@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include <iostream>
 
 void dae::SceneManager::Update(float deltaT)
 {
@@ -7,14 +8,17 @@ void dae::SceneManager::Update(float deltaT)
 	{
 		scene->Update(deltaT);
 	}
+	std::cout << "UPDATE\n";
 }
 
 void dae::SceneManager::FixedUpdate(float fixedTimeStep)
 {
+	std::cout << "\n\nFixedUPDATE\n\n";
 	for (auto& scene : m_scenes)
 	{
 		scene->FixedUpdate(fixedTimeStep);
 	}
+
 }
 
 void dae::SceneManager::LateUpdate(float deltaT)
@@ -23,6 +27,7 @@ void dae::SceneManager::LateUpdate(float deltaT)
 	{
 		scene->LateUpdate(deltaT);
 	}
+	std::cout << "LateUPDATE\n";
 }
 
 void dae::SceneManager::Render()

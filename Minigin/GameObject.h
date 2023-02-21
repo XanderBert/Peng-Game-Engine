@@ -10,7 +10,9 @@ namespace dae
 	class GameObject 
 	{
 	public:
-		virtual void Update();
+		virtual void Update([[maybe_unused]] float deltaT);
+		virtual void FixedUpdate([[maybe_unused]] float fixedTimeStep);
+		virtual void LateUpdate([[maybe_unused]] float deltaT);
 		virtual void Render() const;
 
 		void SetTexture(const std::string& filename);

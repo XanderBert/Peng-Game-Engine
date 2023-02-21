@@ -5,6 +5,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "Minigin.h"
+
+#include <chrono>
+
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -41,6 +44,7 @@ void PrintSDLVersion()
 }
 
 dae::Minigin::Minigin(const std::string &dataPath)
+:fixedTimeStep(0.2f)
 {
 	PrintSDLVersion();
 	
@@ -79,16 +83,31 @@ void dae::Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
-	auto& renderer = Renderer::GetInstance();
+	const auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
+	auto lastTime = std::chrono::high_resolution_clock::now();
+	float lag = 0.f;
+
 	while (doContinue)
 	{
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		const float deltaT = std::chrono::duration<float>(currentTime - lastTime).count();
+		lastTime = currentTime;
+		lag += deltaT;
+
 		doContinue = input.ProcessInput();
-		sceneManager.Update();
+
+		while (lag >= fixedTimeStep)
+		{
+			sceneManager.FixedUpdate(fixedTimeStep);
+			lag -= fixedTimeStep;
+		}
+
+		sceneManager.Update(deltaT);
+		sceneManager.LateUpdate(deltaT);
 		renderer.Render();
 	}
 }
