@@ -7,12 +7,21 @@ namespace dae
 	class Texture2D;
 
 	// todo: this should become final.
-	class GameObject 
+	class GameObject
 	{
 	public:
+		//Called each frame
 		virtual void Update([[maybe_unused]] float deltaT);
+
+		//Called at a fixed time step
+		//Used for physics & networking
 		virtual void FixedUpdate([[maybe_unused]] float fixedTimeStep);
+
+		//Called after the Update()
+		//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
 		virtual void LateUpdate([[maybe_unused]] float deltaT);
+
+		//Called each frame
 		virtual void Render() const;
 
 		void SetTexture(const std::string& filename);
