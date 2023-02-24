@@ -55,4 +55,3 @@ void Scene::Render() const
 		object->Render();
 	}
 }
-

@@ -3,10 +3,13 @@
 #include "TextObject.h"
 #include "Renderer.h"
 #include "Font.h"
+
 #include "Texture2D.h"
 
-dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
+
+dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font)
+	:Component(),
+	m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
 { }
 
 void dae::TextObject::Update([[maybe_unused]] float deltaT)
@@ -28,6 +31,14 @@ void dae::TextObject::Update([[maybe_unused]] float deltaT)
 		m_textTexture = std::make_shared<Texture2D>(texture);
 		m_needsUpdate = false;
 	}
+}
+
+void dae::TextObject::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+{
+}
+
+void dae::TextObject::LateUpdate([[maybe_unused]] float deltaT)
+{
 }
 
 void dae::TextObject::Render() const

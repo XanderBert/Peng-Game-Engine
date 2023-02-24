@@ -3,15 +3,27 @@
 #include <memory>
 #include "GameObject.h"
 #include "Transform.h"
+#include  "Component.h"
 
 namespace dae
 {
 	class Font;
 	class Texture2D;
-	class TextObject final : public GameObject
+	class TextObject : public Component
 	{
 	public:
-		void Update(float deltaT) override;
+		//Called each frame
+		void Update([[maybe_unused]] float deltaT) override;
+
+		//Called at a fixed time step
+		//Used for physics & networking
+		void FixedUpdate([[maybe_unused]] float fixedTimeStep) override;
+
+		//Called after the Update()
+		//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
+		void LateUpdate([[maybe_unused]] float deltaT) override;
+
+		//Called each frame
 		void Render() const override;
 
 		void SetText(const std::string& text);
