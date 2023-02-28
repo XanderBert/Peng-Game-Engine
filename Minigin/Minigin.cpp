@@ -109,5 +109,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update(deltaT);
 		sceneManager.LateUpdate(deltaT);
 		renderer.Render();
+
+		//Todo: add something to not fully use cpu (cap at 144 fps)
 	}
 }

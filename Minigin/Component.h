@@ -1,8 +1,10 @@
 #pragma once
+
+class GameObject;
 class Component
 {
 public:
-	Component();
+	Component(int id);
 	virtual ~Component();
 
 	Component(const Component& other) = delete;
@@ -23,6 +25,14 @@ public:
 
 	//Called each frame
 	virtual void Render() const;
+
+	void SetId(const int id) { m_ID = id; }
+	void MarkForDeletion();
+	bool CanBeDeleted() const;
+	void SetGameObject(GameObject* owner);
 private:
+	int m_ID{};
+	bool m_WillBeDeleted{false};
+	GameObject* m_pOwner{nullptr};
 };
 
