@@ -1,39 +1,55 @@
-#include <string>
+#include "Component.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
 
-dae::GameObject::GameObject() : m_LastId(0)
+#include <iostream>
+
+GameObject::GameObject() = default;
+GameObject::~GameObject() = default;
+
+void GameObject::Update(float deltaT)
 {
+	for (const auto& component : m_pComponents)
+	{
+		component->Update(deltaT);
+	}
 }
 
-dae::GameObject::~GameObject() = default;
-
-void dae::GameObject::Update([[maybe_unused]] float deltaT)
+void GameObject::FixedUpdate(float fixedTimeStep)
 {
-
+	for (const auto& component : m_pComponents)
+	{
+		component->FixedUpdate(fixedTimeStep);
+	}
 }
 
-void dae::GameObject::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void GameObject::LateUpdate(float deltaT)
 {
+	for (const auto& component : m_pComponents)
+	{
+		component->LateUpdate(deltaT);
+	}
+	RemoveComponents();
 }
 
-void dae::GameObject::LateUpdate([[maybe_unused]] float deltaT)
+void GameObject::Render() const
 {
+	for (const auto& component : m_pComponents)
+	{
+		component->Render();
+	}
 }
 
-void dae::GameObject::Render() const
+void GameObject::RemoveComponents()
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
-}
-
-//void dae::GameObject::SetTexture(const std::string& filename)
-//{
-//	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-//}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
+	//Check if it can be deleted
+	for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
+	{
+		const auto& component{ *it };
+		if (component->CanBeDeleted())
+		{
+			const auto index{ std::distance(m_pComponents.begin(), it) };
+			m_pComponents[index].reset();
+			m_pComponents.erase(it);
+		}
+	}
 }

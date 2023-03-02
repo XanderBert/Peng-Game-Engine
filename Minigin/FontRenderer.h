@@ -1,23 +1,19 @@
-#pragma once
+﻿#pragma once
 #include <string>
-#include <memory>
+#include "Component.h"
+#include "Font.h"
 
-#include "TextObject.h"
-#include "Transform.h"
-
-class Component;
-class Font;
 class Texture2D;
-class TextObject : public GameObject
+class FontRenderer : public Component
 {
 public:
-	TextObject(const std::string& text, std::shared_ptr<Font> font);
-	virtual ~TextObject() = default;
+	FontRenderer();
+	~FontRenderer() override;
 
-	TextObject(const TextObject& other) = delete;
-	TextObject(TextObject&& other) = delete;
-	TextObject& operator=(const TextObject& other) = delete;
-	TextObject& operator=(TextObject&& other) = delete;
+	FontRenderer(const FontRenderer& other) = delete;
+	FontRenderer(FontRenderer&& other)noexcept = delete;
+	FontRenderer& operator=(const FontRenderer& other) = delete;
+	FontRenderer& operator=(FontRenderer&& other)noexcept = delete;
 
 	//Called each frame
 	virtual void Update(float deltaT) override;
@@ -33,14 +29,11 @@ public:
 	//Called each frame
 	virtual void Render() const override;
 
-
 	void SetText(const std::string& text);
-
+	void SetFont(const std::string& fontPath, int fontSize);
 private:
-	bool m_needsUpdate;
-	std::string m_text;
-
+	std::string m_text{};
 	std::shared_ptr<Font> m_font;
+	bool m_needsUpdate{ false };
 	std::shared_ptr<Texture2D> m_textTexture;
 };
-

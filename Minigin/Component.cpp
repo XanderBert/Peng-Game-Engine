@@ -1,30 +1,8 @@
 #include "Component.h"
-#include "GameObject.h"
 
-Component::Component(int id): m_ID{id}
-{
+Component::Component() = default;
 
-}
-
-Component::~Component()
-{
-}
-
-void Component::Update([[maybe_unused]]float deltaT)
-{
-}
-
-void Component::FixedUpdate([[maybe_unused]] float fixedTimeStep)
-{
-}
-
-void Component::LateUpdate([[maybe_unused]] float deltaT)
-{
-}
-
-void Component::Render() const
-{
-}
+Component::~Component() = default;
 
 void Component::MarkForDeletion()
 {
@@ -38,7 +16,7 @@ bool Component::CanBeDeleted() const
 
 void Component::SetGameObject(GameObject* owner)
 {
-	if(owner == nullptr)
+	if (!m_pOwner)
 	{
 		m_pOwner = owner;
 	}

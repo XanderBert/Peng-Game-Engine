@@ -1,10 +1,11 @@
 #pragma once
+#include <memory>
+#include "GameObject.h"
 
-class GameObject;
 class Component
 {
 public:
-	Component(int id);
+	Component();
 	virtual ~Component();
 
 	Component(const Component& other) = delete;
@@ -13,26 +14,39 @@ public:
 	Component& operator=(Component&& other) = delete;
 
 	//Called each frame
-	virtual void Update([[maybe_unused]] float deltaT);
+	virtual void Update(float deltaT) = 0;
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate([[maybe_unused]] float fixedTimeStep);
+	virtual void FixedUpdate(float fixedTimeStep) = 0;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate([[maybe_unused]] float deltaT);
+	virtual void LateUpdate(float deltaT) = 0;
 
 	//Called each frame
-	virtual void Render() const;
+	virtual void Render() const = 0;
 
-	void SetId(const int id) { m_ID = id; }
 	void MarkForDeletion();
 	bool CanBeDeleted() const;
+
+	template <typename T>
+	std::shared_ptr<T> GetComponent() const;
+
 	void SetGameObject(GameObject* owner);
-private:
-	int m_ID{};
-	bool m_WillBeDeleted{false};
-	GameObject* m_pOwner{nullptr};
+
+protected:
+	bool m_WillBeDeleted{ false };
+	GameObject* m_pOwner{ nullptr };
 };
 
+//return nullptr if the component has not been found
+template <typename T>
+std::shared_ptr<T> Component::GetComponent() const
+{
+	if (m_pOwner)
+	{
+		return m_pOwner->GetComponent<T>();
+	}
+	return nullptr;
+}

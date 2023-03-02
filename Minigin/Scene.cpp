@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-using namespace dae;
+
 
 unsigned int Scene::m_idCounter = 0;
 
@@ -26,13 +26,13 @@ void Scene::RemoveAll()
 
 void Scene::Update(float deltaT)
 {
-	for(auto& object : m_objects)
+	for (auto& object : m_objects)
 	{
 		object->Update(deltaT);
 	}
 }
 
-void dae::Scene::FixedUpdate(float fixedTimeStep)
+void Scene::FixedUpdate(float fixedTimeStep)
 {
 	for (auto& object : m_objects)
 	{
@@ -40,7 +40,7 @@ void dae::Scene::FixedUpdate(float fixedTimeStep)
 	}
 }
 
-void dae::Scene::LateUpdate(float deltaT)
+void Scene::LateUpdate(float deltaT)
 {
 	for (auto& object : m_objects)
 	{
