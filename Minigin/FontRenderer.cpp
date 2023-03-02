@@ -3,6 +3,8 @@
 #include <SDL_pixels.h>
 #include <SDL_ttf.h>
 #include <stdexcept>
+
+#include "Color.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Texture2D.h"
@@ -19,9 +21,10 @@ void FontRenderer::Update([[maybe_unused]] float deltaT)
 	//needs: font, color, text
 	if (m_needsUpdate && m_font)
 	{
-		const SDL_Color color = { 255,255,255 }; //TODO only white text is supported now
-
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), color);
+		//Looks for color component
+		//if there is none it will use white
+		GetColor();
+		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -67,15 +70,20 @@ void FontRenderer::Render() const
 void FontRenderer::SetText(const std::string& text)
 {
 	m_text = text;
-
-	if (m_font)
-	{
-		m_needsUpdate = true;
-	}
+	if (m_font) m_needsUpdate = true;
 }
 
 void FontRenderer::SetFont(const std::string& fontPath, int fontSize)
 {
 	m_font = { ResourceManager::GetInstance().LoadFont(fontPath, fontSize) };
 	m_needsUpdate = true;
+}
+
+void FontRenderer::GetColor()
+{
+	m_color = SDL_Color(255, 255, 255);
+	if (const auto component{ GetComponent<Color>() })
+	{
+		m_color = component->GetColor();
+	}
 }

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <SDL_pixels.h>
 #include <string>
 #include "Component.h"
 #include "Font.h"
@@ -32,6 +33,9 @@ public:
 	void SetText(const std::string& text);
 	void SetFont(const std::string& fontPath, int fontSize);
 private:
+	void GetColor();
+	SDL_Color m_color{};
+
 	std::string m_text{};
 	std::shared_ptr<Font> m_font;
 	bool m_needsUpdate{ false };
