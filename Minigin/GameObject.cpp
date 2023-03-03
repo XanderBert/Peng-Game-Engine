@@ -6,11 +6,11 @@
 GameObject::GameObject() = default;
 GameObject::~GameObject() = default;
 
-void GameObject::Update(float deltaT)
+void GameObject::Update()
 {
 	for (const auto& component : m_pComponents)
 	{
-		component->Update(deltaT);
+		component->Update();
 	}
 }
 
@@ -22,11 +22,11 @@ void GameObject::FixedUpdate(float fixedTimeStep)
 	}
 }
 
-void GameObject::LateUpdate(float deltaT)
+void GameObject::LateUpdate()
 {
 	for (const auto& component : m_pComponents)
 	{
-		component->LateUpdate(deltaT);
+		component->LateUpdate();
 	}
 	RemoveComponents();
 }

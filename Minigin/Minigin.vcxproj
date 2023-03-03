@@ -190,6 +190,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureRenderer.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +209,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureRenderer.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -15,15 +15,15 @@ public:
 	TextureRenderer& operator=(TextureRenderer&& other) = delete;
 
 	//Called each frame
-	void Update([[maybe_unused]] float deltaT) override;
+	void Update() override;
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	void FixedUpdate([[maybe_unused]] float fixedTimeStep) override;
+	void FixedUpdate(float fixedTimeStep) override;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	void LateUpdate([[maybe_unused]] float deltaT) override;
+	void LateUpdate() override;
 
 	//Called each frame
 	void Render() const override;

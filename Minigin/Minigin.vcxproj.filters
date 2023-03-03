@@ -19,14 +19,11 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{d91df7b1-0a25-4e36-adb8-90bbdfdffec1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Singletons">
+      <UniqueIdentifier>{5e665dc9-dcc0-43d1-b77a-2b474c8528f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,11 +66,17 @@
     <ClInclude Include="Color.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Source Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Source Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Source Files\Singletons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -118,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files\Singletons</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

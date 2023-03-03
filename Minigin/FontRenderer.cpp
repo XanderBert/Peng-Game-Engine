@@ -16,7 +16,7 @@ FontRenderer::FontRenderer() : Component()
 
 FontRenderer::~FontRenderer() = default;
 
-void FontRenderer::Update([[maybe_unused]] float deltaT)
+void FontRenderer::Update()
 {
 	//needs: font, color, text
 	if (m_needsUpdate && m_font)
@@ -45,7 +45,7 @@ void FontRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
 {
 }
 
-void FontRenderer::LateUpdate([[maybe_unused]] float deltaT)
+void FontRenderer::LateUpdate()
 {
 }
 

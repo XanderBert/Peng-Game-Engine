@@ -24,11 +24,11 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-void Scene::Update(float deltaT)
+void Scene::Update()
 {
 	for (auto& object : m_objects)
 	{
-		object->Update(deltaT);
+		object->Update();
 	}
 }
 
@@ -40,11 +40,11 @@ void Scene::FixedUpdate(float fixedTimeStep)
 	}
 }
 
-void Scene::LateUpdate(float deltaT)
+void Scene::LateUpdate()
 {
 	for (auto& object : m_objects)
 	{
-		object->LateUpdate(deltaT);
+		object->LateUpdate();
 	}
 }
 

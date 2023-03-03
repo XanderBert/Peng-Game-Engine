@@ -3,6 +3,7 @@
 #include <string>
 #include "Component.h"
 #include "Font.h"
+#include "Time.h"
 
 class Texture2D;
 class FontRenderer : public Component
@@ -17,7 +18,7 @@ public:
 	FontRenderer& operator=(FontRenderer&& other)noexcept = delete;
 
 	//Called each frame
-	virtual void Update(float deltaT) override;
+	virtual void Update() override;
 
 	//Called at a fixed time step
 	//Used for physics & networking
@@ -25,7 +26,7 @@ public:
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate(float deltaT) override;
+	virtual void LateUpdate() override;
 
 	//Called each frame
 	virtual void Render() const override;
@@ -35,7 +36,7 @@ public:
 private:
 	void GetColor();
 	SDL_Color m_color{};
-
+	
 	std::string m_text{};
 	std::shared_ptr<Font> m_font;
 	bool m_needsUpdate{ false };

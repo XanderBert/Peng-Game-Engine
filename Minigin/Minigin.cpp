@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 SDL_Window* g_window{};
 
@@ -106,8 +107,9 @@ void Minigin::Run(const std::function<void()>& load)
 			lag -= fixedTimeStep;
 		}
 
-		sceneManager.Update(deltaT);
-		sceneManager.LateUpdate(deltaT);
+		Time::GetInstance().Update(deltaT);
+		sceneManager.Update();
+		sceneManager.LateUpdate();
 		renderer.Render();
 
 		//Todo: add something to not fully use cpu (cap at 144 fps)

@@ -14,15 +14,15 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 	//Called each frame
-	virtual void Update([[maybe_unused]] float deltaT);
+	virtual void Update();
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate([[maybe_unused]] float fixedTimeStep);
+	virtual void FixedUpdate(float fixedTimeStep);
 
 	//Called after the Update()c
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate([[maybe_unused]] float deltaT);
+	virtual void LateUpdate();
 
 	//Called each frame
 	virtual void Render() const;

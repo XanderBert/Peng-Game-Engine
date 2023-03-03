@@ -1,21 +1,29 @@
 ﻿#include "FPSCounter.h"
-
 #include <iostream>
+#include "Time.h"
+#include "FontRenderer.h"
 
+
+//needs: translate, font, font renderer
 FPSCounter::FPSCounter() : Component() {};
 
 FPSCounter::~FPSCounter() = default;
 
-void FPSCounter::Update(float deltaT)
+void FPSCounter::Update()
 {
-	CalculateFPS(deltaT);
+	CalculateFPS();
+
+	if(const auto fontRenderer = GetComponent<FontRenderer>())
+	{
+		fontRenderer->SetText(GetFPSAsIntString());
+	}
 }
 
 void FPSCounter::FixedUpdate([[maybe_unused]] float fixedTimeStep)
 {
 }
 
-void FPSCounter::LateUpdate([[maybe_unused]] float deltaT)
+void FPSCounter::LateUpdate()
 {
 }
 
@@ -28,13 +36,18 @@ std::string FPSCounter::GetFPSAsString() const
 	return std::to_string(m_currentFPS);
 }
 
-void FPSCounter::CalculateFPS(float deltaT)
+std::string FPSCounter::GetFPSAsIntString() const
 {
-	//auto measurement = 1.f / deltaT;
-	//constexpr float smoothing = 0.9f; // larger=more smoothing
+	return std::to_string(static_cast<int>(m_currentFPS));
 
-	//measurement = (measurement * smoothing) + (m_currentFPS * (1.0 - smoothing));
+}
 
-	m_currentFPS = 1.f / deltaT;
-	std::cout << GetFPSAsString() << '\n';
+void FPSCounter::CalculateFPS()
+{
+	//Increase precision by increasing the number
+	constexpr int precision{ 100 };
+	if (static_cast<int>(Time::GetInstance().GetElapsed() * precision) % precision == 0)
+	{
+		m_currentFPS = 1.f / Time::GetInstance().GetDeltaTime();
+	}
 }

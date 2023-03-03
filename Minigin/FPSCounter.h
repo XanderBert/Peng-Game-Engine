@@ -14,7 +14,7 @@ public:
 	FPSCounter& operator=(FPSCounter&& other)noexcept = delete;
 
 	//Called each frame
-	virtual void Update(float deltaT) override;
+	virtual void Update() override;
 
 	//Called at a fixed time step
 	//Used for physics & networking
@@ -22,13 +22,15 @@ public:
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate(float deltaT) override;
+	virtual void LateUpdate() override;
 
 	//Called each frame
 	virtual void Render() const override;
 
 	std::string GetFPSAsString() const;
+	std::string GetFPSAsIntString() const;
+
 private:
-	void CalculateFPS(float deltaT);
+	void CalculateFPS();
 	float m_currentFPS{ 0.f };
 };

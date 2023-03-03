@@ -10,9 +10,9 @@ class SceneManager final : public Singleton<SceneManager>
 public:
 	Scene& CreateScene(const std::string& name);
 
-	void Update([[maybe_unused]] float deltaT);
-	void FixedUpdate([[maybe_unused]] float fixedTimeStep);
-	void LateUpdate([[maybe_unused]] float deltaT);
+	void Update();
+	void FixedUpdate(float fixedTimeStep);
+	void LateUpdate();
 	void Render();
 private:
 	friend class Singleton<SceneManager>;

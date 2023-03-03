@@ -11,9 +11,9 @@ public:
 	void Remove(std::shared_ptr<GameObject> object);
 	void RemoveAll();
 
-	void Update(float deltaT);
+	void Update();
 	void FixedUpdate(float fixedTimeStep);
-	void LateUpdate(float deltaT);
+	void LateUpdate();
 	void Render() const;
 
 	~Scene();

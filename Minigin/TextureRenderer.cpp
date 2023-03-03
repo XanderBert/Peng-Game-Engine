@@ -10,19 +10,16 @@ TextureRenderer::TextureRenderer() : Component()
 TextureRenderer::~TextureRenderer() = default;
 
 
-void TextureRenderer::Update([[maybe_unused]] float deltaT)
+void TextureRenderer::Update()
 {
-	//Component::Update(deltaT);
 }
 
 void TextureRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
 {
-	//Component::FixedUpdate(fixedTimeStep);
 }
 
-void TextureRenderer::LateUpdate([[maybe_unused]] float deltaT)
+void TextureRenderer::LateUpdate()
 {
-	//Component::LateUpdate(deltaT);
 }
 
 void TextureRenderer::Render() const

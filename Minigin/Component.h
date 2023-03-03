@@ -14,7 +14,7 @@ public:
 	Component& operator=(Component&& other) = delete;
 
 	//Called each frame
-	virtual void Update(float deltaT) = 0;
+	virtual void Update() = 0;
 
 	//Called at a fixed time step
 	//Used for physics & networking
@@ -22,7 +22,7 @@ public:
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate(float deltaT) = 0;
+	virtual void LateUpdate() = 0;
 
 	//Called each frame
 	virtual void Render() const = 0;

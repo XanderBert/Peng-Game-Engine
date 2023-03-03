@@ -15,18 +15,18 @@ public:
 
 
 	//Called each frame
-	void Update(float deltaT);
+	void Update() override;
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	void FixedUpdate(float fixedTimeStep);
+	void FixedUpdate(float fixedTimeStep) override;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	void LateUpdate(float deltaT);
+	void LateUpdate() override;
 
 	//Called each frame
-	void Render() const;
+	void Render() const override;
 
 	const glm::vec2& GetPosition() const;
 	void SetPosition(const glm::vec2& newPosition);

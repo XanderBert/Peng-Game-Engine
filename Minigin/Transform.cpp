@@ -11,7 +11,7 @@ Transform::Transform() : Component()
 Transform::~Transform() = default;
 
 
-void Transform::Update([[maybe_unused]] float deltaT)
+void Transform::Update()
 {
 }
 
@@ -19,7 +19,7 @@ void Transform::FixedUpdate([[maybe_unused]] float fixedTimeStep)
 {
 }
 
-void Transform::LateUpdate([[maybe_unused]] float deltaT)
+void Transform::LateUpdate()
 {
 }
 

@@ -1,11 +1,12 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Time.h"
 
-void SceneManager::Update(float deltaT)
+void SceneManager::Update()
 {
 	for (auto& scene : m_scenes)
 	{
-		scene->Update(deltaT);
+		scene->Update();
 	}
 }
 
@@ -17,11 +18,11 @@ void SceneManager::FixedUpdate(float fixedTimeStep)
 	}
 }
 
-void SceneManager::LateUpdate(float deltaT)
+void SceneManager::LateUpdate()
 {
 	for (const auto& scene : m_scenes)
 	{
-		scene->LateUpdate(deltaT);
+		scene->LateUpdate();
 	}
 }
 
