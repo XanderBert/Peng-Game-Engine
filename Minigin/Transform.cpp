@@ -1,7 +1,4 @@
 #include "Transform.h"
-
-#include <iostream>
-
 #include "Texture2D.h"
 
 Transform::Transform() : Component()

@@ -31,6 +31,7 @@ public:
 	const glm::vec2& GetPosition() const;
 	void SetPosition(const glm::vec2& newPosition);
 private:
+	//Todo this can become a matrix and do ratation scale and transform
 	glm::vec2 m_position{};
 };
 

@@ -29,11 +29,29 @@ public:
 
 	template <typename T> std::shared_ptr <T> AddComponent();
 	template <typename T> std::shared_ptr<T> GetComponent() const;
-
 	std::vector<std::shared_ptr<Component>> m_pComponents{};
 
+	std::shared_ptr<GameObject> GetParent() const;
+	void SetParent(std::shared_ptr<GameObject>& pParent);
+	int GetChildCount() const;
+	std::shared_ptr<GameObject> GetChildAt(int index) const;
+
+
 private:
-	void RemoveComponents();
+	std::shared_ptr<GameObject> m_pParent{};
+	//todo use unique? or use raw pointers
+	//Do i need shared ownership?
+	//Does this update need to go the children update or does the scene go over all possible game objects?
+	//I think i will go over objects in scene that are in root
+	//go over all children in the game objects
+	//this way the scene will just become a game object at the top root
+	std::vector<std::shared_ptr<GameObject>> m_pChildren{};
+
+	void AddToChildVector(GameObject* pChild);
+	void RemoveFromChildren(GameObject* pChild, GameObject* pParent);
+	//Gets called every late update
+	//Removes all components that have been marked for deletion
+	void RemoveComponents(); 
 };
 
 template<typename T>
