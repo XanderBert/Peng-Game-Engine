@@ -1,6 +1,9 @@
 #include "Component.h"
 
-Component::Component() = default;
+Component::Component(GameObject* owner)
+{
+	SetGameObject(owner);
+};
 
 Component::~Component() = default;
 

@@ -5,7 +5,7 @@
 class FPSCounter : public Component
 {
 public:
-	FPSCounter();
+	FPSCounter(GameObject* owner);
 	~FPSCounter() override;
 
 	FPSCounter(const FPSCounter& other) = delete;

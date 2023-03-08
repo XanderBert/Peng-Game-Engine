@@ -5,7 +5,7 @@
 class Transform final : public Component
 {
 public:
-	Transform();
+	Transform(GameObject* owner);
 	~Transform();
 
 	Transform(const Transform& other) = delete;
@@ -28,10 +28,21 @@ public:
 	//Called each frame
 	void Render() const override;
 
-	const glm::vec2& GetPosition() const;
-	void SetPosition(const glm::vec2& newPosition);
+	//
+	//Position
+	void SetLocalPosition(const glm::vec2& position);
+	glm::vec2 GetLocalPosition() const;
+
+	void SetWorldPosition(const glm::vec2& position);
+	glm::vec2 GetWorldPosition(GameObject* parent);
+	void SetPositionDirty();
+
 private:
-	//Todo this can become a matrix and do ratation scale and transform
-	glm::vec2 m_position{};
+	//Todo this can become a matrix and do rotation scale and transform
+	glm::vec2 m_LocalPosition{};
+	glm::vec2 m_WorldPosition{};
+
+	bool m_IsPositionDirty{ true };
+	void UpdateWorldPosition(GameObject* parent);
 };
 

@@ -9,7 +9,7 @@ class Texture2D;
 class FontRenderer : public Component
 {
 public:
-	FontRenderer();
+	FontRenderer(GameObject* owner);
 	~FontRenderer() override;
 
 	FontRenderer(const FontRenderer& other) = delete;
@@ -36,7 +36,7 @@ public:
 private:
 	void GetColor();
 	SDL_Color m_color{};
-	
+
 	std::string m_text{};
 	std::shared_ptr<Font> m_font;
 	bool m_needsUpdate{ false };

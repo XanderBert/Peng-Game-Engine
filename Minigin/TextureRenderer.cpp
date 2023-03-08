@@ -3,7 +3,7 @@
 #include "Texture2D.h"
 #include "Transform.h"
 
-TextureRenderer::TextureRenderer() : Component()
+TextureRenderer::TextureRenderer(GameObject* owner) : Component(owner)
 {
 }
 
@@ -26,7 +26,7 @@ void TextureRenderer::Render() const
 {
 	if (const auto transformComponent{ GetComponent<Transform>() })
 	{
-		const auto& pos{ transformComponent->GetPosition() };
+		const auto& pos{ transformComponent->GetLocalPosition() };
 		m_pTexture->Render(pos);
 	}
 }

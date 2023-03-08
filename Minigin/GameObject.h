@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <glm/vec2.hpp>
 
 class Component;
 class GameObject
@@ -27,15 +28,19 @@ public:
 	//Called each frame
 	virtual void Render() const;
 
+
+	//
+	//Components
 	template <typename T> std::shared_ptr <T> AddComponent();
 	template <typename T> std::shared_ptr<T> GetComponent() const;
 	std::vector<std::shared_ptr<Component>> m_pComponents{};
 
-	std::shared_ptr<GameObject> GetParent() const;
-	void SetParent(std::shared_ptr<GameObject>& pParent);
+	//
+	//SceneGraph
+	void SetParent(std::shared_ptr<GameObject>& pParent, bool keepWorldPosition);
 	int GetChildCount() const;
+	std::shared_ptr<GameObject> GetParent() const;
 	std::shared_ptr<GameObject> GetChildAt(int index) const;
-
 
 private:
 	std::shared_ptr<GameObject> m_pParent{};
@@ -47,11 +52,11 @@ private:
 	//this way the scene will just become a game object at the top root
 	std::vector<std::shared_ptr<GameObject>> m_pChildren{};
 
-	void AddToChildVector(GameObject* pChild);
-	void RemoveFromChildren(GameObject* pChild, GameObject* pParent);
+	void AddToChildVector(GameObject* pParent);
+	void RemoveFromChildren(GameObject* pParent) const;
 	//Gets called every late update
 	//Removes all components that have been marked for deletion
-	void RemoveComponents(); 
+	void RemoveComponents();
 };
 
 template<typename T>
@@ -59,15 +64,12 @@ std::shared_ptr <T> GameObject::AddComponent()
 {
 	static_assert(std::is_base_of<Component, T>(), "This class is not a component.");
 
-	auto pComponent = std::make_shared<T>();
-
-	pComponent->SetGameObject(this);
+	auto pComponent = std::make_shared<T>(this);
 
 	m_pComponents.emplace_back(pComponent);
 
 	return dynamic_pointer_cast<T>(m_pComponents.back());
 }
-
 
 template<typename T>
 std::shared_ptr<T> GameObject::GetComponent() const

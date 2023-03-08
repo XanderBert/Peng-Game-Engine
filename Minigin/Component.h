@@ -5,7 +5,7 @@
 class Component
 {
 public:
-	Component();
+	Component(GameObject* owner);
 	virtual ~Component();
 
 	Component(const Component& other) = delete;
@@ -33,11 +33,11 @@ public:
 	template <typename T>
 	std::shared_ptr<T> GetComponent() const;
 
-	void SetGameObject(GameObject* owner);
-
 protected:
 	bool m_WillBeDeleted{ false };
 	GameObject* m_pOwner{ nullptr };
+private:
+	void SetGameObject(GameObject* owner);
 };
 
 //return nullptr if the component has not been found

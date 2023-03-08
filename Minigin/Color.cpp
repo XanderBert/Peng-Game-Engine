@@ -1,6 +1,6 @@
 ﻿#include "Color.h"
 
-Color::Color() : Component() {};
+Color::Color(GameObject* owner) : Component(owner) {};
 Color::~Color() = default;
 
 void Color::Update()

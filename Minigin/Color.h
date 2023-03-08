@@ -5,7 +5,7 @@
 class Color : public Component
 {
 public:
-	Color();
+	Color(GameObject* owner);
 	~Color() override;
 
 	Color(const Color& other) = delete;

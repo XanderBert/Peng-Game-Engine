@@ -6,7 +6,7 @@ class Texture2D;
 class TextureRenderer final : public Component
 {
 public:
-	TextureRenderer();
+	TextureRenderer(GameObject* owner);
 	~TextureRenderer() override;
 
 	TextureRenderer(const TextureRenderer& other) = delete;

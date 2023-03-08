@@ -1,7 +1,7 @@
 #include "Transform.h"
 #include "Texture2D.h"
 
-Transform::Transform() : Component()
+Transform::Transform(GameObject* owner) : Component(owner)
 {
 }
 
@@ -24,13 +24,48 @@ void Transform::Render() const
 {
 }
 
-const glm::vec2& Transform::GetPosition() const
+void Transform::SetLocalPosition(const glm::vec2& position)
 {
-	return m_position;
+	m_LocalPosition = position;
+	SetPositionDirty();
 }
 
-void Transform::SetPosition(const glm::vec2& newPosition)
+glm::vec2 Transform::GetLocalPosition() const
 {
-	m_position.x = newPosition.x;
-	m_position.y = newPosition.y;
+	return m_LocalPosition;
+}
+
+void Transform::SetWorldPosition(const glm::vec2& position)
+{
+	m_WorldPosition = position;
+}
+
+glm::vec2 Transform::GetWorldPosition(GameObject* parent)
+{
+	if (m_IsPositionDirty) UpdateWorldPosition(parent);
+
+	return m_WorldPosition;
+}
+
+void Transform::SetPositionDirty()
+{
+	m_IsPositionDirty = true;
+}
+
+void Transform::UpdateWorldPosition(GameObject* parent)
+{
+	if (m_IsPositionDirty)
+	{
+		if (parent == nullptr)
+		{
+			m_WorldPosition = m_LocalPosition;
+
+		}
+		else
+		{
+			//TODO: Check if this even works?
+			m_WorldPosition - parent->GetComponent<Transform>()->GetWorldPosition(parent->GetParent().get()) + m_LocalPosition;
+		}
+	}
+	m_IsPositionDirty = false;
 }

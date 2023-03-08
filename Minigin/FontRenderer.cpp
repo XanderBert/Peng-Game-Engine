@@ -10,7 +10,7 @@
 #include "Texture2D.h"
 #include "Transform.h"
 
-FontRenderer::FontRenderer() : Component()
+FontRenderer::FontRenderer(GameObject* owner) : Component(owner)
 {
 }
 
@@ -56,7 +56,7 @@ void FontRenderer::Render() const
 	{
 		if (const auto transformComponent{ GetComponent<Transform>() })
 		{
-			const auto& pos = transformComponent->GetPosition();
+			const auto& pos = transformComponent->GetLocalPosition();
 			Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 		}
 		else
