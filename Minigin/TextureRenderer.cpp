@@ -26,7 +26,8 @@ void TextureRenderer::Render() const
 {
 	if (const auto transformComponent{ GetComponent<Transform>() })
 	{
-		const auto& pos{ transformComponent->GetLocalPosition() };
+		const auto& pos{ transformComponent->GetWorldPosition(m_pOwner->GetParent()) };
+
 		m_pTexture->Render(pos);
 	}
 }

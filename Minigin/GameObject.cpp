@@ -46,19 +46,19 @@ void GameObject::Render() const
 	}
 }
 
-std::shared_ptr<GameObject> GameObject::GetParent() const
+GameObject* GameObject::GetParent() const
 {
 	return m_pParent;
 }
 
-void GameObject::SetParent(std::shared_ptr<GameObject>& pParent, bool keepWorldPosition = true)
+void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition = true)
 {
 	//TODO: Cleanup This mess
 	const auto transformComponent = GetComponent<Transform>();
 
 	if (pParent == nullptr)
 	{
-		transformComponent->SetLocalPosition(transformComponent->GetWorldPosition(m_pParent.get()));
+		transformComponent->SetLocalPosition(transformComponent->GetWorldPosition(m_pParent));
 	}
 	else
 	{
@@ -66,7 +66,7 @@ void GameObject::SetParent(std::shared_ptr<GameObject>& pParent, bool keepWorldP
 		{
 			const auto parentTransformComponent = pParent->GetComponent<Transform>();
 
-			transformComponent->SetLocalPosition(transformComponent->GetLocalPosition() - parentTransformComponent->GetWorldPosition(m_pParent.get()));
+			transformComponent->SetLocalPosition(transformComponent->GetLocalPosition() - parentTransformComponent->GetWorldPosition(m_pParent));
 		}
 		transformComponent->SetPositionDirty();
 	}
@@ -74,20 +74,20 @@ void GameObject::SetParent(std::shared_ptr<GameObject>& pParent, bool keepWorldP
 	if (m_pParent)
 	{
 		//Remove itself as a child from the previous parent(if any).
-		RemoveFromChildren(m_pParent.get());
+		RemoveFromChildren(m_pParent);
 	}
 
 	//Set the given parent on itself.
 	m_pParent = pParent;
 	//Add itself as a child to the given parent.
-	AddToChildVector(m_pParent.get());
+	AddToChildVector(m_pParent);
 }
 int GameObject::GetChildCount() const
 {
 	return static_cast<int>(m_pChildren.size());
 }
 
-std::shared_ptr<GameObject> GameObject::GetChildAt(int index) const
+GameObject* GameObject::GetChildAt(int index) const
 {
 	if (index >= 0 || index < m_pChildren.size())
 	{
@@ -105,9 +105,9 @@ void GameObject::AddToChildVector(GameObject* pParent)
 void GameObject::RemoveFromChildren(GameObject* pParent) const
 {
 	//will remove the child that needs to be removed from the parent
-	std::erase_if(pParent->m_pChildren, [this](const std::shared_ptr<GameObject>& child)
+	std::erase_if(pParent->m_pChildren, [this](const GameObject* child)
 		{
-			return child.get() == this;
+			return child == this;
 		});
 }
 

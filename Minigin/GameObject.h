@@ -37,20 +37,17 @@ public:
 
 	//
 	//SceneGraph
-	void SetParent(std::shared_ptr<GameObject>& pParent, bool keepWorldPosition);
-	int GetChildCount() const;
-	std::shared_ptr<GameObject> GetParent() const;
-	std::shared_ptr<GameObject> GetChildAt(int index) const;
+	void SetParent(GameObject* pParent, bool keepWorldPosition);
+	[[nodiscard]] int GetChildCount() const;
+
+	[[nodiscard]] GameObject* GetParent() const;
+	[[nodiscard]] GameObject* GetChildAt(int index) const;
 
 private:
-	std::shared_ptr<GameObject> m_pParent{};
-	//todo use unique? or use raw pointers
-	//Do i need shared ownership?
+	GameObject* m_pParent{};
+
 	//Does this update need to go the children update or does the scene go over all possible game objects?
-	//I think i will go over objects in scene that are in root
-	//go over all children in the game objects
-	//this way the scene will just become a game object at the top root
-	std::vector<std::shared_ptr<GameObject>> m_pChildren{};
+	std::vector<GameObject*> m_pChildren{};
 
 	void AddToChildVector(GameObject* pParent);
 	void RemoveFromChildren(GameObject* pParent) const;

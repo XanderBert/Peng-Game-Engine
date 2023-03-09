@@ -27,6 +27,8 @@ void Transform::Render() const
 void Transform::SetLocalPosition(const glm::vec2& position)
 {
 	m_LocalPosition = position;
+
+
 	SetPositionDirty();
 }
 
@@ -63,8 +65,7 @@ void Transform::UpdateWorldPosition(GameObject* parent)
 		}
 		else
 		{
-			//TODO: Check if this even works?
-			m_WorldPosition - parent->GetComponent<Transform>()->GetWorldPosition(parent->GetParent().get()) + m_LocalPosition;
+			m_WorldPosition = parent->GetComponent<Transform>()->GetWorldPosition(parent->GetParent()) + m_LocalPosition;
 		}
 	}
 	m_IsPositionDirty = false;

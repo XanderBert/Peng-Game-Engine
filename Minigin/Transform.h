@@ -42,7 +42,7 @@ private:
 	glm::vec2 m_LocalPosition{};
 	glm::vec2 m_WorldPosition{};
 
-	bool m_IsPositionDirty{ true };
+	bool m_IsPositionDirty{ false };
 	void UpdateWorldPosition(GameObject* parent);
 };
 
