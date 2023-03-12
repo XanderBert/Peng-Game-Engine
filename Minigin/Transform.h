@@ -38,11 +38,9 @@ public:
 	void SetPositionDirty();
 
 private:
-	//Todo this can become a matrix and do rotation scale and transform
-	glm::vec2 m_LocalPosition{};
-	glm::vec2 m_WorldPosition{};
+	glm::mat3x3 m_TranformMatrixLocal{};
+	glm::mat3x3 m_TranformMatrixWorld{};
 
 	bool m_IsPositionDirty{ false };
 	void UpdateWorldPosition(GameObject* parent);
 };
-

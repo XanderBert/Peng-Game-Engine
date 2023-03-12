@@ -53,7 +53,6 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition = true)
 {
-	//TODO: Cleanup This mess
 	const auto transformComponent = GetComponent<Transform>();
 
 	if (pParent == nullptr)

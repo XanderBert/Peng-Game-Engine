@@ -46,7 +46,7 @@ void FPSCounter::CalculateFPS()
 {
 	//Increase precision by increasing the number
 	constexpr int precision{ 100 };
-	if (static_cast<int>(Time::GetInstance().GetElapsed() * precision) % precision == 0)
+	if (static_cast<int>(Time::GetInstance().GetElapsed() * precision) % precision <= FLT_EPSILON)
 	{
 		m_currentFPS = 1.f / Time::GetInstance().GetDeltaTime();
 	}

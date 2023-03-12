@@ -7,6 +7,7 @@
 #include "Minigin.h"
 
 #include <chrono>
+#include <thread>
 
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -92,14 +93,16 @@ void Minigin::Run(const std::function<void()>& load)
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
 
+	//int TARGET_FPS = 60;
+	//auto OPTIMAL_TIME = std::chrono::duration<float>(1000000000 - TARGET_FPS).count(); 
 	while (doContinue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
 		const float deltaT = std::chrono::duration<float>(currentTime - lastTime).count();
-		lastTime = currentTime;
 		lag += deltaT;
 
 		doContinue = input.ProcessInput();
+
 
 		while (lag >= fixedTimeStep)
 		{
@@ -112,6 +115,12 @@ void Minigin::Run(const std::function<void()>& load)
 		sceneManager.LateUpdate();
 		renderer.Render();
 
+		//using fps20 = std::chrono::duration<double, std::ratio<1, 20>>;
+		//using fps_24 = std::chrono::duration<double, std::ratio<1, 24>>;
+		//auto now = std::chrono::high_resolution_clock::now();
+		//std::this_thread::sleep_for(std::chrono::milliseconds ((lastTime - now + static_cast<auto>(OPTIMAL_TIME)) / 1000000));
+		//try { Thread.sleep( };
 		//Todo: add something to not fully use cpu (cap at 144 fps)
+		lastTime = currentTime;
 	}
 }
