@@ -1,5 +1,8 @@
 ﻿#pragma once
+#include <array>
 #include <memory>
+#include <string>
+
 #include "Component.h"
 
 class Texture2D;
@@ -7,7 +10,7 @@ class TextureRenderer final : public Component
 {
 public:
 	TextureRenderer(GameObject* owner);
-	~TextureRenderer() override;
+	virtual ~TextureRenderer() override;
 
 	TextureRenderer(const TextureRenderer& other) = delete;
 	TextureRenderer(TextureRenderer&& other) = delete;
@@ -26,9 +29,10 @@ public:
 	void LateUpdate() override;
 
 	//Called each frame
-	void Render() const override;
+	void Render() override;
 
-	void SetTexture(std::shared_ptr<Texture2D> pTexture);
+	void SetTexture(const std::string& texturePath);
 private:
 	std::shared_ptr<Texture2D> m_pTexture{};
+	//std::array<int, 100000000> bigData{};
 };

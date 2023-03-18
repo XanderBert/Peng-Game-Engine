@@ -7,8 +7,8 @@
 #include "Minigin.h"
 
 #include <chrono>
-#include <thread>
 
+#include "imgui.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -44,6 +44,17 @@ void PrintSDLVersion()
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
 }
+//TODO: Fix Deletion of Components (Destructor Gets Called but memory does not get freed).
+//TODO: Fix Deletion of GameObjects (Function Take Unique pointer)
+
+//TODO: place huge amounts of data in components to check if everything gets deleted (This Data is now in TextureRenderer)
+//Just like i taught the memory does not get freed until the whole program terminates
+
+//TODO: Implement something like juce's safe pointers.
+//Holds a pointer to some type of Component, which automatically becomes null if the component is deleted.
+//TODO: add something to not fully use cpu (cap at 144 fps)
+//TODO: If there is time, place all data from big to small inside a class
+//Todo: Put the cold path data in a class and put a pointer to it in the component
 
 Minigin::Minigin(const std::string& dataPath)
 	:fixedTimeStep(0.2f)
@@ -59,8 +70,8 @@ Minigin::Minigin(const std::string& dataPath)
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
+		m_WindowWidth,
+		m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (g_window == nullptr)
@@ -93,8 +104,6 @@ void Minigin::Run(const std::function<void()>& load)
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
 
-	//int TARGET_FPS = 60;
-	//auto OPTIMAL_TIME = std::chrono::duration<float>(1000000000 - TARGET_FPS).count(); 
 	while (doContinue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
@@ -102,7 +111,6 @@ void Minigin::Run(const std::function<void()>& load)
 		lag += deltaT;
 
 		doContinue = input.ProcessInput();
-
 
 		while (lag >= fixedTimeStep)
 		{
@@ -115,12 +123,7 @@ void Minigin::Run(const std::function<void()>& load)
 		sceneManager.LateUpdate();
 		renderer.Render();
 
-		//using fps20 = std::chrono::duration<double, std::ratio<1, 20>>;
-		//using fps_24 = std::chrono::duration<double, std::ratio<1, 24>>;
-		//auto now = std::chrono::high_resolution_clock::now();
-		//std::this_thread::sleep_for(std::chrono::milliseconds ((lastTime - now + static_cast<auto>(OPTIMAL_TIME)) / 1000000));
-		//try { Thread.sleep( };
-		//Todo: add something to not fully use cpu (cap at 144 fps)
+
 		lastTime = currentTime;
 	}
 }

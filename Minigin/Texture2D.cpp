@@ -23,6 +23,7 @@ glm::ivec2 Texture2D::GetSize() const
 
 SDL_Texture* Texture2D::GetSDLTexture() const
 {
+	//TODO: Set error that texture has not been set!
 	return m_texture;
 }
 

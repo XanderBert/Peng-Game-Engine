@@ -26,7 +26,7 @@ public:
 	void LateUpdate() override;
 
 	//Called each frame
-	void Render() const override;
+	void Render() override;
 
 	//
 	//Position
@@ -34,13 +34,30 @@ public:
 	glm::vec2 GetLocalPosition() const;
 
 	void SetWorldPosition(const glm::vec2& position);
-	glm::vec2 GetWorldPosition(GameObject* parent);
+	glm::vec2 GetWorldPosition(const GameObject* parent);
 	void SetPositionDirty();
 
+	//
+	//Rotation
+	void SetLocalRotation(const glm::vec2& angle);
+	glm::vec2 GetLocalRotation() const;
+
+	void SetWorldRotation(const glm::vec2& angle);
+	glm::vec2 GetWorldPosition() const;
+
+	//
+	//Scale
+	void SetLocalScale(const glm::vec2& scale);
+	glm::vec2 GetLocalScale() const;
+
+	void SetWorldScale(const glm::vec2 scale);
+	glm::vec2 GetWorldScale() const;
+
+
 private:
-	glm::mat3x3 m_TranformMatrixLocal{};
-	glm::mat3x3 m_TranformMatrixWorld{};
+	std::unique_ptr<glm::mat3x3> m_TranformMatrixLocal = std::make_unique<glm::mat3x3>(glm::mat3x3{ {1, 0, 0}, { 0, 1, 0 }, { 0, 0, 1 } });
+	std::unique_ptr<glm::mat3x3> m_TranformMatrixWorld = std::make_unique<glm::mat3x3>(glm::mat3x3{{1, 0 ,0},{0, 1, 0},{0, 0, 1}});
 
 	bool m_IsPositionDirty{ false };
-	void UpdateWorldPosition(GameObject* parent);
+	void UpdateWorldPosition(const GameObject* parent);
 };

@@ -15,4 +15,6 @@ public:
 	Minigin& operator=(Minigin&& other) = delete;
 private:
 	const float fixedTimeStep{};
+	const int m_WindowWidth{ 1366 };
+	const int m_WindowHeight{ 768 };
 };

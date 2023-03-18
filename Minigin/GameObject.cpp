@@ -113,7 +113,5 @@ void GameObject::RemoveFromChildren(GameObject* pParent) const
 void GameObject::RemoveComponents()
 {
 	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
-		{const bool canBeDeleted{ component->CanBeDeleted() };
-	return canBeDeleted;
-		});
+	{return component->CanBeDeleted();});
 }

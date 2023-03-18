@@ -49,7 +49,7 @@ void FontRenderer::LateUpdate()
 {
 }
 
-void FontRenderer::Render() const
+void FontRenderer::Render()
 {
 	//needs: texture, transform
 	if (m_textTexture)

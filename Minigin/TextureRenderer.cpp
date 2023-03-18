@@ -1,5 +1,6 @@
 ﻿#include "Component.h"
 #include "TextureRenderer.h"
+#include "ResourceManager.h"
 #include "Texture2D.h"
 #include "Transform.h"
 
@@ -8,7 +9,6 @@ TextureRenderer::TextureRenderer(GameObject* owner) : Component(owner)
 }
 
 TextureRenderer::~TextureRenderer() = default;
-
 
 void TextureRenderer::Update()
 {
@@ -22,7 +22,7 @@ void TextureRenderer::LateUpdate()
 {
 }
 
-void TextureRenderer::Render() const
+void TextureRenderer::Render()
 {
 	if (const auto transformComponent{ GetComponent<Transform>() })
 	{
@@ -32,7 +32,7 @@ void TextureRenderer::Render() const
 	}
 }
 
-void TextureRenderer::SetTexture(std::shared_ptr<Texture2D> pTexture)
+void TextureRenderer::SetTexture(const std::string& texturePath)
 {
-	m_pTexture = std::move(pTexture);
+	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
 }

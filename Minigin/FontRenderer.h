@@ -29,7 +29,7 @@ public:
 	virtual void LateUpdate() override;
 
 	//Called each frame
-	virtual void Render() const override;
+	virtual void Render() override;
 
 	void SetText(const std::string& text);
 	void SetFont(const std::string& fontPath, int fontSize);

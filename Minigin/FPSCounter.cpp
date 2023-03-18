@@ -27,7 +27,7 @@ void FPSCounter::LateUpdate()
 {
 }
 
-void FPSCounter::Render() const
+void FPSCounter::Render()
 {
 }
 

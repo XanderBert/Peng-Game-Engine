@@ -25,7 +25,7 @@ public:
 	virtual void LateUpdate() = 0;
 
 	//Called each frame
-	virtual void Render() const = 0;
+	virtual void Render() = 0;
 
 	void MarkForDeletion();
 	bool CanBeDeleted() const;

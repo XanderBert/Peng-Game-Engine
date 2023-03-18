@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <glm/vec2.hpp>
 
 class Component;
 class GameObject
@@ -71,7 +70,7 @@ std::shared_ptr <T> GameObject::AddComponent()
 template<typename T>
 std::shared_ptr<T> GameObject::GetComponent() const
 {
-	static_assert(std::is_base_of<Component, T>(), "This class is not a component.");
+	static_assert(std::is_base_of<Component, T>() || std::is_base_of<Component*, T>(), "This class is not a component.");
 
 	for (const auto& component : m_pComponents)
 	{

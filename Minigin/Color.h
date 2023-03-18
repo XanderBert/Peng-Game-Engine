@@ -25,7 +25,7 @@ public:
 	virtual void LateUpdate() override;
 
 	//Called each frame
-	virtual void Render() const override;
+	virtual void Render() override;
 
 	SDL_Color GetColor() const;
 

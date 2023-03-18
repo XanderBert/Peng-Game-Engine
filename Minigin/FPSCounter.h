@@ -25,7 +25,7 @@ public:
 	virtual void LateUpdate() override;
 
 	//Called each frame
-	virtual void Render() const override;
+	virtual void Render() override;
 
 	std::string GetFPSAsString() const;
 	std::string GetFPSAsIntString() const;

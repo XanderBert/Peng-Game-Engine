@@ -15,7 +15,7 @@ void Color::LateUpdate()
 {
 }
 
-void Color::Render() const
+void Color::Render()
 {
 }
 
