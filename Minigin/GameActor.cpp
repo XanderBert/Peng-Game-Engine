@@ -3,8 +3,10 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "InputManager.h"
 #include "ResourceManager.h"
 #include "TextureRenderer.h"
+#include "Time.h"
 #include "Transform.h"
 
 GameActor::GameActor()
@@ -13,20 +15,24 @@ GameActor::GameActor()
 	//TODO: Set with function or in constructor?
 	textureRenderer->SetTexture("Pacman320.png");
 
+	InputManager::GetInstance().AddActor(this);
+	std::cout << "\nActor Made\n";
 }
 
 GameActor::~GameActor()
 {
+
 }
 
 void GameActor::Jump()
 {
+	//std::cout << "The actor Jumps!\n";
 	//glm::vec2 pos = direction * speed * dt;
 	//m_pActor->GetComponent<Transform>().get()->SetLocalPosition();
-	std::cout << "Jump\n";
 }
 
 void GameActor::Move(const glm::vec2& direction)
 {
-	direction;
+	const auto transform = GetComponent<Transform>();
+	transform->SetLocalPosition(transform->GetLocalPosition() += direction * m_Speed * Time::GetInstance().GetDeltaTime());
 }

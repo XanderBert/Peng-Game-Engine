@@ -1,11 +1,13 @@
 ﻿#pragma once
+#include <iostream>
+
 #include "GameActor.h"
 class GameActor;
 
 class Command
 {
 public:
-	explicit Command(GameActor* pActor);
+	explicit Command() = default;
 	virtual ~Command();
 
 	Command(const Command& other) = delete;
@@ -13,23 +15,24 @@ public:
 	Command& operator=(const Command& other) = delete;
 	Command& operator=(Command&& other)noexcept = delete;
 
-	virtual void Execute() = 0;
-protected:
-	GameActor* GetActor() const { return m_pActor; }
-private:
-	GameActor* m_pActor{ nullptr };
+	virtual void Execute(GameActor& actor, const glm::vec2& value) = 0;
 };
 
 class JumpCommand : public Command
 {
 public:
-	void Execute() override { GetActor()->Jump(); }
-
+	void Execute(GameActor& actor, [[maybe_unused]] const glm::vec2& value) override
+	{
+		actor.Jump();
+	}
 };
 
 class MoveCommand : public Command
 {
 public:
-	void Execute() override { GetActor()->Move(glm::vec2{}); }
+	void Execute(GameActor& actor, const glm::vec2& value) override
+	{
+		actor.Move(value);
+	}
 
 };

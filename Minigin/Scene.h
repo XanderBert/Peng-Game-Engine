@@ -8,6 +8,7 @@ public:
 	void Add(GameObject* object);
 	void Remove(std::unique_ptr<GameObject> object);
 	void RemoveAll();
+	std::string GetName() const { return m_name; }
 
 	void Update();
 	void FixedUpdate(float fixedTimeStep);

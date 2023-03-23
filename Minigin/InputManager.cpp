@@ -1,50 +1,119 @@
 #include <SDL.h>
 #include "InputManager.h"
 #include "imgui_impl_sdl2.h"
-#include "Command.h"
 
-//Extend the InputManager so we can add commands to be executed when a certain keyboard  button or controller button is pressed.For this we need :
-//
-//An abstract command class as  we've seen in the pattern with an Execute function
-//A method to add bind a command to a certain controller button or keyboard key and a certain keystate(down, up or pressed).
-//Extra code in ProcessInput that gets the state of the controllers and keyboard and executes the required commands.
-//To handle controller input you'll need to use XInput. Checkout the documentation hereLinks to an external site.. You can include XInput.h without any problem, but don't forget to add xinput.lib to your linker dependencies or you'll get linker errors.
-//To handle keyboard input you can use the sdlLinks to an external site. or win32 Links to an external site.input functionality.
-//We recommend wrapping the controller functionality in a controller / gamepad class
+InputManager::InputManager()
+{
+	m_pButtonA = new JumpCommand();
+	m_pLeftThumbStick = new MoveCommand();
+	m_pControllers.push_back(std::make_unique<Controller>(0));
+}
 
-
-
+InputManager::~InputManager()
+{
+	delete m_pButtonA;
+}
 
 bool InputManager::ProcessInput()
 {
-	std::pair<unsigned, Controller::ControllerButton>  pair = std::make_pair(m_Controllers.at(0), Controller::ControllerButton::ButtonA);
-	if (Controller::IsPressed(BUTTON_Y)) buttonX->Execute();
-	//m_consoleCommands.at(Controller::ControllerButton::ButtonA);
-	JumpCommand jump = JumpCommand();
-	m_consoleCommands.insert_or_assign(pair, JumpCommand().Execute()
-}
+	for (auto& controller : m_pControllers)
+	{
+		controller->Update();
 
+		if (controller->GetIsInUse())
+		{
+			if (const int leftTriggerVal = static_cast<int>(controller->GetbLeftTriggerValue()))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
+			}
+
+			if (controller->IsDown(Controller::ControllerButton::ButtonA))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed A\n";
+				m_pButtonA->Execute(*controller->GetGameActor(), {});
+			}
+
+			if (controller->IsDown(Controller::ControllerButton::LeftThumb))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed LeftThumb\n";
+				//m_pButtonA->Execute(*m_pActors[i]);
+			}
+
+			if (controller->IsDown(Controller::ControllerButton::Start))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed Start\n";
+			}
+
+			//
+			//Triggers
+			//
+			if (const int leftTriggerVal = static_cast<int>(controller->GetbLeftTriggerValue()))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
+			}
+
+			if (const int rightTriggerVal = static_cast<int>(controller->GetbRightTriggerValue()))
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				std::cout << "Right Trigger Value: " << rightTriggerVal << "\n";
+			}
+
+			//
+			//Thumbstick
+			//
+			const glm::vec2 leftThumb = controller->GetLeftThumbValue();
+			if (leftThumb.x || leftThumb.y)
+			{
+				m_pLeftThumbStick->Execute(*controller->GetGameActor(), { leftThumb.x, -leftThumb.y });
+			}
+
+			if (const float rightThumbX = controller->GetRightThumbValue().x)
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				std::cout << "Right Thumb X Value: " << rightThumbX << "\n";
+			}
+
+			if (const float rightThumbY = controller->GetRightThumbValue().y)
+			{
+				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				std::cout << "Right Thumb Y Value: " << rightThumbY << "\n";
+			}
+		}
+	}
 
 	SDL_Event e;
-	while (SDL_PollEvent(&e)) 
+	while (SDL_PollEvent(&e))
 	{
 
-		if (e.type == SDL_QUIT) 
+		if (e.type == SDL_QUIT)
 		{
 			return false;
 		}
 
-		if (e.type == SDL_KEYDOWN) 
+		if (e.type == SDL_KEYDOWN)
 		{
-			
-
-		if (e.type == SDL_MOUSEBUTTONDOWN) 
-		{ 
 
 		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
 
+		}
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 
 	return true;
+}
+
+void InputManager::CheckIfControllerNeedsToBeAdded()
+{
+	//std::cout << "Checking if Controller Needs To Be Added\n";
+	//const int index{ static_cast<int>(m_pControllers.size()) - 1 };
+
+	//if (m_pControllers[index]->GetIsInUse() && m_pControllers[index]->GetGameActor()->GetUsesController())
+	//{
+	//	std::cout << "Controller Added\n";
+	//	m_pControllers.push_back(std::make_unique<Controller>(index + 1));
+	//}
 }

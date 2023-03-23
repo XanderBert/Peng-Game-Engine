@@ -32,17 +32,16 @@ public:
 
 private:
 	std::vector<float> m_Timings{};
-	std::vector<float> m_XData{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024};
+	std::vector<float> m_XData{ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 };
 	std::string m_ComponentName{};
-	inline static ImU32 m_PlotLineColors [3] = {255, 0 ,0}; //Todo: Figure this out
+	inline static ImU32 m_PlotLineColors[3] = { 255, 0 ,0 }; //Todo: Figure this out
 	inline static uint32_t selection_start{};
 	inline static uint32_t selection_length{};
-	const int m_Buffer{static_cast<int>(m_XData.size())};
+	const int m_Buffer{ static_cast<int>(m_XData.size()) };
 	float m_MaxTiming{};
-	Component* m_pComponentToTest{nullptr};
-	int m_Samples{10};
+	Component* m_pComponentToTest{ nullptr };
+	int m_Samples{ 10 };
 	bool m_IsPlotable{ false };
-
 
 	void TestCacheComponent();
 };

@@ -55,8 +55,8 @@ public:
 
 
 private:
-	std::unique_ptr<glm::mat3x3> m_TranformMatrixLocal = std::make_unique<glm::mat3x3>(glm::mat3x3{ {1, 0, 0}, { 0, 1, 0 }, { 0, 0, 1 } });
-	std::unique_ptr<glm::mat3x3> m_TranformMatrixWorld = std::make_unique<glm::mat3x3>(glm::mat3x3{{1, 0 ,0},{0, 1, 0},{0, 0, 1}});
+	glm::mat3x3 m_TranformMatrixLocal = glm::mat3x3{ {1, 0, 0}, { 0, 1, 0 }, { 0, 0, 1 } };
+	glm::mat3x3 m_TranformMatrixWorld = glm::mat3x3{ {1, 0 ,0},{0, 1, 0},{0, 0, 1} };
 
 	bool m_IsPositionDirty{ false };
 	void UpdateWorldPosition(const GameObject* parent);

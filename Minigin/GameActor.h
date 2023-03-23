@@ -31,6 +31,12 @@ public:
 	GameActor& operator=(const GameActor& other) = delete;
 	GameActor& operator=(GameActor&& other)noexcept = delete;
 
+
 	void Jump();
 	void Move(const glm::vec2& direction);
+	bool GetUsesController() const { return m_UsesController; }
+	void SetUsesController(bool usesController) { m_UsesController = usesController; }
+private:
+	bool m_UsesController{ false };
+	float m_Speed{ 150.f };
 };

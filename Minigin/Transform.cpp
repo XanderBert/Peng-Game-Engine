@@ -26,28 +26,28 @@ void Transform::Render()
 
 void Transform::SetLocalPosition(const glm::vec2& position)
 {
-	m_TranformMatrixLocal.get()[0][0][2] = position.x;
-	m_TranformMatrixLocal.get()[0][1][2] = position.y;
+	m_TranformMatrixLocal[0][2] = position.x;
+	m_TranformMatrixLocal[1][2] = position.y;
 
 	SetPositionDirty();
 }
 
 glm::vec2 Transform::GetLocalPosition() const
 {
-	return {m_TranformMatrixLocal.get()[0][0][2],m_TranformMatrixLocal.get()[0][1][2]};
+	return {m_TranformMatrixLocal[0][2],m_TranformMatrixLocal[1][2]};
 }
 
 void Transform::SetWorldPosition(const glm::vec2& position)
 {
-	m_TranformMatrixWorld.get()[0][0][2] = position.x;
-	m_TranformMatrixWorld.get()[0][1][2] = position.y;
+	m_TranformMatrixWorld[0][2] = position.x;
+	m_TranformMatrixWorld[1][2] = position.y;
 }
 
 glm::vec2 Transform::GetWorldPosition(const GameObject* parent)
 {
 	if (m_IsPositionDirty) UpdateWorldPosition(parent);
 
-	return { m_TranformMatrixWorld.get()[0][0][2],m_TranformMatrixWorld.get()[0][1][2] };
+	return { m_TranformMatrixWorld[0][2],m_TranformMatrixWorld[1][2] };
 }
 
 void Transform::SetPositionDirty()
@@ -58,16 +58,16 @@ void Transform::SetPositionDirty()
 void Transform::SetLocalRotation(const glm::vec2& angle)
 {
 	//Rotate Over x
-	m_TranformMatrixLocal.get()[0][1][1] *= cos(angle.x);
-	m_TranformMatrixLocal.get()[0][1][2] *= -sin(angle.x);
-	m_TranformMatrixLocal.get()[0][2][1] *= sin(angle.x);
-	m_TranformMatrixLocal.get()[0][2][2] *= cos(angle.x);
+	m_TranformMatrixLocal[1][1] *= cos(angle.x);
+	m_TranformMatrixLocal[1][2] *= -sin(angle.x);
+	m_TranformMatrixLocal[2][1] *= sin(angle.x);
+	m_TranformMatrixLocal[2][2] *= cos(angle.x);
 
 	//Rotate over y
-	m_TranformMatrixLocal.get()[0][0][0] *= cos(angle.y);
-	m_TranformMatrixLocal.get()[0][0][2] *= sin(angle.y);
-	m_TranformMatrixLocal.get()[0][2][0] *= -sin(angle.y);
-	m_TranformMatrixLocal.get()[0][2][2] *= cos(angle.y);
+	m_TranformMatrixLocal[0][0] *= cos(angle.y);
+	m_TranformMatrixLocal[0][2] *= sin(angle.y);
+	m_TranformMatrixLocal[2][0] *= -sin(angle.y);
+	m_TranformMatrixLocal[2][2] *= cos(angle.y);
 	//TODO: i should rotate over z?
 }
 
@@ -88,24 +88,24 @@ glm::vec2 Transform::GetWorldPosition() const
 
 void Transform::SetLocalScale(const glm::vec2& scale)
 {
-	m_TranformMatrixLocal.get()[0][0][0] = scale.x;
-	m_TranformMatrixLocal.get()[0][1][1] = scale.y;
+	m_TranformMatrixLocal[0][0] = scale.x;
+	m_TranformMatrixLocal[1][1] = scale.y;
 }
 
 glm::vec2 Transform::GetLocalScale() const
 {
-	return glm::vec2{ m_TranformMatrixLocal.get()[0][0][0], m_TranformMatrixLocal.get()[0][1][0]};
+	return glm::vec2{ m_TranformMatrixLocal[0][0], m_TranformMatrixLocal[1][0]};
 }
 
 void Transform::SetWorldScale(const glm::vec2 scale)
 {
-	m_TranformMatrixWorld.get()[0][0][0] = scale.x;
-	m_TranformMatrixWorld.get()[0][1][1] = scale.y;
+	m_TranformMatrixWorld[0][0] = scale.x;
+	m_TranformMatrixWorld[1][1] = scale.y;
 }
 
 glm::vec2 Transform::GetWorldScale() const
 {
-	return glm::vec2{ m_TranformMatrixWorld.get()[0][0][0], m_TranformMatrixWorld.get()[0][1][1] };
+	return glm::vec2{ m_TranformMatrixWorld[0][0], m_TranformMatrixWorld[1][1] };
 }
 
 void Transform::UpdateWorldPosition(const GameObject* parent)
@@ -114,7 +114,7 @@ void Transform::UpdateWorldPosition(const GameObject* parent)
 	{
 		if (parent == nullptr)
 		{
-			m_TranformMatrixWorld = std::move(m_TranformMatrixLocal);
+			m_TranformMatrixWorld = m_TranformMatrixLocal;
 
 		}
 		else
