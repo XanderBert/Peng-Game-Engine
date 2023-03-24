@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Time.h"
+#include "GameActor.h"
 
 void SceneManager::Update()
 {
@@ -34,6 +35,11 @@ void SceneManager::Render()
 	}
 }
 
+std::vector<GameActor*> SceneManager::GetGameActorsOfScene(const std::string& sceneName) const
+{
+	return  GetSceneByName(sceneName)->GetAllGameActors();
+}
+
 Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
@@ -50,8 +56,7 @@ Scene* SceneManager::GetSceneByName(const std::string& name) const
 			return scene.get();
 		}
 	}
-
-
-	//Todo: Throw error here
+	
+	//Todo: Throw custom error here
 	return nullptr;
 }

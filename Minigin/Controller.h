@@ -51,8 +51,8 @@ public:
 	glm::vec2 GetRightThumbValue() const;
 	int GetControllerID() const;
 
-	GameActor* GetGameActor() const;
 	bool GetIsInUse() const;
+	bool IsControllerConnectedOnPort(int controllerIndex) const ;
 
 private:
 	class ControllerImpl;

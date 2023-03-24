@@ -1,4 +1,6 @@
 #include "Scene.h"
+
+#include "GameActor.h"
 #include "GameObject.h"
 
 
@@ -22,6 +24,21 @@ void Scene::Remove(std::unique_ptr<GameObject> object)
 void Scene::RemoveAll()
 {
 	m_objects.clear();
+}
+
+std::vector<GameActor*> Scene::GetAllGameActors() const
+{
+	std::vector<GameActor*> gameActors{};
+
+	for(auto gameActor : m_objects)
+	{
+		if(typeid(gameActor.get()) == typeid(GameActor*))
+		{
+			gameActors.push_back(dynamic_cast<GameActor*>(gameActor.get()));
+		}
+	}
+
+	return gameActors;
 }
 
 void Scene::Update()

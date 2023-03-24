@@ -36,3 +36,8 @@ void GameActor::Move(const glm::vec2& direction)
 	const auto transform = GetComponent<Transform>();
 	transform->SetLocalPosition(transform->GetLocalPosition() += direction * m_Speed * Time::GetInstance().GetDeltaTime());
 }
+
+void GameActor::SetControllerIndex(int index)
+{
+	{ m_UsesController = true; }
+}

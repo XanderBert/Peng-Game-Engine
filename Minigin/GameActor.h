@@ -35,8 +35,14 @@ public:
 	void Jump();
 	void Move(const glm::vec2& direction);
 	bool GetUsesController() const { return m_UsesController; }
-	void SetUsesController(bool usesController) { m_UsesController = usesController; }
+
+	//This can range between 0 & 4
+	void SetControllerIndex(int index);
+	int GetControllerIndex() const { return m_ControllerID; }
 private:
 	bool m_UsesController{ false };
+	int m_ControllerID{};
+
 	float m_Speed{ 150.f };
+
 };

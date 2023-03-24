@@ -12,13 +12,17 @@ InputManager::InputManager()
 InputManager::~InputManager()
 {
 	delete m_pButtonA;
+	delete m_pLeftThumbStick;
 }
 
 bool InputManager::ProcessInput()
 {
-	for (auto& controller : m_pControllers)
+	for (const auto& controller : m_pControllers)
 	{
+		
+
 		controller->Update();
+
 
 		if (controller->GetIsInUse())
 		{
@@ -31,7 +35,7 @@ bool InputManager::ProcessInput()
 			if (controller->IsDown(Controller::ControllerButton::ButtonA))
 			{
 				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed A\n";
-				m_pButtonA->Execute(*controller->GetGameActor(), {});
+				//m_pButtonA->Execute(*controller->GetGameActor(), {});
 			}
 
 			if (controller->IsDown(Controller::ControllerButton::LeftThumb))
@@ -66,7 +70,7 @@ bool InputManager::ProcessInput()
 			const glm::vec2 leftThumb = controller->GetLeftThumbValue();
 			if (leftThumb.x || leftThumb.y)
 			{
-				m_pLeftThumbStick->Execute(*controller->GetGameActor(), { leftThumb.x, -leftThumb.y });
+				//m_pLeftThumbStick->Execute(*controller->GetGameActor(), { leftThumb.x, -leftThumb.y });
 			}
 
 			if (const float rightThumbX = controller->GetRightThumbValue().x)
@@ -108,12 +112,9 @@ bool InputManager::ProcessInput()
 
 void InputManager::CheckIfControllerNeedsToBeAdded()
 {
-	//std::cout << "Checking if Controller Needs To Be Added\n";
-	//const int index{ static_cast<int>(m_pControllers.size()) - 1 };
-
-	//if (m_pControllers[index]->GetIsInUse() && m_pControllers[index]->GetGameActor()->GetUsesController())
-	//{
-	//	std::cout << "Controller Added\n";
-	//	m_pControllers.push_back(std::make_unique<Controller>(index + 1));
-	//}
+	const int index{ static_cast<int>(m_pControllers.size()) };
+	if(m_pControllers[0]->IsControllerConnectedOnPort(index))
+	{
+		m_pControllers.push_back(std::make_unique<Controller>(index));
+	}
 }
