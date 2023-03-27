@@ -52,10 +52,15 @@ public:
 	int GetControllerID() const;
 
 	bool GetIsInUse() const;
-	bool IsControllerConnectedOnPort(int controllerIndex) const ;
+	bool IsControllerConnectedOnPort(int controllerIndex) const;
+
+	void SetActor(GameActor* gameActor);
+	GameActor* GetActor() const;
 
 private:
 	class ControllerImpl;
 	std::unique_ptr<ControllerImpl> pImpl{};
+
+	GameActor* m_pAcotor{};
 };
 

@@ -16,7 +16,6 @@ GameActor::GameActor()
 	textureRenderer->SetTexture("Pacman320.png");
 
 	InputManager::GetInstance().AddActor(this);
-	std::cout << "\nActor Made\n";
 }
 
 GameActor::~GameActor()
@@ -34,10 +33,22 @@ void GameActor::Jump()
 void GameActor::Move(const glm::vec2& direction)
 {
 	const auto transform = GetComponent<Transform>();
-	transform->SetLocalPosition(transform->GetLocalPosition() += direction * m_Speed * Time::GetInstance().GetDeltaTime());
+
+	transform->SetLocalPosition(transform->GetLocalPosition() += (direction * m_Speed) * Time::GetInstance().GetDeltaTime());
 }
 
 void GameActor::SetControllerIndex(int index)
 {
-	{ m_UsesController = true; }
+	m_UsesController = true;
+	m_ControllerID = index;
+	const auto& controllers = InputManager::GetInstance().GetControllers();
+
+	for (const auto& controller : controllers)
+	{
+		if (controller->GetControllerID() == index)
+		{
+			controller->SetActor(this);
+		}
+	}
+
 }

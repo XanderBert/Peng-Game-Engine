@@ -30,9 +30,9 @@ std::vector<GameActor*> Scene::GetAllGameActors() const
 {
 	std::vector<GameActor*> gameActors{};
 
-	for(auto gameActor : m_objects)
+	for (auto& gameActor : m_objects)
 	{
-		if(typeid(gameActor.get()) == typeid(GameActor*))
+		if (typeid(gameActor.get()) == typeid(GameActor*))
 		{
 			gameActors.push_back(dynamic_cast<GameActor*>(gameActor.get()));
 		}

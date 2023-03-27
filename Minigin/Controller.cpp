@@ -5,10 +5,10 @@
 
 #include "Controller.h"
 
+#include <iostream>
 #include <glm/vec2.hpp>
 
 #include "GameActor.h"
-#include "Scene.h"
 #include "SceneManager.h"
 
 class Controller::ControllerImpl
@@ -26,36 +26,37 @@ public:
 	{
 		CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 		ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	}
 
-	bool IsControllerConnectedOnPort(int controllerIndex)
-	{
-		//Get the state of the controller index and check if its connected
-		const bool isControllerConnectedOnPort{ XInputGetState(controllerIndex, &m_CurrentState) == ERROR_SUCCESS };
-
-		//Reset the currentState to the one of this controller
+		//There are 4 virtual ports numbered from 0-4 on witch a controller can be connected
 		XInputGetState(m_ControllerIndex, &m_CurrentState);
 
-		return isControllerConnectedOnPort;
 	}
+
+	//bool IsControllerConnectedOnPort(int controllerIndex)
+	//{
+	//	//Get the state of the controller index and check if its connected
+	//	const bool isControllerConnectedOnPort{ XInputGetState(controllerIndex, &m_CurrentState) == ERROR_SUCCESS };
+
+	//	//Reset the currentState to the one of this controller
+	//	XInputGetState(m_ControllerIndex, &m_CurrentState);
+
+	//	return isControllerConnectedOnPort;
+	//}
 
 	void Update()
 	{
 		UpdateState();
-		//There are 4 virtual ports numbered from 0-4 on witch a controller can be connected
-		//Checks if there is a controller connected to this portNumber
-		if(XInputGetState(m_ControllerIndex, &m_CurrentState) == ERROR_SUCCESS)
-		{
-			//wButtons
-			const auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
-			m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
-			m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 
-			if(!m_IsInUse)
-			{
-				CheckAndSetInUse();
-			}
+		//wButtons
+		const auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
+		m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
+		m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
+
+		if (!m_IsInUse)
+		{
+			CheckAndSetInUse();
 		}
+
 	}
 
 	bool IsDownThisFrame(unsigned int button) const { return m_ButtonsPressedThisFrame & button; }
@@ -113,12 +114,13 @@ private:
 	int m_ControllerIndex{};
 
 	const glm::vec2 m_ThumbStickDeadZones{ 0.05f, 0.02f };
-	
+
 	bool m_IsInUse{ false };
 	void CheckAndSetInUse()
 	{
 		if (IsDownThisFrame(static_cast<unsigned int>(ControllerButton::Start)))
 		{
+			std::cout << "Start has been pressed, Controller: " << GetControllerID() << " is in use now.\n";
 			m_IsInUse = true;
 		}
 	}
@@ -185,5 +187,16 @@ bool Controller::GetIsInUse() const
 
 bool Controller::IsControllerConnectedOnPort(int controllerIndex) const
 {
-	return pImpl->IsControllerConnectedOnPort(controllerIndex);
+	controllerIndex;
+	return false;//pImpl->IsControllerConnectedOnPort(controllerIndex);
+}
+
+void Controller::SetActor(GameActor* gameActor)
+{
+	m_pAcotor = gameActor;
+}
+
+GameActor* Controller::GetActor() const
+{
+	return m_pAcotor;
 }

@@ -16,36 +16,14 @@ public:
 	InputManager();
 	~InputManager() override;
 	bool ProcessInput();
-
-	void UpdateControllerActorPair()
-	{
-		const auto  gameActors = SceneManager::GetInstance().GetActiveScene()->GetAllGameActors();
-
-		for (const auto controller : m_pControllers)
-		{
-			const auto controllerIndex = controller->GetControllerID();
-
-			for(const auto gameActor : gameActors)
-			{
-				if(controller->GetControllerID() == gameActor->GetControllerIndex())
-				{
-					m_pActors.clear();
-					//m_pac
-					break;
-				}
-			}
-			
-			
-		}
-	}
-
+	void AddActor(GameActor* actor) { m_pActors.push_back(actor); }
+	std::vector<Controller*> GetUsedControllers();
+	std::vector<Controller*> GetControllers();
 private:
 
 	////using ControllerKey = 
 	//using ControllerCommandsMap = std::map< std::pair<unsigned, Controller::ControllerButton>, std::unique_ptr<Command>>;
 	//ControllerCommandsMap m_consoleCommands{};
-
-
 
 	Command* m_pButtonX{};
 	Command* m_pButtonY{};
@@ -54,7 +32,7 @@ private:
 	Command* m_pLeftThumbStick{};
 	std::vector<std::unique_ptr<Controller>> m_pControllers{};
 
-	std::vector<std::pair<Controller*, GameActor*>> m_pActors{};
+	std::vector<GameActor*> m_pActors{};
 
 	void CheckIfControllerNeedsToBeAdded();
 };
