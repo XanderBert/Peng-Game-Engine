@@ -37,6 +37,12 @@
     <Filter Include="Source Files\GameActor">
       <UniqueIdentifier>{8dde993a-59a8-4579-8912-85bc02ca742e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Observer">
+      <UniqueIdentifier>{2293b7c6-1ff5-4b6a-9d72-7079d1c24c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Observer\Events">
+      <UniqueIdentifier>{12392fe8-dcbd-49cc-b983-a2a05c91d7cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -138,6 +144,15 @@
     <ClInclude Include="Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Source Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Source Files\Observer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>Source Files\Observer\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -235,6 +250,15 @@
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Observer\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
+      <Filter>Source Files\Observer\Events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
