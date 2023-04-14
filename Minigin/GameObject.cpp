@@ -10,7 +10,13 @@ GameObject::GameObject()
 	AddComponent<Transform>();
 }
 
-GameObject::~GameObject() = default;
+GameObject::~GameObject()
+{
+	for (const auto& component : m_pComponents)
+	{
+		component->MarkForDeletion();
+	}
+};
 
 void GameObject::Update()
 {

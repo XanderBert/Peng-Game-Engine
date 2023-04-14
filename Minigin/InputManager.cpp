@@ -88,8 +88,6 @@ bool InputManager::ProcessInput()
 		}
 	}
 
-
-
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
@@ -98,17 +96,12 @@ bool InputManager::ProcessInput()
 			return false;
 		}
 
-		if (e.type == SDL_KEYDOWN)
-		{
-
-		}
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
 
 		}
-
-
-		//TODO Update to store what has been pressed and then go over actors.
+		
+		//TODO Update to store what has been pressed and then go over actors.?
 		for (const auto& actor : m_pActors)
 		{
 			if (!actor->GetUsesController())
@@ -132,6 +125,10 @@ bool InputManager::ProcessInput()
 					if (input == SDLK_DOWN || input == SDLK_s)
 					{
 						actor->Move({ 0, 4 });
+					}
+					if(input == SDLK_0)
+					{
+						actor->Jump();
 					}
 				}
 			}

@@ -28,6 +28,7 @@ void GameActor::Jump()
 	//std::cout << "The actor Jumps!\n";
 	//glm::vec2 pos = direction * speed * dt;
 	//m_pActor->GetComponent<Transform>().get()->SetLocalPosition();
+
 }
 
 void GameActor::Move(const glm::vec2& direction)

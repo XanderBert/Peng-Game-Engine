@@ -3,24 +3,12 @@
 #include <glm/vec2.hpp>
 
 #include "GameObject.h"
-
-
-//Could GameActor be the same as a GameObject?
-//Can GameActor be a wrapper around a GameObject?
-//Why would i need a wrapper?
-//What if i want 2 players but just a different texture?
-//So yes, GameActor will be a wrapper around a GameObject
-
-//What is the point of a wrapper?
-//What is an actor?
-
-//And Actor is a playable GameObject -> so it is a wrapper and it has a input component?
-
-
+#include "Observer.h"
+#include "Event.h"
 
 class GameObject;
 
-class GameActor final : public GameObject
+class GameActor : public GameObject
 {
 public:
 	GameActor();
@@ -39,10 +27,28 @@ public:
 	//This can range between 0 & 4
 	void SetControllerIndex(int index);
 	int GetControllerIndex() const { return m_ControllerID; }
+
+	void AddObeserver(Observer* observer)
+	{
+		m_Observers.push_back(observer);
+	}
+
+	void RemoveObserver(Observer* observer)
+	{
+		m_Observers.erase(std::remove(m_Observers.begin(), m_Observers.end(), observer), m_Observers.end());
+	}
+
+protected:
+
+	void NotifyObserver(const Event::GameEvent event)
+	{
+		for (const auto observer : m_Observers){ observer->Notify(event, this); }
+	}
+
 private:
 	bool m_UsesController{ false };
 	int m_ControllerID{};
-
 	float m_Speed{ 150.f };
 
+	std::vector<Observer*> m_Observers;
 };
