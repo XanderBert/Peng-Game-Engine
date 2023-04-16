@@ -43,18 +43,15 @@
     <Filter Include="Source Files\Observer\Events">
       <UniqueIdentifier>{12392fe8-dcbd-49cc-b983-a2a05c91d7cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{4d6dbacc-cbde-4f12-a274-56f6f3081246}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
@@ -150,8 +147,17 @@
     <ClInclude Include="Event.h">
       <Filter>Source Files\Observer\Events</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvent.h">
-      <Filter>Source Files\Observer\Events</Filter>
+    <ClInclude Include="Achievement.h">
+      <Filter>Source Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,12 +165,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -251,14 +251,17 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Source Files\Observer</Filter>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Source Files\Observer\Events</Filter>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>Source Files\Observer\Events</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

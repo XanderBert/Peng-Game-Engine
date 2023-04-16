@@ -28,9 +28,10 @@ public:
 	virtual void Render() override;
 
 	std::string GetFPSAsString() const;
-	std::string GetFPSAsIntString() const;
+	std::string* GetFPSAsIntString();
 
 private:
 	void CalculateFPS();
 	float m_currentFPS{ 0.f };
+	std::string m_currentFPSString{ std::to_string(m_currentFPS) };
 };

@@ -1,5 +1,6 @@
 ﻿#include "FontRenderer.h"
 
+#include <iostream>
 #include <SDL_pixels.h>
 #include <SDL_ttf.h>
 #include <stdexcept>
@@ -18,13 +19,15 @@ FontRenderer::~FontRenderer() = default;
 
 void FontRenderer::Update()
 {
+	m_needsUpdate = true;
+
 	//needs: font, color, text
 	if (m_needsUpdate && m_font)
 	{
 		//Looks for color component
 		//if there is none it will use white
 		GetColor();
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_color);
+		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_PointerToText->c_str(), m_color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -67,9 +70,9 @@ void FontRenderer::Render()
 	}
 }
 
-void FontRenderer::SetText(const std::string& text)
+void FontRenderer::SetText(std::string* text)
 {
-	m_text = text;
+	m_PointerToText = text;
 	if (m_font) m_needsUpdate = true;
 }
 

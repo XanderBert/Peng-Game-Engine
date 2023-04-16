@@ -7,7 +7,9 @@
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) : m_name(name)
+{
+}
 
 Scene::~Scene() = default;
 
@@ -47,6 +49,10 @@ void Scene::Update()
 	{
 		object->Update();
 	}
+
+	
+
+
 }
 
 void Scene::FixedUpdate(float fixedTimeStep)
@@ -63,6 +69,11 @@ void Scene::LateUpdate()
 	{
 		object->LateUpdate();
 	}
+
+	//std::erase_if(m_objects, [](const std::shared_ptr<GameObject>& object)
+	//{
+	//	return object.get()->CanBeDeleted();
+	//});
 }
 
 void Scene::Render() const

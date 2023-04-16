@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Observer.h"
 #include "Event.h"
+#include "Achievement.h"
 
 class GameObject;
 
@@ -19,36 +20,66 @@ public:
 	GameActor& operator=(const GameActor& other) = delete;
 	GameActor& operator=(GameActor&& other)noexcept = delete;
 
+	//Called each frame
+	virtual void Update() override;
+
 
 	void Jump();
 	void Move(const glm::vec2& direction);
+	void Die();
+	void TakeDammage(const int dammage);
+	int GetHealth() const { return m_Health; }
+	std::string* GetHealthAsString()
+	{
+		m_HealthString = std::to_string(m_Health);
+		return &m_HealthString;
+	}
+	int GetPoints() const { return  m_Points; }
+	std::string* GetPointsAsString(){
+		m_PointString = std::to_string(m_Points);
+		return &m_PointString;
+	}
+	void GainPoints(int ammountOfPoints);
+
 	bool GetUsesController() const { return m_UsesController; }
 
 	//This can range between 0 & 4
 	void SetControllerIndex(int index);
 	int GetControllerIndex() const { return m_ControllerID; }
 
-	void AddObeserver(Observer* observer)
+	void AddObeserver(std::shared_ptr<Achievement> observer)
 	{
 		m_Observers.push_back(observer);
 	}
-
 	void RemoveObserver(Observer* observer)
 	{
-		m_Observers.erase(std::remove(m_Observers.begin(), m_Observers.end(), observer), m_Observers.end());
-	}
+		m_Observers.erase(std::remove_if(m_Observers.begin(), m_Observers.end(), [observer](const std::shared_ptr<Achievement>& ptr) {
+			if (ptr.get() == observer) {
+				return true;
+			}
+			return false;
+			}), m_Observers.end());
+		}
 
 protected:
 
-	void NotifyObserver(const Event::GameEvent event)
+	void NotifyObserver(const GameEvent event)
 	{
-		for (const auto observer : m_Observers){ observer->Notify(event, this); }
+		for(size_t i{} ; i < m_Observers.size(); ++i )
+		{
+			m_Observers[i].get()->Notify(event);
+		}
 	}
 
 private:
 	bool m_UsesController{ false };
 	int m_ControllerID{};
 	float m_Speed{ 150.f };
+	int m_Health{ 3 };
+	std::string m_HealthString{std::to_string(m_Health)};
 
-	std::vector<Observer*> m_Observers;
+	int m_Points{ 0 };
+	std::string m_PointString{ std::to_string(m_Points) };
+
+	std::vector<std::shared_ptr<Achievement>> m_Observers;
 };

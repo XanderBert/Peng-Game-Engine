@@ -4,7 +4,7 @@
 
 InputManager::InputManager()
 {
-	m_pButtonA = new JumpCommand();
+	//m_pButtonA = new JumpCommand();
 	m_pLeftThumbStick = new MoveCommand();
 
 	m_pControllers.push_back(std::make_unique<Controller>(0));
@@ -35,8 +35,14 @@ bool InputManager::ProcessInput()
 
 			if (controller->IsDown(Controller::ControllerButton::ButtonA))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed A\n";
+				//td::cout << "Controller: " << controller->GetControllerID() << " -> Pressed A\n";
 				//m_pButtonA->Execute(*controller->GetGameActor(), {});
+				controller->GetActor()->TakeDammage(1);
+			}
+
+			if(controller->IsDown(Controller::ControllerButton::ButtonB))
+			{
+				controller->GetActor()->GainPoints(25);
 			}
 
 			if (controller->IsDown(Controller::ControllerButton::LeftThumb))
@@ -128,17 +134,15 @@ bool InputManager::ProcessInput()
 					}
 					if(input == SDLK_0)
 					{
-						actor->Jump();
+						actor->TakeDammage(1);
+					}
+					if(input == SDLK_1)
+					{
+						actor->GainPoints(25);
 					}
 				}
 			}
 		}
-
-
-
-
-
-
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 

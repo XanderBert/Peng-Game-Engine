@@ -28,8 +28,6 @@ private:
 
 	std::string m_name;
 	std::vector < std::unique_ptr<GameObject>> m_objects{};
-
 	
-
 	static unsigned int m_idCounter;
 };

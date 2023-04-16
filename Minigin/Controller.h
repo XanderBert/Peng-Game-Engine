@@ -4,7 +4,6 @@
 #include <glm/detail/type_vec1.hpp>
 
 class GameActor;
-
 class Controller final
 {
 public:
@@ -61,6 +60,6 @@ private:
 	class ControllerImpl;
 	std::unique_ptr<ControllerImpl> pImpl{};
 
-	GameActor* m_pAcotor{};
+	//Todo; if you pimple, pimple all the way, this needs to be gone
+	GameActor* m_pActor{};
 };
-

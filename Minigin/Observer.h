@@ -1,12 +1,8 @@
 ﻿#pragma once
 #include "Event.h"
-class GameActor;
-class Event;
-
 class Observer
 {
 public:
-
 	Observer() = default;
 	virtual  ~Observer() = default;
 
@@ -15,5 +11,5 @@ public:
 	Observer& operator=(const Observer& other) = delete;
 	Observer& operator=(Observer&& other)noexcept = delete;
 
-	virtual void Notify(Event::GameEvent event, GameActor* actor);
+	virtual void Notify(GameEvent event) = 0;
 };

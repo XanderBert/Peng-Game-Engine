@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "FontRenderer.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
@@ -23,12 +24,19 @@ GameActor::~GameActor()
 
 }
 
+void GameActor::Update()
+{
+	//if (const auto fontRenderer = GetComponent<FontRenderer>())
+	//{
+	//	fontRenderer->SetText(std::to_string(m_Health));
+	//}
+}
+
 void GameActor::Jump()
 {
 	//std::cout << "The actor Jumps!\n";
 	//glm::vec2 pos = direction * speed * dt;
 	//m_pActor->GetComponent<Transform>().get()->SetLocalPosition();
-
 }
 
 void GameActor::Move(const glm::vec2& direction)
@@ -36,6 +44,32 @@ void GameActor::Move(const glm::vec2& direction)
 	const auto transform = GetComponent<Transform>();
 
 	transform->SetLocalPosition(transform->GetLocalPosition() += (direction * m_Speed) * Time::GetInstance().GetDeltaTime());
+}
+
+void GameActor::Die()
+{
+	NotifyObserver(GameEvent::ActorDied);
+
+	MarkForDeletion();
+}
+
+void GameActor::TakeDammage(const int dammage)
+{
+	if (!m_Health) return;
+
+	m_Health -= dammage;
+	m_HealthString = std::to_string(m_Health);
+
+	if(!m_Health) Die();
+}
+
+
+void GameActor::GainPoints(int ammountOfPoints)
+{
+	m_Points += ammountOfPoints;
+	m_PointString = std::to_string(m_Points);
+
+	if (m_Points >= 100) NotifyObserver(GameEvent::Actor100Points);
 }
 
 void GameActor::SetControllerIndex(int index)

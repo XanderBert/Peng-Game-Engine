@@ -7,6 +7,7 @@
 #include "Minigin.h"
 
 #include <chrono>
+#include <steam_api_common.h>
 
 #include "imgui.h"
 #include "InputManager.h"
@@ -118,6 +119,9 @@ void Minigin::Run(const std::function<void()>& load)
 		}
 
 		Time::GetInstance().Update(deltaT);
+
+		SteamAPI_RunCallbacks();
+
 		sceneManager.Update();
 		sceneManager.LateUpdate();
 		renderer.Render();

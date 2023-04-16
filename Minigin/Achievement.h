@@ -1,27 +1,54 @@
 ﻿#pragma once
 #include "Observer.h"
-#include "Event.h"
+#include "steam_api.h"
+#include <string>
+//#define stringify( name ) #name
 
-class Achievement final : public Observer
+
+class Achievement : public Observer
 {
 public:
-	void Notify(Event::GameEvent event, GameActor* /*actor*/) override
+	virtual void Notify(GameEvent event) override;
+
+private:
+	ISteamUserStats* steamUserStats = SteamUserStats();
+
+	enum class EAchievements
 	{
-		switch (event) {
-		case Event::GameEvent::ActorDied:
+		ACH_WIN_ONE_GAME,
+		ACH_WIN_100_GAMES,
+		ACH_TRAVEL_FAR_ACCUM,
+		ACH_TRAVEL_FAR_SINGLE,
+	};
+
+
+
+
+	const std::pair<EAchievements, std::string> achievemtPair[4] = 
+	{
+		{EAchievements::ACH_WIN_ONE_GAME, "ACH_WIN_ONE_GAME"},
+		{EAchievements::ACH_WIN_100_GAMES, "ACH_WIN_100_GAMES"},
+		{EAchievements::ACH_TRAVEL_FAR_ACCUM, "ACH_TRAVEL_FAR_ACCUM"},
+		{EAchievements::ACH_TRAVEL_FAR_SINGLE, "ACH_TRAVEL_FAR_SINGLE"}
+	};
+
+	std::string AchievementToString(EAchievements achievements)
+	{
+		for (const auto& pair : achievemtPair) 
+		{
+			if (pair.first == achievements) 
 			{
-			break;
-			}
-		
-		case Event::GameEvent::ActorFell:
-			{
-			break;
+				return pair.second;
 			}
 		}
+		return "UNKNOWN";
 	}
-private:
-	void Unlock(Achievement achievement)
+
+
+	void Unlock([[maybe_unused]]EAchievements achievement)
 	{
-		// code to unlock an achievement...
+		steamUserStats->RequestCurrentStats();
+		steamUserStats->SetAchievement(AchievementToString(achievement).c_str());
+		steamUserStats->StoreStats();
 	}
 };

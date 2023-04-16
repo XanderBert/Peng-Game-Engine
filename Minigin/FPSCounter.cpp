@@ -36,9 +36,10 @@ std::string FPSCounter::GetFPSAsString() const
 	return std::to_string(m_currentFPS);
 }
 
-std::string FPSCounter::GetFPSAsIntString() const
+std::string* FPSCounter::GetFPSAsIntString()
 {
-	return std::to_string(static_cast<int>(m_currentFPS));
+	m_currentFPSString = std::to_string(static_cast<int>(m_currentFPS));
+	return &m_currentFPSString;
 
 }
 

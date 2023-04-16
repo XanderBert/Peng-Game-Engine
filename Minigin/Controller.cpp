@@ -52,11 +52,9 @@ public:
 		m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
 		m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 
-		if (!m_IsInUse)
-		{
-			CheckAndSetInUse();
-		}
 
+		//use observer pattern???
+		if (!m_IsInUse) CheckAndSetInUse();
 	}
 
 	bool IsDownThisFrame(unsigned int button) const { return m_ButtonsPressedThisFrame & button; }
@@ -66,17 +64,20 @@ public:
 	unsigned char GetbLeftTriggerValue() const { return m_CurrentState.Gamepad.bLeftTrigger; }
 	unsigned char GetbRightTriggerValue() const { return m_CurrentState.Gamepad.bRightTrigger; }
 
-	auto GetLeftThumbValue()
+	auto GetLeftThumbValue()const
 	{
+		//Todo: Make 1 function that takes a enum class?
 		float thumbLX{ static_cast<float>(m_CurrentState.Gamepad.sThumbLX) };
 		float thumbLY{ static_cast<float>(m_CurrentState.Gamepad.sThumbLY) };
 
+		//Normalize the value's
 		const float normLX = thumbLX / SHRT_MAX;
 		const float normLY = thumbLY / SHRT_MAX;
 
-		thumbLX = abs(normLX) < m_ThumbStickDeadZones.x ? 0 : (abs(normLX) - m_ThumbStickDeadZones.x) * (normLX / (abs(normLX)));
+		//Adjust value's for the dead zone and remap the actual used value's from [0-1]
+		//For example: there is a dead zone up to 0.2 -> then the controller will only give input from 0.2 up to 1.
+		thumbLX = abs(normLX) < m_ThumbStickDeadZones.x ? 0 : (abs(normLX) - m_ThumbStickDeadZones.x) * (normLX / abs(normLX));
 		thumbLY = abs(normLY) < m_ThumbStickDeadZones.y ? 0 : (abs(normLY) - m_ThumbStickDeadZones.y) * (normLY / (abs(normLY)));
-
 		thumbLX /= 1.f - m_ThumbStickDeadZones.x;
 		thumbLY /= 1.f - m_ThumbStickDeadZones.y;
 
@@ -101,7 +102,6 @@ public:
 	}
 
 	int GetControllerID() const { return  m_ControllerIndex; }
-
 	bool GetIsInUse() const { return m_IsInUse; }
 
 private:
@@ -193,10 +193,10 @@ bool Controller::IsControllerConnectedOnPort(int controllerIndex) const
 
 void Controller::SetActor(GameActor* gameActor)
 {
-	m_pAcotor = gameActor;
+	m_pActor = gameActor;
 }
 
 GameActor* Controller::GetActor() const
 {
-	return m_pAcotor;
+	return m_pActor;
 }
