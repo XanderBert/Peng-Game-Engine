@@ -21,9 +21,6 @@ private:
 		ACH_TRAVEL_FAR_SINGLE,
 	};
 
-
-
-
 	const std::pair<EAchievements, std::string> achievemtPair[4] = 
 	{
 		{EAchievements::ACH_WIN_ONE_GAME, "ACH_WIN_ONE_GAME"},

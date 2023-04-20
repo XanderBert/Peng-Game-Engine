@@ -120,6 +120,7 @@
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" "$(OutputPath)" /Y
+xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\*.txt" "$(OutputPath)" /Y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -146,6 +147,7 @@ xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" 
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" "$(OutputPath)" /Y
+xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\*.txt" "$(OutputPath)" /Y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -176,6 +178,7 @@ xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" 
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" "$(OutputPath)" /Y
+xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\*.txt" "$(OutputPath)" /Y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -206,6 +209,7 @@ xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" 
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\redistributable_bin\*.dll" "$(OutputPath)" /Y
+xcopy "$(SolutionDir)3rdParty\steamworks_sdk_155\sdk\*.txt" "$(OutputPath)" /Y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
