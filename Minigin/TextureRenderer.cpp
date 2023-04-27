@@ -34,5 +34,8 @@ void TextureRenderer::Render()
 
 void TextureRenderer::SetTexture(const std::string& texturePath)
 {
+	//if(ResourceManager::GetInstance().)
+
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
+
 }

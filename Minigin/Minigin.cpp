@@ -7,7 +7,7 @@
 #include "Minigin.h"
 
 #include <chrono>
-#include <steam_api_common.h>
+//#include <steam_api_common.h>
 
 #include "imgui.h"
 #include "InputManager.h"
@@ -99,7 +99,7 @@ void Minigin::Run(const std::function<void()>& load)
 	const auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
-	
+
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
@@ -120,7 +120,7 @@ void Minigin::Run(const std::function<void()>& load)
 
 		Time::GetInstance().Update(deltaT);
 
-		SteamAPI_RunCallbacks();
+		//SteamAPI_RunCallbacks();
 
 		sceneManager.Update();
 		sceneManager.LateUpdate();

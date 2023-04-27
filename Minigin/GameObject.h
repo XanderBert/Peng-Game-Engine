@@ -32,6 +32,7 @@ public:
 	//
 	//Components
 	template <typename T> std::shared_ptr <T> AddComponent();
+	template <typename T> std::shared_ptr <T> AddComponent(std::shared_ptr<T> pComponent); //For adding existing component
 	template <typename T> std::shared_ptr<T> GetComponent() const;
 	std::vector<std::shared_ptr<Component>> m_pComponents{};
 
@@ -72,6 +73,15 @@ std::shared_ptr <T> GameObject::AddComponent()
 
 	m_pComponents.emplace_back(pComponent);
 
+	return dynamic_pointer_cast<T>(m_pComponents.back());
+}
+
+//Used For adding existing component;
+template<typename T>
+std::shared_ptr <T> GameObject::AddComponent(std::shared_ptr<T> pComponent)
+{
+	static_assert(std::is_base_of<Component, T>(), "This class is not a component.");
+	m_pComponents.emplace_back(pComponent);
 	return dynamic_pointer_cast<T>(m_pComponents.back());
 }
 
