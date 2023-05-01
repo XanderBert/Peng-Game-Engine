@@ -5,7 +5,7 @@
 
 
 //needs: translate, font, font renderer
-FPSCounter::FPSCounter(GameObject* owner) : Component(owner) {};
+FPSCounter::FPSCounter(GameObject* owner) : Component(owner) {}
 
 FPSCounter::~FPSCounter() = default;
 
@@ -13,6 +13,7 @@ void FPSCounter::Update()
 {
 	CalculateFPS();
 
+	//Todo Set the fetchcomponent as member.
 	if (const auto fontRenderer = GetComponent<FontRenderer>())
 	{
 		fontRenderer->SetText(GetFPSAsIntString());

@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
 #include "Component.h"
 #include "SDL.h"
 
@@ -18,6 +20,7 @@ public:
 
 	//Called each frame
 	void Render(const glm::vec2& pos) const;
+	void Render(const glm::vec2& pos, const SDL_Rect& srcRect) const;
 
 	glm::ivec2 GetSize() const;
 
@@ -26,6 +29,5 @@ public:
 	Texture2D& operator= (const Texture2D&) = delete;
 	Texture2D& operator= (const Texture2D&&) = delete;
 private:
-	//std::shared_ptr<SDL_Texture> m_texture;
 	SDL_Texture* m_texture;
 };

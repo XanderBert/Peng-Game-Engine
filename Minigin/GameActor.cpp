@@ -1,11 +1,10 @@
 ﻿#include "GameActor.h"
-
 #include <iostream>
-
 #include "FontRenderer.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
+#include "SpriteRenderer.h"
 #include "TextureRenderer.h"
 #include "Time.h"
 #include "Transform.h"
@@ -14,7 +13,12 @@ GameActor::GameActor()
 {
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	//TODO: Set with function or in constructor?
-	textureRenderer->SetTexture("Pacman320.png");
+	textureRenderer->SetTexture("Pengo.png");
+
+	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
+
+	spriteRenderer->SetSourceRect({ 0,0 }, { 16, 16 });
+
 
 	InputManager::GetInstance().AddActor(this);
 }
@@ -30,6 +34,16 @@ void GameActor::Update()
 	//{
 	//	fontRenderer->SetText(std::to_string(m_Health));
 	//}
+	const auto elapsed = static_cast<int>(Time::GetInstance().GetElapsed() * 4) % 2;
+
+	if (!elapsed)
+	{
+		GetComponent<SpriteRenderer>()->SetSourceRect({ 16,0 }, { 16,16 });
+	}
+	else
+	{
+		GetComponent<SpriteRenderer>()->SetSourceRect({ 0,0 }, { 16,16 });
+	}
 }
 
 void GameActor::Jump()
@@ -42,8 +56,9 @@ void GameActor::Jump()
 void GameActor::Move(const glm::vec2& direction)
 {
 	const auto transform = GetComponent<Transform>();
+	const auto movement{ direction * m_Speed * Time::GetInstance().GetDeltaTime() };
 
-	transform->SetLocalPosition(transform->GetLocalPosition() += (direction * m_Speed) * Time::GetInstance().GetDeltaTime());
+	transform->SetLocalPosition(transform->GetLocalPosition() + movement);
 }
 
 void GameActor::Die()
@@ -60,7 +75,7 @@ void GameActor::TakeDammage(const int dammage)
 	m_Health -= dammage;
 	m_HealthString = std::to_string(m_Health);
 
-	if(!m_Health) Die();
+	if (!m_Health) Die();
 }
 
 

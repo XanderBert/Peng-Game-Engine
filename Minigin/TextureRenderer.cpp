@@ -29,8 +29,16 @@ void TextureRenderer::Render()
 {
 	if (const auto transformComponent{ GetComponent<Transform>() })
 	{
-		const auto pos{ transformComponent->GetWorldPosition() };
-		m_pTexture->Render(pos);
+		const auto position{ transformComponent->GetWorldPosition() };
+
+		if (m_usesSrcRect)
+		{
+			m_pTexture->Render(position, m_SrcRect);
+		}
+		else
+		{
+			m_pTexture->Render(position);
+		}
 	}
 }
 
@@ -42,4 +50,14 @@ void TextureRenderer::SetTexture(const std::string& texturePath)
 glm::vec2 TextureRenderer::GetSize()
 {
 	return m_pTexture->GetSize();
+}
+
+void TextureRenderer::SetSourceRect(const glm::vec2& position, const glm::vec2 size)
+{
+	m_usesSrcRect = true;
+
+	m_SrcRect.x = static_cast<int>(position.x);
+	m_SrcRect.y = static_cast<int>(position.y);
+	m_SrcRect.w = static_cast<int>(size.x);
+	m_SrcRect.h = static_cast<int>(size.y);
 }

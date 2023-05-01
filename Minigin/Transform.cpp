@@ -44,12 +44,13 @@ void Transform::SetLocalPosition(const glm::vec2& position)
 {
 	//Get parent world and add this
 
-	if(m_pOwner->GetParent())
+	if (const auto parent = m_pOwner->GetParent())
 	{
-		auto parentWorldpos = m_pOwner->GetParent()->GetComponent<Transform>()->GetWorldPosition();
+		const auto parentWorldpos = parent->GetComponent<Transform>()->GetWorldPosition();
 
 		SetWorldPosition(parentWorldpos + position);
-	}else
+	}
+	else
 	{
 		SetWorldPosition(position);
 	}
@@ -60,10 +61,10 @@ void Transform::SetLocalPosition(const glm::vec2& position)
 glm::vec2 Transform::GetLocalPosition()
 {
 
-	if (m_pOwner->GetParent())
+	if (const auto parent = m_pOwner->GetParent())
 	{
-		auto parentWorldpos = m_pOwner->GetParent()->GetComponent<Transform>()->GetWorldPosition();
-		return  parentWorldpos - GetWorldPosition();
+		auto parentWorldpos = parent->GetComponent<Transform>()->GetWorldPosition();
+		return  GetWorldPosition() - parentWorldpos;
 	}
 
 	return  GetWorldPosition();
@@ -71,11 +72,9 @@ glm::vec2 Transform::GetLocalPosition()
 
 void Transform::SetWorldPosition(const glm::vec2& position)
 {
-	
-
-	if(m_pOwner)
+	if (const auto parent = m_pOwner->GetParent())
 	{
-		const auto parentTransComponent = m_pOwner->GetComponent<Transform>();
+		const auto parentTransComponent = parent->GetComponent<Transform>();
 		const auto parentWorldPos = parentTransComponent->GetWorldPosition();
 		const auto newLocalPos = position - parentWorldPos;
 
@@ -83,7 +82,8 @@ void Transform::SetWorldPosition(const glm::vec2& position)
 		m_TranformMatrixWorld[1][2] = newLocalPos.y;
 
 		//SetLocalPosition(newLocalPos);
-	}else
+	}
+	else
 	{
 		m_TranformMatrixWorld[0][2] = position.x;
 		m_TranformMatrixWorld[1][2] = position.y;
@@ -92,6 +92,8 @@ void Transform::SetWorldPosition(const glm::vec2& position)
 
 glm::vec2 Transform::GetWorldPosition()
 {
+	UpdateWorldPosition();
+
 	glm::vec2 worldPos{ m_TranformMatrixWorld[0][2], m_TranformMatrixWorld[1][2] };
 	const GameObject* parent = m_pOwner->GetParent();
 
@@ -155,13 +157,13 @@ glm::vec2 Transform::GetWorldScale() const
 	return glm::vec2{ m_TranformMatrixWorld[0][0], m_TranformMatrixWorld[1][1] };
 }
 
-void Transform::UpdateWorldPosition(const GameObject* parent)
+void Transform::UpdateWorldPosition()
 {
-	if(parent)
+	if (const auto parent = m_pOwner->GetParent())
 	{
 		const auto parentTransformComponent = parent->GetComponent<Transform>().get();
 
-		if(parentTransformComponent->IsPositionDirty() || m_IsPositionDirty)
+		if (parentTransformComponent->IsPositionDirty() || m_IsPositionDirty)
 		{
 			_UpdateWorldPosition(parentTransformComponent);
 		}

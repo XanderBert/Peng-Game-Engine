@@ -14,8 +14,13 @@ Texture2D::~Texture2D()
 
 void Texture2D::Render(const glm::vec2& pos) const
 {
-
 	Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y);
+}
+
+void Texture2D::Render(const glm::vec2& pos, const SDL_Rect& srcRect) const
+{
+	//Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y);
+	Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y, srcRect);
 }
 
 glm::ivec2 Texture2D::GetSize() const

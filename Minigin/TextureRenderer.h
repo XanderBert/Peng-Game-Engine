@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <memory>
+#include <SDL_rect.h>
 #include <string>
 #include <glm/vec2.hpp>
 
@@ -33,7 +34,9 @@ public:
 
 	void SetTexture(const std::string& texturePath);
 	glm::vec2 GetSize();
+	void SetSourceRect(const glm::vec2& position, const glm::vec2 size);
 private:
-
 	std::shared_ptr<Texture2D> m_pTexture{};
+	SDL_Rect m_SrcRect{};
+	bool m_usesSrcRect{ false };
 };

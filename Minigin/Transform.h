@@ -53,12 +53,12 @@ public:
 	void SetWorldScale(const glm::vec2 scale);
 	glm::vec2 GetWorldScale() const;
 
-	bool IsPositionDirty() const { return m_IsPositionDirty; } 
+	bool IsPositionDirty() const { return m_IsPositionDirty; }
 
 private:
 	glm::mat3x3 m_TranformMatrixWorld = glm::mat3x3{ {1, 0 ,0},{0, 1, 0},{0, 0, 1} };
 
 	bool m_IsPositionDirty{ false };
-	void UpdateWorldPosition(const GameObject* parent);
+	void UpdateWorldPosition();
 	void _UpdateWorldPosition(Transform* parentTransComponent);
 };
