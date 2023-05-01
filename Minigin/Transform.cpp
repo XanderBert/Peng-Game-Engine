@@ -1,5 +1,21 @@
 #include "Transform.h"
+
+#include <iostream>
+
 #include "Texture2D.h"
+
+//The SetLocalRotation function applies rotations to the local transform matrix,
+//but it does not set the dirty flag.This can cause issues with the world position updates.
+
+//The GetLocalRotation function returns a zero vector.
+//This means that it does not actually return the local rotation of the transform.
+
+//The SetWorldRotation function does not actually rotate the transform matrix.
+//It only takes the angle parameter and does nothing with it.
+
+//The GetWorldPosition function does not take a parent parameter.
+//This means that it always returns the world position relative to the parent GameObject,
+//even if the parent GameObject is null.
 
 Transform::Transform(GameObject* owner) : Component(owner)
 {
@@ -26,28 +42,67 @@ void Transform::Render()
 
 void Transform::SetLocalPosition(const glm::vec2& position)
 {
-	m_TranformMatrixLocal[0][2] = position.x;
-	m_TranformMatrixLocal[1][2] = position.y;
+	//Get parent world and add this
+
+	if(m_pOwner->GetParent())
+	{
+		auto parentWorldpos = m_pOwner->GetParent()->GetComponent<Transform>()->GetWorldPosition();
+
+		SetWorldPosition(parentWorldpos + position);
+	}else
+	{
+		SetWorldPosition(position);
+	}
 
 	SetPositionDirty();
 }
 
-glm::vec2 Transform::GetLocalPosition() const
+glm::vec2 Transform::GetLocalPosition()
 {
-	return {m_TranformMatrixLocal[0][2],m_TranformMatrixLocal[1][2]};
+
+	if (m_pOwner->GetParent())
+	{
+		auto parentWorldpos = m_pOwner->GetParent()->GetComponent<Transform>()->GetWorldPosition();
+		return  parentWorldpos - GetWorldPosition();
+	}
+
+	return  GetWorldPosition();
 }
 
 void Transform::SetWorldPosition(const glm::vec2& position)
 {
-	m_TranformMatrixWorld[0][2] = position.x;
-	m_TranformMatrixWorld[1][2] = position.y;
+	
+
+	if(m_pOwner)
+	{
+		const auto parentTransComponent = m_pOwner->GetComponent<Transform>();
+		const auto parentWorldPos = parentTransComponent->GetWorldPosition();
+		const auto newLocalPos = position - parentWorldPos;
+
+		m_TranformMatrixWorld[0][2] = newLocalPos.x;
+		m_TranformMatrixWorld[1][2] = newLocalPos.y;
+
+		//SetLocalPosition(newLocalPos);
+	}else
+	{
+		m_TranformMatrixWorld[0][2] = position.x;
+		m_TranformMatrixWorld[1][2] = position.y;
+	}
 }
 
-glm::vec2 Transform::GetWorldPosition(const GameObject* parent)
+glm::vec2 Transform::GetWorldPosition()
 {
-	if (m_IsPositionDirty) UpdateWorldPosition(parent);
+	glm::vec2 worldPos{ m_TranformMatrixWorld[0][2], m_TranformMatrixWorld[1][2] };
+	const GameObject* parent = m_pOwner->GetParent();
 
-	return { m_TranformMatrixWorld[0][2],m_TranformMatrixWorld[1][2] };
+	while (parent)
+	{
+		const auto parentTransform = parent->GetComponent<Transform>();
+		worldPos += parentTransform->GetLocalPosition();
+		parent = parent->GetParent();
+	}
+
+	return worldPos;
 }
 
 void Transform::SetPositionDirty()
@@ -58,16 +113,7 @@ void Transform::SetPositionDirty()
 void Transform::SetLocalRotation(const glm::vec2& angle)
 {
 	//Rotate Over x
-	m_TranformMatrixLocal[1][1] *= cos(angle.x);
-	m_TranformMatrixLocal[1][2] *= -sin(angle.x);
-	m_TranformMatrixLocal[2][1] *= sin(angle.x);
-	m_TranformMatrixLocal[2][2] *= cos(angle.x);
-
-	//Rotate over y
-	m_TranformMatrixLocal[0][0] *= cos(angle.y);
-	m_TranformMatrixLocal[0][2] *= sin(angle.y);
-	m_TranformMatrixLocal[2][0] *= -sin(angle.y);
-	m_TranformMatrixLocal[2][2] *= cos(angle.y);
+	angle;
 	//TODO: i should rotate over z?
 }
 
@@ -81,20 +127,21 @@ void Transform::SetWorldRotation(const glm::vec2& angle)
 	angle;
 }
 
-glm::vec2 Transform::GetWorldPosition() const
+glm::vec2 Transform::GetWorldRotation() const
 {
-	return glm::vec2{};
+	return glm::vec2();
 }
 
 void Transform::SetLocalScale(const glm::vec2& scale)
 {
-	m_TranformMatrixLocal[0][0] = scale.x;
-	m_TranformMatrixLocal[1][1] = scale.y;
+	scale;
+	//m_TranformMatrixLocal[0][0] = scale.x;
+	//m_TranformMatrixLocal[1][1] = scale.y;
 }
 
 glm::vec2 Transform::GetLocalScale() const
 {
-	return glm::vec2{ m_TranformMatrixLocal[0][0], m_TranformMatrixLocal[1][0]};
+	return glm::vec2{ };
 }
 
 void Transform::SetWorldScale(const glm::vec2 scale)
@@ -110,17 +157,21 @@ glm::vec2 Transform::GetWorldScale() const
 
 void Transform::UpdateWorldPosition(const GameObject* parent)
 {
-	if (m_IsPositionDirty)
+	if(parent)
 	{
-		if (parent == nullptr)
-		{
-			m_TranformMatrixWorld = m_TranformMatrixLocal;
+		const auto parentTransformComponent = parent->GetComponent<Transform>().get();
 
-		}
-		else
+		if(parentTransformComponent->IsPositionDirty() || m_IsPositionDirty)
 		{
-			SetWorldPosition(parent->GetComponent<Transform>()->GetWorldPosition(parent->GetParent()) + GetLocalPosition());
+			_UpdateWorldPosition(parentTransformComponent);
 		}
 	}
+
 	m_IsPositionDirty = false;
+}
+
+void Transform::_UpdateWorldPosition(Transform* parentTransComponent)
+{
+	std::cout << "UPDATE WORLD POS";
+	SetWorldPosition(parentTransComponent->GetWorldPosition());
 }

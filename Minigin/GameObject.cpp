@@ -4,7 +4,7 @@
 #include "Transform.h"
 
 
-//Transform Component Is All ready Added Here
+//Transform Component Is Allready Added Here
 GameObject::GameObject()
 {
 	AddComponent<Transform>();
@@ -63,7 +63,7 @@ void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition = true)
 
 	if (pParent == nullptr)
 	{
-		transformComponent->SetLocalPosition(transformComponent->GetWorldPosition(m_pParent));
+		transformComponent->SetLocalPosition(transformComponent->GetWorldPosition());
 	}
 	else
 	{
@@ -71,7 +71,7 @@ void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition = true)
 		{
 			const auto parentTransformComponent = pParent->GetComponent<Transform>();
 
-			transformComponent->SetLocalPosition(transformComponent->GetLocalPosition() - parentTransformComponent->GetWorldPosition(m_pParent));
+			transformComponent->SetLocalPosition(transformComponent->GetLocalPosition() - parentTransformComponent->GetWorldPosition());
 		}
 		transformComponent->SetPositionDirty();
 	}

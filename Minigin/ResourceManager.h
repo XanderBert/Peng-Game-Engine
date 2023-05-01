@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include <vector>
+#include <unordered_map>
 
 #include "Singleton.h"
 
@@ -18,11 +18,8 @@ private:
 	ResourceManager() = default;
 	std::string m_dataPath;
 
-	/*std::vector<std::string> m_LoadedTexturesPaths;
-	std::vector<std::string> m_LoadedTexturesPaths;*/
-
-	std::vector<std::pair<std::string, std::shared_ptr<Texture2D>>> m_loadedTextures;
-	std::vector<std::pair<std::string, std::shared_ptr<Font>>> m_LoadedFonts;
+	std::unordered_map<std::string, std::shared_ptr<Texture2D>> m_loadedTextures;
+	std::unordered_map<std::string, std::shared_ptr<Font>> m_LoadedFonts;
 
 };
 

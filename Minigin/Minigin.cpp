@@ -56,7 +56,7 @@ void PrintSDLVersion()
 //TODO: If there is time, place all data from big to small inside a class
 //Todo: Put the cold path data in a class and put a pointer to it in the component
 
-Minigin::Minigin(const std::string& dataPath)
+Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize)
 	:fixedTimeStep(0.2f)
 {
 	PrintSDLVersion();
@@ -70,8 +70,8 @@ Minigin::Minigin(const std::string& dataPath)
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		m_WindowWidth,
-		m_WindowHeight,
+		windowSize.x,
+		windowSize.y,
 		SDL_WINDOW_OPENGL
 	);
 	if (g_window == nullptr)

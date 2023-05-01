@@ -59,7 +59,7 @@ void FontRenderer::Render()
 	{
 		if (const auto transformComponent{ GetComponent<Transform>() })
 		{
-			const auto& pos = transformComponent->GetWorldPosition(m_pOwner->GetParent());
+			const auto pos = transformComponent->GetWorldPosition();
 			Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 		}
 		else

@@ -6,7 +6,7 @@ class Transform final : public Component
 {
 public:
 	Transform(GameObject* owner);
-	~Transform();
+	~Transform() override;
 
 	Transform(const Transform& other) = delete;
 	Transform(Transform&& other) = delete;
@@ -31,10 +31,10 @@ public:
 	//
 	//Position
 	void SetLocalPosition(const glm::vec2& position);
-	glm::vec2 GetLocalPosition() const;
+	glm::vec2 GetLocalPosition();
 
 	void SetWorldPosition(const glm::vec2& position);
-	glm::vec2 GetWorldPosition(const GameObject* parent);
+	glm::vec2 GetWorldPosition();
 	void SetPositionDirty();
 
 	//
@@ -43,7 +43,7 @@ public:
 	glm::vec2 GetLocalRotation() const;
 
 	void SetWorldRotation(const glm::vec2& angle);
-	glm::vec2 GetWorldPosition() const;
+	glm::vec2 GetWorldRotation() const;
 
 	//
 	//Scale
@@ -53,11 +53,12 @@ public:
 	void SetWorldScale(const glm::vec2 scale);
 	glm::vec2 GetWorldScale() const;
 
+	bool IsPositionDirty() const { return m_IsPositionDirty; } 
 
 private:
-	glm::mat3x3 m_TranformMatrixLocal = glm::mat3x3{ {1, 0, 0}, { 0, 1, 0 }, { 0, 0, 1 } };
 	glm::mat3x3 m_TranformMatrixWorld = glm::mat3x3{ {1, 0 ,0},{0, 1, 0},{0, 0, 1} };
 
 	bool m_IsPositionDirty{ false };
 	void UpdateWorldPosition(const GameObject* parent);
+	void _UpdateWorldPosition(Transform* parentTransComponent);
 };

@@ -1,5 +1,8 @@
 #include <SDL.h>
 #include "Texture2D.h"
+
+#include <iostream>
+
 #include "Renderer.h"
 #include "ResourceManager.h"
 
@@ -11,6 +14,7 @@ Texture2D::~Texture2D()
 
 void Texture2D::Render(const glm::vec2& pos) const
 {
+
 	Renderer::GetInstance().RenderTexture(*this, pos.x, pos.y);
 }
 

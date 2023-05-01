@@ -2,6 +2,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include "Component.h"
+#include "SDL.h"
 
 struct SDL_Texture;
 /**
@@ -25,5 +26,6 @@ public:
 	Texture2D& operator= (const Texture2D&) = delete;
 	Texture2D& operator= (const Texture2D&&) = delete;
 private:
+	//std::shared_ptr<SDL_Texture> m_texture;
 	SDL_Texture* m_texture;
 };

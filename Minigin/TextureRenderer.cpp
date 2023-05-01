@@ -1,5 +1,8 @@
 ﻿#include "Component.h"
 #include "TextureRenderer.h"
+
+#include <iostream>
+
 #include "ResourceManager.h"
 #include "Texture2D.h"
 #include "Transform.h"
@@ -26,16 +29,17 @@ void TextureRenderer::Render()
 {
 	if (const auto transformComponent{ GetComponent<Transform>() })
 	{
-		const auto& pos{ transformComponent->GetWorldPosition(m_pOwner->GetParent()) };
-
+		const auto pos{ transformComponent->GetWorldPosition() };
 		m_pTexture->Render(pos);
 	}
 }
 
 void TextureRenderer::SetTexture(const std::string& texturePath)
 {
-	//if(ResourceManager::GetInstance().)
-
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
+}
 
+glm::vec2 TextureRenderer::GetSize()
+{
+	return m_pTexture->GetSize();
 }

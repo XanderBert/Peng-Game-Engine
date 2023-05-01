@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include <array>
 #include <memory>
 #include <string>
+#include <glm/vec2.hpp>
 
 #include "Component.h"
 
@@ -32,7 +32,8 @@ public:
 	void Render() override;
 
 	void SetTexture(const std::string& texturePath);
+	glm::vec2 GetSize();
 private:
+
 	std::shared_ptr<Texture2D> m_pTexture{};
-	//std::array<int, 100000000> bigData{};
 };

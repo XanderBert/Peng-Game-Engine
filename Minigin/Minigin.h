@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
 #include <functional>
+#include <glm/fwd.hpp>
 
 class Minigin
 {
 public:
-	explicit Minigin(const std::string& dataPath);
+	explicit Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize);
 	~Minigin();
 	void Run(const std::function<void()>& load);
 
@@ -15,6 +16,5 @@ public:
 	Minigin& operator=(Minigin&& other) = delete;
 private:
 	const float fixedTimeStep{};
-	const int m_WindowWidth{ 1366 };
-	const int m_WindowHeight{ 768 };
+
 };
