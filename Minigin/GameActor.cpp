@@ -18,7 +18,14 @@ GameActor::GameActor()
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
 	spriteRenderer->SetSpriteSize({ 16,16 });
 
-
+	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::Down);
+	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::Down);
+	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::Left);
+	spriteRenderer->AddSpriteFrame({ 48,0 }, MovementDirection::Left);
+	spriteRenderer->AddSpriteFrame({ 64,0 }, MovementDirection::Up);
+	spriteRenderer->AddSpriteFrame({ 80,0 }, MovementDirection::Up);
+	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
+	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
 	InputManager::GetInstance().AddActor(this);
 }

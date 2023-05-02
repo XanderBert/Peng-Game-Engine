@@ -4,19 +4,20 @@
 #include "TextureRenderer.h"
 #include "Time.h"
 
+//SpriteSize Needs to be set
+//Sprite Frames Need to be added
 SpriteRenderer::SpriteRenderer(GameObject* owner)
 	: Component(owner)
-
 	, m_MovementDirectionMap{
-		std::make_pair(MovementDirection::Up, glm::vec2{ 64,0 }),
-		std::make_pair(MovementDirection::Down, glm::vec2{0,0}),
-		std::make_pair(MovementDirection::Left, glm::vec2{32,0}),
-		std::make_pair(MovementDirection::Right, glm::vec2{96,0}) }
+		{MovementDirection::Up, {}},
+		{MovementDirection::Down, {}},
+		{MovementDirection::Left, {}},
+		{MovementDirection::Right, {}},
+		{MovementDirection::None, {}} }
 
-		, m_TimeFromMovementToStandStill{ 0.3f }
+		, m_FrameTime{ 0.3f }
+	, m_TimeFromMovementToStandStill{ 0.3f }
 {
-	//SetSourceRect({ 0,0 }, { 16, 16 });
-
 	if (GetComponent<TextureRenderer>() == nullptr)
 	{
 		throw std::runtime_error(std::string("Your GameObject needs an TextureRenderer Component for the SpriteRenderer To work"));
@@ -37,22 +38,23 @@ void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
 
 void SpriteRenderer::LateUpdate()
 {
-	const glm::vec2 basePosition = m_MovementDirectionMap.find(m_MovementDirection)->second;
+	const auto elapsedTime = Time::GetInstance().GetDeltaTime();
 
-	const auto elaspedTime{ Time::GetInstance().GetElapsed() };
-	const auto elapsed = static_cast<int>(elaspedTime * 4) % 2;
+	m_AccumulatedFrameTime += elapsedTime;
+	m_AccumulatedMoveToStandstillTime += elapsedTime;
 
-	if (!elapsed)
+	if (m_AccumulatedMoveToStandstillTime > m_TimeFromMovementToStandStill)
 	{
-		SetSourceRect({ basePosition.x + 16, basePosition.y });
+		m_AnimationFrame = 1;
 	}
-	//Only play the full animation when you actually move
-	else if (m_AccumulatedMoveToStandstillTime <= m_TimeFromMovementToStandStill)
+	else if (m_AccumulatedFrameTime > m_FrameTime)
 	{
-		SetSourceRect(basePosition);
+		++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+		m_AccumulatedFrameTime -= m_FrameTime;
 	}
 
-	m_AccumulatedMoveToStandstillTime += elaspedTime;
+
+	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
 }
 
 void SpriteRenderer::Render()
@@ -65,6 +67,10 @@ void SpriteRenderer::SetTexture(const std::string& texturePath)
 	GetComponent<TextureRenderer>()->SetTexture(texturePath);
 }
 
+void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection direction)
+{
+	m_MovementDirectionMap.find(direction)->second.push_back(position);
+}
 void SpriteRenderer::SetSourceRect(const glm::vec2& position)
 {
 	GetComponent<TextureRenderer>()->SetSourceRect(position, m_SpriteSize);

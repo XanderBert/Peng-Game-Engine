@@ -10,7 +10,8 @@ enum class MovementDirection
 	Up = 0,
 	Down = 1,
 	Left = 2,
-	Right = 3
+	Right = 3,
+	None = 4
 };
 
 
@@ -49,15 +50,21 @@ public:
 	}
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
-
+	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
 private:
 	glm::vec2 m_SpriteSize{};
 	MovementDirection m_MovementDirection{ MovementDirection::Right };
-	std::unordered_map<MovementDirection, glm::vec2> m_MovementDirectionMap{};
+
+	std::unordered_map<MovementDirection, std::vector<glm::vec2>> m_MovementDirectionMap{};
 
 	void SetSourceRect(const glm::vec2& position);
 
+	int m_AnimationFrame{};
+	float m_AccumulatedFrameTime{};
+	float m_FrameTime{};
 
 	float m_TimeFromMovementToStandStill{};
 	float m_AccumulatedMoveToStandstillTime{};
+
+
 };

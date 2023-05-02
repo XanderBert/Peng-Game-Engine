@@ -29,11 +29,13 @@ public:
 	void Die();
 	void TakeDammage(const int dammage);
 	int GetHealth() const { return m_Health; }
+
 	std::string* GetHealthAsString()
 	{
 		m_HealthString = std::to_string(m_Health);
 		return &m_HealthString;
 	}
+
 	int GetPoints() const { return  m_Points; }
 	std::string* GetPointsAsString() {
 		m_PointString = std::to_string(m_Points);
@@ -63,7 +65,6 @@ public:
 	}
 
 protected:
-
 	void NotifyObserver(const GameEvent event)
 	{
 		for (size_t i{}; i < m_Observers.size(); ++i)
