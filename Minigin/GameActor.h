@@ -35,7 +35,7 @@ public:
 		return &m_HealthString;
 	}
 	int GetPoints() const { return  m_Points; }
-	std::string* GetPointsAsString(){
+	std::string* GetPointsAsString() {
 		m_PointString = std::to_string(m_Points);
 		return &m_PointString;
 	}
@@ -47,25 +47,26 @@ public:
 	void SetControllerIndex(int index);
 	int GetControllerIndex() const { return m_ControllerID; }
 
-	void AddObeserver(std::shared_ptr<Achievement> observer)
+	void AddObeserver(std::shared_ptr<Observer> observer)
 	{
 		m_Observers.push_back(observer);
 	}
+
 	void RemoveObserver(Observer* observer)
 	{
-		m_Observers.erase(std::remove_if(m_Observers.begin(), m_Observers.end(), [observer](const std::shared_ptr<Achievement>& ptr) {
+		m_Observers.erase(std::remove_if(m_Observers.begin(), m_Observers.end(), [observer](const std::shared_ptr<Observer>& ptr) {
 			if (ptr.get() == observer) {
 				return true;
 			}
-			return false;
+		return false;
 			}), m_Observers.end());
-		}
+	}
 
 protected:
 
 	void NotifyObserver(const GameEvent event)
 	{
-		for(size_t i{} ; i < m_Observers.size(); ++i )
+		for (size_t i{}; i < m_Observers.size(); ++i)
 		{
 			m_Observers[i].get()->Notify(event);
 		}
@@ -74,12 +75,12 @@ protected:
 private:
 	bool m_UsesController{ false };
 	int m_ControllerID{};
-	float m_Speed{ 150.f };
+	float m_Speed{ 50.f };
 	int m_Health{ 3 };
-	std::string m_HealthString{std::to_string(m_Health)};
-
+	std::string m_HealthString{ std::to_string(m_Health) };
 	int m_Points{ 0 };
 	std::string m_PointString{ std::to_string(m_Points) };
+	std::vector<std::shared_ptr<Observer>> m_Observers;
 
-	std::vector<std::shared_ptr<Achievement>> m_Observers;
+	void SetTextureDirection(const glm::vec2& direction);
 };

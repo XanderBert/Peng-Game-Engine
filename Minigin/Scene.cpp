@@ -49,10 +49,6 @@ void Scene::Update()
 	{
 		object->Update();
 	}
-
-	
-
-
 }
 
 void Scene::FixedUpdate(float fixedTimeStep)

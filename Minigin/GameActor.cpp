@@ -16,8 +16,8 @@ GameActor::GameActor()
 	textureRenderer->SetTexture("Pengo.png");
 
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
+	spriteRenderer->SetSpriteSize({ 16,16 });
 
-	spriteRenderer->SetSourceRect({ 0,0 }, { 16, 16 });
 
 
 	InputManager::GetInstance().AddActor(this);
@@ -34,16 +34,7 @@ void GameActor::Update()
 	//{
 	//	fontRenderer->SetText(std::to_string(m_Health));
 	//}
-	const auto elapsed = static_cast<int>(Time::GetInstance().GetElapsed() * 4) % 2;
 
-	if (!elapsed)
-	{
-		GetComponent<SpriteRenderer>()->SetSourceRect({ 16,0 }, { 16,16 });
-	}
-	else
-	{
-		GetComponent<SpriteRenderer>()->SetSourceRect({ 0,0 }, { 16,16 });
-	}
 }
 
 void GameActor::Jump()
@@ -59,6 +50,8 @@ void GameActor::Move(const glm::vec2& direction)
 	const auto movement{ direction * m_Speed * Time::GetInstance().GetDeltaTime() };
 
 	transform->SetLocalPosition(transform->GetLocalPosition() + movement);
+
+	SetTextureDirection(direction);
 }
 
 void GameActor::Die()
@@ -101,4 +94,41 @@ void GameActor::SetControllerIndex(int index)
 		}
 	}
 
+}
+
+void GameActor::SetTextureDirection(const glm::vec2& direction)
+{
+	//When a sprite component is added it will update the direction
+	if (const auto spriteComponent = GetComponent<SpriteRenderer>())
+	{
+		//Set Texture Direction
+		float absX = std::abs(direction.x);
+		float absY = std::abs(direction.y);
+
+		// Compare magnitudes to determine dominant axis
+		if (absX > absY)
+		{
+			// X-axis is dominant
+			if (direction.x > 0)
+			{
+				spriteComponent->SetMovementDirection(MovementDirection::Right);
+			}
+			else
+			{
+				spriteComponent->SetMovementDirection(MovementDirection::Left);
+			}
+		}
+		else
+		{
+			// Y-axis is dominant
+			if (direction.y > 0)
+			{
+				spriteComponent->SetMovementDirection(MovementDirection::Down);
+			}
+			else
+			{
+				spriteComponent->SetMovementDirection(MovementDirection::Up);
+			}
+		}
+	}
 }

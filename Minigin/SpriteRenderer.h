@@ -1,7 +1,18 @@
 ﻿#pragma once
 #include "Component.h"
 #include "TextureRenderer.h"
+#include "Time.h"
 #include "Transform.h"
+#include "unordered_map"
+
+enum class MovementDirection
+{
+	Up = 0,
+	Down = 1,
+	Left = 2,
+	Right = 3
+};
+
 
 class SpriteRenderer : public Component
 {
@@ -28,21 +39,25 @@ public:
 	//Called each frame
 	virtual void Render() override;
 
-
 	//Set the texture of the TextureRenderer Component
 	//This does not need to be called if the Texture is already been set in the  TextureRenderer Component
 	void SetTexture(const std::string& texturePath);
-	void SetSourceRect(const glm::vec2& position, const glm::vec2 size);
+	void SetMovementDirection(MovementDirection value)
+	{
+		m_MovementDirection = value;
+		m_AccumulatedMoveToStandstillTime = 0.f;
+	}
+
+	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 
 private:
 	glm::vec2 m_SpriteSize{};
+	MovementDirection m_MovementDirection{ MovementDirection::Right };
+	std::unordered_map<MovementDirection, glm::vec2> m_MovementDirectionMap{};
 
-	enum class MovmentDirection
-	{
-		Up,
-		Down,
-		Left,
-		Right
-	};
+	void SetSourceRect(const glm::vec2& position);
 
+
+	float m_TimeFromMovementToStandStill{};
+	float m_AccumulatedMoveToStandstillTime{};
 };

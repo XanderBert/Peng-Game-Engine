@@ -1,5 +1,8 @@
 #include <stdexcept>
 #include "Renderer.h"
+
+#include <iostream>
+
 #include "SceneManager.h"
 #include "Texture2D.h"
 #include "Imgui.h"
@@ -80,8 +83,6 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 	dst.w = srcRect.w;
 	dst.h = srcRect.h;
 
-
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &dst);
 }
 
