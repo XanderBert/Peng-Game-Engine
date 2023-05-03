@@ -53,7 +53,6 @@ void SpriteRenderer::LateUpdate()
 		m_AccumulatedFrameTime -= m_FrameTime;
 	}
 
-
 	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
 }
 

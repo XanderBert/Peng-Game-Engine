@@ -64,7 +64,6 @@ void GameActor::Move(const glm::vec2& direction)
 void GameActor::Die()
 {
 	NotifyObserver(GameEvent::ActorDied);
-
 	MarkForDeletion();
 }
 
