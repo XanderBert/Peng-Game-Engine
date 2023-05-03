@@ -64,7 +64,6 @@ void FontRenderer::Render()
 		}
 		else
 		{
-			//TODO make own error class
 			throw std::runtime_error(std::string("FontRenderer::Render() is dependent on a Transform Component"));
 		}
 	}
