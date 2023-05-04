@@ -64,6 +64,9 @@ public:
 			}), m_Observers.end());
 	}
 
+
+	virtual void OnCollision(GameObject* other) override;
+
 protected:
 	void NotifyObserver(const GameEvent event)
 	{

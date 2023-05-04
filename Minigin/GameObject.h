@@ -44,11 +44,17 @@ public:
 	[[nodiscard]] GameObject* GetParent() const;
 	[[nodiscard]] GameObject* GetChildAt(int index) const;
 
-
+	//
+	//Deletion
 	bool CanBeDeleted()const { return m_CanBeDeleted; }
 
 	//Will delete the object in the late update
 	void MarkForDeletion() { m_CanBeDeleted = true; }
+
+	//
+	//Collision
+	virtual void OnCollision([[maybe_unused]] GameObject* other){};
+
 protected:
 	bool m_CanBeDeleted{ false };
 private:

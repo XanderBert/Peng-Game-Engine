@@ -1,5 +1,7 @@
 ﻿#include "GameActor.h"
 #include <iostream>
+
+#include "BoxCollider.h"
 #include "FontRenderer.h"
 #include "GameObject.h"
 #include "InputManager.h"
@@ -26,6 +28,9 @@ GameActor::GameActor()
 	spriteRenderer->AddSpriteFrame({ 80,0 }, MovementDirection::Up);
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
+
+	const auto boxCollision{ AddComponent<BoxCollider>() };
+
 
 	InputManager::GetInstance().AddActor(this);
 }
@@ -100,6 +105,11 @@ void GameActor::SetControllerIndex(int index)
 		}
 	}
 
+}
+
+void GameActor::OnCollision(GameObject* other)
+{
+	std::cout << "Game Actor Collided with a " << typeid(other).name() << '\n';
 }
 
 void GameActor::SetTextureDirection(const glm::vec2& direction)

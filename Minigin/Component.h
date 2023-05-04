@@ -33,6 +33,8 @@ public:
 	template <typename T>
 	std::shared_ptr<T> GetComponent() const;
 
+	GameObject* GetGameObject() const;
+
 protected:
 	bool m_WillBeDeleted{ false };
 	GameObject* m_pOwner{ nullptr };

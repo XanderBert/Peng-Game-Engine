@@ -1,9 +1,11 @@
 ﻿#include "BoxCollider.h"
 
+#include "CollisionManager.h"
 #include "Transform.h"
 
 BoxCollider::BoxCollider(GameObject* owner) : Component(owner)
 {
+	CollisionManager::GetInstance().AddBoxCollider(this);
 }
 
 BoxCollider::~BoxCollider()
@@ -14,7 +16,7 @@ void BoxCollider::Update()
 {
 }
 
-void BoxCollider::FixedUpdate(float fixedTimeStep)
+void BoxCollider::FixedUpdate([[maybe_unused]]float fixedTimeStep)
 {
 }
 
@@ -28,14 +30,14 @@ void BoxCollider::Render()
 
 void BoxCollider::SetColliderSize(const glm::vec2& size)
 {
-	m_Collider.w = size.x;
-	m_Collider.h = size.y;
+	m_Collider.w = static_cast<int>(size.x);
+	m_Collider.h = static_cast<int>(size.y);
 }
 
 void BoxCollider::SetColliderOffset(const glm::vec2& offset)
 {
-	m_Collider.x = offset.x;
-	m_Collider.y = offset.y;
+	m_Collider.x = static_cast<int>(offset.x);
+	m_Collider.y = static_cast<int>(offset.y);
 }
 
 SDL_Rect BoxCollider::GetCollider() const

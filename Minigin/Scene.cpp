@@ -1,5 +1,5 @@
 #include "Scene.h"
-
+#include "CollisionManager.h"
 #include "GameActor.h"
 #include "GameObject.h"
 
@@ -48,6 +48,7 @@ void Scene::Update()
 	for (auto& object : m_objects)
 	{
 		object->Update();
+		CollisionManager::GetInstance().Update();
 	}
 }
 

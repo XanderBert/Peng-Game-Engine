@@ -222,6 +222,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="Achievement.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CacheTestComponent.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
@@ -262,6 +263,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CacheTestComponent.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />

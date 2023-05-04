@@ -174,6 +174,5 @@ void Transform::UpdateWorldPosition()
 
 void Transform::_UpdateWorldPosition(Transform* parentTransComponent)
 {
-	std::cout << "UPDATE WORLD POS";
 	SetWorldPosition(parentTransComponent->GetWorldPosition());
 }
