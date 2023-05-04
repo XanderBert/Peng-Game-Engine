@@ -13,7 +13,7 @@ public:
 	std::string GetName() const { return m_name; }
 
 	void Update();
-	void FixedUpdate(float fixedTimeStep);
+	void FixedUpdate(float fixedTimeMStep);
 	void LateUpdate();
 	void Render() const;
 	

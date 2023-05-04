@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
-#include "Time.h"
+#include "TimeM.h"
 #include "GameActor.h"
 
 void SceneManager::Update()
@@ -11,11 +11,11 @@ void SceneManager::Update()
 	}
 }
 
-void SceneManager::FixedUpdate(float fixedTimeStep)
+void SceneManager::FixedUpdate(float fixedTimeMStep)
 {
 	for (auto& scene : m_scenes)
 	{
-		scene->FixedUpdate(fixedTimeStep);
+		scene->FixedUpdate(fixedTimeMStep);
 	}
 }
 

@@ -1,5 +1,7 @@
 ﻿#include "CollisionManager.h"
 
+#include <future>
+
 void CollisionManager::Update()
 {
     //TODO Implement one of the following Optimizations
@@ -16,22 +18,10 @@ void CollisionManager::Update()
     //This approach is particularly efficient when most of the colliders are stationary.
 
 
-    for (size_t i = 0; i < m_BoxColliders.size(); i++)
+    for (size_t i = 0; i < m_BoxColliders.size(); ++i)
     {
-        for (size_t j = i + 1; j < m_BoxColliders.size(); j++)
-        {
-            BoxCollider* colliderA = m_BoxColliders[i];
-            BoxCollider* colliderB = m_BoxColliders[j];
-
-
-            // Check if the BoxColliders are colliding
-            if (CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
-            {
-                // Call a function on the game objects to handle the collision
-                colliderA->GetGameObject()->OnCollision(colliderB->GetGameObject());
-                colliderB->GetGameObject()->OnCollision(colliderA->GetGameObject());
-            }
-        }
+        auto func = [this, i]() { CheckCollisionAsync(i); };
+        auto asycnFunc = std::async(std::launch::async, func);
     }
 }
 
@@ -40,7 +30,25 @@ void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)
     m_BoxColliders.push_back(boxCollider);
 }
 
-bool CollisionManager::CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB)
+void CollisionManager::CheckCollisionAsync(size_t index)
+{
+    for (size_t j = index + 1; j < m_BoxColliders.size(); ++j)
+    {
+        BoxCollider* colliderA = m_BoxColliders[index];
+        BoxCollider* colliderB = m_BoxColliders[j];
+
+
+        // Check if the BoxColliders are colliding
+        if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
+        {
+            // Call a function on the game objects to handle the collision
+            colliderA->GetGameObject()->OnCollision(colliderB->GetGameObject());
+            colliderB->GetGameObject()->OnCollision(colliderA->GetGameObject());
+        }
+    }
+}
+
+bool CollisionManager::_CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB)
 {
     //AABB Collision Check
     return  rectA.x < rectB.x + rectB.w && 

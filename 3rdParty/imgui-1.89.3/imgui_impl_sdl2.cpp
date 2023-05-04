@@ -90,7 +90,7 @@ struct ImGui_ImplSDL2_Data
 {
     SDL_Window*     Window;
     SDL_Renderer*   Renderer;
-    Uint64          Time;
+    Uint64          TimeM;
     Uint32          MouseWindowID;
     int             MouseButtonsDown;
     SDL_Cursor*     MouseCursors[ImGuiMouseCursor_COUNT];
@@ -612,8 +612,8 @@ void ImGui_ImplSDL2_NewFrame()
     // Setup time step (we don't use SDL_GetTicks() because it is using millisecond resolution)
     static Uint64 frequency = SDL_GetPerformanceFrequency();
     Uint64 current_time = SDL_GetPerformanceCounter();
-    io.DeltaTime = bd->Time > 0 ? (float)((double)(current_time - bd->Time) / frequency) : (float)(1.0f / 60.0f);
-    bd->Time = current_time;
+    io.DeltaTimeM = bd->TimeM > 0 ? (float)((double)(current_time - bd->TimeM) / frequency) : (float)(1.0f / 60.0f);
+    bd->TimeM = current_time;
 
     if (bd->PendingMouseLeaveFrame && bd->PendingMouseLeaveFrame >= ImGui::GetFrameCount() && bd->MouseButtonsDown == 0)
     {

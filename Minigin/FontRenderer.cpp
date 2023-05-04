@@ -44,7 +44,7 @@ void FontRenderer::Update()
 	}
 }
 
-void FontRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void FontRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 

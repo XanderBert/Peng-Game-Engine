@@ -10,6 +10,7 @@ public:
 private:
 	friend class Singleton<CollisionManager>;
 	CollisionManager() = default;
-	static bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
+	static bool _CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
+	void CheckCollisionAsync(const size_t index);
 	std::vector<BoxCollider*> m_BoxColliders;
 };

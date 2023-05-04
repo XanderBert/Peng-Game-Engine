@@ -15,6 +15,6 @@ public:
 	Minigin& operator=(const Minigin& other) = delete;
 	Minigin& operator=(Minigin&& other) = delete;
 private:
-	const float fixedTimeStep{};
+	const float fixedTimeMStep{};
 
 };

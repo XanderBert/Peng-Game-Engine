@@ -12,7 +12,7 @@ class SceneManager final : public Singleton<SceneManager>
 public:
 	Scene& CreateScene(const std::string& name);
 	void Update();
-	void FixedUpdate(float fixedTimeStep);
+	void FixedUpdate(float fixedTimeMStep);
 	void LateUpdate();
 	void Render();
 	std::vector<GameActor*> GetGameActorsOfScene(const std::string& sceneName) const;

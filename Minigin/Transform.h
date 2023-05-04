@@ -19,7 +19,7 @@ public:
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	void FixedUpdate(float fixedTimeStep) override;
+	void FixedUpdate(float fixedTimeMStep) override;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern

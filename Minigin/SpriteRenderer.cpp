@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include "InputManager.h"
 #include "TextureRenderer.h"
-#include "Time.h"
+#include "TimeM.h"
 
 //SpriteSize Needs to be set
 //Sprite Frames Need to be added
@@ -15,8 +15,8 @@ SpriteRenderer::SpriteRenderer(GameObject* owner)
 		{MovementDirection::Right, {}},
 		{MovementDirection::None, {}} }
 
-		, m_FrameTime{ 0.3f }
-	, m_TimeFromMovementToStandStill{ 0.3f }
+		, m_FrameTimeM{ 0.3f }
+	, m_TimeMFromMovementToStandStill{ 0.3f }
 {
 	if (GetComponent<TextureRenderer>() == nullptr)
 	{
@@ -32,25 +32,25 @@ void SpriteRenderer::Update()
 	std::cout << " This Comp Updates???";
 }
 
-void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 
 void SpriteRenderer::LateUpdate()
 {
-	const auto elapsedTime = Time::GetInstance().GetDeltaTime();
+	const auto elapsedTimeM = TimeM::GetInstance().GetDeltaTimeM();
 
-	m_AccumulatedFrameTime += elapsedTime;
-	m_AccumulatedMoveToStandstillTime += elapsedTime;
+	m_AccumulatedFrameTimeM += elapsedTimeM;
+	m_AccumulatedMoveToStandstillTimeM += elapsedTimeM;
 
-	if (m_AccumulatedMoveToStandstillTime > m_TimeFromMovementToStandStill)
+	if (m_AccumulatedMoveToStandstillTimeM > m_TimeMFromMovementToStandStill)
 	{
 		m_AnimationFrame = 1;
 	}
-	else if (m_AccumulatedFrameTime > m_FrameTime)
+	else if (m_AccumulatedFrameTimeM > m_FrameTimeM)
 	{
 		++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
-		m_AccumulatedFrameTime -= m_FrameTime;
+		m_AccumulatedFrameTimeM -= m_FrameTimeM;
 	}
 
 	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);

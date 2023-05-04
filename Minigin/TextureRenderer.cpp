@@ -17,7 +17,7 @@ void TextureRenderer::Update()
 {
 }
 
-void TextureRenderer::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void TextureRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 

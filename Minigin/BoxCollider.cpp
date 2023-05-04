@@ -16,7 +16,7 @@ void BoxCollider::Update()
 {
 }
 
-void BoxCollider::FixedUpdate([[maybe_unused]]float fixedTimeStep)
+void BoxCollider::FixedUpdate([[maybe_unused]]float fixedTimeMStep)
 {
 }
 

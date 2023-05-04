@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Component.h"
 #include "TextureRenderer.h"
-#include "Time.h"
+#include "TimeM.h"
 #include "Transform.h"
 #include "unordered_map"
 
@@ -31,7 +31,7 @@ public:
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate(float fixedTimeStep) override;
+	virtual void FixedUpdate(float fixedTimeMStep) override;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
@@ -46,7 +46,7 @@ public:
 	void SetMovementDirection(MovementDirection value)
 	{
 		m_MovementDirection = value;
-		m_AccumulatedMoveToStandstillTime = 0.f;
+		m_AccumulatedMoveToStandstillTimeM = 0.f;
 	}
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
@@ -60,11 +60,11 @@ private:
 	void SetSourceRect(const glm::vec2& position);
 
 	int m_AnimationFrame{};
-	float m_AccumulatedFrameTime{};
-	float m_FrameTime{};
+	float m_AccumulatedFrameTimeM{};
+	float m_FrameTimeM{};
 
-	float m_TimeFromMovementToStandStill{};
-	float m_AccumulatedMoveToStandstillTime{};
+	float m_TimeMFromMovementToStandStill{};
+	float m_AccumulatedMoveToStandstillTimeM{};
 
 
 };

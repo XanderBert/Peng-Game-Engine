@@ -14,7 +14,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Time.h"
+#include "TimeM.h"
 
 SDL_Window* g_window{};
 
@@ -57,7 +57,7 @@ void PrintSDLVersion()
 //Todo: Put the cold path data in a class and put a pointer to it in the component
 
 Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize)
-	:fixedTimeStep(0.2f)
+	:fixedTimeMStep(0.2f)
 {
 	PrintSDLVersion();
 
@@ -101,24 +101,24 @@ void Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	bool doContinue = true;
-	auto lastTime = std::chrono::high_resolution_clock::now();
+	auto lastTimeM = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
 
 	while (doContinue)
 	{
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		const float deltaT = std::chrono::duration<float>(currentTime - lastTime).count();
+		auto currentTimeM = std::chrono::high_resolution_clock::now();
+		const float deltaT = std::chrono::duration<float>(currentTimeM - lastTimeM).count();
 		lag += deltaT;
 
 		doContinue = input.ProcessInput();
 
-		while (lag >= fixedTimeStep)
+		while (lag >= fixedTimeMStep)
 		{
-			sceneManager.FixedUpdate(fixedTimeStep);
-			lag -= fixedTimeStep;
+			sceneManager.FixedUpdate(fixedTimeMStep);
+			lag -= fixedTimeMStep;
 		}
 
-		Time::GetInstance().Update(deltaT);
+		TimeM::GetInstance().Update(deltaT);
 
 		//SteamAPI_RunCallbacks();
 
@@ -126,10 +126,10 @@ void Minigin::Run(const std::function<void()>& load)
 		sceneManager.LateUpdate();
 		renderer.Render();
 
-		lastTime = currentTime;
+		lastTimeM = currentTimeM;
 
-		auto t2 = std::chrono::high_resolution_clock::now() - currentTime;
-		currentTime += std::chrono::milliseconds(17) - t2; // we want ~60 fps
-		std::this_thread::sleep_until(currentTime);
+		auto t2 = std::chrono::high_resolution_clock::now() - currentTimeM;
+		currentTimeM += std::chrono::milliseconds(17) - t2; // we want ~60 fps
+		std::this_thread::sleep_until(currentTimeM);
 	}
 }

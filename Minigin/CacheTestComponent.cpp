@@ -7,7 +7,7 @@ CacheTestComponent::~CacheTestComponent() = default;
 
 void CacheTestComponent::Update(){}
 
-void CacheTestComponent::FixedUpdate([[maybe_unused]]float fixedTimeStep){}
+void CacheTestComponent::FixedUpdate([[maybe_unused]]float fixedTimeMStep){}
 
 void CacheTestComponent::LateUpdate(){}
 
@@ -79,9 +79,9 @@ void CacheTestComponent::TestCacheComponent()
 	//Set the amount of timings
 	m_Timings.resize(m_Buffer);
 
-	//Declare Start, Ending and elapsedTime
+	//Declare Start, Ending and elapsedTimeM
 	std::chrono::time_point<std::chrono::steady_clock> start{}, end{};
-	long long elapsedTime{};
+	long long elapsedTimeM{};
 
 	for (size_t iterator{}; iterator < static_cast<size_t>(m_Samples); ++iterator)
 	{
@@ -100,16 +100,16 @@ void CacheTestComponent::TestCacheComponent()
 				value;
 			}
 
-			//End Timing and Calculate ElapsedTime
+			//End Timing and Calculate ElapsedTimeM
 			end = std::chrono::high_resolution_clock::now();
-			//Times take a lot less in release so we time it in nanoseconds
+			//TimeMs take a lot less in release so we time it in nanoseconds
 #if _DEBUG
-			elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+			elapsedTimeM = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 #else
-			elapsedTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+			elapsedTimeM = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 #endif
 
-			m_Timings[index] += static_cast<float>(elapsedTime);
+			m_Timings[index] += static_cast<float>(elapsedTimeM);
 			++index;
 			index %= m_Samples;
 		}

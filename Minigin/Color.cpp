@@ -7,7 +7,7 @@ void Color::Update()
 {
 }
 
-void Color::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void Color::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 

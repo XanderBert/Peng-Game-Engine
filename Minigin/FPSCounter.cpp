@@ -1,6 +1,6 @@
 ﻿#include "FPSCounter.h"
 #include <iostream>
-#include "Time.h"
+#include "TimeM.h"
 #include "FontRenderer.h"
 
 
@@ -20,7 +20,7 @@ void FPSCounter::Update()
 	}
 }
 
-void FPSCounter::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void FPSCounter::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 
@@ -48,8 +48,8 @@ void FPSCounter::CalculateFPS()
 {
 	//Increase precision by increasing the number
 	constexpr int precision{ 100 };
-	if (static_cast<int>(Time::GetInstance().GetElapsed() * precision) % precision <= FLT_EPSILON)
+	if (static_cast<int>(TimeM::GetInstance().GetElapsed() * precision) % precision <= FLT_EPSILON)
 	{
-		m_currentFPS = 1.f / Time::GetInstance().GetDeltaTime();
+		m_currentFPS = 1.f / TimeM::GetInstance().GetDeltaTimeM();
 	}
 }

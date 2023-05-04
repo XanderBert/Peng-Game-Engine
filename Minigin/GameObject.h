@@ -19,7 +19,7 @@ public:
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate(float fixedTimeStep);
+	virtual void FixedUpdate(float fixedTimeMStep);
 
 	//Called after the Update()c
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern

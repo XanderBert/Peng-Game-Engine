@@ -52,11 +52,11 @@ void Scene::Update()
 	}
 }
 
-void Scene::FixedUpdate(float fixedTimeStep)
+void Scene::FixedUpdate(float fixedTimeMStep)
 {
 	for (auto& object : m_objects)
 	{
-		object->FixedUpdate(fixedTimeStep);
+		object->FixedUpdate(fixedTimeMStep);
 	}
 }
 

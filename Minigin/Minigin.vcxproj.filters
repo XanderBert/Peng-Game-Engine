@@ -84,9 +84,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Source Files\Singletons</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
@@ -162,6 +159,15 @@
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Resource Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -198,9 +204,6 @@
       <Filter>Resource Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Source Files\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui.cpp">
@@ -268,6 +271,15 @@
     </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Resource Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeM.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

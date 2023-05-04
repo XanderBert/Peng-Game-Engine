@@ -1703,9 +1703,9 @@ struct ImGuiStackTool
     ImGuiID                 QueryId;                    // ID to query details for
     ImVector<ImGuiStackLevelInfo> Results;
     bool                    CopyToClipboardOnCtrlC;
-    float                   CopyToClipboardLastTime;
+    float                   CopyToClipboardLastTimeM;
 
-    ImGuiStackTool()        { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+    ImGuiStackTool()        { memset(this, 0, sizeof(*this)); CopyToClipboardLastTimeM = -FLT_MAX; }
 };
 
 //-----------------------------------------------------------------------------
@@ -1742,7 +1742,7 @@ struct ImGuiContext
     float                   FontSize;                           // (Shortcut) == FontBaseSize * g.CurrentWindow->FontWindowScale == window->FontSize(). Text height for current window.
     float                   FontBaseSize;                       // (Shortcut) == IO.FontGlobalScale * Font->Scale * Font->FontSize. Base text height.
     ImDrawListSharedData    DrawListSharedData;
-    double                  Time;
+    double                  TimeM;
     int                     FrameCount;
     int                     FrameCountEnded;
     int                     FrameCountRendered;
@@ -1768,7 +1768,7 @@ struct ImGuiContext
     ImGuiWindow*            WheelingWindow;                     // Track the window we started mouse-wheeling on. Until a timer elapse or mouse has moved, generally keep scrolling the same window even if during the course of scrolling the mouse ends up hovering a child window.
     ImVec2                  WheelingWindowRefMousePos;
     int                     WheelingWindowStartFrame;           // This may be set one frame before WheelingWindow is != NULL
-    float                   WheelingWindowReleaseTimer;
+    float                   WheelingWindowReleaseTimeMr;
     ImVec2                  WheelingWindowWheelRemainder;
     ImVec2                  WheelingAxisAvg;
 
@@ -1778,11 +1778,11 @@ struct ImGuiContext
     ImGuiID                 HoveredIdPreviousFrame;
     bool                    HoveredIdAllowOverlap;
     bool                    HoveredIdDisabled;                  // At least one widget passed the rect test, but has been discarded by disabled flag or popup inhibit. May be true even if HoveredId == 0.
-    float                   HoveredIdTimer;                     // Measure contiguous hovering time
-    float                   HoveredIdNotActiveTimer;            // Measure contiguous hovering time where the item has not been active
+    float                   HoveredIdTimeMr;                     // Measure contiguous hovering time
+    float                   HoveredIdNotActiveTimeMr;            // Measure contiguous hovering time where the item has not been active
     ImGuiID                 ActiveId;                           // Active widget
     ImGuiID                 ActiveIdIsAlive;                    // Active widget has been seen this frame (we can't use a bool as the ActiveId may change within the frame)
-    float                   ActiveIdTimer;
+    float                   ActiveIdTimeMr;
     bool                    ActiveIdIsJustActivated;            // Set at the time of activation for one frame
     bool                    ActiveIdAllowOverlap;               // Active widget allows another widget to steal active id (generally for overlapping widgets, but not always)
     bool                    ActiveIdNoClearOnFocusLoss;         // Disable losing active id if the active id window gets unfocused.
@@ -1798,7 +1798,7 @@ struct ImGuiContext
     bool                    ActiveIdPreviousFrameHasBeenEditedBefore;
     ImGuiWindow*            ActiveIdPreviousFrameWindow;
     ImGuiID                 LastActiveId;                       // Store the last non-zero ActiveId, useful for animation.
-    float                   LastActiveIdTimer;                  // Store the last non-zero ActiveId timer since the beginning of activation, useful for animation.
+    float                   LastActiveIdTimeMr;                  // Store the last non-zero ActiveId timer since the beginning of activation, useful for animation.
 
     // [EXPERIMENTAL] Key/Input Ownership + Shortcut Routing system
     // - The idea is that instead of "eating" a given key, we can link to an owner.
@@ -1886,7 +1886,7 @@ struct ImGuiContext
     ImGuiWindow*            NavWindowingTarget;                 // Target window when doing CTRL+Tab (or Pad Menu + FocusPrev/Next), this window is temporarily displayed top-most!
     ImGuiWindow*            NavWindowingTargetAnim;             // Record of last valid NavWindowingTarget until DimBgRatio and NavWindowingHighlightAlpha becomes 0.0f, so the fade-out can stay on it.
     ImGuiWindow*            NavWindowingListWindow;             // Internal window actually listing the CTRL+Tab contents
-    float                   NavWindowingTimer;
+    float                   NavWindowingTimeMr;
     float                   NavWindowingHighlightAlpha;
     bool                    NavWindowingToggleLayer;
     ImVec2                  NavWindowingAccumDeltaPos;
@@ -1924,7 +1924,7 @@ struct ImGuiContext
     int                             TablesTempDataStacked;      // Temporary table data size (because we leave previous instances undestructed, we generally don't use TablesTempData.Size)
     ImVector<ImGuiTableTempData>    TablesTempData;             // Temporary table data (buffers reused/shared across instances, support nesting)
     ImPool<ImGuiTable>              Tables;                     // Persistent table data
-    ImVector<float>                 TablesLastTimeActive;       // Last used timestamp of each tables (SOA, for efficient GC)
+    ImVector<float>                 TablesLastTimeMActive;       // Last used timestamp of each tables (SOA, for efficient GC)
     ImVector<ImDrawChannel>         DrawChannelsTempMergeBuffer;
 
     // Tab bars
@@ -1936,8 +1936,8 @@ struct ImGuiContext
     // Hover Delay system
     ImGuiID                 HoverDelayId;
     ImGuiID                 HoverDelayIdPreviousFrame;
-    float                   HoverDelayTimer;                    // Currently used IsItemHovered(), generally inferred from g.HoveredIdTimer but kept uncleared until clear timer elapse.
-    float                   HoverDelayClearTimer;               // Currently used IsItemHovered(): grace time before g.TooltipHoverTimer gets cleared.
+    float                   HoverDelayTimeMr;                    // Currently used IsItemHovered(), generally inferred from g.HoveredIdTimeMr but kept uncleared until clear timer elapse.
+    float                   HoverDelayClearTimeMr;               // Currently used IsItemHovered(): grace time before g.TooltipHoverTimeMr gets cleared.
 
     // Widget state
     ImVec2                  MouseLastValidPos;
@@ -1972,7 +1972,7 @@ struct ImGuiContext
 
     // Settings
     bool                    SettingsLoaded;
-    float                   SettingsDirtyTimer;                 // Save .ini Settings to memory when time reaches zero
+    float                   SettingsDirtyTimeMr;                 // Save .ini Settings to memory when time reaches zero
     ImGuiTextBuffer         SettingsIniData;                    // In memory .ini settings
     ImVector<ImGuiSettingsHandler>      SettingsHandlers;       // List of .ini settings handlers
     ImChunkStream<ImGuiWindowSettings>  SettingsWindows;        // ImGuiWindow .ini settings entries
@@ -2025,7 +2025,7 @@ struct ImGuiContext
         Font = NULL;
         FontSize = FontBaseSize = 0.0f;
         IO.Fonts = shared_font_atlas ? shared_font_atlas : IM_NEW(ImFontAtlas)();
-        Time = 0.0f;
+        TimeM = 0.0f;
         FrameCount = 0;
         FrameCountEnded = FrameCountRendered = -1;
         WithinFrameScope = WithinFrameScopeWithImplicitWindow = WithinEndChild = false;
@@ -2040,16 +2040,16 @@ struct ImGuiContext
         MovingWindow = NULL;
         WheelingWindow = NULL;
         WheelingWindowStartFrame = -1;
-        WheelingWindowReleaseTimer = 0.0f;
+        WheelingWindowReleaseTimeMr = 0.0f;
 
         DebugHookIdInfo = 0;
         HoveredId = HoveredIdPreviousFrame = 0;
         HoveredIdAllowOverlap = false;
         HoveredIdDisabled = false;
-        HoveredIdTimer = HoveredIdNotActiveTimer = 0.0f;
+        HoveredIdTimeMr = HoveredIdNotActiveTimeMr = 0.0f;
         ActiveId = 0;
         ActiveIdIsAlive = 0;
-        ActiveIdTimer = 0.0f;
+        ActiveIdTimeMr = 0.0f;
         ActiveIdIsJustActivated = false;
         ActiveIdAllowOverlap = false;
         ActiveIdNoClearOnFocusLoss = false;
@@ -2065,7 +2065,7 @@ struct ImGuiContext
         ActiveIdPreviousFrameHasBeenEditedBefore = false;
         ActiveIdPreviousFrameWindow = NULL;
         LastActiveId = 0;
-        LastActiveIdTimer = 0.0f;
+        LastActiveIdTimeMr = 0.0f;
 
         ActiveIdUsingNavDirMask = 0x00;
         ActiveIdUsingAllKeyboardKeys = false;
@@ -2106,7 +2106,7 @@ struct ImGuiContext
         ConfigNavWindowingKeyNext = ImGuiMod_Ctrl | ImGuiKey_Tab;
         ConfigNavWindowingKeyPrev = ImGuiMod_Ctrl | ImGuiMod_Shift | ImGuiKey_Tab;
         NavWindowingTarget = NavWindowingTargetAnim = NavWindowingListWindow = NULL;
-        NavWindowingTimer = NavWindowingHighlightAlpha = 0.0f;
+        NavWindowingTimeMr = NavWindowingHighlightAlpha = 0.0f;
         NavWindowingToggleLayer = false;
 
         DimBgRatio = 0.0f;
@@ -2131,7 +2131,7 @@ struct ImGuiContext
         CurrentTabBar = NULL;
 
         HoverDelayId = HoverDelayIdPreviousFrame = 0;
-        HoverDelayTimer = HoverDelayClearTimer = 0.0f;
+        HoverDelayTimeMr = HoverDelayClearTimeMr = 0.0f;
 
         TempInputId = 0;
         ColorEditOptions = ImGuiColorEditFlags_DefaultOptions_;
@@ -2154,7 +2154,7 @@ struct ImGuiContext
         PlatformLocaleDecimalPoint = '.';
 
         SettingsLoaded = false;
-        SettingsDirtyTimer = 0.0f;
+        SettingsDirtyTimeMr = 0.0f;
         HookIdNext = 0;
 
         memset(LocalizationTable, 0, sizeof(LocalizationTable));
@@ -2313,7 +2313,7 @@ struct IMGUI_API ImGuiWindow
     ImVec2ih                HitTestHoleOffset;
 
     int                     LastFrameActive;                    // Last frame number the window was Active.
-    float                   LastTimeActive;                     // Last timestamp the window was Active (using float as we don't need high precision there)
+    float                   LastTimeMActive;                     // Last timestamp the window was Active (using float as we don't need high precision there)
     float                   ItemWidthDefault;
     ImGuiStorage            StateStorage;
     ImVector<ImGuiOldColumns> ColumnsStorage;
@@ -2643,7 +2643,7 @@ struct IMGUI_API ImGuiTable
 struct IMGUI_API ImGuiTableTempData
 {
     int                         TableIndex;                 // Index in g.Tables.Buf[] pool
-    float                       LastTimeActive;             // Last timestamp this structure was used
+    float                       LastTimeMActive;             // Last timestamp this structure was used
 
     ImVec2                      UserOuterSize;              // outer_size.x passed to BeginTable()
     ImDrawListSplitter          DrawSplitter;
@@ -2657,7 +2657,7 @@ struct IMGUI_API ImGuiTableTempData
     float                       HostBackupItemWidth;        // Backup of OuterWindow->DC.ItemWidth at the end of BeginTable()
     int                         HostBackupItemWidthStackSize;//Backup of OuterWindow->DC.ItemWidthStack.Size at the end of BeginTable()
 
-    ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+    ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeMActive = -1.0f; }
 };
 
 // sizeof() ~ 12

@@ -491,10 +491,10 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
         table->IsResetDisplayOrderRequest = true;
 
     // Mark as used
-    if (table_idx >= g.TablesLastTimeActive.Size)
-        g.TablesLastTimeActive.resize(table_idx + 1, -1.0f);
-    g.TablesLastTimeActive[table_idx] = (float)g.Time;
-    temp_data->LastTimeActive = (float)g.Time;
+    if (table_idx >= g.TablesLastTimeMActive.Size)
+        g.TablesLastTimeMActive.resize(table_idx + 1, -1.0f);
+    g.TablesLastTimeMActive[table_idx] = (float)g.TimeM;
+    temp_data->LastTimeMActive = (float)g.TimeM;
     table->MemoryCompacted = false;
 
     // Setup memory buffer (clear data if columns count changed)
@@ -1221,7 +1221,7 @@ void ImGui::TableUpdateBorders(ImGuiTable* table)
             table->ResizedColumn = (ImGuiTableColumnIdx)column_n;
             table->InstanceInteracted = table->InstanceCurrent;
         }
-        if ((hovered && g.HoveredIdTimer > TABLE_RESIZE_SEPARATOR_FEEDBACK_TIMER) || held)
+        if ((hovered && g.HoveredIdTimeMr > TABLE_RESIZE_SEPARATOR_FEEDBACK_TIMER) || held)
         {
             table->HoveredColumnBorder = (ImGuiTableColumnIdx)column_n;
             SetMouseCursor(ImGuiMouseCursor_ResizeEW);
@@ -3522,7 +3522,7 @@ void ImGui::TableRemove(ImGuiTable* table)
     //memset(table->RawData.Data, 0, table->RawData.size_in_bytes());
     //memset(table, 0, sizeof(ImGuiTable));
     g.Tables.Remove(table->ID, table);
-    g.TablesLastTimeActive[table_idx] = -1.0f;
+    g.TablesLastTimeMActive[table_idx] = -1.0f;
 }
 
 // Free up/compact internal Table buffers for when it gets unused
@@ -3538,13 +3538,13 @@ void ImGui::TableGcCompactTransientBuffers(ImGuiTable* table)
     table->MemoryCompacted = true;
     for (int n = 0; n < table->ColumnsCount; n++)
         table->Columns[n].NameOffset = -1;
-    g.TablesLastTimeActive[g.Tables.GetIndex(table)] = -1.0f;
+    g.TablesLastTimeMActive[g.Tables.GetIndex(table)] = -1.0f;
 }
 
 void ImGui::TableGcCompactTransientBuffers(ImGuiTableTempData* temp_data)
 {
     temp_data->DrawSplitter.ClearFreeMemory();
-    temp_data->LastTimeActive = -1.0f;
+    temp_data->LastTimeMActive = -1.0f;
 }
 
 // Compact and remove unused settings data (currently only used by TestEngine)

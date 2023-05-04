@@ -16,7 +16,7 @@ void GameObjectAltEx::Update()
 {
 }
 
-void GameObjectAltEx::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void GameObjectAltEx::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 

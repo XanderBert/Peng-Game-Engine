@@ -13,7 +13,7 @@ void GameObjectEx::Update()
 {
 }
 
-void GameObjectEx::FixedUpdate([[maybe_unused]] float fixedTimeStep)
+void GameObjectEx::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 

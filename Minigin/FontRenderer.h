@@ -3,7 +3,7 @@
 #include <string>
 #include "Component.h"
 #include "Font.h"
-#include "Time.h"
+#include "TimeM.h"
 
 class Texture2D;
 class FontRenderer : public Component
@@ -22,7 +22,7 @@ public:
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate(float fixedTimeStep) override;
+	virtual void FixedUpdate(float fixedTimeMStep) override;
 
 	//Called after the Update()
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern

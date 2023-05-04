@@ -26,11 +26,11 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::FixedUpdate(float fixedTimeStep)
+void GameObject::FixedUpdate(float fixedTimeMStep)
 {
 	for (const auto& component : m_pComponents)
 	{
-		component->FixedUpdate(fixedTimeStep);
+		component->FixedUpdate(fixedTimeMStep);
 	}
 }
 
