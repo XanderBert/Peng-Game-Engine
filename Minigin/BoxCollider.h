@@ -33,7 +33,10 @@ public:
 	void SetColliderSize(const glm::vec2& size);
 	void SetColliderOffset(const glm::vec2& offset);
 
+	void DebugRender(bool isDebugRendering);
+
 	SDL_Rect GetCollider() const;
 private:
 	SDL_Rect m_Collider{0,0,5,5};
+	bool m_DebugRender{};
 };

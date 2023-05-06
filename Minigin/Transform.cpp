@@ -72,6 +72,8 @@ glm::vec2 Transform::GetLocalPosition()
 
 void Transform::SetWorldPosition(const glm::vec2& position)
 {
+	m_LastTransformMatrixWorld = m_TranformMatrixWorld;
+
 	if (const auto parent = m_pOwner->GetParent())
 	{
 		const auto parentTransComponent = parent->GetComponent<Transform>();
@@ -105,6 +107,11 @@ glm::vec2 Transform::GetWorldPosition()
 	}
 
 	return worldPos;
+}
+
+glm::vec2 Transform::GetLastWorldPosition()
+{
+	return glm::vec2{ m_LastTransformMatrixWorld[0][2], m_LastTransformMatrixWorld[1][2] };
 }
 
 void Transform::SetPositionDirty()

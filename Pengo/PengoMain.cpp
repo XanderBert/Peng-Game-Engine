@@ -4,6 +4,8 @@
 #endif
 #endif
 
+#include <iostream>
+
 #include "SceneManager.h"
 #include "Scene.h"
 #include "FontRenderer.h"
@@ -15,13 +17,15 @@
 #include "imgui.h"
 #include "GameActor.h"
 #include "Pengo.h"
+#include "WallManager.h"
 
 
-glm::vec<2, glm::uint> g_WindowSize{ 1366, 720 };
+glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
 
 void load()
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+
 	//FPS Counter
 	auto go = new GameObject();
 	const auto fpsCounter{ go->AddComponent<FPSCounter>() };
@@ -31,9 +35,13 @@ void load()
 	fontRendererFPS->SetFont("Lingua.otf", 20);
 	scene.Add(go);
 
+
 	//Player1
 	const auto gameac = new Pengo();
 	scene.Add(gameac);
+
+	const auto wallManager = new WallManager();
+	scene.Add(wallManager);
 }
 
 int main(int, char* [])

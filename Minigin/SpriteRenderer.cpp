@@ -28,16 +28,6 @@ SpriteRenderer::~SpriteRenderer() = default;
 
 void SpriteRenderer::Update()
 {
-	//Todo Why does this function not get called????
-	std::cout << " This Comp Updates???";
-}
-
-void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
-{
-}
-
-void SpriteRenderer::LateUpdate()
-{
 	const auto elapsedTimeM = TimeM::GetInstance().GetDeltaTimeM();
 
 	m_AccumulatedFrameTimeM += elapsedTimeM;
@@ -54,6 +44,14 @@ void SpriteRenderer::LateUpdate()
 	}
 
 	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
+}
+
+void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
+{
+}
+
+void SpriteRenderer::LateUpdate()
+{
 }
 
 void SpriteRenderer::Render()

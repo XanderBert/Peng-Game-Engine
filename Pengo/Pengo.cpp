@@ -2,8 +2,10 @@
 
 #include "BoxCollider.h"
 #include "SpriteRenderer.h"
+#include "Wall.h"
+#include "WallManager.h"
 
-Pengo::Pengo()
+Pengo::Pengo() : GameActor()
 {
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	//TODO: Set with function or in constructor?
@@ -21,7 +23,9 @@ Pengo::Pengo()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
-	//const auto boxCollision{ AddComponent<BoxCollider>() };
+	const auto boxCollision{ AddComponent<BoxCollider>() };
+	boxCollision->SetColliderSize({16,16});
+	//boxCollision->DebugRender(true);
 }
 
 Pengo::~Pengo()
@@ -31,5 +35,14 @@ Pengo::~Pengo()
 void Pengo::Update()
 {
 	GameActor::Update();
+}
+
+void Pengo::OnCollision(GameObject* other)
+{
+	if(reinterpret_cast<Wall*>(other))
+	{
+		const auto transform = GetComponent<Transform>();
+		transform->SetWorldPosition(transform->GetLastWorldPosition());
+	}
 }
 

@@ -1,10 +1,8 @@
 #include "Component.h"
 #include "GameObject.h"
-
 #include "Transform.h"
 
-
-//Transform Component Is Allready Added Here
+//Transform Component Is Already Added Here
 GameObject::GameObject()
 {
 	AddComponent<Transform>();
@@ -59,33 +57,33 @@ GameObject* GameObject::GetParent() const
 
 void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition = true)
 {
-	const auto transformComponent = GetComponent<Transform>();
-
-	if (pParent == nullptr)
+	if (m_pParent == pParent)
 	{
-		transformComponent->SetLocalPosition(transformComponent->GetWorldPosition());
-	}
-	else
-	{
-		if (keepWorldPosition)
-		{
-			const auto parentTransformComponent = pParent->GetComponent<Transform>();
-
-			transformComponent->SetLocalPosition(transformComponent->GetLocalPosition() - parentTransformComponent->GetWorldPosition());
-		}
-		transformComponent->SetPositionDirty();
+		return;
 	}
 
 	if (m_pParent)
 	{
-		//Remove itself as a child from the previous parent(if any).
-		RemoveFromChildren(m_pParent);
+		// Remove from current parent's child list
+		m_pParent->RemoveFromChildren(this);
 	}
 
-	//Set the given parent on itself.
 	m_pParent = pParent;
-	//Add itself as a child to the given parent.
-	AddToChildVector(m_pParent);
+
+	if (m_pParent)
+	{
+		// Add to new parent's child list
+		m_pParent->AddToChildVector(this);
+
+		if (keepWorldPosition)
+		{
+			// Calculate the difference between the current world position and the new parent's world position
+			glm::vec2 worldPosDiff = GetComponent<Transform>()->GetWorldPosition() - m_pParent->GetComponent<Transform>()->GetWorldPosition();
+
+			// Set the local position of the child so that its world position remains the same
+			GetComponent<Transform>()->SetLocalPosition(worldPosDiff);
+		}
+	}
 }
 int GameObject::GetChildCount() const
 {

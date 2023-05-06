@@ -35,6 +35,7 @@ public:
 
 	void SetWorldPosition(const glm::vec2& position);
 	glm::vec2 GetWorldPosition();
+	glm::vec2 GetLastWorldPosition();
 	void SetPositionDirty();
 
 	//
@@ -55,8 +56,10 @@ public:
 
 	bool IsPositionDirty() const { return m_IsPositionDirty; }
 
+
 private:
 	glm::mat3x3 m_TranformMatrixWorld = glm::mat3x3{ {1, 0 ,0},{0, 1, 0},{0, 0, 1} };
+	glm::mat3x3 m_LastTransformMatrixWorld{};
 
 	bool m_IsPositionDirty{ false };
 	void UpdateWorldPosition();

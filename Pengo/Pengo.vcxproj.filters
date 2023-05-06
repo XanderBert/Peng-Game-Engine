@@ -13,18 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Walls">
+      <UniqueIdentifier>{999f7d1e-ad69-408c-bd7c-adc5e3c1c635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{e1f6cddd-dc4b-4bf1-baae-08cd249592a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pengo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Source Files\Walls</Filter>
+    </ClCompile>
+    <ClCompile Include="WallManager.cpp">
+      <Filter>Source Files\Walls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Source Files\Walls</Filter>
+    </ClInclude>
+    <ClInclude Include="WallManager.h">
+      <Filter>Source Files\Walls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@
 #include "TimeM.h"
 #include "Transform.h"
 
-GameActor::GameActor()
+GameActor::GameActor() : GameObject()
 {
 	InputManager::GetInstance().AddActor(this);
 }
@@ -94,7 +94,6 @@ void GameActor::SetTextureDirection(const glm::vec2& direction)
 	//When a sprite component is added it will update the direction
 	if (const auto spriteComponent = GetComponent<SpriteRenderer>())
 	{
-		std::cout << "SpriteComponent Here\n";
 		//Set Texture Direction
 		float absX = std::abs(direction.x);
 		float absY = std::abs(direction.y);
@@ -125,4 +124,5 @@ void GameActor::SetTextureDirection(const glm::vec2& direction)
 			}
 		}
 	}
+	
 }

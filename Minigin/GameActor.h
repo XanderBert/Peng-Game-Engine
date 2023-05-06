@@ -7,7 +7,6 @@
 #include "Event.h"
 #include "Achievement.h"
 
-class GameObject;
 
 class GameActor : public GameObject
 {
@@ -68,11 +67,11 @@ public:
 	virtual void OnCollision(GameObject* other) override;
 
 protected:
-	void NotifyObserver(const GameEvent event)
+	void NotifyObserver(const GameEvent event) const
 	{
 		for (size_t i{}; i < m_Observers.size(); ++i)
 		{
-			m_Observers[i].get()->Notify(event);
+			m_Observers[i]->Notify(event);
 		}
 	}
 
