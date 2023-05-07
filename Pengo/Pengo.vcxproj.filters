@@ -33,6 +33,9 @@
     <ClCompile Include="WallManager.cpp">
       <Filter>Source Files\Walls</Filter>
     </ClCompile>
+    <ClCompile Include="IceBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="WallManager.h">
       <Filter>Source Files\Walls</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBlock.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

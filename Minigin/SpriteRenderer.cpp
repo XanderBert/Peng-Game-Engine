@@ -6,8 +6,7 @@
 
 //SpriteSize Needs to be set
 //Sprite Frames Need to be added
-SpriteRenderer::SpriteRenderer(GameObject* owner)
-	: Component(owner)
+SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner)
 	, m_MovementDirectionMap{
 		{MovementDirection::Up, {}},
 		{MovementDirection::Down, {}},
@@ -15,32 +14,51 @@ SpriteRenderer::SpriteRenderer(GameObject* owner)
 		{MovementDirection::Right, {}},
 		{MovementDirection::None, {}} }
 
-		, m_FrameTimeM{ 0.3f }
+	, m_FrameTimeM{ 0.3f }
 	, m_TimeMFromMovementToStandStill{ 0.3f }
 {
 	if (GetComponent<TextureRenderer>() == nullptr)
 	{
 		throw std::runtime_error(std::string("Your GameObject needs an TextureRenderer Component for the SpriteRenderer To work"));
 	}
+
+
 }
 
 SpriteRenderer::~SpriteRenderer() = default;
 
 void SpriteRenderer::Update()
 {
-	const auto elapsedTimeM = TimeM::GetInstance().GetDeltaTimeM();
-
-	m_AccumulatedFrameTimeM += elapsedTimeM;
-	m_AccumulatedMoveToStandstillTimeM += elapsedTimeM;
-
-	if (m_AccumulatedMoveToStandstillTimeM > m_TimeMFromMovementToStandStill)
+	if(m_IsPlaying)
 	{
-		m_AnimationFrame = 1;
-	}
-	else if (m_AccumulatedFrameTimeM > m_FrameTimeM)
-	{
-		++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
-		m_AccumulatedFrameTimeM -= m_FrameTimeM;
+		const auto elapsedTimeM = TimeM::GetInstance().GetDeltaTimeM();
+
+		m_AccumulatedFrameTimeM += elapsedTimeM;
+
+		//Moving Objects
+		if(m_MovementDirection != MovementDirection::None)
+		{
+			m_AccumulatedMoveToStandstillTimeM += elapsedTimeM;
+			if (m_AccumulatedMoveToStandstillTimeM > m_TimeMFromMovementToStandStill)
+			{
+				m_AnimationFrame = 1;
+			}
+			else if (m_AccumulatedFrameTimeM > m_FrameTimeM)
+			{
+				++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+				m_AccumulatedFrameTimeM -= m_FrameTimeM;
+			}
+		}
+
+		//Non Moving Objects
+		else
+		{
+			if (m_AccumulatedFrameTimeM > m_FrameTimeM)
+			{
+				++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+				m_AccumulatedFrameTimeM -= m_FrameTimeM;
+			}
+		}		
 	}
 
 	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);

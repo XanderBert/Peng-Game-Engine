@@ -8,7 +8,6 @@
 Pengo::Pengo() : GameActor()
 {
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
-	//TODO: Set with function or in constructor?
 	textureRenderer->SetTexture("Pengo.png");
 
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };

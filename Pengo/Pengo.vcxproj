@@ -191,12 +191,14 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IceBlock.cpp" />
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PengoMain.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IceBlock.h" />
     <ClInclude Include="Pengo.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallManager.h" />

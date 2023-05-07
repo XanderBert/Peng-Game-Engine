@@ -1,6 +1,5 @@
 ﻿#include "GameActor.h"
 #include <iostream>
-
 #include "BoxCollider.h"
 #include "FontRenderer.h"
 #include "GameObject.h"

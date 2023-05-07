@@ -16,6 +16,7 @@
 #include "glm/vec2.hpp"
 #include "imgui.h"
 #include "GameActor.h"
+#include "IceBlock.h"
 #include "Pengo.h"
 #include "WallManager.h"
 
@@ -42,6 +43,16 @@ void load()
 
 	const auto wallManager = new WallManager();
 	scene.Add(wallManager);
+
+
+	auto ice = new IceBlock();
+	ice->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
+	scene.Add(ice);
+
+	ice = new IceBlock();
+	ice->GetComponent<Transform>()->SetWorldPosition({ 116,100 });
+	scene.Add(ice);
+
 }
 
 int main(int, char* [])

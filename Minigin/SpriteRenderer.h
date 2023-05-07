@@ -51,6 +51,14 @@ public:
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
+
+	void Play() { m_IsPlaying = true; }
+	void Pause() { m_IsPlaying = false; }
+	bool IsPlaying() const { return  m_IsPlaying; }
+
+	int GetLastSpriteIndexForCurrentDirection() const { return m_MovementDirectionMap.find(m_MovementDirection)->second.size() - 1; };
+	int GetCurrentSpriteIndexForCurrentDirection() const { return m_AnimationFrame; }
+
 private:
 	glm::vec2 m_SpriteSize{};
 	MovementDirection m_MovementDirection{ MovementDirection::Right };
@@ -66,5 +74,5 @@ private:
 	float m_TimeMFromMovementToStandStill{};
 	float m_AccumulatedMoveToStandstillTimeM{};
 
-
+	bool m_IsPlaying{ true };
 };
