@@ -31,13 +31,16 @@ void IceBlock::Update()
 {
 	GameObject::Update();
 
-	const auto spriteRenderer = GetComponent<SpriteRenderer>();
-
-	if(spriteRenderer->IsPlaying())
-	if(spriteRenderer->GetCurrentSpriteIndexForCurrentDirection() == spriteRenderer->GetLastSpriteIndexForCurrentDirection())
+	if(const auto spriteRenderer = GetComponent<SpriteRenderer>())
 	{
-		spriteRenderer->Pause();
-		MarkForDeletion();
+		if (spriteRenderer->IsPlaying())
+		{
+			if (spriteRenderer->GetCurrentSpriteIndexForCurrentDirection() == spriteRenderer->GetLastSpriteIndexForCurrentDirection())
+			{
+				spriteRenderer->Pause();
+				MarkForDeletion();
+			}
+		}
 	}
 }
 

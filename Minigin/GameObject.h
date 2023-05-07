@@ -49,7 +49,7 @@ public:
 	bool CanBeDeleted()const { return m_CanBeDeleted; }
 
 	//Will delete the object in the late update
-	void MarkForDeletion() { m_CanBeDeleted = true; }
+	void MarkForDeletion();
 
 	//
 	//Collision
@@ -59,12 +59,11 @@ protected:
 	bool m_CanBeDeleted{ false };
 private:
 	GameObject* m_pParent{};
-
-	//Does this update need to go the children update or does the scene go over all possible game objects?
 	std::vector<GameObject*> m_pChildren{};
 
 	void AddToChildVector(GameObject* pParent);
 	void RemoveFromChildren(GameObject* pParent) const;
+
 	//Gets called every late update
 	//Removes all components that have been marked for deletion
 	void RemoveComponents();

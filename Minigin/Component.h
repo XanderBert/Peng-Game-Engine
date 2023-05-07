@@ -40,6 +40,7 @@ protected:
 	GameObject* m_pOwner{ nullptr };
 private:
 	void SetGameObject(GameObject* owner);
+
 };
 
 //return nullptr if the component has not been found

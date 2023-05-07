@@ -67,10 +67,12 @@ void Scene::LateUpdate()
 		object->LateUpdate();
 	}
 
-	//std::erase_if(m_objects, [](const std::shared_ptr<GameObject>& object)
-	//{
-	//	return object.get()->CanBeDeleted();
-	//});
+
+	//Handles Deletion of the GameObjects itself
+	std::erase_if(m_objects, []( std::unique_ptr<GameObject>& object)
+	{
+		return object->CanBeDeleted();
+	});
 }
 
 void Scene::Render() const

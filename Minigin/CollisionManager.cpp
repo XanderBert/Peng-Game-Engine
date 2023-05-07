@@ -18,6 +18,10 @@ void CollisionManager::Update()
     //This approach is particularly efficient when most of the colliders are stationary.
 
 
+
+
+    //When Collider Gets Deleted it needs to be removed from this vector
+
     for (size_t i = 0; i < m_BoxColliders.size(); ++i)
     {
         auto func = [this, i]() { CheckCollisionAsync(i); };
@@ -28,6 +32,16 @@ void CollisionManager::Update()
 void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)
 {
     m_BoxColliders.push_back(boxCollider);
+}
+
+void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
+{
+    const auto it = std::ranges::find(m_BoxColliders, boxCollider);
+
+	if (it != m_BoxColliders.end()) 
+    {
+        m_BoxColliders.erase(it);
+    }
 }
 
 void CollisionManager::CheckCollisionAsync(size_t index)

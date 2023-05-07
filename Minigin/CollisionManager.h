@@ -7,6 +7,7 @@ class CollisionManager final : public Singleton<CollisionManager>
 public:
 	void Update();
 	void AddBoxCollider(BoxCollider* boxCollider);
+	void UnRegisterBoxCollider(BoxCollider* boxCollider);
 private:
 	friend class Singleton<CollisionManager>;
 	CollisionManager() = default;

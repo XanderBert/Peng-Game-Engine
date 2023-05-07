@@ -1,5 +1,9 @@
 #include "Component.h"
 #include "GameObject.h"
+
+#include <iostream>
+
+#include "CollisionManager.h"
 #include "Transform.h"
 
 //Transform Component Is Already Added Here
@@ -100,6 +104,17 @@ GameObject* GameObject::GetChildAt(int index) const
 	return nullptr;
 }
 
+void GameObject::MarkForDeletion()
+{
+	for (const auto& component : m_pComponents)
+	{
+		component->MarkForDeletion();
+	}
+
+	m_CanBeDeleted = true;
+
+}
+
 void GameObject::AddToChildVector(GameObject* pParent)
 {
 	pParent->m_pChildren.emplace_back(this);
@@ -116,11 +131,22 @@ void GameObject::RemoveFromChildren(GameObject* pParent) const
 
 void GameObject::RemoveComponents()
 {
-	//TODO FIX DELETION OF OBJECTS
-   // Remove components that can be deleted
-	std::erase_if(m_pComponents, [this](const std::shared_ptr<Component>& component)
-		{
-			component;
-			return this->CanBeDeleted();
-		});
+	// Remove components that can be deleted
+	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
+	{
+
+			const auto canBeRemoved = component->CanBeDeleted();
+			if (canBeRemoved)
+			{
+				//Handles Collision remove
+				if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
+				{
+					// Unregister the collider from the collision manager
+					CollisionManager::GetInstance().UnRegisterBoxCollider(collider);
+				}
+
+			}
+			return canBeRemoved;
+	});
+
 }
