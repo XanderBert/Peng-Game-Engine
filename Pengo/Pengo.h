@@ -15,4 +15,8 @@ public:
 	//Called each frame
 	virtual void Update() override;
 	virtual void OnCollision(GameObject* other) override;
+private:
+	GameObject* m_CollidingObject{};
+	bool m_IsCollidingWithIce{};
+	void StopMovement() const;
 };

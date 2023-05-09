@@ -1,6 +1,7 @@
 ﻿#include "Pengo.h"
 
 #include "BoxCollider.h"
+#include "IceBlock.h"
 #include "SpriteRenderer.h"
 #include "Wall.h"
 #include "WallManager.h"
@@ -31,17 +32,53 @@ Pengo::~Pengo()
 {
 }
 
+void Pengo::Attack()
+{
+	if(m_IsCollidingWithIce)
+	{
+		auto block = dynamic_cast<IceBlock*>(m_CollidingObject);
+
+		//block.TakeAttack()
+	}
+}
+
 void Pengo::Update()
 {
 	GameActor::Update();
+
+	m_IsCollidingWithIce = false;
+	m_CollidingObject = nullptr;
 }
 
 void Pengo::OnCollision(GameObject* other)
 {
-	if(reinterpret_cast<Wall*>(other))
+	m_CollidingObject = other;
+
+
+	if(dynamic_cast<Wall*>(other))
 	{
-		const auto transform = GetComponent<Transform>();
-		transform->SetWorldPosition(transform->GetLastWorldPosition());
+		StopMovement();
 	}
+
+	if (dynamic_cast<IceBlock*>(other))
+	{
+		StopMovement();
+		m_IsCollidingWithIce = true;
+
+		//When space is pressed. and collision is active.
+		//Make bool member in pengo isColliding with ice.
+		//this function will set that to true.
+		
+		//Fire -> will check if if bool is true
+		//Move ICE BLOCK make function for it. if it collides with wall/ice block. stop moving
+		//when it cannot move in that direction it gets destroyed
+
+	}
+}
+
+void Pengo::StopMovement() const
+{
+	const auto transform = GetComponent<Transform>();
+	transform->SetWorldPosition(transform->GetLastWorldPosition());
 }
 

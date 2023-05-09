@@ -22,14 +22,14 @@ public:
 	//virtual void Execute() = 0;
 };
 
-//class JumpCommand final : public Command
-//{
-//public:
-//	void Execute(GameActor& actor, [[maybe_unused]] const glm::vec2& value) override
-//	{
-//		actor.Jump();
-//	}
-//};
+class AttackCommand final : public Command
+{
+public:
+	void Execute(GameActor& actor, [[maybe_unused]] const glm::vec2& value) override
+	{
+		actor.Attack();
+	}
+};
 
 class MoveCommand final : public Command
 {

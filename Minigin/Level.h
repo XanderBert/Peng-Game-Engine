@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include <vector>
 
-class IceBlock;
-
 class Level
 {
 public:
+	Level();
+	virtual ~Level();
+
 private:
-	std::vector<IceBlock>
+
 };

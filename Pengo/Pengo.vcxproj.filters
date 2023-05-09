@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Player">
       <UniqueIdentifier>{e1f6cddd-dc4b-4bf1-baae-08cd249592a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\LevelHandling">
+      <UniqueIdentifier>{3098180c-0d11-4be8-b40a-5a59e7aadb71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
@@ -36,6 +39,12 @@
     <ClCompile Include="IceBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PengoLevelLoader.cpp">
+      <Filter>Source Files\LevelHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="PengoLevel.cpp">
+      <Filter>Source Files\LevelHandling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
@@ -49,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="IceBlock.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PengoLevelLoader.h">
+      <Filter>Source Files\LevelHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="PengoLevel.h">
+      <Filter>Source Files\LevelHandling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

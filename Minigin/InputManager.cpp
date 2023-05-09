@@ -4,7 +4,7 @@
 
 InputManager::InputManager()
 {
-	//m_pButtonA = new JumpCommand();
+	m_pButtonA = new AttackCommand();
 	m_pLeftThumbStick = new MoveCommand();
 
 	m_pControllers.push_back(std::make_unique<Controller>(0));
