@@ -12,6 +12,8 @@ public:
 	Pengo& operator=(const Pengo& other) = delete;
 	Pengo& operator=(Pengo&& other)noexcept = delete;
 
+	void Attack() override;
+
 	//Called each frame
 	virtual void Update() override;
 	virtual void OnCollision(GameObject* other) override;
