@@ -1,24 +1,24 @@
 #pragma once
-#include <map>
 #include <memory>
 #include <vector>
-
 #include "Command.h"
 #include "Controller.h"
-#include "Scene.h"
-#include "SceneManager.h"
-#include "Singleton.h"
 
-
-class InputManager final : public Singleton<InputManager>
+class InputManager
 {
 public:
 	InputManager();
-	~InputManager() override;
-	bool ProcessInput();
-	void AddActor(GameActor* actor) { m_pActors.push_back(actor); }
-	std::vector<Controller*> GetUsedControllers();
-	std::vector<Controller*> GetControllers();
+	~InputManager();
+
+	InputManager(const InputManager& other) = delete;
+	InputManager(InputManager&& other)noexcept = delete;
+	InputManager& operator=(const InputManager& other) = delete;
+	InputManager& operator=(InputManager&& other)noexcept = delete;
+
+	virtual bool ProcessInput();
+	virtual void AddActor(GameActor* actor) { m_pActors.push_back(actor); }
+	virtual std::vector<Controller*> GetUsedControllers();
+	virtual std::vector<Controller*> GetControllers();
 private:
 
 	////using ControllerKey = 
@@ -35,4 +35,13 @@ private:
 	std::vector<GameActor*> m_pActors{};
 
 	void CheckIfControllerNeedsToBeAdded();
+};
+
+class null_InputManager final : public InputManager
+{
+public:
+	bool ProcessInput() override { return false; }
+	void AddActor([[maybe_unused]] GameActor* actor) override {}
+	std::vector<Controller*> GetUsedControllers() override { return std::vector<Controller*> {}; }
+	std::vector<Controller*> GetControllers() override { return std::vector<Controller*> {}; }
 };

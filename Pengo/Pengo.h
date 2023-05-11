@@ -12,13 +12,16 @@ public:
 	Pengo& operator=(const Pengo& other) = delete;
 	Pengo& operator=(Pengo&& other)noexcept = delete;
 
+	void Move(const glm::vec2& direction) override;
 	void Attack() override;
 
 	//Called each frame
 	virtual void Update() override;
+	virtual void LateUpdate() override;
 	virtual void OnCollision(GameObject* other) override;
 private:
 	GameObject* m_CollidingObject{};
 	bool m_IsCollidingWithIce{};
 	void StopMovement() const;
+	void ResetCollision();
 };

@@ -1,8 +1,7 @@
 #include "Scene.h"
-#include "CollisionManager.h"
 #include "GameActor.h"
 #include "GameObject.h"
-
+#include "ServiceLocator.h"
 
 
 unsigned int Scene::m_idCounter = 0;
@@ -48,7 +47,7 @@ void Scene::Update()
 	for (auto& object : m_objects)
 	{
 		object->Update();
-		CollisionManager::GetInstance().Update();
+		ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 	}
 }
 
@@ -69,10 +68,10 @@ void Scene::LateUpdate()
 
 
 	//Handles Deletion of the GameObjects itself
-	std::erase_if(m_objects, []( std::unique_ptr<GameObject>& object)
-	{
-		return object->CanBeDeleted();
-	});
+	std::erase_if(m_objects, [](std::unique_ptr<GameObject>& object)
+		{
+			return object->CanBeDeleted();
+		});
 }
 
 void Scene::Render() const

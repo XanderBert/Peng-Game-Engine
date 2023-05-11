@@ -6,8 +6,7 @@
 #include <stdexcept>
 
 #include "Color.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
+#include "ServiceLocator.h"
 #include "Texture2D.h"
 #include "Transform.h"
 
@@ -32,7 +31,7 @@ void FontRenderer::Update()
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 		}
-		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
+		auto texture = SDL_CreateTextureFromSurface(ServiceLocator::GetInstance().Renderer.GetService().GetSDLRenderer(), surf);
 		if (texture == nullptr)
 		{
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
@@ -60,7 +59,7 @@ void FontRenderer::Render()
 		if (const auto transformComponent{ GetComponent<Transform>() })
 		{
 			const auto pos = transformComponent->GetWorldPosition();
-			Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
+			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x, pos.y);
 		}
 		else
 		{
@@ -77,7 +76,7 @@ void FontRenderer::SetText(std::string* text)
 
 void FontRenderer::SetFont(const std::string& fontPath, int fontSize)
 {
-	m_font = { ResourceManager::GetInstance().LoadFont(fontPath, fontSize) };
+	m_font = { ServiceLocator::GetInstance().ResourceManager.GetService().LoadFont(fontPath, fontSize) };
 	m_needsUpdate = true;
 }
 

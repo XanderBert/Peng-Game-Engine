@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <glm/vec2.hpp>
-
 #include "GameObject.h"
+#include "SpriteRenderer.h"
 
 class IceBlock final : public GameObject
 {
@@ -18,7 +18,13 @@ public:
 	virtual void Update() override;
 	virtual void OnCollision(GameObject* other) override;
 
+	void MoveIceBlock(const MovementDirection fireDirection);
+
 private:
-	const size_t m_NrFrames{10};
-	const glm::vec2 m_SpriteSize{16,16};
+	const size_t m_NrFrames{ 10 };
+	const glm::vec2 m_SpriteSize{ 16,16 };
+	glm::vec2 m_Velocity{ 0,0 };
+
+	void UpdateMovement();
+	void UpdateSpriteLogic();
 };

@@ -1,13 +1,9 @@
 #include <stdexcept>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "ResourceManager.h"
-
-#include <iostream>
-
-#include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include "ServiceLocator.h"
 
 void ResourceManager::Init(const std::string& dataPath)
 {
@@ -32,7 +28,7 @@ std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file)
 
 	//Make a new Texture
 	const auto fullPath = m_dataPath + file;
-	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
+	auto texture = IMG_LoadTexture(ServiceLocator::GetInstance().Renderer.GetService().GetSDLRenderer(), fullPath.c_str());
 
 	//Did not found texture
 	if (texture == nullptr)

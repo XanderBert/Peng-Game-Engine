@@ -21,12 +21,11 @@ public:
 
 	//Called each frame
 	virtual void Update() override;
-	
-	void Jump();
-	void Move(const glm::vec2& direction);
-	void Die();
 
-	virtual void Attack();
+	void Jump();
+	virtual void Move(const glm::vec2& direction);
+	void Die();
+	virtual void Attack() {}
 
 	void TakeDammage(const int dammage);
 	int GetHealth() const { return m_Health; }
@@ -61,7 +60,7 @@ public:
 			if (ptr.get() == observer) {
 				return true;
 			}
-		return false;
+			return false;
 			}), m_Observers.end());
 	}
 

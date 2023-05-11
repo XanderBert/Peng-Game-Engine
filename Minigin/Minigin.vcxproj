@@ -232,6 +232,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_truetype.h" />
     <ClInclude Include="Achievement.h" />
+    <ClInclude Include="AudioService.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CacheTestComponent.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -256,6 +257,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TestScene.h" />
@@ -275,6 +277,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_widgets.cpp" />
     <ClCompile Include="Achievement.cpp" />
+    <ClCompile Include="AudioService.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CacheTestComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -303,6 +306,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture2D.cpp" />

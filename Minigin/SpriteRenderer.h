@@ -15,6 +15,12 @@ enum class MovementDirection
 };
 
 
+enum class Action
+{
+	Move = 0,
+	Attack = 1,
+};
+
 class SpriteRenderer : public Component
 {
 public:
@@ -43,36 +49,42 @@ public:
 	//Set the texture of the TextureRenderer Component
 	//This does not need to be called if the Texture is already been set in the  TextureRenderer Component
 	void SetTexture(const std::string& texturePath);
-	void SetMovementDirection(MovementDirection value)
-	{
-		m_MovementDirection = value;
-		m_AccumulatedMoveToStandstillTimeM = 0.f;
-	}
+	void SetMovementDirection(MovementDirection value);
+	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
+
+	void SetActionOffset(const glm::vec2& offset, Action action);
+	void SetAction(Action action) { m_Action = action; }
 
 	void Play() { m_IsPlaying = true; }
 	void Pause() { m_IsPlaying = false; }
 	bool IsPlaying() const { return  m_IsPlaying; }
 
-	int GetLastSpriteIndexForCurrentDirection() const { return m_MovementDirectionMap.find(m_MovementDirection)->second.size() - 1; };
-	int GetCurrentSpriteIndexForCurrentDirection() const { return m_AnimationFrame; }
+	void SetFrameTime(const float frameTime) { m_FrameTime = frameTime; }
+
+	size_t GetLastSpriteIndexForCurrentDirection() const { return m_MovementDirectionMap.find(m_MovementDirection)->second.size() - 1; };
+	size_t GetCurrentSpriteIndexForCurrentDirection() const { return m_AnimationFrame; }
 
 private:
 	glm::vec2 m_SpriteSize{};
-	MovementDirection m_MovementDirection{ MovementDirection::Right };
 
+	MovementDirection m_MovementDirection{ MovementDirection::Right };
 	std::unordered_map<MovementDirection, std::vector<glm::vec2>> m_MovementDirectionMap{};
+
+	Action m_Action{ Action::Move };
+	std::unordered_map<Action, glm::vec2> m_ActionmapOffset{};
 
 	void SetSourceRect(const glm::vec2& position);
 
 	int m_AnimationFrame{};
-	float m_AccumulatedFrameTimeM{};
-	float m_FrameTimeM{};
+	float m_AccumulatedFrameTime{};
+	float m_FrameTime{};
 
-	float m_TimeMFromMovementToStandStill{};
-	float m_AccumulatedMoveToStandstillTimeM{};
+	float m_TimeFromMovementToStandStill{};
+	float m_AccumulatedMoveToStandstillTime{};
 
 	bool m_IsPlaying{ true };
+
 };

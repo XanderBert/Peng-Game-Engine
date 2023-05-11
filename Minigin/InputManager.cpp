@@ -140,6 +140,10 @@ bool InputManager::ProcessInput()
 					{
 						actor->GainPoints(25);
 					}
+					if(input == SDLK_SPACE)
+					{
+						actor->Attack();
+					}
 				}
 			}
 		}

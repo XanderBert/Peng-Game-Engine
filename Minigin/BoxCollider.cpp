@@ -1,12 +1,11 @@
 ﻿#include "BoxCollider.h"
-
-#include "CollisionManager.h"
+#include "ServiceLocator.h"
 #include "Renderer.h"
 #include "Transform.h"
 
 BoxCollider::BoxCollider(GameObject* owner) : Component(owner)
 {
-	CollisionManager::GetInstance().AddBoxCollider(this);
+	ServiceLocator::GetInstance().CollisionManager.GetService().AddBoxCollider(this);
 }
 
 BoxCollider::~BoxCollider()
@@ -17,7 +16,7 @@ void BoxCollider::Update()
 {
 }
 
-void BoxCollider::FixedUpdate([[maybe_unused]]float fixedTimeMStep)
+void BoxCollider::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
 {
 }
 
@@ -27,8 +26,9 @@ void BoxCollider::LateUpdate()
 
 void BoxCollider::Render()
 {
-	if(m_DebugRender)
-	Renderer::GetInstance().RenderRect(GetCollider());
+	if (m_DebugRender)
+		ServiceLocator::GetInstance().Renderer.GetService().RenderRect(GetCollider());
+
 }
 
 void BoxCollider::SetColliderSize(const glm::vec2& size)

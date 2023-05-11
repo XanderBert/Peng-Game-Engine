@@ -147,9 +147,6 @@
     <ClInclude Include="TestScene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Resource Files\Components</Filter>
     </ClInclude>
@@ -173,6 +170,15 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Source Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Source Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioService.h">
+      <Filter>Source Files\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +266,6 @@
     <ClCompile Include="Achievement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
@@ -292,6 +295,15 @@
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioService.cpp">
+      <Filter>Source Files\Singletons</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

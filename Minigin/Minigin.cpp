@@ -14,6 +14,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 #include "TimeM.h"
 
 SDL_Window* g_window{};
@@ -79,26 +80,26 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(g_window);
-
-	ResourceManager::GetInstance().Init(dataPath);
+	ServiceLocator::GetInstance().Renderer.GetService().Init(g_window);
+	ServiceLocator::GetInstance().ResourceManager.GetService().Init(dataPath);
 }
 
 Minigin::~Minigin()
 {
-	Renderer::GetInstance().Destroy();
+	ServiceLocator::GetInstance().Renderer.GetService().Destroy();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
+	ServiceLocator::GetInstance().Cleanup();
 }
 
 void Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
-	const auto& renderer = Renderer::GetInstance();
+	const auto& renderer = ServiceLocator::GetInstance().Renderer.GetService();
 	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	auto& input = ServiceLocator::GetInstance().InputManager.GetService();
 
 	bool doContinue = true;
 	auto lastTimeM = std::chrono::high_resolution_clock::now();
@@ -119,8 +120,6 @@ void Minigin::Run(const std::function<void()>& load)
 		}
 
 		TimeM::GetInstance().Update(deltaT);
-
-		//SteamAPI_RunCallbacks();
 
 		sceneManager.Update();
 		sceneManager.LateUpdate();

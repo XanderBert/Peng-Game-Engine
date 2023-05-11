@@ -23,8 +23,12 @@ Pengo::Pengo() : GameActor()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
+	spriteRenderer->SetActionOffset({ 0,0 }, Action::Move);
+	spriteRenderer->SetActionOffset({ 0,16 }, Action::Attack);
+
+
 	const auto boxCollision{ AddComponent<BoxCollider>() };
-	boxCollision->SetColliderSize({16,16});
+	boxCollision->SetColliderSize({ 16,16 });
 	//boxCollision->DebugRender(true);
 }
 
@@ -32,22 +36,38 @@ Pengo::~Pengo()
 {
 }
 
+void Pengo::Move(const glm::vec2& direction)
+{
+	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
+	{
+		spriteRenderer->SetAction(Action::Move);
+	}
+
+	GameActor::Move(direction);
+	ResetCollision();
+}
+
 void Pengo::Attack()
 {
-	if(m_IsCollidingWithIce)
+	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
 	{
-		auto block = dynamic_cast<IceBlock*>(m_CollidingObject);
+		if (m_IsCollidingWithIce)
+		{
+			dynamic_cast<IceBlock*>(m_CollidingObject)->MoveIceBlock(spriteRenderer->GetMovementDirection());
+		}
 
-		//block.TakeAttack()
+		spriteRenderer->SetAction(Action::Attack);
 	}
 }
 
 void Pengo::Update()
 {
 	GameActor::Update();
+}
 
-	m_IsCollidingWithIce = false;
-	m_CollidingObject = nullptr;
+void Pengo::LateUpdate()
+{
+	GameActor::LateUpdate();
 }
 
 void Pengo::OnCollision(GameObject* other)
@@ -55,23 +75,18 @@ void Pengo::OnCollision(GameObject* other)
 	m_CollidingObject = other;
 
 
-	if(dynamic_cast<Wall*>(other))
+	if (dynamic_cast<Wall*>(other))
 	{
 		StopMovement();
 	}
 
 	if (dynamic_cast<IceBlock*>(other))
 	{
-		StopMovement();
 		m_IsCollidingWithIce = true;
+		StopMovement();
 
-		//When space is pressed. and collision is active.
-		//Make bool member in pengo isColliding with ice.
-		//this function will set that to true.
-		
-		//Fire -> will check if if bool is true
-		//Move ICE BLOCK make function for it. if it collides with wall/ice block. stop moving
-		//when it cannot move in that direction it gets destroyed
+		//TODO ONLY when it cannot move in that direction it gets destroyed!!!
+		//Now it gets destroyed when it collides with anything on the first attack
 
 	}
 }
@@ -80,5 +95,11 @@ void Pengo::StopMovement() const
 {
 	const auto transform = GetComponent<Transform>();
 	transform->SetWorldPosition(transform->GetLastWorldPosition());
+}
+
+void Pengo::ResetCollision()
+{
+	m_IsCollidingWithIce = false;
+	m_CollidingObject = nullptr;
 }
 

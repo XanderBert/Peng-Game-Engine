@@ -5,14 +5,14 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
-#include "TextureRenderer.h"
 #include "TimeM.h"
 #include "Transform.h"
 
 GameActor::GameActor() : GameObject()
 {
-	InputManager::GetInstance().AddActor(this);
+	ServiceLocator::GetInstance().InputManager.GetService().AddActor(this);
 }
 
 GameActor::~GameActor()
@@ -71,7 +71,7 @@ void GameActor::SetControllerIndex(int index)
 {
 	m_UsesController = true;
 	m_ControllerID = index;
-	const auto& controllers = InputManager::GetInstance().GetControllers();
+	const auto& controllers = ServiceLocator::GetInstance().InputManager.GetService().GetControllers();
 
 	for (const auto& controller : controllers)
 	{
@@ -123,5 +123,5 @@ void GameActor::SetTextureDirection(const glm::vec2& direction)
 			}
 		}
 	}
-	
+
 }

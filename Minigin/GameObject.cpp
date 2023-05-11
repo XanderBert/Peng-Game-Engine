@@ -1,12 +1,8 @@
 #include "Component.h"
 #include "GameObject.h"
-
-#include <iostream>
-
-#include "CollisionManager.h"
 #include "Transform.h"
+#include "ServiceLocator.h"
 
-//Transform Component Is Already Added Here
 GameObject::GameObject()
 {
 	AddComponent<Transform>();
@@ -133,7 +129,7 @@ void GameObject::RemoveComponents()
 {
 	// Remove components that can be deleted
 	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
-	{
+		{
 
 			const auto canBeRemoved = component->CanBeDeleted();
 			if (canBeRemoved)
@@ -142,11 +138,11 @@ void GameObject::RemoveComponents()
 				if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
 				{
 					// Unregister the collider from the collision manager
-					CollisionManager::GetInstance().UnRegisterBoxCollider(collider);
+					ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(collider);
 				}
 
 			}
 			return canBeRemoved;
-	});
+		});
 
 }

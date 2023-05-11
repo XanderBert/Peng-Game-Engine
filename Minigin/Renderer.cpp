@@ -92,5 +92,3 @@ void Renderer::RenderRect(const SDL_Rect& rect) const
 	SDL_SetRenderDrawColor(GetSDLRenderer(), 255, 1, 1, 255);
 	SDL_RenderDrawRect(GetSDLRenderer(), &rect);
 }
-
-inline SDL_Renderer* Renderer::GetSDLRenderer() const { return m_renderer; }

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 #include "Texture2D.h"
 #include "Transform.h"
 
@@ -44,7 +45,7 @@ void TextureRenderer::Render()
 
 void TextureRenderer::SetTexture(const std::string& texturePath)
 {
-	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
+	m_pTexture = ServiceLocator::GetInstance().ResourceManager.GetService().LoadTexture(texturePath);
 }
 
 glm::vec2 TextureRenderer::GetSize()

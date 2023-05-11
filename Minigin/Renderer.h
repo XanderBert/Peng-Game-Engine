@@ -6,23 +6,39 @@ class Texture2D;
 /**
  * Simple RAII wrapper for the SDL renderer
  */
-class Renderer final : public Singleton<Renderer>
+class Renderer
 {
 	SDL_Renderer* m_renderer{};
 	SDL_Window* m_window{};
 	SDL_Color m_clearColor{};
 public:
-	void Init(SDL_Window* window);
-	void Render() const;
-	void Destroy();
+	Renderer() = default;
+	virtual ~Renderer() = default;
 
-	void RenderTexture(const Texture2D& texture, float x, float y) const;
-	void RenderTexture(const Texture2D& texture, float x, float y, const SDL_Rect& srcRect) const;
-	void RenderRect(const SDL_Rect& rect) const;
 
-	SDL_Renderer* GetSDLRenderer() const;
+	virtual void Init(SDL_Window* window);
+	virtual void Render() const;
+	virtual void Destroy();
 
-	const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
-	void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
+	virtual void RenderTexture(const Texture2D& texture, float x, float y) const;
+	virtual void RenderTexture(const Texture2D& texture, float x, float y, const SDL_Rect& srcRect) const;
+	virtual void RenderRect(const SDL_Rect& rect) const;
+
+	virtual SDL_Renderer* GetSDLRenderer() const { return m_renderer; };
+
+	virtual const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
+	virtual void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 };
 
+class null_Renderer final : public Renderer
+{
+	virtual void Init([[maybe_unused]] SDL_Window* window) override {}
+	virtual void Render() const override {}
+	virtual void Destroy() override {}
+	virtual void RenderTexture([[maybe_unused]] const Texture2D& texture, [[maybe_unused]] float x, [[maybe_unused]] float y) const override {}
+	virtual void RenderTexture([[maybe_unused]] const Texture2D& texture, [[maybe_unused]] float x, [[maybe_unused]] float y, [[maybe_unused]] const SDL_Rect& srcRect) const override {}
+	virtual void RenderRect([[maybe_unused]] const SDL_Rect& rect) const override {}
+	SDL_Renderer* GetSDLRenderer() const override { return nullptr; }
+	const SDL_Color& GetBackgroundColor() const override { return *new SDL_Color{ 0, 0, 0, 0 }; }
+	virtual void SetBackgroundColor([[maybe_unused]] const SDL_Color& color) override {}
+};
