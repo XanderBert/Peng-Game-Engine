@@ -1,10 +1,11 @@
 ﻿#include "Pengo.h"
-
 #include "BoxCollider.h"
 #include "IceBlock.h"
+#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "Wall.h"
 #include "WallManager.h"
+
 
 Pengo::Pengo() : GameActor()
 {
@@ -26,10 +27,14 @@ Pengo::Pengo() : GameActor()
 	spriteRenderer->SetActionOffset({ 0,0 }, Action::Move);
 	spriteRenderer->SetActionOffset({ 0,16 }, Action::Attack);
 
+	
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });
 	//boxCollision->DebugRender(true);
+
+	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
+
 }
 
 Pengo::~Pengo()
@@ -49,6 +54,8 @@ void Pengo::Move(const glm::vec2& direction)
 
 void Pengo::Attack()
 {
+	ServiceLocator::GetInstance().AudioService.GetService().Play(0);
+
 	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
 	{
 		if (m_IsCollidingWithIce)

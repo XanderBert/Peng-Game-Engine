@@ -15,18 +15,17 @@
 #include "Transform.h"
 #include "glm/vec2.hpp"
 #include "imgui.h"
-#include "GameActor.h"
 #include "IceBlock.h"
 #include "Pengo.h"
 #include "WallManager.h"
 #include "ServiceLocator.h"
+#include "SDL_mixer.h"
 
 
 glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
 
 void load()
 {
-
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	//FPS Counter
@@ -71,15 +70,12 @@ void load()
 
 int main(int, char* [])
 {
-	//ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
+	ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
 	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManager());
 	ServiceLocator::GetInstance().InputManager.SetService(new InputManager());
 	//ServiceLocator::GetInstance().LevelLoader.SetService(new LevelLoader());
 	ServiceLocator::GetInstance().Renderer.SetService(new Renderer());
 	ServiceLocator::GetInstance().ResourceManager.SetService(new ResourceManager());
-
-	//ServiceLocator::GetInstance().Renderer.GetService().init(g_WindowSize.x, g_WindowSize.y);
-
 
 	Minigin engine{ "../Data/", g_WindowSize };
 	engine.Run(load);

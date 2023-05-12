@@ -45,12 +45,17 @@ void PrintSDLVersion()
 	version = *TTF_Linked_Version();
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
-}
-//TODO: Fix Deletion of Components (Destructor Gets Called but memory does not get freed).
-//TODO: Fix Deletion of GameObjects (Function Take Unique pointer)
 
-//TODO: place huge amounts of data in components to check if everything gets deleted (This Data is now in TextureRenderer)
-//Just like i taught the memory does not get freed until the whole program terminates
+
+	SDL_MIXER_VERSION(&version)
+		printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
+			version.major, version.minor, version.patch);
+
+	version = *Mix_Linked_Version();
+	printf("We are linking against SDL_mixer version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+}
+
 
 //TODO: Implement something like juce's safe pointers.
 //Holds a pointer to some type of Component, which automatically becomes null if the component is deleted.
@@ -67,7 +72,13 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	g_window = SDL_CreateWindow(
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096) != 0)
+	{
+		throw std::runtime_error(std::string("Mix_OpenAudio Error: ") + Mix_GetError());
+	}
+
+	g_window = SDL_CreateWindow
+	(
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -75,6 +86,7 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 		windowSize.y,
 		SDL_WINDOW_OPENGL
 	);
+
 	if (g_window == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
@@ -87,6 +99,7 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 Minigin::~Minigin()
 {
 	ServiceLocator::GetInstance().Renderer.GetService().Destroy();
+	Mix_CloseAudio();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
