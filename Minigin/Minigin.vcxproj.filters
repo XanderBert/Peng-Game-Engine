@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Singletons\Services">
       <UniqueIdentifier>{d707d6ba-9042-4a28-b3e4-6d97ce780bc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Singletons\Services\AudioService">
+      <UniqueIdentifier>{e2c0322b-4a60-45fe-b782-67e0286243d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
@@ -165,9 +168,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Source Files\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="AudioService.h">
-      <Filter>Source Files\Singletons\Services</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Source Files\Singletons\Services</Filter>
     </ClInclude>
@@ -182,6 +182,15 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\Singletons\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioService.h">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioServiceImpl.h">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioServiceDebug.h">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +299,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="AudioService.cpp">
-      <Filter>Source Files\Singletons\Services</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files\Singletons\Services</Filter>
     </ClCompile>
@@ -307,6 +313,15 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\Singletons\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioService.cpp">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioServiceImpl.cpp">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioServiceDebug.cpp">
+      <Filter>Source Files\Singletons\Services\AudioService</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

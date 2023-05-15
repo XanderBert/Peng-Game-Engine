@@ -247,6 +247,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_truetype.h" />
     <ClInclude Include="Achievement.h" />
     <ClInclude Include="AudioService.h" />
+    <ClInclude Include="AudioServiceDebug.h" />
+    <ClInclude Include="AudioServiceImpl.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CacheTestComponent.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -292,6 +294,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_widgets.cpp" />
     <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="AudioService.cpp" />
+    <ClCompile Include="AudioServiceDebug.cpp" />
+    <ClCompile Include="AudioServiceImpl.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CacheTestComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />

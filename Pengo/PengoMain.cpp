@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "AudioServiceDebug.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "FontRenderer.h"
@@ -19,7 +20,7 @@
 #include "Pengo.h"
 #include "WallManager.h"
 #include "ServiceLocator.h"
-#include "SDL_mixer.h"
+
 
 
 glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
@@ -70,7 +71,7 @@ void load()
 
 int main(int, char* [])
 {
-	ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
+	ServiceLocator::GetInstance().AudioService.SetService(new AudioServiceDebug());
 	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManager());
 	ServiceLocator::GetInstance().InputManager.SetService(new InputManager());
 	//ServiceLocator::GetInstance().LevelLoader.SetService(new LevelLoader());

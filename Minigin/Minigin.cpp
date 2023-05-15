@@ -45,8 +45,7 @@ void PrintSDLVersion()
 	version = *TTF_Linked_Version();
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
-
-
+	
 	SDL_MIXER_VERSION(&version)
 		printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
 			version.major, version.minor, version.patch);
@@ -70,11 +69,6 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
-	}
-
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096) != 0)
-	{
-		throw std::runtime_error(std::string("Mix_OpenAudio Error: ") + Mix_GetError());
 	}
 
 	g_window = SDL_CreateWindow
