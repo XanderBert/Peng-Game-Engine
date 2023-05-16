@@ -1,7 +1,7 @@
 ﻿#include "ServiceLocator.h"
 
 //Declarations are also put in the cpp file. Otherwise the linker will not find the definitions in release.
-DefaultServiceLocator<AudioService, null_AudioService> ServiceLocator::AudioService;
+DefaultServiceLocator<null_AudioService, AudioService> ServiceLocator::AudioService;
 DefaultServiceLocator<CollisionManager, null_CollisionManager> ServiceLocator::CollisionManager;
 DefaultServiceLocator<InputManager, null_InputManager> ServiceLocator::InputManager;
 DefaultServiceLocator<LevelLoader, null_LevelLoader> ServiceLocator::LevelLoader;

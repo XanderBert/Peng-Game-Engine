@@ -58,7 +58,7 @@ T* DefaultServiceLocator<T, DefaultService>::m_Service = nullptr;
 class ServiceLocator final : public Singleton<ServiceLocator>
 {
 public:
-	static DefaultServiceLocator<AudioService, null_AudioService> AudioService;
+	static DefaultServiceLocator<null_AudioService, AudioService> AudioService;
 	static DefaultServiceLocator<CollisionManager, null_CollisionManager> CollisionManager;
 	static DefaultServiceLocator<InputManager, null_InputManager> InputManager;
 	static DefaultServiceLocator<LevelLoader, null_LevelLoader> LevelLoader;

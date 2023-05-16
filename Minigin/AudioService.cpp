@@ -1,7 +1,7 @@
 ﻿#include "AudioService.h"
 #include "ServiceLocator.h"
 
-AudioService::AudioService() : m_Impl(new AudioServiceImpl())
+AudioService::AudioService(): null_AudioService(), m_Impl(new AudioServiceImpl())
 {
 }
 

@@ -1,14 +1,13 @@
 ﻿#include "AudioServiceDebug.h"
-
+#include "AudioService.h"
 #include <iostream>
 
-AudioServiceDebug::AudioServiceDebug() : m_Impl(new AudioServiceImpl())
+AudioServiceDebug::AudioServiceDebug() : AudioService()
 {
 }
 
 AudioServiceDebug::~AudioServiceDebug()
 {
-	delete m_Impl;
 }
 
 void AudioServiceDebug::Play(int id)

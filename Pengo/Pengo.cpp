@@ -94,7 +94,6 @@ void Pengo::OnCollision(GameObject* other)
 
 		//TODO ONLY when it cannot move in that direction it gets destroyed!!!
 		//Now it gets destroyed when it collides with anything on the first attack
-
 	}
 }
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "AudioService.h"
 
-class AudioServiceDebug final :public AudioService
+class AudioServiceDebug final : public AudioService
 {
 public:
     AudioServiceDebug();
@@ -12,10 +12,8 @@ public:
     AudioServiceDebug& operator=(const AudioServiceDebug& other) = delete;
     AudioServiceDebug& operator=(AudioServiceDebug&& other) = delete;
 
-    void Play(int id) override;
-    void AddSound(const int id, const std::string& file) override;
+    void Play(int id);
+    void AddSound(const int id, const std::string& file);
     int GetLastId()const override;
 
-private:
-    AudioServiceImpl* m_Impl;
 };

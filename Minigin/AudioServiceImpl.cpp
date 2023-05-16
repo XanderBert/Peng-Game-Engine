@@ -69,7 +69,6 @@ int AudioServiceImpl::GetLastId() const
 
 void AudioServiceImpl::PlayAudioAsync()
 {
-
 	while (true)
 	{
 		int audioData;
