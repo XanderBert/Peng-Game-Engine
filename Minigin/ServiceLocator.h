@@ -61,7 +61,7 @@ public:
 	static DefaultServiceLocator<null_AudioService, AudioService> AudioService;
 	static DefaultServiceLocator<CollisionManager, null_CollisionManager> CollisionManager;
 	static DefaultServiceLocator<InputManager, null_InputManager> InputManager;
-	static DefaultServiceLocator<LevelLoader, null_LevelLoader> LevelLoader;
+	static DefaultServiceLocator<null_LevelLoader, LevelLoader> LevelLoader;
 	static DefaultServiceLocator<Renderer, null_Renderer> Renderer;
 	static DefaultServiceLocator<ResourceManager, null_ResourceManager> ResourceManager;
 

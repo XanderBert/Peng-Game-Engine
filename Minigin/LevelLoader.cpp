@@ -9,6 +9,12 @@ void LevelLoader::Init(const std::string& levelFolder)
 	m_LevelFolder = levelFolder;
 }
 
+std::unique_ptr<Level> LevelLoader::LoadLevel(const std::string& name)
+{
+	name;
+	return nullptr;
+}
+
 void LevelLoader::OpenFile(const std::string& name)
 {
 	std::ifstream theFile{ name };

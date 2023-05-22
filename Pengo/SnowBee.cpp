@@ -61,6 +61,8 @@ void SnowBee::OnCollision(GameObject* other)
 
 	if (dynamic_cast<IceBlock*>(other))
 	{
+		//if the iceblock is moving, kill the focking snowbee
+		//else
 		//Go goblin mode
 		if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
 		{

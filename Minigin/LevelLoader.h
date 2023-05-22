@@ -1,10 +1,24 @@
 ﻿#pragma once
-#include "Singleton.h"
+#include <memory>
 #include <string>
 #include "Level.h"
 #include "rapidxml.hpp"
 
-class LevelLoader
+class null_LevelLoader
+{
+public:
+	null_LevelLoader() = default;
+	virtual ~null_LevelLoader() = default;
+
+	virtual std::unique_ptr<Level> LoadLevel(const std::string&) = 0;
+	virtual void Init(const std::string&) = 0;
+
+protected:
+	virtual void OpenFile(const std::string& name) = 0;
+};
+
+
+class LevelLoader : public null_LevelLoader
 {
 public:
 	LevelLoader() = default;
@@ -15,20 +29,13 @@ public:
 	LevelLoader& operator=(const LevelLoader& other) = delete;
 	LevelLoader& operator=(LevelLoader&& other)noexcept = delete;
 
-	virtual void Init(const std::string& levelFolder);
-	virtual Level* LoadLevel(const std::string& name) = 0;
+	virtual void Init(const std::string& levelFolder) override;
+	virtual std::unique_ptr<Level> LoadLevel(const std::string& name) override;
 
 protected:
 	//Stores the level document in this XML member.
-	void OpenFile(const std::string& name);
+	void OpenFile(const std::string& name) override;
 	rapidxml::xml_document<> m_levelDocument;
 private:
 	std::string m_LevelFolder;
-};
-
-class null_LevelLoader final : public LevelLoader
-{
-public:
-	virtual Level* LoadLevel([[maybe_unused]] const std::string& name) override { return nullptr; }
-	virtual void Init([[maybe_unused]] const std::string& levelFolder) override {}
 };

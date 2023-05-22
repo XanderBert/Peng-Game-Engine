@@ -4,7 +4,7 @@
 DefaultServiceLocator<null_AudioService, AudioService> ServiceLocator::AudioService;
 DefaultServiceLocator<CollisionManager, null_CollisionManager> ServiceLocator::CollisionManager;
 DefaultServiceLocator<InputManager, null_InputManager> ServiceLocator::InputManager;
-DefaultServiceLocator<LevelLoader, null_LevelLoader> ServiceLocator::LevelLoader;
+DefaultServiceLocator<null_LevelLoader, LevelLoader> ServiceLocator::LevelLoader;
 DefaultServiceLocator<Renderer, null_Renderer> ServiceLocator::Renderer;
 DefaultServiceLocator<ResourceManager, null_ResourceManager> ServiceLocator::ResourceManager;
 
