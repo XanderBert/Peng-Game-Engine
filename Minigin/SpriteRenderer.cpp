@@ -92,6 +92,30 @@ void SpriteRenderer::SetMovementDirection(MovementDirection value)
 	m_AccumulatedMoveToStandstillTime = 0.f;
 }
 
+void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
+{
+	if (direction.x > 0)
+	{
+		SetMovementDirection(MovementDirection::Right);
+	}
+	else if (direction.x < 0)
+	{
+		SetMovementDirection(MovementDirection::Left);
+	}
+	else if (direction.y > 0)
+	{
+		SetMovementDirection(MovementDirection::Down);
+	}
+	else if (direction.y < 0)
+	{
+		SetMovementDirection(MovementDirection::Up);
+	}
+	else
+	{
+		SetMovementDirection(MovementDirection::None);
+	}
+}
+
 void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection direction)
 {
 	m_MovementDirectionMap.find(direction)->second.push_back(position);

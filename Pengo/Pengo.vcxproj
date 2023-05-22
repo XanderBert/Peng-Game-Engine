@@ -206,6 +206,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="PengoLevel.cpp" />
     <ClCompile Include="PengoLevelLoader.cpp" />
     <ClCompile Include="PengoMain.cpp" />
+    <ClCompile Include="SnowBee.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
@@ -214,6 +215,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="Pengo.h" />
     <ClInclude Include="PengoLevel.h" />
     <ClInclude Include="PengoLevelLoader.h" />
+    <ClInclude Include="SnowBee.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallManager.h" />
   </ItemGroup>

@@ -20,7 +20,7 @@
 #include "Pengo.h"
 #include "WallManager.h"
 #include "ServiceLocator.h"
-
+#include "SnowBee.h"
 
 
 glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
@@ -66,6 +66,9 @@ void load()
 	ice = new IceBlock();
 	ice->GetComponent<Transform>()->SetWorldPosition({ 116,82 });
 	scene.Add(ice);
+
+	const auto snowBee = new SnowBee();
+	scene.Add(snowBee);
 
 }
 

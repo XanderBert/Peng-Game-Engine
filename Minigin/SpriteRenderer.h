@@ -50,6 +50,7 @@ public:
 	//This does not need to be called if the Texture is already been set in the  TextureRenderer Component
 	void SetTexture(const std::string& texturePath);
 	void SetMovementDirection(MovementDirection value);
+	void SetMovementDirection(const glm::vec2& direction);
 	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
