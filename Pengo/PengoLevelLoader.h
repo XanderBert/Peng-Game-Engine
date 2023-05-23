@@ -11,6 +11,11 @@ public:
 	PengoLevelLoader() = default;
 	~PengoLevelLoader() = default;
 
+	PengoLevelLoader(const PengoLevelLoader& other) = delete;
+	PengoLevelLoader(PengoLevelLoader&& other)noexcept = delete;
+	PengoLevelLoader& operator=(const PengoLevelLoader& other) = delete;
+	PengoLevelLoader& operator=(PengoLevelLoader&& other)noexcept = delete;
+
 	virtual void Init(const std::string& levelFolder);
 	virtual std::unique_ptr<PengoLevel> LoadLevel(const std::string& name);
 private:

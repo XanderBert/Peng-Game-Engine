@@ -27,3 +27,8 @@ void PengoLevelLoader::OpenFile(const std::string& name)
 	// Parse the buffer using the xml file parsing library into doc 
 	m_levelDocument.parse<0>(&buffer[0]);
 }
+
+void PengoLevelLoader::ParseLevel()
+{
+
+}
