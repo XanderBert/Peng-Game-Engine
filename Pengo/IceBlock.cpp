@@ -57,6 +57,13 @@ void IceBlock::MoveIceBlock(const MovementDirection fireDirection)
 	case MovementDirection::Left: m_Velocity = { -100, 0 }; break;
 	case MovementDirection::Right: m_Velocity = { 100, 0 }; break;
 	}
+
+	m_IsMoving = true;
+}
+
+bool IceBlock::IsMoving() const
+{
+	return m_IsMoving;
 }
 
 void IceBlock::UpdateMovement()

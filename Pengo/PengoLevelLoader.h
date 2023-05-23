@@ -1,13 +1,23 @@
 ﻿#pragma once
-#include "LevelLoader.h"
+#include <rapidxml.hpp>
+#include "PengoLevel.h"
 #include "IceBlock.h"
 #include "Pengo.h"
 #include "Wall.h"
 
-//class PengoLevelLoader final : public LevelLoader
-//{
-//public:
-//	//Level* LoadLevel(const std::string& name) override;
-//private:
-//	//PengoLevelLoader() = default;
-//};
+class PengoLevelLoader final
+{
+public:
+	PengoLevelLoader() = default;
+	~PengoLevelLoader() = default;
+
+	virtual void Init(const std::string& levelFolder);
+	virtual std::unique_ptr<PengoLevel> LoadLevel(const std::string& name);
+private:
+
+	//Stores the level document in this XML member.
+	void OpenFile(const std::string& name);
+	void ParseLevel();
+	rapidxml::xml_document<> m_levelDocument;
+	std::string m_LevelFolder;
+};

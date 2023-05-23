@@ -77,7 +77,6 @@ int main(int, char* [])
 	ServiceLocator::GetInstance().AudioService.SetService(new AudioServiceDebug());
 	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManager());
 	ServiceLocator::GetInstance().InputManager.SetService(new InputManager());
-	ServiceLocator::GetInstance().LevelLoader.SetService(new LevelLoader());
 	ServiceLocator::GetInstance().Renderer.SetService(new Renderer());
 	ServiceLocator::GetInstance().ResourceManager.SetService(new ResourceManager());
 
