@@ -1,6 +1,27 @@
 ﻿#include "CollisionManager.h"
-
+#include "BoxCollider.h"
 #include <future>
+
+CollisionManager::CollisionManager() : m_StopRequested(false)
+{
+	//number of available threads
+	const Uint32 numThreads = std::thread::hardware_concurrency();
+
+	//Create threads
+	for (uint32_t i{}; i < numThreads; ++i)
+	{
+		m_ThreadPool.emplace_back(&CollisionManager::CollisionWorker, this);
+	}
+
+}
+
+CollisionManager::~CollisionManager()
+{
+	//Stop threads
+	std::unique_lock lock(m_CollisionMutex);
+	m_StopRequested = true;
+	m_ConditionVariable.notify_all();
+}
 
 void CollisionManager::Update()
 {
@@ -18,17 +39,19 @@ void CollisionManager::Update()
 	//This approach is particularly efficient when most of the colliders are stationary.
 
 
-
-
-	//When Collider Gets Deleted it needs to be removed from this vector
-
 	for (size_t i = 0; i < m_BoxColliders.size(); ++i)
 	{
+		//Create the task function pointer
+		std::function task = [this, i]() {CheckCollisionAsync(i);  };
 
-		//TODO I make threads on the fly, this is not a good idea
-		//TODO I should make a thread pool
-		auto func = [this, i]() { CheckCollisionAsync(i); };
-		auto asycnFunc = std::async(std::launch::async, func);
+		//Add the task to the queue
+		{
+			std::unique_lock lock(m_CollisionMutex);
+			m_TaskQueue.push(task);
+		}
+
+		//Notify a thread that there is work to do
+		m_ConditionVariable.notify_one();
 	}
 }
 
@@ -44,6 +67,29 @@ void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
 	if (it != m_BoxColliders.end())
 	{
 		m_BoxColliders.erase(it);
+	}
+}
+
+void CollisionManager::CollisionWorker()
+{
+	//Runs on a seperate thread
+	while (true)
+	{
+		//Get the task from the queue
+		std::function<void()> task;
+
+		{
+			std::unique_lock lock(m_CollisionMutex);
+			m_ConditionVariable.wait(lock, [this]() {return !m_TaskQueue.empty() || m_StopRequested; });
+			if (m_StopRequested)
+			{
+				return;
+			}
+			task = m_TaskQueue.front();
+			m_TaskQueue.pop();
+		}
+		//Execute the task
+		task();
 	}
 }
 

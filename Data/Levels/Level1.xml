@@ -1,0 +1,16 @@
+<game>
+  <objects>
+    <object type="wall" x="150" y="160" />
+    <object type="wall" x="170" y="180" />
+    <object type="wall" x="190" y="200" />
+    
+    <object type="iceBlock" x="210" y="220" />
+    <object type="iceBlock" x="230" y="240" />
+    <object type="iceBlock" x="250" y="260" />
+
+    <object type="player" x="10" y="20"/> 
+
+    <object type="snowBee" x="20" y="30"/>
+    <object type="snowBee" x="30" y="40"/>
+  </objects>
+</game>

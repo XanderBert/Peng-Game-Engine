@@ -37,6 +37,7 @@ void AudioServiceImpl::Play(int id)
 Mix_Chunk* AudioServiceImpl::AddSound(const int id, const std::string& file)
 {
 	const auto pathdir = ServiceLocator::GetInstance().ResourceManager.GetService().GetDataPath() + file;
+
 	Mix_Chunk* wave = Mix_LoadWAV(pathdir.c_str());
 
 	if (wave == nullptr) return nullptr;

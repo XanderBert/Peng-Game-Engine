@@ -21,6 +21,8 @@
 #include "WallManager.h"
 #include "ServiceLocator.h"
 #include "SnowBee.h"
+#include "PengoLevel.h"
+#include "PengoLevelLoader.h"
 
 
 glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
@@ -38,37 +40,40 @@ void load()
 	fontRendererFPS->SetFont("Lingua.otf", 20);
 	scene.Add(go);
 
+	PengoLevelLoader levelLoader;
+	PengoLevel* level01 = levelLoader.LoadLevel("Level1.xml");
+	level01->AddGameObjectsToScene(&scene);
 
-	//Player1
-	const auto gameac = new Pengo();
-	scene.Add(gameac);
+	////Player1
+	//const auto gameac = new Pengo();
+	//scene.Add(gameac);
 
-	const auto wallManager = new WallManager();
-	scene.Add(wallManager);
+	//const auto wallManager = new WallManager();
+	//scene.Add(wallManager);
 
 
-	auto ice = new IceBlock();
-	ice->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
-	scene.Add(ice);
+	//auto ice = new IceBlock();
+	//ice->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
+	//scene.Add(ice);
 
-	ice = new IceBlock();
-	ice->GetComponent<Transform>()->SetWorldPosition({ 116,100 });
-	scene.Add(ice);
+	//ice = new IceBlock();
+	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,100 });
+	//scene.Add(ice);
 
-	ice = new IceBlock();
-	ice->GetComponent<Transform>()->SetWorldPosition({ 116,50 });
-	scene.Add(ice);
+	//ice = new IceBlock();
+	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,50 });
+	//scene.Add(ice);
 
-	ice = new IceBlock();
-	ice->GetComponent<Transform>()->SetWorldPosition({ 116,66 });
-	scene.Add(ice);
+	//ice = new IceBlock();
+	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,66 });
+	//scene.Add(ice);
 
-	ice = new IceBlock();
-	ice->GetComponent<Transform>()->SetWorldPosition({ 116,82 });
-	scene.Add(ice);
+	//ice = new IceBlock();
+	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,82 });
+	//scene.Add(ice);
 
-	const auto snowBee = new SnowBee();
-	scene.Add(snowBee);
+	//const auto snowBee = new SnowBee();
+	//scene.Add(snowBee);
 
 }
 

@@ -8,7 +8,7 @@
 class PengoLevelLoader final
 {
 public:
-	PengoLevelLoader() = default;
+	PengoLevelLoader();
 	~PengoLevelLoader() = default;
 
 	PengoLevelLoader(const PengoLevelLoader& other) = delete;
@@ -16,13 +16,15 @@ public:
 	PengoLevelLoader& operator=(const PengoLevelLoader& other) = delete;
 	PengoLevelLoader& operator=(PengoLevelLoader&& other)noexcept = delete;
 
-	virtual void Init(const std::string& levelFolder);
-	virtual std::unique_ptr<PengoLevel> LoadLevel(const std::string& name);
+	PengoLevel* LoadLevel(const std::string& name);
 private:
-
 	//Stores the level document in this XML member.
 	void OpenFile(const std::string& name);
-	void ParseLevel();
-	rapidxml::xml_document<> m_levelDocument;
+	void ParseLevel() const;
+	static GameObject* CreateObject(const std::string& type, const glm::vec2& location);
+
+	rapidxml::xml_document<> m_LevelDocument;
 	std::string m_LevelFolder;
+	std::unique_ptr<PengoLevel> m_pLevel;
+	std::vector<char> m_XmlBuffer;
 };
