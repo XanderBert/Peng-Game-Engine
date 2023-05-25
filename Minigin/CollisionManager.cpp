@@ -85,8 +85,6 @@ void CollisionManager::Update()
 		collider->ClearCollidingObjects();
 	}
 
-
-
 	{
 		std::unique_lock lock(m_CollisionMutex);
 
@@ -186,9 +184,6 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 
 		for (size_t j = i + 1; j < m_BoxColliders.size(); ++j)
 		{
-			if (m_StopRequested) { return; }
-
-
 			BoxCollider* colliderB = m_BoxColliders[j];
 
 			// Check if the BoxColliders are colliding
