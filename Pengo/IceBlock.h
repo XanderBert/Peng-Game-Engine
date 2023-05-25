@@ -20,6 +20,7 @@ public:
 
 	void MoveIceBlock(const MovementDirection fireDirection);
 	bool IsMoving() const;
+	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
 
 private:
 	const size_t m_NrFrames{ 10 };

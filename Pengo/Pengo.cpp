@@ -1,6 +1,7 @@
 ﻿#include "Pengo.h"
 #include "BoxCollider.h"
 #include "IceBlock.h"
+#include "IceBlockTrigger.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "Wall.h"
@@ -8,10 +9,14 @@
 #include "PlayerState.h"
 #include "PengoEvents.h"
 #include "TimeM.h"
+#include "PengoIceBlockTrigger.h"
 
 
 Pengo::Pengo() : GameActor()
 {
+	m_pIceBlockTrigger = new PengoIceBlockTrigger(this);
+
+
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	textureRenderer->SetTexture("Pengo.png");
 
@@ -58,16 +63,6 @@ void Pengo::Update()
 	GameActor::Update();
 	UpdateState();
 
-	//if (m_CollidingObject)
-	//{
-	//	m_TimeUntilCollisionForget -= TimeM::GetInstance().GetDeltaTimeM();
-	//	if (m_TimeUntilCollisionForget <= 0.f)
-	//	{
-	//		ResetCollision();
-	//	}
-	//}
-
-
 }
 
 void Pengo::LateUpdate()
@@ -77,43 +72,26 @@ void Pengo::LateUpdate()
 
 void Pengo::OnCollision(GameObject* other)
 {
+	if (dynamic_cast<PengoIceBlockTrigger*>(other)) { return; }
+
 	GameActor::OnCollision(other);
-
-	//Set the colliding object
-	//ResetCollision();
-
-	//std::cout << "Pengo collided with " << other << std::endl;
-
-	//Call the OnCollision of the current state
 	m_pState->OnCollision();
 
-
-	if (dynamic_cast<Wall*>(other))
-	{
-		StopMovement();
-	}
-
-	if (dynamic_cast<IceBlock*>(other))
+	if (dynamic_cast<IceBlockTrigger*>(other))
 	{
 		NotifyObserver(this, GameEvent::CollidingWithIce);
-		StopMovement();
-		//TODO ONLY when it cannot move in that direction it gets destroyed!!!
-		//Now it gets destroyed when it collides with anything on the first attack
+		return;
 	}
 
+	StopMovement();
 }
 
 void Pengo::StopMovement() const
 {
 	const auto transform = GetComponent<Transform>();
+
 	transform->SetWorldPosition(transform->GetLastWorldPosition());
 }
-
-//void Pengo::ResetCollision()
-//{
-//	m_TimeUntilCollisionForget = 0.3f;
-//	m_CollidingObject = nullptr;
-//}
 
 void Pengo::UpdateState()
 {
@@ -124,4 +102,3 @@ void Pengo::UpdateState()
 	}
 	m_pState->Update();
 }
-

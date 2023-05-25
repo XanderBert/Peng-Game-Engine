@@ -2,11 +2,12 @@
 #include <glm/vec2.hpp>
 
 #include "GameObject.h"
+#include "IceBlock.h"
 
 class IceBlockTrigger final : public GameObject
 {
 public:
-	IceBlockTrigger(GameObject* pParent);
+	IceBlockTrigger(IceBlock* pParent);
 	virtual ~IceBlockTrigger() override;
 
 	IceBlockTrigger(const IceBlockTrigger& other) = delete;
@@ -19,5 +20,5 @@ public:
 private:
 	//This is somewhat bigger then the sprite
 	//The sprite collider will handle the stopping and this collider will handle the attack
-	const glm::vec2 m_CollisionSize{ 18,18 };
+	const glm::vec2 m_CollisionSize{ 22,22 };
 };

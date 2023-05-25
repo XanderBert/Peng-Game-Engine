@@ -3,19 +3,22 @@
 #include <iostream>
 
 #include "BoxCollider.h"
+#include "IceBlock.h"
 
-IceBlockTrigger::IceBlockTrigger(GameObject* pParent)
+IceBlockTrigger::IceBlockTrigger(IceBlock* pParent)
 {
 	SetParent(pParent, false);
+
+	const auto offset = (m_CollisionSize - pParent->GetSpriteSize()) / 2.f; // will result in {2,2}
 
 	const auto collision = AddComponent<BoxCollider>();
 	collision->SetColliderSize(m_CollisionSize);
 	collision->DebugRender(true);
+	collision->SetColliderOffset(-offset);
 }
 
 IceBlockTrigger::~IceBlockTrigger()
 {
-	std::cout << "IceBlockTrigger::~IceBlockTrigger()\n";
 }
 
 void IceBlockTrigger::Update()

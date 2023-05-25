@@ -3,6 +3,7 @@
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "IceBlock.h"
+#include "IceBlockTrigger.h"
 //
 //Attacking State
 //
@@ -47,13 +48,14 @@ void AttackingState::Update()
 
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		for (auto& gameObject : m_pActor->GetCollidingObjects())
-		{
-			if (gameObject->CanBeDeleted()) continue;
 
-			if (auto iceBlock = dynamic_cast<IceBlock*>(gameObject))
+		for (const auto& collidingGameObjects : dynamic_cast<Pengo*>(m_pActor)->GetPengoIceBlockTrigger()->GetCollidingObjects())
+		{
+			if (collidingGameObjects->CanBeDeleted()) continue;
+
+			if (const auto iceBlockTrigger = dynamic_cast<IceBlockTrigger*>(collidingGameObjects))
 			{
-				iceBlock->MoveIceBlock(spriteRenderer->GetMovementDirection());
+				dynamic_cast<IceBlock*>(iceBlockTrigger->GetParent())->MoveIceBlock(spriteRenderer->GetMovementDirection());
 			}
 		}
 	}

@@ -60,6 +60,9 @@
     <ClCompile Include="IceBlockTrigger.cpp">
       <Filter>Source Files\IceBlock</Filter>
     </ClCompile>
+    <ClCompile Include="PengoIceBlockTrigger.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="IceBlockTrigger.h">
       <Filter>Source Files\IceBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="PengoIceBlockTrigger.h">
+      <Filter>Source Files\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

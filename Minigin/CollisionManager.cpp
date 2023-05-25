@@ -34,22 +34,31 @@ CollisionManager::CollisionManager() : m_StopRequested(false)
 CollisionManager::~CollisionManager()
 {
 	//Stop threads
-	m_StopRequested = true;
 	std::unique_lock lock(m_CollisionMutex);
+	m_StopRequested = true;
 	m_ConditionVariable.notify_all();
 }
 
 void CollisionManager::Update()
 {
-	std::unique_lock lock(m_CollisionMutex);
 
-	//Implement double buffering to synchronise colliding objects
-	std::swap(m_CurrentCollidingObjects, m_NextCollidingObjects);
+	{
+		std::unique_lock lock(m_CollisionMutex);
 
-	// Clear the next buffer
-	m_NextCollidingObjects.clear();
+		//Implement double buffering to synchronise colliding objects
+		std::swap(m_CurrentCollidingObjects, m_NextCollidingObjects);
+
+		// Clear the next buffer
+		m_NextCollidingObjects.clear();
+
+		// Remove any BoxColliders that have been flagged as removed
+		m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
+			{
+				return collider->CanBeDeleted();
+			}), m_BoxColliders.end());
 
 
+	}
 
 
 	// Call OnCollision for each game object involved in a collision
@@ -68,44 +77,46 @@ void CollisionManager::Update()
 				continue;
 			}
 
+			//m_CollidingPairs.emplace_back(collider, collidingCollider->GetComponent<BoxCollider>().get());
+
 			collider->GetGameObject()->OnCollision(collidingCollider);
+		}
+
+		collider->ClearCollidingObjects();
+	}
+
+
+
+	{
+		std::unique_lock lock(m_CollisionMutex);
+
+		const size_t amountofThreads = m_ThreadPool.size();
+		const size_t amountofColliders = m_BoxColliders.size();
+		const size_t collidersPerThread = amountofColliders / amountofThreads;
+
+		// Divide the work among the threads
+		for (size_t i = 0; i < amountofThreads; ++i)
+		{
+			const size_t startIndex = i * collidersPerThread;
+			const size_t endIndex = (i == amountofThreads - 1) ? amountofColliders : startIndex + collidersPerThread;
+
+			// Create the task function pointer
+			std::function<void()> task = [this, startIndex, endIndex]() { CheckCollisionRange(startIndex, endIndex); };
+
+			// Add the task to the queue
+			m_TaskQueue.push(task);
+
+			// Notify a thread that there is work to do
+			m_ConditionVariable.notify_one();
 		}
 	}
 
-	// Remove any BoxColliders that have been flagged as removed
-	m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
-		{
-			return collider->CanBeDeleted();
-		}), m_BoxColliders.end());
-
-
-
-
-	const size_t amountofThreads = m_ThreadPool.size();
-	const size_t amountofColliders = m_BoxColliders.size();
-	const size_t collidersPerThread = amountofColliders / amountofThreads;
-
-	// Divide the work among the threads
-	for (size_t i = 0; i < amountofThreads; ++i)
-	{
-		const size_t startIndex = i * collidersPerThread;
-		const size_t endIndex = (i == amountofThreads - 1) ? amountofColliders : startIndex + collidersPerThread;
-
-		// Create the task function pointer
-		std::function<void()> task = [this, startIndex, endIndex]() { CheckCollisionRange(startIndex, endIndex); };
-
-		// Add the task to the queue
-		m_TaskQueue.push(task);
-
-		// Notify a thread that there is work to do
-		m_ConditionVariable.notify_one();
-	}
 }
 
 void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)
 {
 	std::unique_lock lock(m_CollisionMutex);
-	m_BoxColliders.push_back(boxCollider);
+	m_BoxColliders.emplace_back(boxCollider);
 }
 
 void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
@@ -128,10 +139,9 @@ void CollisionManager::CollisionWorker()
 		std::function<void()> task;
 		{
 
+
 			std::unique_lock lock(m_CollisionMutex);
-
-			m_ConditionVariable.wait(lock, [this]() {return !m_TaskQueue.empty() || m_StopRequested; });
-
+			m_ConditionVariable.wait(lock, [this] {return !m_TaskQueue.empty() || m_StopRequested; });
 			if (m_StopRequested) { return; }
 
 			task = m_TaskQueue.front();
@@ -176,6 +186,9 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 
 		for (size_t j = i + 1; j < m_BoxColliders.size(); ++j)
 		{
+			if (m_StopRequested) { return; }
+
+
 			BoxCollider* colliderB = m_BoxColliders[j];
 
 			// Check if the BoxColliders are colliding
@@ -186,8 +199,14 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 				colliderB->AddCollidingObject(colliderA->GetGameObject());
 
 				// Add the colliders to the next colliding objects vector
-				m_NextCollidingObjects.push_back(colliderA);
-				m_NextCollidingObjects.push_back(colliderB);
+				m_NextCollidingObjects.emplace_back(colliderA);
+				m_NextCollidingObjects.emplace_back(colliderB);
+			}
+			else
+			{
+				// Remove the objects as colliding objects
+				colliderA->RemoveCollidingObject(colliderB->GetGameObject());
+				colliderB->RemoveCollidingObject(colliderA->GetGameObject());
 			}
 		}
 	}

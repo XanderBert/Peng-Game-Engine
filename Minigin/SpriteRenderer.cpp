@@ -108,6 +108,30 @@ void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
 	}
 }
 
+glm::vec2 SpriteRenderer::GetMovementDirectionVector() const
+{
+	if (m_MovementDirection == MovementDirection::Down)
+	{
+		return { 0,1 };
+	}
+	else if (m_MovementDirection == MovementDirection::Left)
+	{
+		return { -1,0 };
+	}
+	else if (m_MovementDirection == MovementDirection::Right)
+	{
+		return { 1,0 };
+	}
+	else if (m_MovementDirection == MovementDirection::Up)
+	{
+		return { 0,-1 };
+	}
+	else
+	{
+		return { 0,0 };
+	}
+}
+
 void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection direction)
 {
 	m_MovementDirectionMap.find(direction)->second.push_back(position);

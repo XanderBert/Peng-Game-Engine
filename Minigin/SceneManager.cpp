@@ -9,8 +9,9 @@ void SceneManager::Update()
 	for (auto& scene : m_scenes)
 	{
 		scene->Update();
-		ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 	}
+
+	ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 }
 
 void SceneManager::FixedUpdate(float fixedTimeMStep)
@@ -26,7 +27,7 @@ void SceneManager::LateUpdate()
 	for (const auto& scene : m_scenes)
 	{
 		scene->LateUpdate();
-		
+
 	}
 }
 
@@ -46,7 +47,7 @@ std::vector<GameActor*> SceneManager::GetGameActorsOfScene(const std::string& sc
 Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
+	m_scenes.emplace_back(scene);
 	return *scene;
 }
 

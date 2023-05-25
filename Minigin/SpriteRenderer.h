@@ -45,6 +45,7 @@ public:
 	void SetMovementDirection(MovementDirection value);
 	void SetMovementDirection(const glm::vec2& direction);
 	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
+	glm::vec2 GetMovementDirectionVector() const;
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);

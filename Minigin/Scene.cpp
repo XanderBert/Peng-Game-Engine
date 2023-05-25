@@ -45,7 +45,7 @@ std::vector<GameActor*> Scene::GetAllGameActors() const
 	{
 		if (typeid(gameActor.get()) == typeid(GameActor*))
 		{
-			gameActors.push_back(dynamic_cast<GameActor*>(gameActor.get()));
+			gameActors.emplace_back(dynamic_cast<GameActor*>(gameActor.get()));
 		}
 	}
 

@@ -2,12 +2,13 @@
 
 #include "BoxCollider.h"
 #include "IceBlockTrigger.h"
+#include "Pengo.h"
 #include "SpriteRenderer.h"
 #include "TextureRenderer.h"
 
 IceBlock::IceBlock()
 	: GameObject()
-	, m_pTrgger{ }//new IceBlockTrigger(this) }
+	, m_pTrgger{ new IceBlockTrigger(this) }
 {
 
 	const auto texture = AddComponent<TextureRenderer>();
@@ -41,9 +42,14 @@ void IceBlock::Update()
 	UpdateSpriteLogic();
 }
 
-void IceBlock::OnCollision(GameObject* /*other*/)
+void IceBlock::OnCollision(GameObject* other)
 {
 	//Stop the block when it collides again an play the animation.
+	if (other == m_pTrgger || dynamic_cast<Pengo*>(other) || dynamic_cast<PengoIceBlockTrigger*>(other))
+	{
+		return;
+	}
+
 	if (m_Velocity != glm::vec2{ 0,0 })
 	{
 		GetComponent<SpriteRenderer>()->Play();

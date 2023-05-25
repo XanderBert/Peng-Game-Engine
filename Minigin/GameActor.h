@@ -51,7 +51,7 @@ public:
 
 	void AddObserver(std::shared_ptr<Observer> observer)
 	{
-		m_Observers.push_back(observer);
+		m_Observers.emplace_back(observer);
 	}
 
 	void RemoveObserver(Observer* observer)
