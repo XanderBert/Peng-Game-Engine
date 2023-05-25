@@ -34,8 +34,8 @@ CollisionManager::CollisionManager() : m_StopRequested(false)
 CollisionManager::~CollisionManager()
 {
 	//Stop threads
-	m_StopRequested = true;
 	std::unique_lock lock(m_CollisionMutex);
+	m_StopRequested = true;
 	m_ConditionVariable.notify_all();
 }
 
@@ -100,6 +100,22 @@ void CollisionManager::Update()
 		// Notify a thread that there is work to do
 		m_ConditionVariable.notify_one();
 	}
+
+
+
+	//for (size_t i = 0; i < m_BoxColliders.size(); ++i)
+	//{
+	//	std::unique_lock lock(m_CollisionMutex);
+
+	//	//Create the task function pointer
+	//	std::function task = [this, i]() {CheckCollisionAsync(i);  };
+
+	//	//Add the task to the queue
+	//	m_TaskQueue.push(task);
+
+	//	//Notify a thread that there is work to do
+	//	m_ConditionVariable.notify_one();
+	//}
 }
 
 void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)

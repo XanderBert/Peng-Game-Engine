@@ -26,6 +26,8 @@ private:
 	const glm::vec2 m_SpriteSize{ 16,16 };
 	glm::vec2 m_Velocity{ 0,0 };
 	bool m_IsMoving{ false };
+	GameObject* m_pTrgger{};
+
 
 	void UpdateMovement();
 	void UpdateSpriteLogic();

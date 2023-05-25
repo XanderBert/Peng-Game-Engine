@@ -44,9 +44,10 @@ void load()
 	PengoLevel* level01 = levelLoader.LoadLevel("Level1.xml");
 	level01->AddGameObjectsToScene(&scene);
 
-	////Player1
-	//const auto gameac = new Pengo();
-	//scene.Add(gameac);
+	//Player1
+	/*const auto gameac = new Pengo();
+	gameac->SetControllerIndex(0);
+	scene.Add(gameac);*/
 
 	//const auto wallManager = new WallManager();
 	//scene.Add(wallManager);

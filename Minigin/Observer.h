@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "Event.h"
+#include "GameObject.h"
+enum class GameEvent;
 class Observer
 {
 public:
@@ -11,5 +12,5 @@ public:
 	Observer& operator=(const Observer& other) = delete;
 	Observer& operator=(Observer&& other)noexcept = delete;
 
-	virtual void Notify(GameEvent event) = 0;
+	virtual void Notify(GameObject*, GameEvent event) = 0;
 };

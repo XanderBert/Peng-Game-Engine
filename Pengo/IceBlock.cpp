@@ -1,11 +1,15 @@
 ﻿#include "IceBlock.h"
 
 #include "BoxCollider.h"
+#include "IceBlockTrigger.h"
 #include "SpriteRenderer.h"
 #include "TextureRenderer.h"
 
-IceBlock::IceBlock() : GameObject()
+IceBlock::IceBlock()
+	: GameObject()
+	, m_pTrgger{ }//new IceBlockTrigger(this) }
 {
+
 	const auto texture = AddComponent<TextureRenderer>();
 	texture->SetTexture("Ice_Block.png");
 
@@ -37,8 +41,9 @@ void IceBlock::Update()
 	UpdateSpriteLogic();
 }
 
-void IceBlock::OnCollision([[maybe_unused]] GameObject* other)
+void IceBlock::OnCollision(GameObject* /*other*/)
 {
+	//Stop the block when it collides again an play the animation.
 	if (m_Velocity != glm::vec2{ 0,0 })
 	{
 		GetComponent<SpriteRenderer>()->Play();

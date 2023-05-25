@@ -58,8 +58,8 @@ class ServiceLocator final : public Singleton<ServiceLocator>
 {
 public:
 	static DefaultServiceLocator<null_AudioService, AudioService> AudioService;
-	static DefaultServiceLocator<CollisionManager, null_CollisionManager> CollisionManager;
-	static DefaultServiceLocator<InputManager, null_InputManager> InputManager;
+	static DefaultServiceLocator<null_CollisionManager, CollisionManager> CollisionManager;
+	static DefaultServiceLocator<null_InputManager, InputManager> InputManager;
 	static DefaultServiceLocator<Renderer, null_Renderer> Renderer;
 	static DefaultServiceLocator<ResourceManager, null_ResourceManager> ResourceManager;
 

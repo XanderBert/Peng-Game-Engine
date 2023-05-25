@@ -14,13 +14,6 @@ enum class MovementDirection
 	None = 4
 };
 
-
-enum class Action
-{
-	Move = 0,
-	Attack = 1,
-};
-
 class SpriteRenderer : public Component
 {
 public:
@@ -56,8 +49,7 @@ public:
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
 
-	void SetActionOffset(const glm::vec2& offset, Action action);
-	void SetAction(Action action) { m_Action = action; }
+	void SetOffset(const glm::vec2& offset);
 
 	void Play() { m_IsPlaying = true; }
 	void Pause() { m_IsPlaying = false; }
@@ -73,11 +65,9 @@ private:
 
 	MovementDirection m_MovementDirection{ MovementDirection::Right };
 	std::unordered_map<MovementDirection, std::vector<glm::vec2>> m_MovementDirectionMap{};
+	glm::vec2 m_Offset{};
 
-	Action m_Action{ Action::Move };
-	std::unordered_map<Action, glm::vec2> m_ActionmapOffset{};
-
-	void SetSourceRect(const glm::vec2& position);
+	void SetSourceRect(const glm::vec2& position) const;
 
 	int m_AnimationFrame{};
 	float m_AccumulatedFrameTime{};

@@ -5,6 +5,7 @@
     <object type="wall" x="190" y="200" />
     
     <object type="iceBlock" x="210" y="220" />
+    <object type="iceBlock" x="230" y="220" />
     <object type="iceBlock" x="230" y="240" />
     <object type="iceBlock" x="250" y="260" />
 

@@ -15,11 +15,21 @@ Scene::~Scene() = default;
 void Scene::Add(GameObject* object)
 {
 	m_objects.emplace_back(object);
+
+	for (auto& child : object->GetChildren())
+	{
+		Add(child);
+	}
 }
 
-void Scene::Remove(std::unique_ptr<GameObject> object)
+void Scene::Remove(GameObject* object)
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	for (auto& child : object->GetChildren())
+	{
+		Remove(child);
+	}
+
+	//	std::erase(m_objects, object);
 }
 
 void Scene::RemoveAll()
@@ -47,7 +57,6 @@ void Scene::Update()
 	for (auto& object : m_objects)
 	{
 		object->Update();
-		ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 	}
 }
 

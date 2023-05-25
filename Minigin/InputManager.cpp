@@ -19,6 +19,8 @@ InputManager::~InputManager()
 
 bool InputManager::ProcessInput()
 {
+	m_Input = 0;
+
 	CheckIfControllerNeedsToBeAdded();
 
 	for (const auto& controller : m_pControllers)
@@ -29,31 +31,31 @@ bool InputManager::ProcessInput()
 		{
 			if (const int leftTriggerVal = static_cast<int>(controller->GetbLeftTriggerValue()))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
-				std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				//std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
 			}
 
 			if (controller->IsDown(Controller::ControllerButton::ButtonA))
 			{
 				//td::cout << "Controller: " << controller->GetControllerID() << " -> Pressed A\n";
 				//m_pButtonA->Execute(*controller->GetGameActor(), {});
-				controller->GetActor()->TakeDammage(1);
+				//controller->GetActor()->TakeDammage(1);
 			}
 
-			if(controller->IsDown(Controller::ControllerButton::ButtonB))
+			if (controller->IsDown(Controller::ControllerButton::ButtonB))
 			{
-				controller->GetActor()->GainPoints(25);
+				//controller->GetActor()->GainPoints(25);
 			}
 
 			if (controller->IsDown(Controller::ControllerButton::LeftThumb))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed LeftThumb\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed LeftThumb\n";
 				//m_pButtonA->Execute(*m_pActors[i]);
 			}
 
 			if (controller->IsDown(Controller::ControllerButton::Start))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed Start\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> Pressed Start\n";
 			}
 
 			//
@@ -61,14 +63,14 @@ bool InputManager::ProcessInput()
 			//
 			if (const int leftTriggerVal = static_cast<int>(controller->GetbLeftTriggerValue()))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
-				std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				//std::cout << "Left Trigger Value: " << leftTriggerVal << "\n";
 			}
 
 			if (const int rightTriggerVal = static_cast<int>(controller->GetbRightTriggerValue()))
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
-				std::cout << "Right Trigger Value: " << rightTriggerVal << "\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				//std::cout << "Right Trigger Value: " << rightTriggerVal << "\n";
 			}
 
 			//
@@ -77,19 +79,19 @@ bool InputManager::ProcessInput()
 			const glm::vec2 leftThumb = controller->GetLeftThumbValue();
 			if (leftThumb.x || leftThumb.y)
 			{
-				m_pLeftThumbStick->Execute(*controller->GetActor(), { leftThumb.x, -leftThumb.y });
+				m_pLeftThumbStick->Execute(*controller->GetActor(), { leftThumb.x * 4, -leftThumb.y * 4 });
 			}
 
 			if (const float rightThumbX = controller->GetRightThumbValue().x)
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
-				std::cout << "Right Thumb X Value: " << rightThumbX << "\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				//std::cout << "Right Thumb X Value: " << rightThumbX << "\n";
 			}
 
 			if (const float rightThumbY = controller->GetRightThumbValue().y)
 			{
-				std::cout << "Controller: " << controller->GetControllerID() << " -> ";
-				std::cout << "Right Thumb Y Value: " << rightThumbY << "\n";
+				//std::cout << "Controller: " << controller->GetControllerID() << " -> ";
+				//::cout << "Right Thumb Y Value: " << rightThumbY << "\n";
 			}
 		}
 	}
@@ -106,41 +108,40 @@ bool InputManager::ProcessInput()
 		{
 
 		}
-		
-		//TODO Update to store what has been pressed and then go over actors.?
+
 		for (const auto& actor : m_pActors)
 		{
 			if (!actor->GetUsesController())
 			{
 				if (e.type == SDL_KEYDOWN)
 				{
-					const auto& input = e.key.keysym.sym;
+					m_Input = e.key.keysym.sym;
 
-					if (input == SDLK_LEFT || input == SDLK_a)
+					if (m_Input == SDLK_LEFT || m_Input == SDLK_a)
 					{
 						actor->Move({ -4, 0 });
 					}
-					if (input == SDLK_RIGHT || input == SDLK_d)
+					if (m_Input == SDLK_RIGHT || m_Input == SDLK_d)
 					{
 						actor->Move({ 4, 0 });
 					}
-					if (input == SDLK_UP || input == SDLK_w)
+					if (m_Input == SDLK_UP || m_Input == SDLK_w)
 					{
 						actor->Move({ 0, -4 });
 					}
-					if (input == SDLK_DOWN || input == SDLK_s)
+					if (m_Input == SDLK_DOWN || m_Input == SDLK_s)
 					{
 						actor->Move({ 0, 4 });
 					}
-					if(input == SDLK_0)
+					if (m_Input == SDLK_0)
 					{
 						actor->TakeDammage(1);
 					}
-					if(input == SDLK_1)
+					if (m_Input == SDLK_1)
 					{
 						actor->GainPoints(25);
 					}
-					if(input == SDLK_SPACE)
+					if (m_Input == SDLK_SPACE)
 					{
 						actor->Attack();
 					}
@@ -178,6 +179,24 @@ std::vector<Controller*> InputManager::GetControllers()
 
 	}
 	return controllers;
+}
+
+bool InputManager::GetButtonPressed(SDL_KeyCode key) const
+{
+	return key == m_Input;
+}
+
+bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const
+{
+	for (const auto& controller : m_pControllers)
+	{
+		if (controller.get()->GetControllerID() == controllerId)
+		{
+			return controller.get()->IsPressed(controllerButton);
+		}
+	}
+
+	return false;
 }
 
 void InputManager::CheckIfControllerNeedsToBeAdded()

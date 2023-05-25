@@ -1,7 +1,9 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include <vector>
 
+class BoxCollider;
 class Component;
 class GameObject
 {
@@ -43,6 +45,7 @@ public:
 
 	[[nodiscard]] GameObject* GetParent() const;
 	[[nodiscard]] GameObject* GetChildAt(int index) const;
+	[[nodiscard]] std::vector<GameObject*> GetChildren() const;
 
 	//
 	//Deletion
@@ -53,7 +56,11 @@ public:
 
 	//
 	//Collision
-	virtual void OnCollision([[maybe_unused]] GameObject* other){};
+	virtual void OnCollision(GameObject* /*other*/) {}
+
+	//template <typename T>
+	std::vector<GameObject*> GetCollidingObjects() const;
+
 
 protected:
 	bool m_CanBeDeleted{ false };
@@ -61,7 +68,7 @@ private:
 	GameObject* m_pParent{};
 	std::vector<GameObject*> m_pChildren{};
 
-	void AddToChildVector(GameObject* pParent);
+	void AddToChildVector(GameObject* pChild);
 	void RemoveFromChildren(GameObject* pParent) const;
 
 	//Gets called every late update

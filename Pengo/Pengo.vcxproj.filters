@@ -22,6 +22,12 @@
     <Filter Include="Source Files\LevelHandling">
       <UniqueIdentifier>{3098180c-0d11-4be8-b40a-5a59e7aadb71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{eae7da35-fad1-48d8-b4c3-b988320f7d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IceBlock">
+      <UniqueIdentifier>{8e12829d-ba9c-4e94-8d5a-2a4076710a96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
@@ -36,9 +42,6 @@
     <ClCompile Include="WallManager.cpp">
       <Filter>Source Files\Walls</Filter>
     </ClCompile>
-    <ClCompile Include="IceBlock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PengoLevelLoader.cpp">
       <Filter>Source Files\LevelHandling</Filter>
     </ClCompile>
@@ -47,6 +50,15 @@
     </ClCompile>
     <ClCompile Include="SnowBee.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBlock.cpp">
+      <Filter>Source Files\IceBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBlockTrigger.cpp">
+      <Filter>Source Files\IceBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +71,6 @@
     <ClInclude Include="WallManager.h">
       <Filter>Source Files\Walls</Filter>
     </ClInclude>
-    <ClInclude Include="IceBlock.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="PengoLevelLoader.h">
       <Filter>Source Files\LevelHandling</Filter>
     </ClInclude>
@@ -70,6 +79,18 @@
     </ClInclude>
     <ClInclude Include="SnowBee.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Source Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PengoEvents.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBlock.h">
+      <Filter>Source Files\IceBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBlockTrigger.h">
+      <Filter>Source Files\IceBlock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

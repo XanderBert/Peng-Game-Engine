@@ -1,7 +1,7 @@
 ﻿#pragma once
+#include <mutex>
 #include <SDL_rect.h>
 #include <glm/vec2.hpp>
-
 #include "Component.h"
 
 
@@ -36,7 +36,15 @@ public:
 	void DebugRender(bool isDebugRendering);
 
 	SDL_Rect GetCollider() const;
+
+	void ClearCollidingObjects();
+	void SetCollidingObjects(const std::vector<GameObject*>& pCollidingObjects);
+	void AddCollidingObject(GameObject* collider);
+	void RemoveCollidingObject(GameObject* collider);
+	std::vector<GameObject*> GetCollidingObjects() const;
 private:
-	SDL_Rect m_Collider{0,0,5,5};
+	std::mutex m_CollidingObjectsMutex{};
+	std::vector<GameObject*> m_CollidingObjects;
+	SDL_Rect m_Collider{ 0,0,5,5 };
 	bool m_DebugRender{};
 };

@@ -24,9 +24,10 @@ SnowBee::SnowBee()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
-	spriteRenderer->SetActionOffset({ 0,16 }, Action::Move);
-	spriteRenderer->SetActionOffset({ 0,32 }, Action::Attack);
-	spriteRenderer->SetAction(Action::Move);
+	//spriteRenderer->SetActionOffset({ 0,16 }, Action::Move);
+	//spriteRenderer->SetActionOffset({ 0,32 }, Action::Attack);
+
+	//spriteRenderer->SetAction(Action::Move);
 	spriteRenderer->SetMovementDirection(m_Direction);
 	spriteRenderer->Play();
 
@@ -61,7 +62,7 @@ void SnowBee::OnCollision(GameObject* other)
 
 	if (const auto* iceBlock = dynamic_cast<IceBlock*>(other))
 	{
-		if(iceBlock->IsMoving())
+		if (iceBlock->IsMoving())
 		{
 			//Kill the focking snowbee
 			//Kill();
@@ -71,9 +72,9 @@ void SnowBee::OnCollision(GameObject* other)
 			//Go goblin mode
 			if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
 			{
-				spriteRenderer->SetAction(Action::Attack);
+				//spriteRenderer->SetAction(Action::Attack);
 			}
-		}		
+		}
 	}
 
 	StopMovement();
@@ -98,12 +99,15 @@ void SnowBee::ChangeMovement()
 
 void SnowBee::Move() const
 {
-	if (const auto transform = GetComponent<Transform>())
-	{
-		const auto pos = transform->GetWorldPosition();
-		const glm::vec2 newPos = pos + m_Direction * m_velocity * TimeM::GetInstance().GetDeltaTimeM();
-		transform->SetWorldPosition(newPos);
-	}
+	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
+		//spriteRenderer->SetAction(Action::Move);
+
+		if (const auto transform = GetComponent<Transform>())
+		{
+			const auto pos = transform->GetWorldPosition();
+			const glm::vec2 newPos = pos + m_Direction * m_velocity * TimeM::GetInstance().GetDeltaTimeM();
+			transform->SetWorldPosition(newPos);
+		}
 
 	//Will need to be triggered each frame to handle spriteSheet animation
 	GetComponent<SpriteRenderer>()->SetMovementDirection(m_Direction);

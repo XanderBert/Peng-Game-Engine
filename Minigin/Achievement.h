@@ -1,19 +1,14 @@
 ﻿#pragma once
 #include "Observer.h"
-//
-//
-//
-//#include "steam_api.h"
+#include "GameObject.h"
 #include <string>
 
 class Achievement : public Observer
 {
 public:
-	virtual void Notify(GameEvent event) override;
+	virtual void Notify(GameObject*, GameEvent) override;
 
 private:
-	//ISteamUserStats* steamUserStats = SteamUserStats();
-
 	enum class EAchievements
 	{
 		ACH_WIN_ONE_GAME,
@@ -43,7 +38,7 @@ private:
 	}
 
 
-	void Unlock([[maybe_unused]] EAchievements achievement)
+	void Unlock(EAchievements /*achievement*/)
 	{
 		/*steamUserStats->RequestCurrentStats();
 		steamUserStats->SetAchievement(AchievementToString(achievement).c_str());

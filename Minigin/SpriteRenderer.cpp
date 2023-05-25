@@ -14,10 +14,6 @@ SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner)
 {MovementDirection::Right, {}},
 {MovementDirection::None, {}} }
 
-, m_ActionmapOffset{
-{ Action::Move, {}},
-{ Action::Attack, {}} }
-
 , m_FrameTime{ 0.3f }
 , m_TimeFromMovementToStandStill{ 0.3f }
 {
@@ -106,13 +102,9 @@ void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
 	{
 		SetMovementDirection(MovementDirection::Down);
 	}
-	else if (direction.y < 0)
-	{
-		SetMovementDirection(MovementDirection::Up);
-	}
 	else
 	{
-		SetMovementDirection(MovementDirection::None);
+		SetMovementDirection(MovementDirection::Up);
 	}
 }
 
@@ -121,15 +113,12 @@ void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection
 	m_MovementDirectionMap.find(direction)->second.push_back(position);
 }
 
-void SpriteRenderer::SetActionOffset(const glm::vec2& offset, Action action)
+void SpriteRenderer::SetOffset(const glm::vec2& offset)
 {
-	m_ActionmapOffset.find(action)->second = offset;
+	m_Offset = offset;
 }
 
-void SpriteRenderer::SetSourceRect(const glm::vec2& position)
+void SpriteRenderer::SetSourceRect(const glm::vec2& position) const
 {
-	auto pos = position;
-
-	pos += m_ActionmapOffset.find(m_Action)->second;
-	GetComponent<TextureRenderer>()->SetSourceRect(pos, m_SpriteSize);
+	GetComponent<TextureRenderer>()->SetSourceRect(position + m_Offset, m_SpriteSize);
 }

@@ -17,7 +17,6 @@ GameActor::GameActor() : GameObject()
 
 GameActor::~GameActor()
 {
-
 }
 
 void GameActor::Update()
@@ -27,9 +26,6 @@ void GameActor::Update()
 
 void GameActor::Jump()
 {
-	//std::cout << "The actor Jumps!\n";
-	//glm::vec2 pos = direction * speed * dt;
-	//m_pActor->GetComponent<Transform>().get()->SetLocalPosition();
 }
 
 void GameActor::Move(const glm::vec2& direction)
@@ -44,7 +40,6 @@ void GameActor::Move(const glm::vec2& direction)
 
 void GameActor::Die()
 {
-	NotifyObserver(GameEvent::ActorDied);
 	MarkForDeletion();
 }
 
@@ -58,13 +53,10 @@ void GameActor::TakeDammage(const int dammage)
 	if (!m_Health) Die();
 }
 
-
 void GameActor::GainPoints(int ammountOfPoints)
 {
 	m_Points += ammountOfPoints;
 	m_PointString = std::to_string(m_Points);
-
-	if (m_Points >= 100) NotifyObserver(GameEvent::Actor100Points);
 }
 
 void GameActor::SetControllerIndex(int index)
@@ -85,7 +77,7 @@ void GameActor::SetControllerIndex(int index)
 
 void GameActor::OnCollision(GameObject* other)
 {
-	std::cout << "Game Actor Collided with a " << typeid(other).name() << '\n';
+	GameObject::OnCollision(other);
 }
 
 void GameActor::SetTextureDirection(const glm::vec2& direction)
@@ -123,5 +115,4 @@ void GameActor::SetTextureDirection(const glm::vec2& direction)
 			}
 		}
 	}
-
 }

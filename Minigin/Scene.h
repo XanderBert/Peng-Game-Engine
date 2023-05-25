@@ -6,7 +6,7 @@ class Scene final
 	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
 	void Add(GameObject* object);
-	void Remove(std::unique_ptr<GameObject> object);
+	void Remove(GameObject* object);
 	void RemoveAll();
 	std::vector<GameActor*> GetAllGameActors() const;
 
@@ -16,7 +16,7 @@ public:
 	void FixedUpdate(float fixedTimeMStep);
 	void LateUpdate();
 	void Render() const;
-	
+
 	~Scene();
 	Scene(const Scene& other) = delete;
 	Scene(Scene&& other) = delete;
@@ -28,6 +28,6 @@ private:
 
 	std::string m_name;
 	std::vector < std::unique_ptr<GameObject>> m_objects{};
-	
+
 	static unsigned int m_idCounter;
 };

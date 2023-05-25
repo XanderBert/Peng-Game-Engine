@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameActor.h"
+#include "PlayerState.h"
 
 class Pengo final : public GameActor
 {
@@ -19,9 +20,16 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate() override;
 	virtual void OnCollision(GameObject* other) override;
+
+	PlayerState* GetState() const { return m_pState; }
+	//GameObject* GetCollidingObject() const { return m_CollidingObject; }
+	//void ResetCollision();
+
 private:
-	GameObject* m_CollidingObject{};
-	bool m_IsCollidingWithIce{};
+	//GameObject* m_CollidingObject{};
+	PlayerState* m_pState{};
+	float m_TimeUntilCollisionForget{ 0.3f };
+
 	void StopMovement() const;
-	void ResetCollision();
+	void UpdateState();
 };

@@ -49,7 +49,7 @@ public:
 	void SetControllerIndex(int index);
 	int GetControllerIndex() const { return m_ControllerID; }
 
-	void AddObeserver(std::shared_ptr<Observer> observer)
+	void AddObserver(std::shared_ptr<Observer> observer)
 	{
 		m_Observers.push_back(observer);
 	}
@@ -68,11 +68,11 @@ public:
 	virtual void OnCollision(GameObject* other) override;
 
 protected:
-	void NotifyObserver(const GameEvent event) const
+	void NotifyObserver(GameObject* object, const GameEvent event) const
 	{
 		for (size_t i{}; i < m_Observers.size(); ++i)
 		{
-			m_Observers[i]->Notify(event);
+			m_Observers[i]->Notify(object, event);
 		}
 	}
 

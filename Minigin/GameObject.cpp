@@ -2,6 +2,9 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "ServiceLocator.h"
+#include "../Pengo/IceBlockTrigger.h"
+#include "../Pengo/IceBlock.h"
+#include "BoxCollider.h"
 
 GameObject::GameObject()
 {
@@ -100,20 +103,42 @@ GameObject* GameObject::GetChildAt(int index) const
 	return nullptr;
 }
 
+std::vector < GameObject*> GameObject::GetChildren() const
+{
+	return m_pChildren;
+}
+
 void GameObject::MarkForDeletion()
 {
+	if (typeid(this) == typeid(IceBlock))
+	{
+		std::cout << "IceBlock Marked for deletion" << std::endl;
+	}
+
+	//Mark All the member components for deletion
 	for (const auto& component : m_pComponents)
 	{
 		component->MarkForDeletion();
+	}
+
+	//Call this function on its children
+	for (const auto& child : m_pChildren)
+	{
+		child->MarkForDeletion();
 	}
 
 	m_CanBeDeleted = true;
 
 }
 
-void GameObject::AddToChildVector(GameObject* pParent)
+std::vector<GameObject*> GameObject::GetCollidingObjects() const
 {
-	pParent->m_pChildren.emplace_back(this);
+	return GetComponent<BoxCollider>()->GetCollidingObjects();
+}
+
+void GameObject::AddToChildVector(GameObject* pChild)
+{
+	m_pChildren.emplace_back(pChild);
 }
 
 void GameObject::RemoveFromChildren(GameObject* pParent) const

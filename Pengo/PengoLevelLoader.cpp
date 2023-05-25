@@ -76,7 +76,6 @@ void PengoLevelLoader::ParseLevel() const
 	{
 		// Handle the case where the root node is not found
 		// throw an exception
-		std::cout << "Root node not found" << std::endl;
 		return;
 	}
 
@@ -86,7 +85,6 @@ void PengoLevelLoader::ParseLevel() const
 	{
 		// Handle the case where the root node is not found
 		// throw an exception
-		std::cout << "Objects node not found" << std::endl;
 		return;
 	}
 

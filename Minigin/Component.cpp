@@ -18,7 +18,9 @@ bool Component::CanBeDeleted() const
 }
 
 GameObject* Component::GetGameObject() const
-{ return m_pOwner; }
+{
+	return m_pOwner;
+}
 
 //Once a owner has been set this function won't anything.
 void Component::SetGameObject(GameObject* owner)

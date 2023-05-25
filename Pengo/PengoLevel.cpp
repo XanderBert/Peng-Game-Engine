@@ -1,5 +1,7 @@
 ﻿#include "PengoLevel.h"
 
+#include <iostream>
+
 void PengoLevel::AddGameObject(GameObject* pGameObject)
 {
 	m_pGameObjects.emplace_back(pGameObject);

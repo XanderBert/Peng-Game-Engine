@@ -2,12 +2,14 @@
 #include "Scene.h"
 #include "TimeM.h"
 #include "GameActor.h"
+#include "ServiceLocator.h"
 
 void SceneManager::Update()
 {
 	for (auto& scene : m_scenes)
 	{
 		scene->Update();
+		ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 	}
 }
 
@@ -24,6 +26,7 @@ void SceneManager::LateUpdate()
 	for (const auto& scene : m_scenes)
 	{
 		scene->LateUpdate();
+		
 	}
 }
 
@@ -56,7 +59,7 @@ Scene* SceneManager::GetSceneByName(const std::string& name) const
 			return scene.get();
 		}
 	}
-	
+
 	//Todo: Throw custom error here
 	return nullptr;
 }
