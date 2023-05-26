@@ -4,6 +4,7 @@
 #include "rapidxml_utils.hpp"
 #include "ServiceLocator.h"
 #include "SnowBee.h"
+#include "WallRow.h"
 
 
 PengoLevelLoader::PengoLevelLoader()
@@ -25,9 +26,13 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 {
 	GameObject* object = nullptr;
 
-	if (type == "wall")
+	if (type == "wallHorizontal")
 	{
-		object = new Wall();
+		object = new WallRow(location, { 500,8 });
+	}
+	else if (type == "wallVertical")
+	{
+		object = new WallRow(location, { 8,330 });
 	}
 	else if (type == "iceBlock")
 	{
@@ -43,8 +48,7 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	}
 	else
 	{
-		//Todo throw error
-		return nullptr;
+		throw std::exception("Unknown object type");
 	}
 
 	//Set the location of the object

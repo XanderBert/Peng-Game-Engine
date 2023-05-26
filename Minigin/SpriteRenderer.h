@@ -61,6 +61,13 @@ public:
 	size_t GetLastSpriteIndexForCurrentDirection() const { return m_MovementDirectionMap.find(m_MovementDirection)->second.size() - 1; };
 	size_t GetCurrentSpriteIndexForCurrentDirection() const { return m_AnimationFrame; }
 
+
+	bool IsAnimationFinished() const
+	{
+		return GetCurrentSpriteIndexForCurrentDirection() == GetLastSpriteIndexForCurrentDirection();
+	}
+
+	void SetAnimationFrame(int animationFrame) { m_AnimationFrame = animationFrame; }
 private:
 	glm::vec2 m_SpriteSize{};
 
@@ -69,6 +76,7 @@ private:
 	glm::vec2 m_Offset{};
 
 	void SetSourceRect(const glm::vec2& position) const;
+	void UpdateAnimationFrame();
 
 	int m_AnimationFrame{};
 	float m_AccumulatedFrameTime{};

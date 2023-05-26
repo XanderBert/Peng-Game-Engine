@@ -28,6 +28,12 @@
     <Filter Include="Source Files\IceBlock">
       <UniqueIdentifier>{8e12829d-ba9c-4e94-8d5a-2a4076710a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayerState">
+      <UniqueIdentifier>{44ac5644-6b33-48b2-8ecd-c7d43242f1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SnowBee">
+      <UniqueIdentifier>{05e62a26-718f-47c3-8fc5-a90db50162a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
@@ -48,12 +54,6 @@
     <ClCompile Include="PengoLevel.cpp">
       <Filter>Source Files\LevelHandling</Filter>
     </ClCompile>
-    <ClCompile Include="SnowBee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Source Files\Player</Filter>
-    </ClCompile>
     <ClCompile Include="IceBlock.cpp">
       <Filter>Source Files\IceBlock</Filter>
     </ClCompile>
@@ -62,6 +62,21 @@
     </ClCompile>
     <ClCompile Include="PengoIceBlockTrigger.cpp">
       <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PengoState.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowBee.cpp">
+      <Filter>Source Files\SnowBee</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowBeeState.cpp">
+      <Filter>Source Files\SnowBee</Filter>
+    </ClCompile>
+    <ClCompile Include="WallRow.cpp">
+      <Filter>Source Files\Walls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,12 +95,6 @@
     <ClInclude Include="PengoLevel.h">
       <Filter>Source Files\LevelHandling</Filter>
     </ClInclude>
-    <ClInclude Include="SnowBee.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>Source Files\Player</Filter>
-    </ClInclude>
     <ClInclude Include="PengoEvents.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
@@ -97,6 +106,21 @@
     </ClInclude>
     <ClInclude Include="PengoIceBlockTrigger.h">
       <Filter>Source Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PengoState.h">
+      <Filter>Source Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBee.h">
+      <Filter>Source Files\SnowBee</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBeeState.h">
+      <Filter>Source Files\SnowBee</Filter>
+    </ClInclude>
+    <ClInclude Include="WallRow.h">
+      <Filter>Source Files\Walls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

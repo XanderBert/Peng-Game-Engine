@@ -4,12 +4,9 @@
 #include "IceBlockTrigger.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
-#include "Wall.h"
-#include "WallManager.h"
-#include "PlayerState.h"
 #include "PengoEvents.h"
-#include "TimeM.h"
 #include "PengoIceBlockTrigger.h"
+#include "PengoState.h"
 
 
 Pengo::Pengo() : GameActor()
@@ -35,7 +32,6 @@ Pengo::Pengo() : GameActor()
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });
-	//boxCollision->DebugRender(true);
 
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
 
@@ -75,7 +71,7 @@ void Pengo::OnCollision(GameObject* other)
 	if (dynamic_cast<PengoIceBlockTrigger*>(other)) { return; }
 
 	GameActor::OnCollision(other);
-	m_pState->OnCollision();
+	m_pState->OnCollision(other);
 
 	if (dynamic_cast<IceBlockTrigger*>(other))
 	{
@@ -90,15 +86,25 @@ void Pengo::StopMovement() const
 {
 	const auto transform = GetComponent<Transform>();
 
-	transform->SetWorldPosition(transform->GetLastWorldPosition());
+
+	//Tunneling still occurs with this method.
+	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
+	{
+		const auto movementDirection = spriteRenderer->GetMovementDirectionVector();
+		transform->SetWorldPosition(transform->GetLastWorldPosition() + (-movementDirection * m_TunnelingMultiplier));
+	}
+
 }
 
 void Pengo::UpdateState()
 {
 	if (const auto newState = m_pState->HandleInput())
 	{
-		delete m_pState;
-		m_pState = newState;
+		if (newState)
+		{
+			delete m_pState;
+			m_pState = newState;
+		}
 	}
 	m_pState->Update();
 }

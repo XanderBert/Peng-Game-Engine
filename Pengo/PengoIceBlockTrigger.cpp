@@ -9,7 +9,7 @@ PengoIceBlockTrigger::PengoIceBlockTrigger(GameObject* pParent)
 
 	const auto collision = AddComponent<BoxCollider>();
 	collision->SetColliderSize(m_CollisionSize);
-	collision->DebugRender(true);
+	//collision->DebugRender(true);
 }
 
 PengoIceBlockTrigger::~PengoIceBlockTrigger()

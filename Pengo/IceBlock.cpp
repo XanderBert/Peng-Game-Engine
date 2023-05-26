@@ -30,9 +30,7 @@ IceBlock::IceBlock()
 	collision->SetColliderSize(m_SpriteSize);
 }
 
-IceBlock::~IceBlock()
-{
-}
+IceBlock::~IceBlock() = default;
 
 void IceBlock::Update()
 {
@@ -69,6 +67,7 @@ void IceBlock::MoveIceBlock(const MovementDirection fireDirection)
 	case MovementDirection::Right: m_Velocity = { 100, 0 }; break;
 	}
 
+	m_FireDirection = m_Velocity;
 	m_IsMoving = true;
 }
 
@@ -96,7 +95,7 @@ void IceBlock::UpdateSpriteLogic()
 		if (spriteRenderer->IsPlaying())
 		{
 			//Check if it is at the last frame
-			if (spriteRenderer->GetCurrentSpriteIndexForCurrentDirection() == spriteRenderer->GetLastSpriteIndexForCurrentDirection())
+			if (spriteRenderer->IsAnimationFinished())
 			{
 				//Stop playing and mark for deletion
 				spriteRenderer->Pause();

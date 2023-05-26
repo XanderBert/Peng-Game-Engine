@@ -21,14 +21,17 @@ public:
 	void MoveIceBlock(const MovementDirection fireDirection);
 	bool IsMoving() const;
 	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
+	glm::vec2 GetFireDirection() const { return m_FireDirection; }
+
 
 private:
 	const size_t m_NrFrames{ 10 };
 	const glm::vec2 m_SpriteSize{ 16,16 };
 	glm::vec2 m_Velocity{ 0,0 };
+	glm::vec2 m_FireDirection{ 0,0 };
+
 	bool m_IsMoving{ false };
 	GameObject* m_pTrgger{};
-
 
 	void UpdateMovement();
 	void UpdateSpriteLogic();

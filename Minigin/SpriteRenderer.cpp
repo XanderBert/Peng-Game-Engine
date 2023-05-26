@@ -39,32 +39,28 @@ void SpriteRenderer::Update()
 			m_AccumulatedMoveToStandstillTime += elapsedTime;
 			if (m_AccumulatedMoveToStandstillTime > m_TimeFromMovementToStandStill)
 			{
-				m_AnimationFrame = 1;
+				m_AnimationFrame = 0;
 			}
-			else if (m_AccumulatedFrameTime > m_FrameTime)
+
+			else
 			{
-				++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
-
-
-				m_AccumulatedFrameTime = 0.f;
+				UpdateAnimationFrame();
 			}
 		}
 
 		//Non Moving Objects
 		else
 		{
-			if (m_AccumulatedFrameTime > m_FrameTime)
-			{
-				++m_AnimationFrame %= m_MovementDirectionMap.find(m_MovementDirection)->second.size();
-				m_AccumulatedFrameTime -= m_FrameTime;
-			}
+			UpdateAnimationFrame();
 		}
 	}
 
 	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
+
+
 }
 
-void SpriteRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
+void SpriteRenderer::FixedUpdate(float /*fixedTimeMStep*/)
 {
 }
 
@@ -84,6 +80,9 @@ void SpriteRenderer::SetTexture(const std::string& texturePath)
 
 void SpriteRenderer::SetMovementDirection(MovementDirection value)
 {
+	const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+	if (static_cast<int>(size) < m_AnimationFrame) m_AnimationFrame = 0;
+
 	m_MovementDirection = value;
 	m_AccumulatedMoveToStandstillTime = 0.f;
 }
@@ -145,4 +144,14 @@ void SpriteRenderer::SetOffset(const glm::vec2& offset)
 void SpriteRenderer::SetSourceRect(const glm::vec2& position) const
 {
 	GetComponent<TextureRenderer>()->SetSourceRect(position + m_Offset, m_SpriteSize);
+}
+
+void SpriteRenderer::UpdateAnimationFrame()
+{
+	if (m_AccumulatedFrameTime > m_FrameTime)
+	{
+		const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+		++m_AnimationFrame %= size;
+		m_AccumulatedFrameTime = 0.f;
+	}
 }

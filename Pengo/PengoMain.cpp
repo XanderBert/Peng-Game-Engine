@@ -18,7 +18,7 @@
 #include "imgui.h"
 #include "IceBlock.h"
 #include "Pengo.h"
-#include "WallManager.h"
+#include "WallRow.h"
 #include "ServiceLocator.h"
 #include "SnowBee.h"
 #include "PengoLevel.h"
@@ -43,6 +43,9 @@ void load()
 	PengoLevelLoader levelLoader;
 	PengoLevel* level01 = levelLoader.LoadLevel("Level1.xml");
 	level01->AddGameObjectsToScene(&scene);
+
+
+
 
 	//Player1
 	/*const auto gameac = new Pengo();

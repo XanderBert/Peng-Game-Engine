@@ -1,6 +1,7 @@
 ﻿#include "SnowBee.h"
 
 #include "IceBlock.h"
+#include "IceBlockTrigger.h"
 #include "Pengo.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
@@ -13,8 +14,19 @@ SnowBee::SnowBee()
 	textureRenderer->SetTexture("SnowBee.png");
 
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
-	spriteRenderer->SetSpriteSize({ 16,16 });
+	spriteRenderer->SetSpriteSize(m_SpriteSize);
 
+	//Spawinging Animation
+	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 48,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 64,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 80,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::None);
+
+	// All other animations
 	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::Left);
@@ -24,24 +36,25 @@ SnowBee::SnowBee()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
-	//spriteRenderer->SetActionOffset({ 0,16 }, Action::Move);
-	//spriteRenderer->SetActionOffset({ 0,32 }, Action::Attack);
-
-	//spriteRenderer->SetAction(Action::Move);
 	spriteRenderer->SetMovementDirection(m_Direction);
-	spriteRenderer->Play();
-
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });
 
 	GetComponent<Transform>()->SetWorldPosition({ 250,250 });
+
+	m_pState = new SnowBeeSpawningState(this);
+}
+
+SnowBee::~SnowBee()
+{
+	delete m_pState;
 }
 
 void SnowBee::Update()
 {
 	GameObject::Update();
-	Move();
+	UpdateState();
 }
 
 void SnowBee::LateUpdate()
@@ -51,72 +64,24 @@ void SnowBee::LateUpdate()
 
 void SnowBee::OnCollision(GameObject* other)
 {
+	if (dynamic_cast<PengoIceBlockTrigger*>(other) || dynamic_cast<IceBlockTrigger*>(other))
+	{
+		return;
+	}
+
 	GameObject::OnCollision(other);
-
-	if (const auto* pengo = dynamic_cast<Pengo*>(other))
-	{
-		//Kill the focking pengo
-		//pengo->Kill();
-
-	}
-
-	if (const auto* iceBlock = dynamic_cast<IceBlock*>(other))
-	{
-		if (iceBlock->IsMoving())
-		{
-			//Kill the focking snowbee
-			//Kill();
-		}
-		else
-		{
-			//Go goblin mode
-			if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
-			{
-				//spriteRenderer->SetAction(Action::Attack);
-			}
-		}
-	}
-
-	StopMovement();
-	ChangeMovement();
+	m_pState->OnCollision(other);
 }
 
-void SnowBee::ChangeMovement()
+void SnowBee::UpdateState()
 {
-	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
-
-	// Generate a random integer between 0 and 3
-	const int numQuarterTurns = std::rand() % 4;
-
-	// Perform the quarter turns
-	for (int i = 0; i < numQuarterTurns; ++i)
+	if (const auto newState = m_pState->HandleInput())
 	{
-		const float temp = m_Direction.x;
-		m_Direction.x = -m_Direction.y;
-		m_Direction.y = temp;
-	}
-}
-
-void SnowBee::Move() const
-{
-	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
-		//spriteRenderer->SetAction(Action::Move);
-
-		if (const auto transform = GetComponent<Transform>())
+		if (newState)
 		{
-			const auto pos = transform->GetWorldPosition();
-			const glm::vec2 newPos = pos + m_Direction * m_velocity * TimeM::GetInstance().GetDeltaTimeM();
-			transform->SetWorldPosition(newPos);
+			delete m_pState;
+			m_pState = newState;
 		}
-
-	//Will need to be triggered each frame to handle spriteSheet animation
-	GetComponent<SpriteRenderer>()->SetMovementDirection(m_Direction);
-}
-
-void SnowBee::StopMovement() const
-{
-	if (const auto transform = GetComponent<Transform>())
-	{
-		transform->SetWorldPosition(transform->GetLastWorldPosition());
 	}
+	m_pState->Update();
 }

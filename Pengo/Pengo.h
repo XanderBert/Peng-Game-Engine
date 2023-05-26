@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameActor.h"
+#include "IceBlock.h"
 #include "PengoIceBlockTrigger.h"
 #include "PlayerState.h"
 
@@ -27,8 +28,10 @@ public:
 
 private:
 	PengoIceBlockTrigger* m_pIceBlockTrigger{};
-	PlayerState* m_pState{};
-	float m_TimeUntilCollisionForget{ 0.3f };
+	PlayerState* m_pState;
+
+	//Multiplies the the direction of the previous location to prevent tunneling
+	float m_TunnelingMultiplier{ 3.f };
 
 	void StopMovement() const;
 	void UpdateState();

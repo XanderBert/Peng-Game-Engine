@@ -208,10 +208,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="PengoLevel.cpp" />
     <ClCompile Include="PengoLevelLoader.cpp" />
     <ClCompile Include="PengoMain.cpp" />
+    <ClCompile Include="PengoState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="SnowBee.cpp" />
+    <ClCompile Include="SnowBeeState.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WallManager.cpp" />
+    <ClCompile Include="WallRow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IceBlock.h" />
@@ -221,10 +224,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="PengoIceBlockTrigger.h" />
     <ClInclude Include="PengoLevel.h" />
     <ClInclude Include="PengoLevelLoader.h" />
+    <ClInclude Include="PengoState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="SnowBee.h" />
+    <ClInclude Include="SnowBeeState.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallManager.h" />
+    <ClInclude Include="WallRow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

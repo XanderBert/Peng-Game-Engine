@@ -1,17 +1,24 @@
 <game>
   <objects>
-    <object type="wall" x="150" y="160" />
-    <object type="wall" x="170" y="180" />
-    <object type="wall" x="190" y="200" />
+  <!--x= 58 - 540-->
+  <!--y= 18 - 340-->
+    <object type="wallHorizontal" x="50" y="10" />
+    <object type="wallHorizontal" x="50" y="350" />
+    <object type="wallVertical" x="50" y="18" />
+    <object type="wallVertical" x="546" y="18" />
+
     
+
+    <object type="iceBlock" x="60" y="25" />
+    <object type="iceBlock" x="60" y="45" />
     <object type="iceBlock" x="210" y="220" />
     <object type="iceBlock" x="230" y="220" />
     <object type="iceBlock" x="230" y="240" />
     <object type="iceBlock" x="250" y="260" />
 
-    <object type="player" x="10" y="20"/> 
+    <object type="player" x="60" y="120"/> 
 
-    <object type="snowBee" x="20" y="30"/>
-    <object type="snowBee" x="30" y="40"/>
+    <object type="snowBee" x="65" y="80"/>
+    <object type="snowBee" x="65" y="100"/>
   </objects>
 </game>

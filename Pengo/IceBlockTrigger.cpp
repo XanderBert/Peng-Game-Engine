@@ -13,7 +13,7 @@ IceBlockTrigger::IceBlockTrigger(IceBlock* pParent)
 
 	const auto collision = AddComponent<BoxCollider>();
 	collision->SetColliderSize(m_CollisionSize);
-	collision->DebugRender(true);
+	//collision->DebugRender(true);
 	collision->SetColliderOffset(-offset);
 }
 
