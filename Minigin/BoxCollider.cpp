@@ -53,7 +53,7 @@ SDL_Rect BoxCollider::GetCollider() const
 {
 
 	//Todo: this will make the dirty flag pattern obsolete for the objects that will use collision?
-	const auto position = GetComponent<Transform>()->GetWorldPosition();
+	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
 
 	return SDL_Rect{ m_Collider.x + static_cast<int>(position.x),m_Collider.y + static_cast<int>(position.y), m_Collider.w, m_Collider.h };
 

@@ -28,7 +28,7 @@ void TextureRenderer::LateUpdate()
 
 void TextureRenderer::Render()
 {
-	if (const auto transformComponent{ GetComponent<Transform>() })
+	if (const auto transformComponent{ m_pOwner->GetComponent<Transform>() })
 	{
 		const auto position{ transformComponent->GetWorldPosition() };
 

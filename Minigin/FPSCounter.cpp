@@ -14,7 +14,7 @@ void FPSCounter::Update()
 	CalculateFPS();
 
 	//Todo Set the fetchcomponent as member.
-	if (const auto fontRenderer = GetComponent<FontRenderer>())
+	if (const auto fontRenderer = m_pOwner->GetComponent<FontRenderer>())
 	{
 		fontRenderer->SetText(GetFPSAsIntString());
 	}

@@ -2,6 +2,7 @@
 #include "GameActor.h"
 #include "IceBlock.h"
 #include "PengoIceBlockTrigger.h"
+#include "PlayerCommands.h"
 #include "PlayerState.h"
 
 class Pengo final : public GameActor
@@ -14,9 +15,6 @@ public:
 	Pengo(Pengo&& other)noexcept = delete;
 	Pengo& operator=(const Pengo& other) = delete;
 	Pengo& operator=(Pengo&& other)noexcept = delete;
-
-	void Move(const glm::vec2& direction) override;
-	void Attack() override;
 
 	//Called each frame
 	virtual void Update() override;
@@ -35,5 +33,6 @@ private:
 
 	void StopMovement() const;
 	void UpdateState();
+
 
 };

@@ -1,7 +1,6 @@
 ﻿#include "CollisionManager.h"
 #include "BoxCollider.h"
 #include <future>
-#include <iostream>
 
 //Possible collision detection algorithms
 
@@ -34,14 +33,25 @@ CollisionManager::CollisionManager() : m_StopRequested(false)
 CollisionManager::~CollisionManager()
 {
 	//Stop threads
-	std::unique_lock lock(m_CollisionMutex);
-	m_StopRequested = true;
-	m_ConditionVariable.notify_all();
+	{
+		std::unique_lock lock(m_CollisionMutex);
+		m_StopRequested = true;
+		m_ConditionVariable.notify_all();
+	}
+
+	//When i not explicitly call thread.join() i will get a mutex error when closing the game.
+	//I do not understand why because it uses jthreads
+	for (auto& thread : m_ThreadPool)
+	{
+		if (thread.joinable())
+		{
+			thread.join();
+		}
+	}
 }
 
 void CollisionManager::Update()
 {
-
 	{
 		std::unique_lock lock(m_CollisionMutex);
 
@@ -76,8 +86,6 @@ void CollisionManager::Update()
 				collider->RemoveCollidingObject(collidingCollider);
 				continue;
 			}
-
-			//m_CollidingPairs.emplace_back(collider, collidingCollider->GetComponent<BoxCollider>().get());
 
 			collider->GetGameObject()->OnCollision(collidingCollider);
 		}
@@ -136,8 +144,6 @@ void CollisionManager::CollisionWorker()
 		//Get the task from the queue
 		std::function<void()> task;
 		{
-
-
 			std::unique_lock lock(m_CollisionMutex);
 			m_ConditionVariable.wait(lock, [this] {return !m_TaskQueue.empty() || m_StopRequested; });
 			if (m_StopRequested) { return; }

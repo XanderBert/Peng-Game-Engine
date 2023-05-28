@@ -56,7 +56,7 @@ void FontRenderer::Render()
 	//needs: texture, transform
 	if (m_textTexture)
 	{
-		if (const auto transformComponent{ GetComponent<Transform>() })
+		if (const auto transformComponent{ m_pOwner->GetComponent<Transform>() })
 		{
 			const auto pos = transformComponent->GetWorldPosition();
 			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x, pos.y);
@@ -83,7 +83,7 @@ void FontRenderer::SetFont(const std::string& fontPath, int fontSize)
 void FontRenderer::GetColor()
 {
 	m_color = SDL_Color(255, 255, 255);
-	if (const auto component{ GetComponent<Color>() })
+	if (const auto component{ m_pOwner->GetComponent<Color>() })
 	{
 		m_color = component->GetColor();
 	}

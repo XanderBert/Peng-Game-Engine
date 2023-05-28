@@ -1,18 +1,28 @@
 ﻿#include "Pengo.h"
 #include "BoxCollider.h"
+#include "Color.h"
+#include "Controller.h"
 #include "IceBlock.h"
 #include "IceBlockTrigger.h"
+#include "ObserverComponent.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "PengoEvents.h"
 #include "PengoIceBlockTrigger.h"
 #include "PengoState.h"
+#include "PlayerCommands.h"
 
 
 Pengo::Pengo() : GameActor()
 {
-	m_pIceBlockTrigger = new PengoIceBlockTrigger(this);
+	auto& inputManager = ServiceLocator::GetInstance().InputManager.GetService();
+	inputManager.RegisterCommand(SDLK_w, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 0, -1 }));
+	inputManager.RegisterCommand(SDLK_s, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 0,1 }));
+	inputManager.RegisterCommand(SDLK_a, Controller::ControllerButton::ButtonA, new MoveCommand(this, { -1,0 }));
+	inputManager.RegisterCommand(SDLK_d, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 1,0 }));
 
+	//make Trigger component!!!!
+	m_pIceBlockTrigger = new PengoIceBlockTrigger(this);
 
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	textureRenderer->SetTexture("Pengo.png");
@@ -35,9 +45,12 @@ Pengo::Pengo() : GameActor()
 
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
 
-	AddObserver(std::make_shared<PengoEvent>());
+	const auto observerComponent = AddComponent<ObserverComponent>();
+	observerComponent->AddObserver(std::make_shared<PengoEvent>());
 
 	m_pState = new MovingState(this);
+
+	SetVelocity(200);
 }
 
 Pengo::~Pengo()
@@ -45,20 +58,11 @@ Pengo::~Pengo()
 	delete m_pState;
 }
 
-void Pengo::Move(const glm::vec2& direction)
-{
-	GameActor::Move(direction);
-}
-
-void Pengo::Attack()
-{
-}
 
 void Pengo::Update()
 {
 	GameActor::Update();
 	UpdateState();
-
 }
 
 void Pengo::LateUpdate()
@@ -75,7 +79,7 @@ void Pengo::OnCollision(GameObject* other)
 
 	if (dynamic_cast<IceBlockTrigger*>(other))
 	{
-		NotifyObserver(this, GameEvent::CollidingWithIce);
+		GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::CollidingWithIce);
 		return;
 	}
 
@@ -88,11 +92,8 @@ void Pengo::StopMovement() const
 
 
 	//Tunneling still occurs with this method.
-	if (const auto spriteRenderer = GetComponent<SpriteRenderer>())
-	{
-		const auto movementDirection = spriteRenderer->GetMovementDirectionVector();
-		transform->SetWorldPosition(transform->GetLastWorldPosition() + (-movementDirection * m_TunnelingMultiplier));
-	}
+	transform->SetWorldPosition(transform->GetLastWorldPosition() + (-m_Direction * m_TunnelingMultiplier));
+
 
 }
 

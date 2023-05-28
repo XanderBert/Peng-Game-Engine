@@ -34,6 +34,9 @@
     <Filter Include="Source Files\SnowBee">
       <UniqueIdentifier>{05e62a26-718f-47c3-8fc5-a90db50162a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{b1e5d76a-af71-4c76-b513-7fc5f820c0ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="WallRow.h">
       <Filter>Source Files\Walls</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCommands.h">
+      <Filter>Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

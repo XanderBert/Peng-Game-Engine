@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include "GameObject.h"
 
 class Component
@@ -30,9 +29,6 @@ public:
 	void MarkForDeletion();
 	bool CanBeDeleted() const;
 
-	template <typename T>
-	std::shared_ptr<T> GetComponent() const;
-
 	GameObject* GetGameObject() const;
 
 protected:
@@ -40,16 +36,4 @@ protected:
 	GameObject* m_pOwner{ nullptr };
 private:
 	void SetGameObject(GameObject* owner);
-
 };
-
-//return nullptr if the component has not been found
-template <typename T>
-std::shared_ptr<T> Component::GetComponent() const
-{
-	if (m_pOwner)
-	{
-		return m_pOwner->GetComponent<T>();
-	}
-	return nullptr;
-}

@@ -37,8 +37,8 @@ void SnowBeeSpawningState::OnEnter()
 {
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
+		m_pActor->SetDirection({ 0, 0 });
 		spriteRenderer->SetOffset({ 0,0 });
-		spriteRenderer->SetMovementDirection(MovementDirection::None);
 		spriteRenderer->Play();
 		spriteRenderer->SetFrameTime(0.2f);
 	}
@@ -70,8 +70,7 @@ void SnowBeeMovingState::OnEnter()
 {
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		spriteRenderer->SetMovementDirection(MovementDirection::Right);
-		dynamic_cast<SnowBee*>(m_pActor)->SetDirection({ 1,0 });
+		m_pActor->SetDirection({ 1, 0 });
 		spriteRenderer->SetOffset({ 0,16 });
 		spriteRenderer->SetFrameTime(0.4f);
 	}

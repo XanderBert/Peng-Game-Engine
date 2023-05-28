@@ -57,7 +57,7 @@ void AttackingState::Update()
 
 			if (const auto iceBlockTrigger = dynamic_cast<IceBlockTrigger*>(collidingGameObjects))
 			{
-				dynamic_cast<IceBlock*>(iceBlockTrigger->GetParent())->MoveIceBlock(spriteRenderer->GetMovementDirection());
+				dynamic_cast<IceBlock*>(iceBlockTrigger->GetParent())->MoveIceBlock(m_pActor->GetDirection());
 			}
 		}
 	}

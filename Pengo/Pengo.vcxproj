@@ -225,6 +225,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="PengoLevel.h" />
     <ClInclude Include="PengoLevelLoader.h" />
     <ClInclude Include="PengoState.h" />
+    <ClInclude Include="PlayerCommands.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="SnowBee.h" />
     <ClInclude Include="SnowBeeState.h" />

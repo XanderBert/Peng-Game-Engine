@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <unordered_map>
 #include <vector>
-
-class BoxCollider;
+#include <glm/vec2.hpp>
 class Component;
+class BoxCollider;
+
 class GameObject
 {
 public:
@@ -34,18 +36,19 @@ public:
 	//
 	//Components
 	template <typename T> std::shared_ptr <T> AddComponent();
-	template <typename T> std::shared_ptr <T> AddComponent(std::shared_ptr<T> pComponent); //For adding existing component
+	template <typename T> void RemoveComponent() const;
 	template <typename T> std::shared_ptr<T> GetComponent() const;
+
 	std::vector<std::shared_ptr<Component>> m_pComponents{};
 
 	//
 	//SceneGraph
 	void SetParent(GameObject* pParent, bool keepWorldPosition);
-	[[nodiscard]] int GetChildCount() const;
+	int GetChildCount() const;
 
-	[[nodiscard]] GameObject* GetParent() const;
-	[[nodiscard]] GameObject* GetChildAt(int index) const;
-	[[nodiscard]] std::vector<GameObject*> GetChildren() const;
+	GameObject* GetParent() const;
+	GameObject* GetChildAt(int index) const;
+	std::vector<GameObject*> GetChildren() const;
 
 	//
 	//Deletion
@@ -58,22 +61,28 @@ public:
 	//Collision
 	virtual void OnCollision(GameObject* /*other*/) {}
 
-	//template <typename T>
+
 	std::vector<GameObject*> GetCollidingObjects() const;
 
+	void SetDirection(const glm::vec2& direction) { m_Direction = direction; }
+	glm::vec2 GetDirection() const { return  m_Direction; }
+	void SetDirectionX(const float x) { m_Direction.x = x; }
+	void SetDirectionY(const float y) { m_Direction.y = y; }
 
 protected:
 	bool m_CanBeDeleted{ false };
-private:
-	GameObject* m_pParent{};
-	std::vector<GameObject*> m_pChildren{};
 
+	glm::vec2 m_Direction{};
+
+	GameObject* m_pParent{};
+
+	std::vector<GameObject*> m_pChildren{};
 	void AddToChildVector(GameObject* pChild);
 	void RemoveFromChildren(GameObject* pParent) const;
-
-	//Gets called every late update
-	//Removes all components that have been marked for deletion
+private:
 	void RemoveComponents();
+	//Just accesses the component and marks it for deletion
+	void MarkComponentForDeletionUtility(Component* component) const;
 };
 
 template<typename T>
@@ -88,19 +97,26 @@ std::shared_ptr <T> GameObject::AddComponent()
 	return dynamic_pointer_cast<T>(m_pComponents.back());
 }
 
-//Used For adding existing component;
 template<typename T>
-std::shared_ptr <T> GameObject::AddComponent(std::shared_ptr<T> pComponent)
+void GameObject::RemoveComponent() const
 {
 	static_assert(std::is_base_of<Component, T>(), "This class is not a component.");
-	m_pComponents.emplace_back(pComponent);
-	return dynamic_pointer_cast<T>(m_pComponents.back());
+
+	for (const auto& component : m_pComponents)
+	{
+		if (const auto& comp = dynamic_pointer_cast<T>(component))
+		{
+			//Just accesses the component and marks it for deletion
+			//This is done in the cpp because the template really does not like it when acces the component here.
+			MarkComponentForDeletionUtility(comp.get());
+		}
+	}
 }
 
 template<typename T>
 std::shared_ptr<T> GameObject::GetComponent() const
 {
-	static_assert(std::is_base_of<Component, T>() || std::is_base_of<Component*, T>(), "This class is not a component.");
+	static_assert(std::is_base_of<Component, T>(), "This class is not a component.");
 
 	for (const auto& component : m_pComponents)
 	{

@@ -18,7 +18,7 @@ public:
 	virtual void Update() override;
 	virtual void OnCollision(GameObject* other) override;
 
-	void MoveIceBlock(const MovementDirection fireDirection);
+	void MoveIceBlock(glm::vec2 direction);
 	bool IsMoving() const;
 	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
 	glm::vec2 GetFireDirection() const { return m_FireDirection; }
@@ -27,7 +27,7 @@ public:
 private:
 	const size_t m_NrFrames{ 10 };
 	const glm::vec2 m_SpriteSize{ 16,16 };
-	glm::vec2 m_Velocity{ 0,0 };
+	float m_Velocity{ 100 };
 	glm::vec2 m_FireDirection{ 0,0 };
 
 	bool m_IsMoving{ false };

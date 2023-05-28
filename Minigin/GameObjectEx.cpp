@@ -1,8 +1,8 @@
 ﻿#include "GameObjectEx.h"
 
 GameObjectEx::GameObjectEx(GameObject* owner) : Component(owner)
-, ID(0)
 , transform(TransformEx(owner))
+, ID(0)
 {
 }
 

@@ -2,6 +2,7 @@
 #include <memory>
 #include <glm/vec2.hpp>
 
+
 #include "GameObject.h"
 #include "Observer.h"
 #include "Event.h"
@@ -21,11 +22,6 @@ public:
 
 	//Called each frame
 	virtual void Update() override;
-
-	void Jump();
-	virtual void Move(const glm::vec2& direction);
-	void Die();
-	virtual void Attack() {}
 
 	void TakeDammage(const int dammage);
 	int GetHealth() const { return m_Health; }
@@ -49,42 +45,23 @@ public:
 	void SetControllerIndex(int index);
 	int GetControllerIndex() const { return m_ControllerID; }
 
-	void AddObserver(std::shared_ptr<Observer> observer)
-	{
-		m_Observers.emplace_back(observer);
-	}
-
-	void RemoveObserver(Observer* observer)
-	{
-		m_Observers.erase(std::remove_if(m_Observers.begin(), m_Observers.end(), [observer](const std::shared_ptr<Observer>& ptr) {
-			if (ptr.get() == observer) {
-				return true;
-			}
-			return false;
-			}), m_Observers.end());
-	}
-
-
 	virtual void OnCollision(GameObject* other) override;
 
-protected:
-	void NotifyObserver(GameObject* object, const GameEvent event) const
-	{
-		for (size_t i{}; i < m_Observers.size(); ++i)
-		{
-			m_Observers[i]->Notify(object, event);
-		}
-	}
+	float GetVelocity() const { return  m_Velocity; }
+	void SetVelocity(const float velocity) { m_Velocity = velocity; }
+
+
 
 private:
 	bool m_UsesController{ false };
 	int m_ControllerID{};
-	float m_Speed{ 50.f };
+	float m_Velocity{ 50.f };
+
 	int m_Health{ 3 };
 	std::string m_HealthString{ std::to_string(m_Health) };
 	int m_Points{ 0 };
 	std::string m_PointString{ std::to_string(m_Points) };
 	std::vector<std::shared_ptr<Observer>> m_Observers;
 
-	void SetTextureDirection(const glm::vec2& direction);
+	//void SetTextureDirection(const glm::vec2& direction);
 };

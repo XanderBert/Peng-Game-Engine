@@ -9,7 +9,9 @@
 IceBlock::IceBlock()
 	: GameObject()
 	, m_pTrgger{ new IceBlockTrigger(this) }
+
 {
+	SetDirection({ 0, 0 });
 
 	const auto texture = AddComponent<TextureRenderer>();
 	texture->SetTexture("Ice_Block.png");
@@ -22,7 +24,7 @@ IceBlock::IceBlock()
 		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::None);
 	}
 
-	sprite->SetMovementDirection(MovementDirection::None);
+
 	sprite->Pause();
 	sprite->SetFrameTime(0.05f);
 
@@ -48,26 +50,16 @@ void IceBlock::OnCollision(GameObject* other)
 		return;
 	}
 
-	if (m_Velocity != glm::vec2{ 0,0 })
+	if (m_IsMoving)
 	{
 		GetComponent<SpriteRenderer>()->Play();
-		m_Velocity = { 0,0 };
+		m_Velocity = 0;
 	}
 }
 
-void IceBlock::MoveIceBlock(const MovementDirection fireDirection)
+void IceBlock::MoveIceBlock(glm::vec2 direction)
 {
-	//Move this if it collides with wall/ice block. stop moving
-	//when it cannot move in that direction it gets destroyed
-	switch (fireDirection)
-	{
-	case MovementDirection::Up: m_Velocity = { 0, -100 }; break;
-	case MovementDirection::Down: m_Velocity = { 0, 100 }; break;
-	case MovementDirection::Left: m_Velocity = { -100, 0 }; break;
-	case MovementDirection::Right: m_Velocity = { 100, 0 }; break;
-	}
-
-	m_FireDirection = m_Velocity;
+	m_FireDirection = direction * m_Velocity;
 	m_IsMoving = true;
 }
 
@@ -78,12 +70,15 @@ bool IceBlock::IsMoving() const
 
 void IceBlock::UpdateMovement()
 {
-	//Get TransformComponent
-	const auto transform = GetComponent<Transform>();
-	//Get Local Psotion
-	const auto pos = transform->GetLocalPosition();
-	//Update Local Position with Velocity
-	transform->SetLocalPosition(pos + (m_Velocity * TimeM::GetInstance().GetDeltaTimeM()));
+	if (m_IsMoving)
+	{
+		//Get TransformComponent
+		const auto transform = GetComponent<Transform>();
+		//Get Local Psotion
+		const auto pos = transform->GetLocalPosition();
+		//Update Local Position with Velocity
+		transform->SetLocalPosition(pos + (m_Velocity * TimeM::GetInstance().GetDeltaTimeM()));
+	}
 }
 
 void IceBlock::UpdateSpriteLogic()

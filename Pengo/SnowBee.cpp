@@ -36,7 +36,6 @@ SnowBee::SnowBee()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
-	spriteRenderer->SetMovementDirection(m_Direction);
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });

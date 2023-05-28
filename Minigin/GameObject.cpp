@@ -7,6 +7,7 @@
 #include "BoxCollider.h"
 
 GameObject::GameObject()
+
 {
 	AddComponent<Transform>();
 }
@@ -110,11 +111,6 @@ std::vector < GameObject*> GameObject::GetChildren() const
 
 void GameObject::MarkForDeletion()
 {
-	if (typeid(this) == typeid(IceBlock))
-	{
-		std::cout << "IceBlock Marked for deletion" << std::endl;
-	}
-
 	//Mark All the member components for deletion
 	for (const auto& component : m_pComponents)
 	{
@@ -153,11 +149,11 @@ void GameObject::RemoveFromChildren(GameObject* pParent) const
 void GameObject::RemoveComponents()
 {
 	// Remove components that can be deleted
+	//Does it get deleted out of the vector?
+	//the memory does gets freed.
 	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
 		{
-
-			const auto canBeRemoved = component->CanBeDeleted();
-			if (canBeRemoved)
+			if (const auto canBeRemoved = component->CanBeDeleted())
 			{
 				//Handles Collision remove
 				if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
@@ -166,8 +162,15 @@ void GameObject::RemoveComponents()
 					ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(collider);
 				}
 
-			}
-			return canBeRemoved;
-		});
+				return canBeRemoved;
 
+
+			}
+			return false;
+		});
+}
+
+void GameObject::MarkComponentForDeletionUtility(Component* component) const
+{
+	component->MarkForDeletion();
 }

@@ -52,31 +52,46 @@
     <Filter Include="Source Files\Singletons\Services\AudioService">
       <UniqueIdentifier>{e2c0322b-4a60-45fe-b782-67e0286243d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Components\Colliders">
+      <UniqueIdentifier>{3f3c8194-53d0-40a3-98ee-ff7b96690607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\Colliders\BoxCollider">
+      <UniqueIdentifier>{24d3d32f-1d08-4d0f-9466-09b456768b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\Color">
+      <UniqueIdentifier>{98d7140c-e7c1-4ccc-8139-51d531cba53d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\FontRenderer">
+      <UniqueIdentifier>{aa91f939-57bc-4181-b901-df2eae7252aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\FPS Counter">
+      <UniqueIdentifier>{3164d56a-1cda-4695-832b-35b950611522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\SpriteRenderer">
+      <UniqueIdentifier>{b5d76aec-8332-4fa4-b028-604778cd4ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\TextureRenderer">
+      <UniqueIdentifier>{51a88f8e-31b4-4b40-8e54-869a24fcd840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\Transform">
+      <UniqueIdentifier>{c283f7d2-1ae2-4fa9-bdc9-80b4308a0d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\GameActor">
+      <UniqueIdentifier>{254a2323-25fb-4c6f-9743-5380f35807f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\Observer">
+      <UniqueIdentifier>{42697225-31e6-42da-8256-788101c92f39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureRenderer.h">
-      <Filter>Resource Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Resource Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FontRenderer.h">
-      <Filter>Resource Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSCounter.h">
-      <Filter>Resource Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>Resource Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Source Files\Singletons</Filter>
@@ -109,9 +124,6 @@
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Resource Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CacheTestComponent.h">
       <Filter>Resource Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="TransformEx.h">
@@ -150,14 +162,8 @@
     <ClInclude Include="TestScene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
-      <Filter>Resource Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="TimeM.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Resource Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Source Files\Singletons</Filter>
@@ -186,6 +192,36 @@
     <ClInclude Include="AudioServiceDebug.h">
       <Filter>Source Files\Singletons\Services\AudioService</Filter>
     </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Resource Files\Components\Colliders\BoxCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="CacheTestComponent.h">
+      <Filter>Resource Files\Components\Exercise</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Resource Files\Components\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRenderer.h">
+      <Filter>Resource Files\Components\FontRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Resource Files\Components\FPS Counter</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Resource Files\Components\SpriteRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderer.h">
+      <Filter>Resource Files\Components\TextureRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Resource Files\Components\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="GameActorComponent.h">
+      <Filter>Resource Files\Components\GameActor</Filter>
+    </ClInclude>
+    <ClInclude Include="ObserverComponent.h">
+      <Filter>Resource Files\Components\Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -197,23 +233,8 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextureRenderer.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="FontRenderer.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCounter.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Resource Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
@@ -242,9 +263,6 @@
     <ClCompile Include="Component.cpp">
       <Filter>Resource Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CacheTestComponent.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="TransformEx.cpp">
       <Filter>Resource Files\Components\Exercise</Filter>
     </ClCompile>
@@ -256,9 +274,6 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Source Files\Command</Filter>
     </ClCompile>
     <ClCompile Include="GameActor.cpp">
       <Filter>Source Files\GameActor</Filter>
@@ -275,14 +290,8 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>Resource Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="TimeM.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Resource Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Source Files\Singletons</Filter>
@@ -310,6 +319,36 @@
     </ClCompile>
     <ClCompile Include="AudioServiceDebug.cpp">
       <Filter>Source Files\Singletons\Services\AudioService</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Resource Files\Components\Colliders\BoxCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="CacheTestComponent.cpp">
+      <Filter>Resource Files\Components\Exercise</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Resource Files\Components\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRenderer.cpp">
+      <Filter>Resource Files\Components\FontRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Resource Files\Components\FPS Counter</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Resource Files\Components\SpriteRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderer.cpp">
+      <Filter>Resource Files\Components\TextureRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Resource Files\Components\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="GameActorComponent.cpp">
+      <Filter>Resource Files\Components\GameActor</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverComponent.cpp">
+      <Filter>Resource Files\Components\Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

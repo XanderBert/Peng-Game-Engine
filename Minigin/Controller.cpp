@@ -185,9 +185,8 @@ bool Controller::GetIsInUse() const
 	return pImpl->GetIsInUse();
 }
 
-bool Controller::IsControllerConnectedOnPort(int controllerIndex) const
+bool Controller::IsControllerConnectedOnPort(int /*controllerIndex*/) const
 {
-	controllerIndex;
 	return false;//pImpl->IsControllerConnectedOnPort(controllerIndex);
 }
 

@@ -24,8 +24,7 @@ void PengoIceBlockTrigger::Update()
 	{
 		if (const auto boxCollider = GetComponent<BoxCollider>())
 		{
-			const glm::vec2 movementDir = spriteRenderer->GetMovementDirectionVector();
-			boxCollider->SetColliderOffset({ m_OffsetMultiplier * movementDir.x + m_Offset.x, m_OffsetMultiplier * movementDir.y + m_Offset.y });
+			boxCollider->SetColliderOffset({ m_OffsetMultiplier * m_Direction.x + m_Offset.x, m_OffsetMultiplier * m_Direction.y + m_Offset.y });
 		}
 	}
 }

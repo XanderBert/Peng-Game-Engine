@@ -14,6 +14,7 @@ enum class MovementDirection
 	None = 4
 };
 
+
 class SpriteRenderer : public Component
 {
 public:
@@ -42,10 +43,8 @@ public:
 	//Set the texture of the TextureRenderer Component
 	//This does not need to be called if the Texture is already been set in the  TextureRenderer Component
 	void SetTexture(const std::string& texturePath);
-	void SetMovementDirection(MovementDirection value);
+
 	void SetMovementDirection(const glm::vec2& direction);
-	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
-	glm::vec2 GetMovementDirectionVector() const;
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
@@ -74,6 +73,11 @@ private:
 	MovementDirection m_MovementDirection{ MovementDirection::Right };
 	std::unordered_map<MovementDirection, std::vector<glm::vec2>> m_MovementDirectionMap{};
 	glm::vec2 m_Offset{};
+
+	void SetMovementDirection(MovementDirection value);
+	MovementDirection ConvertMovementDirection(const glm::vec2& direction);
+	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
+	glm::vec2 GetMovementDirectionVector() const;
 
 	void SetSourceRect(const glm::vec2& position) const;
 	void UpdateAnimationFrame();
