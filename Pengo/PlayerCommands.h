@@ -8,7 +8,7 @@
 class MoveCommand final : public Command
 {
 public:
-	MoveCommand(GameActor* gameActor, const glm::vec2 movmentDirection)
+	MoveCommand(GameObject* gameActor, const glm::vec2 movmentDirection)
 		: m_GameActor(gameActor)
 		, m_MovementDirection(movmentDirection)
 	{}
@@ -25,7 +25,7 @@ public:
 		transform->SetWorldPosition(transform->GetWorldPosition() + movement);
 	}
 private:
-	GameActor* m_GameActor;
+	GameObject* m_GameActor;
 	glm::vec2 m_MovementDirection;
 };
 

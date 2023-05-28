@@ -105,6 +105,16 @@ void InputManager::RegisterCommand(SDL_Keycode key, Controller::ControllerButton
 	//m_ControllerCommands.insert(std::make_pair(controllerButton, command));
 }
 
+void InputManager::RegisterCommand(SDL_Keycode key, Command* command)
+{
+	m_KeyboardCommands.insert(std::make_pair(key, command));
+}
+
+void InputManager::RegisterCommand(Controller::ControllerButton /*controllerButton*/, Command* /*command*/)
+{
+	//m_ControllerCommands.insert(std::make_pair(controllerButton, command));
+}
+
 void InputManager::HandleInput(Controller::ControllerButton /*key*/)
 {
 	/*if (m_ControllerCommands.contains(key))

@@ -28,9 +28,6 @@
     <Filter Include="Source Files\Command">
       <UniqueIdentifier>{ff8334b8-9c12-4bee-b5ee-a62a21d9cf72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameActor">
-      <UniqueIdentifier>{8dde993a-59a8-4579-8912-85bc02ca742e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{2293b7c6-1ff5-4b6a-9d72-7079d1c24c30}</UniqueIdentifier>
     </Filter>
@@ -76,11 +73,11 @@
     <Filter Include="Resource Files\Components\Transform">
       <UniqueIdentifier>{c283f7d2-1ae2-4fa9-bdc9-80b4308a0d5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Components\GameActor">
-      <UniqueIdentifier>{254a2323-25fb-4c6f-9743-5380f35807f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Components\Observer">
       <UniqueIdentifier>{42697225-31e6-42da-8256-788101c92f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\InputComponent">
+      <UniqueIdentifier>{1aefc779-ab90-4d45-b159-bd91da115583}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -140,9 +137,6 @@
     </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Source Files\Command</Filter>
-    </ClInclude>
-    <ClInclude Include="GameActor.h">
-      <Filter>Source Files\GameActor</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>Header Files</Filter>
@@ -216,11 +210,11 @@
     <ClInclude Include="Transform.h">
       <Filter>Resource Files\Components\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="GameActorComponent.h">
-      <Filter>Resource Files\Components\GameActor</Filter>
-    </ClInclude>
     <ClInclude Include="ObserverComponent.h">
       <Filter>Resource Files\Components\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>Resource Files\Components\InputComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -274,9 +268,6 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameActor.cpp">
-      <Filter>Source Files\GameActor</Filter>
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
@@ -344,11 +335,11 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Resource Files\Components\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="GameActorComponent.cpp">
-      <Filter>Resource Files\Components\GameActor</Filter>
-    </ClCompile>
     <ClCompile Include="ObserverComponent.cpp">
       <Filter>Resource Files\Components\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>Resource Files\Components\InputComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

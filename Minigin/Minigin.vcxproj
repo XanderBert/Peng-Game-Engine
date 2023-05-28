@@ -260,13 +260,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="FPSCounter.h" />
-    <ClInclude Include="GameActor.h" />
-    <ClInclude Include="GameActorComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectAltEx.h" />
     <ClInclude Include="GameObjectEx.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
+    <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverComponent.h" />
     <ClInclude Include="Renderer.h" />
@@ -305,8 +304,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
-    <ClCompile Include="GameActor.cpp" />
-    <ClCompile Include="GameActorComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectAltEx.cpp" />
     <ClCompile Include="GameObjectEx.cpp" />
@@ -318,6 +315,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="ObserverComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

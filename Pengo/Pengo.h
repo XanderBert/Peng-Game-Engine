@@ -5,7 +5,7 @@
 #include "PlayerCommands.h"
 #include "PlayerState.h"
 
-class Pengo final : public GameActor
+class Pengo final : public GameObject
 {
 public:
 	Pengo();

@@ -87,7 +87,5 @@ void BoxCollider::RemoveCollidingObject(GameObject* collider)
 std::vector<GameObject*> BoxCollider::GetCollidingObjects() const
 {
 	//std::unique_lock lock(m_CollidingObjectsMutex);
-
-
 	return m_CollidingObjects;
 }

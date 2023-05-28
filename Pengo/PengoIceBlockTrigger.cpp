@@ -9,7 +9,6 @@ PengoIceBlockTrigger::PengoIceBlockTrigger(GameObject* pParent)
 
 	const auto collision = AddComponent<BoxCollider>();
 	collision->SetColliderSize(m_CollisionSize);
-	//collision->DebugRender(true);
 }
 
 PengoIceBlockTrigger::~PengoIceBlockTrigger()
@@ -24,7 +23,7 @@ void PengoIceBlockTrigger::Update()
 	{
 		if (const auto boxCollider = GetComponent<BoxCollider>())
 		{
-			boxCollider->SetColliderOffset({ m_OffsetMultiplier * m_Direction.x + m_Offset.x, m_OffsetMultiplier * m_Direction.y + m_Offset.y });
+			boxCollider->SetColliderOffset({ m_OffsetMultiplier * m_pParent->GetDirection().x + m_Offset.x, m_OffsetMultiplier * m_pParent->GetDirection().y + m_Offset.y });
 		}
 	}
 }

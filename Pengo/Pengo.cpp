@@ -11,22 +11,33 @@
 #include "PengoIceBlockTrigger.h"
 #include "PengoState.h"
 #include "PlayerCommands.h"
+#include "InputComponent.h"
 
 
-Pengo::Pengo() : GameActor()
+Pengo::Pengo() : GameObject()
 {
-	auto& inputManager = ServiceLocator::GetInstance().InputManager.GetService();
-	inputManager.RegisterCommand(SDLK_w, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 0, -1 }));
-	inputManager.RegisterCommand(SDLK_s, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 0,1 }));
-	inputManager.RegisterCommand(SDLK_a, Controller::ControllerButton::ButtonA, new MoveCommand(this, { -1,0 }));
-	inputManager.RegisterCommand(SDLK_d, Controller::ControllerButton::ButtonA, new MoveCommand(this, { 1,0 }));
 
-	//make Trigger component!!!!
+	//Input Component
+	const auto inputComponent = AddComponent<InputComponent>();
+	inputComponent->AddBinding(SDLK_w, new MoveCommand(this, { 0, -1 }));
+	inputComponent->AddBinding(SDLK_s, new MoveCommand(this, { 0,1 }));
+	inputComponent->AddBinding(SDLK_a, new MoveCommand(this, { -1,0 }));
+	inputComponent->AddBinding(SDLK_d, new MoveCommand(this, { 1,0 }));
+
+
+	//make Trigger component??
+	//This will be a BoxCollider Component.
+	//Will it have extra features?
+	//Can i just add 2 box colliders to the same object?
+	//how will i diffrerentiate between the 2?
 	m_pIceBlockTrigger = new PengoIceBlockTrigger(this);
 
+	//Texture Component
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	textureRenderer->SetTexture("Pengo.png");
 
+
+	//Sprite Component
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
 	spriteRenderer->SetSpriteSize({ 16,16 });
 
@@ -40,16 +51,23 @@ Pengo::Pengo() : GameActor()
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
 
+	//Box Collider Component
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });
 
+
+	//Audio Component Needs to be made!
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
 
 	const auto observerComponent = AddComponent<ObserverComponent>();
 	observerComponent->AddObserver(std::make_shared<PengoEvent>());
 
+
+	//Does state need a component?
 	m_pState = new MovingState(this);
 
+
+	//Make Velocity and direction component
 	SetVelocity(200);
 }
 
@@ -61,20 +79,20 @@ Pengo::~Pengo()
 
 void Pengo::Update()
 {
-	GameActor::Update();
+	GameObject::Update();
 	UpdateState();
 }
 
 void Pengo::LateUpdate()
 {
-	GameActor::LateUpdate();
+	GameObject::LateUpdate();
 }
 
 void Pengo::OnCollision(GameObject* other)
 {
 	if (dynamic_cast<PengoIceBlockTrigger*>(other)) { return; }
 
-	GameActor::OnCollision(other);
+	GameObject::OnCollision(other);
 	m_pState->OnCollision(other);
 
 	if (dynamic_cast<IceBlockTrigger*>(other))

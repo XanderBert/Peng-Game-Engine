@@ -26,6 +26,9 @@ public:
 	virtual Controller* GetController(int controllerId) const = 0;
 
 	virtual void RegisterCommand(SDL_Keycode key, Controller::ControllerButton controllerButton, Command* command) = 0;
+	virtual void RegisterCommand(SDL_Keycode key, Command* command) = 0;
+	virtual void RegisterCommand(Controller::ControllerButton controllerButton, Command* command) = 0;
+
 	virtual void HandleInput(Controller::ControllerButton key) = 0;
 };
 
@@ -50,6 +53,9 @@ public:
 
 
 	void RegisterCommand(SDL_Keycode key, Controller::ControllerButton controllerButton, Command* command) override;
+	virtual void RegisterCommand(SDL_Keycode key, Command* command) override;
+	virtual void RegisterCommand(Controller::ControllerButton controllerButton, Command* command) override;
+
 	void HandleInput(Controller::ControllerButton key) override;
 
 private:

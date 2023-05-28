@@ -53,13 +53,13 @@ void IceBlock::OnCollision(GameObject* other)
 	if (m_IsMoving)
 	{
 		GetComponent<SpriteRenderer>()->Play();
-		m_Velocity = 0;
+		m_FireDirection = { 0,0 };
 	}
 }
 
 void IceBlock::MoveIceBlock(glm::vec2 direction)
 {
-	m_FireDirection = direction * m_Velocity;
+	m_FireDirection = { direction.x * m_Velocity, direction.y * m_Velocity };
 	m_IsMoving = true;
 }
 
@@ -74,10 +74,10 @@ void IceBlock::UpdateMovement()
 	{
 		//Get TransformComponent
 		const auto transform = GetComponent<Transform>();
-		//Get Local Psotion
+		//Get Local Position
 		const auto pos = transform->GetLocalPosition();
 		//Update Local Position with Velocity
-		transform->SetLocalPosition(pos + (m_Velocity * TimeM::GetInstance().GetDeltaTimeM()));
+		transform->SetLocalPosition(pos + (m_FireDirection * TimeM::GetInstance().GetDeltaTimeM()));
 	}
 }
 
