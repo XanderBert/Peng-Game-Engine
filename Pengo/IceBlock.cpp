@@ -2,6 +2,7 @@
 
 #include "BoxCollider.h"
 #include "IceBlockTrigger.h"
+#include "MoveComponent.h"
 #include "Pengo.h"
 #include "SpriteRenderer.h"
 #include "TextureRenderer.h"
@@ -11,8 +12,7 @@ IceBlock::IceBlock()
 	, m_pTrgger{ new IceBlockTrigger(this) }
 
 {
-	SetDirection({ 0, 0 });
-
+	
 	const auto texture = AddComponent<TextureRenderer>();
 	texture->SetTexture("Ice_Block.png");
 
@@ -22,6 +22,10 @@ IceBlock::IceBlock()
 	for (size_t i{}; i < m_NrFrames; ++i)
 	{
 		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::None);
+		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::Left);
+		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::Right);
+		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::Up);
+		sprite->AddSpriteFrame({ 0 + i * 16,0 }, MovementDirection::Down);
 	}
 
 
@@ -30,6 +34,11 @@ IceBlock::IceBlock()
 
 	const auto collision = AddComponent<BoxCollider>();
 	collision->SetColliderSize(m_SpriteSize);
+
+
+	AddComponent<VelocityComponent>()->SetVelocity(100);
+	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
+	AddComponent<MoveComponent>();
 }
 
 IceBlock::~IceBlock() = default;
@@ -37,8 +46,6 @@ IceBlock::~IceBlock() = default;
 void IceBlock::Update()
 {
 	GameObject::Update();
-
-	UpdateMovement();
 	UpdateSpriteLogic();
 }
 
@@ -50,36 +57,22 @@ void IceBlock::OnCollision(GameObject* other)
 		return;
 	}
 
-	if (m_IsMoving)
+	if (GetComponent<MoveComponent>()->CanMove())
 	{
 		GetComponent<SpriteRenderer>()->Play();
-		m_FireDirection = { 0,0 };
 	}
 }
 
-void IceBlock::MoveIceBlock(glm::vec2 direction)
+void IceBlock::MoveIceBlock(glm::vec2 direction) const
 {
-	m_FireDirection = { direction.x * m_Velocity, direction.y * m_Velocity };
-	m_IsMoving = true;
+	std::cout << "Move IceBlock" << std::endl;
+	std::cout << "Direction: " << direction.x << " " << direction.y << std::endl;
+	
+	GetComponent<DirectionComponent>()->SetDirection(direction);
+	GetComponent<MoveComponent>()->SetCanMove(true);
 }
 
-bool IceBlock::IsMoving() const
-{
-	return m_IsMoving;
-}
 
-void IceBlock::UpdateMovement()
-{
-	if (m_IsMoving)
-	{
-		//Get TransformComponent
-		const auto transform = GetComponent<Transform>();
-		//Get Local Position
-		const auto pos = transform->GetLocalPosition();
-		//Update Local Position with Velocity
-		transform->SetLocalPosition(pos + (m_FireDirection * TimeM::GetInstance().GetDeltaTimeM()));
-	}
-}
 
 void IceBlock::UpdateSpriteLogic()
 {

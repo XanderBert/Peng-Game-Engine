@@ -26,7 +26,7 @@ void FontRenderer::Update()
 		//Looks for color component
 		//if there is none it will use white
 		GetColor();
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_PointerToText->c_str(), m_color);
+		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -53,7 +53,12 @@ void FontRenderer::LateUpdate()
 
 void FontRenderer::Render()
 {
-	//needs: texture, transform
+
+	//In your Render you always get the
+	//transformcomponent every frame, is that necessary ?
+	//Can it change somehow in between frames ?
+	
+
 	if (m_textTexture)
 	{
 		if (const auto transformComponent{ m_pOwner->GetComponent<Transform>() })
@@ -61,16 +66,12 @@ void FontRenderer::Render()
 			const auto pos = transformComponent->GetWorldPosition();
 			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x, pos.y);
 		}
-		else
-		{
-			throw std::runtime_error(std::string("FontRenderer::Render() is dependent on a Transform Component"));
-		}
 	}
 }
 
-void FontRenderer::SetText(std::string* text)
+void FontRenderer::SetText(const std::string& text)
 {
-	m_PointerToText = text;
+	m_text = text;
 	if (m_font) m_needsUpdate = true;
 }
 

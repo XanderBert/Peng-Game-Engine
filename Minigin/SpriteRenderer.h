@@ -44,7 +44,6 @@ public:
 	//This does not need to be called if the Texture is already been set in the  TextureRenderer Component
 	void SetTexture(const std::string& texturePath);
 
-	void SetMovementDirection(const glm::vec2& direction);
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
@@ -74,6 +73,7 @@ private:
 	std::unordered_map<MovementDirection, std::vector<glm::vec2>> m_MovementDirectionMap{};
 	glm::vec2 m_Offset{};
 
+	void SetMovementDirection(const glm::vec2& direction);
 	void SetMovementDirection(MovementDirection value);
 	MovementDirection ConvertMovementDirection(const glm::vec2& direction);
 	MovementDirection GetMovementDirection() const { return m_MovementDirection; }
@@ -89,6 +89,9 @@ private:
 	float m_TimeFromMovementToStandStill{};
 	float m_AccumulatedMoveToStandstillTime{};
 
+	glm::vec2 m_OldDirection{};
+
+	bool m_IsNotInit{true};
 	bool m_IsPlaying{ true };
 
 };

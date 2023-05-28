@@ -256,6 +256,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="DirectionComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRenderer.h" />
@@ -266,6 +267,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ObserverComponent.h" />
     <ClInclude Include="Renderer.h" />
@@ -281,6 +283,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="TimeM.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformEx.h" />
+    <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui.cpp" />
@@ -301,6 +304,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="DirectionComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
@@ -316,6 +320,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp" />
+    <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="ObserverComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -329,6 +334,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="TimeM.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformEx.cpp" />
+    <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,7 +28,7 @@ public:
 	virtual void Render() override;
 
 	std::string GetFPSAsString() const;
-	std::string* GetFPSAsIntString();
+	std::string GetFPSAsIntString();
 
 private:
 	void CalculateFPS();

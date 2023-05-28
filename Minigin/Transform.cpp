@@ -54,17 +54,17 @@ void Transform::SetLocalPosition(const glm::vec2& position)
 	{
 		SetWorldPosition(position);
 	}
-
-	SetPositionDirty();
 }
 
+
+//This returns the world position of the transform?
 glm::vec2 Transform::GetLocalPosition()
 {
-
 	if (const auto parent = m_pOwner->GetParent())
 	{
 		auto parentWorldpos = parent->GetComponent<Transform>()->GetWorldPosition();
-		return  GetWorldPosition() - parentWorldpos;
+
+		return  (GetWorldPosition() - parentWorldpos);
 	}
 
 	return  GetWorldPosition();
@@ -82,8 +82,6 @@ void Transform::SetWorldPosition(const glm::vec2& position)
 
 		m_TranformMatrixWorld[0][2] = newLocalPos.x;
 		m_TranformMatrixWorld[1][2] = newLocalPos.y;
-
-		//SetLocalPosition(newLocalPos);
 	}
 	else
 	{

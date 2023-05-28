@@ -53,18 +53,24 @@ void AttackingState::Update()
 
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-
 		for (const auto& collidingGameObjects : dynamic_cast<Pengo*>(m_pActor)->GetPengoIceBlockTrigger()->GetCollidingObjects())
 		{
 			if (collidingGameObjects->CanBeDeleted()) continue;
 
 			if (const auto iceBlockTrigger = dynamic_cast<IceBlockTrigger*>(collidingGameObjects))
 			{
-				dynamic_cast<IceBlock*>(iceBlockTrigger->GetParent())->MoveIceBlock(m_pActor->GetDirection());
+				const auto iceBlock = iceBlockTrigger->GetParent();
+				if(const auto direction = iceBlock->GetComponent<DirectionComponent>())
+				{
+					//Move component!
+					//Pengo Usually does not move when attacking so that means we don't have a valid direction
+					dynamic_cast<IceBlock*>(iceBlock)->MoveIceBlock(direction->GetPreviousDirection());
+				}
 			}
 		}
 	}
 }
+
 void AttackingState::OnEnter()
 {
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())

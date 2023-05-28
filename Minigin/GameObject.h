@@ -64,19 +64,7 @@ public:
 
 	std::vector<GameObject*> GetCollidingObjects() const;
 
-
-	//Needs to be moved to a component
-	void SetDirection(const glm::vec2& direction) { m_Direction = direction; }
-	glm::vec2 GetDirection() const { return  m_Direction; }
-	void SetDirectionX(const float x) { m_Direction.x = x; }
-	void SetDirectionY(const float y) { m_Direction.y = y; }
-
-	//Needs to be moved to a component
-	float GetVelocity() const { return  m_Velocity; }
-	void SetVelocity(const float velocity) { m_Velocity = velocity; }
-
-
-
+	
 	//Needs to be moved to a component
 	bool GetUsesController() const { return m_UsesController; }
 	//This can range between 0 & 4
@@ -85,8 +73,6 @@ public:
 
 protected:
 	bool m_CanBeDeleted{ false };
-	float m_Velocity{ 50.f };
-	glm::vec2 m_Direction{};
 	bool m_UsesController{ false };
 	int m_ControllerID{};
 

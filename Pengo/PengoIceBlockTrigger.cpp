@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BoxCollider.h"
 #include "SpriteRenderer.h"
+#include "DirectionComponent.h"
 
 PengoIceBlockTrigger::PengoIceBlockTrigger(GameObject* pParent)
 {
@@ -23,7 +24,14 @@ void PengoIceBlockTrigger::Update()
 	{
 		if (const auto boxCollider = GetComponent<BoxCollider>())
 		{
-			boxCollider->SetColliderOffset({ m_OffsetMultiplier * m_pParent->GetDirection().x + m_Offset.x, m_OffsetMultiplier * m_pParent->GetDirection().y + m_Offset.y });
+			glm::vec2 direction = { 0,0 };
+
+			if(const auto directionComponent = GetParent()->GetComponent<DirectionComponent>())
+			{
+				direction = directionComponent->GetDirection();
+			}
+
+			boxCollider->SetColliderOffset({ m_OffsetMultiplier * direction.x + m_Offset.x, m_OffsetMultiplier * direction.y + m_Offset.y });
 		}
 	}
 }

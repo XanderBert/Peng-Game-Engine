@@ -2,6 +2,7 @@
 #include "BoxCollider.h"
 #include "Color.h"
 #include "Controller.h"
+#include "DirectionComponent.h"
 #include "IceBlock.h"
 #include "IceBlockTrigger.h"
 #include "ObserverComponent.h"
@@ -23,6 +24,9 @@ Pengo::Pengo() : GameObject()
 	inputComponent->AddBinding(SDLK_s, new MoveCommand(this, { 0,1 }));
 	inputComponent->AddBinding(SDLK_a, new MoveCommand(this, { -1,0 }));
 	inputComponent->AddBinding(SDLK_d, new MoveCommand(this, { 1,0 }));
+
+	//Direction Component
+	const auto directionComponent = AddComponent<DirectionComponent>();
 
 
 	//make Trigger component??
@@ -68,7 +72,7 @@ Pengo::Pengo() : GameObject()
 
 
 	//Make Velocity and direction component
-	SetVelocity(200);
+	AddComponent<VelocityComponent>()->SetVelocity(200);
 }
 
 Pengo::~Pengo()
@@ -107,10 +111,10 @@ void Pengo::OnCollision(GameObject* other)
 void Pengo::StopMovement() const
 {
 	const auto transform = GetComponent<Transform>();
-
+	const auto direction = GetComponent<DirectionComponent>()->GetDirection();
 
 	//Tunneling still occurs with this method.
-	transform->SetWorldPosition(transform->GetLastWorldPosition() + (-m_Direction * m_TunnelingMultiplier));
+	transform->SetWorldPosition(transform->GetLastWorldPosition() + (-direction * m_TunnelingMultiplier));
 
 
 }

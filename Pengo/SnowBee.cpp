@@ -2,6 +2,7 @@
 
 #include "IceBlock.h"
 #include "IceBlockTrigger.h"
+#include "MoveComponent.h"
 #include "Pengo.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
@@ -43,6 +44,9 @@ SnowBee::SnowBee()
 	GetComponent<Transform>()->SetWorldPosition({ 250,250 });
 
 	m_pState = new SnowBeeSpawningState(this);
+
+	AddComponent<VelocityComponent>()->SetVelocity(20);
+	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
 }
 
 SnowBee::~SnowBee()

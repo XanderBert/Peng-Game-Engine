@@ -5,22 +5,29 @@
 
 
 //needs: translate, font, font renderer
-FPSCounter::FPSCounter(GameObject* owner) : Component(owner) {}
+FPSCounter::FPSCounter(GameObject* owner) : Component(owner)
+{
+}
 
 FPSCounter::~FPSCounter() = default;
 
 void FPSCounter::Update()
 {
+
+	const auto currentFps = m_currentFPS;
 	CalculateFPS();
 
-	//Todo Set the fetchcomponent as member.
-	if (const auto fontRenderer = m_pOwner->GetComponent<FontRenderer>())
+	//If the fps stayed the same do not update the text
+	if(abs(m_currentFPS - currentFps) > 1.f)
 	{
-		fontRenderer->SetText(GetFPSAsIntString());
+		if (const auto fontRenderer = m_pOwner->GetComponent<FontRenderer>())
+		{
+			fontRenderer->SetText(GetFPSAsIntString());
+		}
 	}
 }
 
-void FPSCounter::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
+void FPSCounter::FixedUpdate( float /*fixedTimeMStep*/)
 {
 }
 
@@ -37,11 +44,9 @@ std::string FPSCounter::GetFPSAsString() const
 	return std::to_string(m_currentFPS);
 }
 
-std::string* FPSCounter::GetFPSAsIntString()
+std::string FPSCounter::GetFPSAsIntString()
 {
-	m_currentFPSString = std::to_string(static_cast<int>(m_currentFPS));
-	return &m_currentFPSString;
-
+	return m_currentFPSString = std::to_string(static_cast<int>(m_currentFPS));
 }
 
 void FPSCounter::CalculateFPS()

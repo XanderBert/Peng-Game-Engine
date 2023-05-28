@@ -1,9 +1,12 @@
 ﻿#include "SnowBeeState.h"
 
+#include "DirectionComponent.h"
 #include "IceBlockTrigger.h"
+#include "MoveComponent.h"
 #include "PengoIceBlockTrigger.h"
 #include "SnowBee.h"
 #include "SpriteRenderer.h"
+#include "VelocityComponent.h"
 
 //
 //-- Spawning -
@@ -37,10 +40,13 @@ void SnowBeeSpawningState::OnEnter()
 {
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		m_pActor->SetDirection({ 0, 0 });
 		spriteRenderer->SetOffset({ 0,0 });
 		spriteRenderer->Play();
 		spriteRenderer->SetFrameTime(0.2f);
+	}
+	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	{
+		directionComponent->SetDirection({ 0, 0 });
 	}
 }
 
@@ -68,12 +74,19 @@ void SnowBeeMovingState::OnCollision(GameObject* other)
 
 void SnowBeeMovingState::OnEnter()
 {
+	if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	{
+		directionComponent->SetDirection({ 1, 0 });
+	}
+
+	ChangeMovement();
+
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		m_pActor->SetDirection({ 1, 0 });
 		spriteRenderer->SetOffset({ 0,16 });
 		spriteRenderer->SetFrameTime(0.4f);
 	}
+
 }
 
 //
@@ -132,11 +145,16 @@ void SnowBeeDyingState::OnEnter()
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
 		//Set Movement Direction the same as the Incoming Movement Direction of the Iceblock
-		const auto iceBlockVelocity = dynamic_cast<SnowBee*>(m_pActor)->GetHittedIceBlock()->GetFireDirection();
-		spriteRenderer->SetMovementDirection(-iceBlockVelocity);
-		spriteRenderer->SetOffset({ 0,64 });
-		spriteRenderer->SetFrameTime(0.2f);
-		spriteRenderer->SetAnimationFrame(0);
+		const auto iceBlockDirection = dynamic_cast<SnowBee*>(m_pActor)->GetHittedIceBlock()->GetComponent<DirectionComponent>()->GetDirection();
+
+		if(const auto direction = m_pActor->GetComponent<DirectionComponent>())
+		{
+			direction->SetDirection(-iceBlockDirection);
+
+			spriteRenderer->SetOffset({ 0,64 });
+			spriteRenderer->SetFrameTime(0.2f);
+			spriteRenderer->SetAnimationFrame(0);
+		}
 	}
 }
 
@@ -161,8 +179,8 @@ SnowBeeState* SnowBeeState::HandleInput()
 void SnowBeeState::OnCollision(GameObject* other)
 {
 	if (const auto iceBlock = dynamic_cast<IceBlock*>(other))
-	{
-		if (iceBlock->IsMoving())
+	{ 
+		if (iceBlock->GetComponent<MoveComponent>()->CanMove())
 		{
 			m_IsHit = true;
 			dynamic_cast<SnowBee*>(m_pActor)->SetHittedIceBlock(iceBlock);
@@ -172,54 +190,61 @@ void SnowBeeState::OnCollision(GameObject* other)
 
 void SnowBeeState::ChangeMovement()
 {
-	const auto snowBee = dynamic_cast<SnowBee*>(m_pActor);
-
-	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
-
-	const auto oldDirection = snowBee->GetDirection();
-	auto newDirection = oldDirection;
-
-	// Generate a new direction until it is different from the old direction
-	while (newDirection == oldDirection)
+	if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 	{
-		// Generate a random integer between 0 and 3
-		const int numQuarterTurns = std::rand() % 4;
+		std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
+		const glm::vec2 oldDirection{ directionComponent->GetDirection()};
 
-		newDirection = oldDirection;
+		auto newDirection = oldDirection;
 
-		// Perform the quarter turns
-		for (int i = 0; i < numQuarterTurns; ++i)
+		// Generate a new direction until it is different from the old direction
+
+		//TODO run on seperate thread?
+		while (newDirection == oldDirection)
 		{
-			const float temp = newDirection.x;
-			newDirection.x = -newDirection.y;
-			newDirection.y = temp;
+			// Generate a random integer between 0 and 3
+			const int numQuarterTurns = std::rand() % 4;
+
+			newDirection = oldDirection;
+
+			// Perform the quarter turns
+			for (int i = 0; i < numQuarterTurns; ++i)
+			{
+				const float temp = newDirection.x;
+				newDirection.x = -newDirection.y;
+				newDirection.y = temp;
+			}
+
+			directionComponent->SetDirection(newDirection);
 		}
 	}
-
-	snowBee->SetDirection(newDirection);
 }
 
 
 void SnowBeeState::Move()
 {
-	const auto snowBee = dynamic_cast<SnowBee*>(m_pActor);
+	//const auto snowBee = dynamic_cast<SnowBee*>(m_pActor);
 
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
 		if (const auto transform = m_pActor->GetComponent<Transform>())
 		{
-			//Get Position
-			const auto pos = transform->GetWorldPosition();
+			if(const auto direction = m_pActor->GetComponent<DirectionComponent>())
+			{
+				if(const auto velocity = m_pActor->GetComponent<VelocityComponent>())
+				{
+					//Get Position
+					const auto pos = transform->GetWorldPosition();
 
-			//Calculate new position
-			const glm::vec2 newPos = pos + snowBee->GetDirection() * snowBee->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM();
+					//Calculate new position
+					const glm::vec2 newPos = pos + direction->GetDirection() * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM();
 
-			//Set new position
-			transform->SetWorldPosition(newPos);
+					//Set new position
+					transform->SetWorldPosition(newPos);
+				}
+				
+			}
 		}
-
-		//Set movement Direction
-		spriteRenderer->SetMovementDirection(snowBee->GetDirection());
 	}
 }
 
@@ -227,7 +252,9 @@ void SnowBeeState::StopMovement()
 {
 	if (const auto transform = m_pActor->GetComponent<Transform>())
 	{
-		const auto snowBee = dynamic_cast<SnowBee*>(m_pActor);
-		transform->SetWorldPosition(transform->GetLastWorldPosition() + (-snowBee->GetDirection() * m_TunnelingMultiplier));
+		if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+		{
+			transform->SetWorldPosition(transform->GetLastWorldPosition() + (-directionComponent->GetDirection() * m_TunnelingMultiplier));
+		}
 	}
 }
