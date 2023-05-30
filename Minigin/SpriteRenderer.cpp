@@ -9,15 +9,18 @@
 //SpriteSize Needs to be set
 //Sprite Frames Need to be added
 SpriteRenderer::SpriteRenderer(GameObject* owner) : Component(owner)
-, m_MovementDirectionMap{
+, m_MovementDirectionMap
+{
 {MovementDirection::Up, {}},
 {MovementDirection::Down, {}},
 {MovementDirection::Left, {}},
 {MovementDirection::Right, {}},
-{MovementDirection::None, {}} }
+{MovementDirection::None, {}}
+}
 
-, m_FrameTime{ 0.3f }
-, m_TimeFromMovementToStandStill{ 0.3f }
+, m_AnimationFrame{ 0 }
+, m_AccumulatedFrameTime{ 0.f }
+, m_FrameTime{ 0.5f }
 {
 	if (m_pOwner->GetComponent<TextureRenderer>() == nullptr)
 	{
@@ -29,33 +32,34 @@ SpriteRenderer::~SpriteRenderer() = default;
 
 void SpriteRenderer::Update()
 {
-	if(m_IsNotInit)
+	if (m_IsNotInit)
 	{
 		m_IsNotInit = false;
+		m_AnimationFrame = 0;
 		SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[0]);
+		SetMovementDirection(ConvertMovementDirection(m_pOwner->GetComponent<DirectionComponent>()->GetDirection()));
 	}
 
 
-	if(m_IsPlaying)
+	if (m_IsPlaying)
 	{
 		//Set Texture Direction
 		if (const auto directionComponent = m_pOwner->GetComponent<DirectionComponent>())
 		{
+			//if (directionComponent->GetDirection() == m_MovementDirection)
+
 			SetMovementDirection(directionComponent->GetDirection());
 		}
 		else
 		{
-			SetMovementDirection({ 0,0 });
+			m_MovementDirection = MovementDirection::None;
 		}
-		
+
 
 		const auto elapsedTime = TimeM::GetInstance().GetDeltaTimeM();
 		m_AccumulatedFrameTime += elapsedTime;
 
 
-		//Handle With States!
-		//if no Idle Animation -> Just pause the animation
-		
 		UpdateAnimationFrame();
 		SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
 	}
@@ -81,9 +85,9 @@ void SpriteRenderer::SetTexture(const std::string& texturePath)
 
 void SpriteRenderer::SetMovementDirection(MovementDirection value)
 {
-	m_AnimationFrame = 0;
+	const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+	m_AnimationFrame %= size;
 	m_MovementDirection = value;
-	m_AccumulatedMoveToStandstillTime = 0.f;
 }
 
 MovementDirection SpriteRenderer::ConvertMovementDirection(const glm::vec2& direction)
@@ -91,6 +95,7 @@ MovementDirection SpriteRenderer::ConvertMovementDirection(const glm::vec2& dire
 	if (direction.x > 0)
 	{
 		return MovementDirection::Right;
+
 	}
 	else if (direction.x < 0)
 	{
@@ -112,11 +117,13 @@ MovementDirection SpriteRenderer::ConvertMovementDirection(const glm::vec2& dire
 
 void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
 {
-	if(direction == m_OldDirection)
-	{
-		return;
-	}
-	m_OldDirection = direction;
+	//const auto oldDirection = m_pOwner->GetComponent<DirectionComponent>()->GetPreviousDirection();
+
+	//if (direction == oldDirection)
+	//{
+	//	return;
+	//}
+
 	SetMovementDirection(ConvertMovementDirection(direction));
 }
 
@@ -152,6 +159,21 @@ void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection
 void SpriteRenderer::SetOffset(const glm::vec2& offset)
 {
 	m_Offset = offset;
+}
+
+void SpriteRenderer::Play()
+{
+	m_IsPlaying = true;
+}
+
+void SpriteRenderer::Pause()
+{
+	m_IsPlaying = false;
+}
+
+bool SpriteRenderer::IsPlaying() const
+{
+	return  m_IsPlaying;
 }
 
 void SpriteRenderer::SetSourceRect(const glm::vec2& position) const

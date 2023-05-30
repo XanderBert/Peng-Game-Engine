@@ -2,13 +2,9 @@
 #include <windows.h>
 #include <Xinput.h>
 #pragma comment(lib, "xinput.lib")
-
 #include "Controller.h"
-
 #include <iostream>
 #include <glm/vec2.hpp>
-
-#include "GameActor.h"
 #include "SceneManager.h"
 
 class Controller::ControllerImpl
@@ -104,6 +100,9 @@ public:
 	int GetControllerID() const { return  m_ControllerIndex; }
 	bool GetIsInUse() const { return m_IsInUse; }
 
+	WORD GetButtonsPressedThisFrame() const { return m_ButtonsPressedThisFrame; }
+	WORD GetButtonsPressed() const { return m_CurrentState.Gamepad.wButtons; }
+
 private:
 	XINPUT_STATE m_PreviousState{};
 	XINPUT_STATE m_CurrentState{};
@@ -180,6 +179,11 @@ int Controller::GetControllerID() const
 	return pImpl->GetControllerID();
 }
 
+WORD Controller::GetPressedButtons() const
+{
+	return pImpl->GetButtonsPressed();
+}
+
 bool Controller::GetIsInUse() const
 {
 	return pImpl->GetIsInUse();
@@ -190,12 +194,12 @@ bool Controller::IsControllerConnectedOnPort(int /*controllerIndex*/) const
 	return false;//pImpl->IsControllerConnectedOnPort(controllerIndex);
 }
 
-void Controller::SetActor(GameActor* gameActor)
+void Controller::SetActor(GameObject* gameActor)
 {
 	m_pActor = gameActor;
 }
 
-GameActor* Controller::GetActor() const
+GameObject* Controller::GetActor() const
 {
 	return m_pActor;
 }

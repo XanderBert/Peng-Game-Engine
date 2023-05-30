@@ -2,8 +2,7 @@
 #include <memory>
 #include <glm/vec2.hpp>
 #include <glm/detail/type_vec1.hpp>
-
-class GameActor;
+#include "GameObject.h"
 class Controller final
 {
 public:
@@ -48,18 +47,22 @@ public:
 
 	glm::vec2 GetLeftThumbValue() const;
 	glm::vec2 GetRightThumbValue() const;
+
+
 	int GetControllerID() const;
+
+	unsigned short GetPressedButtons() const;
 
 	bool GetIsInUse() const;
 	bool IsControllerConnectedOnPort(int controllerIndex) const;
 
-	void SetActor(GameActor* gameActor);
-	GameActor* GetActor() const;
+	void SetActor(GameObject* gameActor);
+	GameObject* GetActor() const;
 
 private:
 	class ControllerImpl;
 	std::unique_ptr<ControllerImpl> pImpl{};
 
-	//Todo; if you pimple, pimple all the way, this needs to be gone
-	GameActor* m_pActor{};
+
+	GameObject* m_pActor{};
 };

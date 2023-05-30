@@ -50,21 +50,23 @@ public:
 
 	void SetOffset(const glm::vec2& offset);
 
-	void Play() { m_IsPlaying = true; }
-	void Pause() { m_IsPlaying = false; }
-	bool IsPlaying() const { return  m_IsPlaying; }
+	void Play();
+	void Pause();
+	bool IsPlaying() const;
 
 	void SetFrameTime(const float frameTime) { m_FrameTime = frameTime; }
 
 	size_t GetLastSpriteIndexForCurrentDirection() const { return m_MovementDirectionMap.find(m_MovementDirection)->second.size() - 1; };
 	size_t GetCurrentSpriteIndexForCurrentDirection() const { return m_AnimationFrame; }
 
+	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
+	glm::vec2 GetOffset() const { return m_Offset; }
+
 
 	bool IsAnimationFinished() const
 	{
 		return GetCurrentSpriteIndexForCurrentDirection() == GetLastSpriteIndexForCurrentDirection();
 	}
-
 	void SetAnimationFrame(int animationFrame) { m_AnimationFrame = animationFrame; }
 private:
 	glm::vec2 m_SpriteSize{};
@@ -82,16 +84,11 @@ private:
 	void SetSourceRect(const glm::vec2& position) const;
 	void UpdateAnimationFrame();
 
-	int m_AnimationFrame{};
-	float m_AccumulatedFrameTime{};
-	float m_FrameTime{};
+	int m_AnimationFrame;
+	float m_AccumulatedFrameTime;
+	float m_FrameTime;
 
-	float m_TimeFromMovementToStandStill{};
-	float m_AccumulatedMoveToStandstillTime{};
-
-	glm::vec2 m_OldDirection{};
-
-	bool m_IsNotInit{true};
+	bool m_IsNotInit{ true };
 	bool m_IsPlaying{ true };
 
 };

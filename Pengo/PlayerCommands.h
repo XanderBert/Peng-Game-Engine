@@ -5,6 +5,7 @@
 #include "TimeM.h"
 #include "Transform.h"
 #include "GameActor.h"
+#include "PengoEvents.h"
 #include "VelocityComponent.h"
 
 class MoveCommand final : public Command
@@ -19,12 +20,12 @@ public:
 
 	void Execute() override
 	{
-		if(const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })
+
+		std::cout << "Move Command Triggered\n";
+		if (const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })
 		{
 			directionComponent->SetDirection(m_MovementDirection);
 		}
-			
-		
 
 		const auto transform = m_GameActor->GetComponent<Transform>();
 		const auto velocity = m_GameActor->GetComponent<VelocityComponent>();

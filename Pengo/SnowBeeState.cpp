@@ -38,16 +38,23 @@ void SnowBeeSpawningState::OnCollision(GameObject* other)
 
 void SnowBeeSpawningState::OnEnter()
 {
-	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
 	{
-		spriteRenderer->SetOffset({ 0,0 });
-		spriteRenderer->Play();
-		spriteRenderer->SetFrameTime(0.2f);
+		moveComponent->SetCanMove(false);
 	}
+
 	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 	{
 		directionComponent->SetDirection({ 0, 0 });
 	}
+
+	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	{
+		spriteRenderer->SetOffset({ 0,0 });
+		spriteRenderer->Play();
+		spriteRenderer->SetFrameTime(0.3f);
+	}
+
 }
 
 
@@ -62,7 +69,7 @@ SnowBeeState* SnowBeeMovingState::HandleInput()
 
 void SnowBeeMovingState::Update()
 {
-	Move();
+	//Move();
 }
 
 void SnowBeeMovingState::OnCollision(GameObject* other)
@@ -74,7 +81,7 @@ void SnowBeeMovingState::OnCollision(GameObject* other)
 
 void SnowBeeMovingState::OnEnter()
 {
-	if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 	{
 		directionComponent->SetDirection({ 1, 0 });
 	}
@@ -87,6 +94,11 @@ void SnowBeeMovingState::OnEnter()
 		spriteRenderer->SetFrameTime(0.4f);
 	}
 
+
+	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+	{
+		moveComponent->SetCanMove(true);
+	}
 }
 
 //
@@ -112,6 +124,10 @@ void SnowbeeAttackingState::OnCollision(GameObject* other)
 
 void SnowbeeAttackingState::OnEnter()
 {
+	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+	{
+		moveComponent->SetCanMove(true);
+	}
 }
 
 
@@ -147,18 +163,23 @@ void SnowBeeDyingState::OnEnter()
 		//Set Movement Direction the same as the Incoming Movement Direction of the Iceblock
 		const auto iceBlockDirection = dynamic_cast<SnowBee*>(m_pActor)->GetHittedIceBlock()->GetComponent<DirectionComponent>()->GetDirection();
 
-		if(const auto direction = m_pActor->GetComponent<DirectionComponent>())
+		spriteRenderer->SetOffset({ 0,64 });
+		spriteRenderer->SetFrameTime(0.2f);
+		spriteRenderer->SetAnimationFrame(0);
+
+		if (const auto direction = m_pActor->GetComponent<DirectionComponent>())
 		{
 			direction->SetDirection(-iceBlockDirection);
 
-			spriteRenderer->SetOffset({ 0,64 });
-			spriteRenderer->SetFrameTime(0.2f);
-			spriteRenderer->SetAnimationFrame(0);
+			if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+			{
+				moveComponent->SetCanMove(false);
+			}
 		}
 	}
+
+
 }
-
-
 
 
 //
@@ -179,7 +200,7 @@ SnowBeeState* SnowBeeState::HandleInput()
 void SnowBeeState::OnCollision(GameObject* other)
 {
 	if (const auto iceBlock = dynamic_cast<IceBlock*>(other))
-	{ 
+	{
 		if (iceBlock->GetComponent<MoveComponent>()->CanMove())
 		{
 			m_IsHit = true;
@@ -188,12 +209,13 @@ void SnowBeeState::OnCollision(GameObject* other)
 	}
 }
 
+//Change Direction -> Can be placed in the DirectionComponent
 void SnowBeeState::ChangeMovement()
 {
-	if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 	{
 		std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
-		const glm::vec2 oldDirection{ directionComponent->GetDirection()};
+		const glm::vec2 oldDirection{ directionComponent->GetDirection() };
 
 		auto newDirection = oldDirection;
 
@@ -220,39 +242,12 @@ void SnowBeeState::ChangeMovement()
 	}
 }
 
-
-void SnowBeeState::Move()
-{
-	//const auto snowBee = dynamic_cast<SnowBee*>(m_pActor);
-
-	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
-	{
-		if (const auto transform = m_pActor->GetComponent<Transform>())
-		{
-			if(const auto direction = m_pActor->GetComponent<DirectionComponent>())
-			{
-				if(const auto velocity = m_pActor->GetComponent<VelocityComponent>())
-				{
-					//Get Position
-					const auto pos = transform->GetWorldPosition();
-
-					//Calculate new position
-					const glm::vec2 newPos = pos + direction->GetDirection() * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM();
-
-					//Set new position
-					transform->SetWorldPosition(newPos);
-				}
-				
-			}
-		}
-	}
-}
-
+//Reset Last Position -> Can be placed in the MoveComponent
 void SnowBeeState::StopMovement()
 {
 	if (const auto transform = m_pActor->GetComponent<Transform>())
 	{
-		if(const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+		if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 		{
 			transform->SetWorldPosition(transform->GetLastWorldPosition() + (-directionComponent->GetDirection() * m_TunnelingMultiplier));
 		}

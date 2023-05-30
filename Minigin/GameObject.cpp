@@ -2,8 +2,6 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "ServiceLocator.h"
-#include "../Pengo/IceBlockTrigger.h"
-#include "../Pengo/IceBlock.h"
 #include "BoxCollider.h"
 
 GameObject::GameObject()

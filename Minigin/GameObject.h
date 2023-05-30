@@ -60,27 +60,16 @@ public:
 	//
 	//Collision
 	virtual void OnCollision(GameObject* /*other*/) {}
-
-
 	std::vector<GameObject*> GetCollidingObjects() const;
 
-	
-	//Needs to be moved to a component
-	bool GetUsesController() const { return m_UsesController; }
-	//This can range between 0 & 4
-	void SetControllerIndex(int index);
-	int GetControllerIndex() const { return m_ControllerID; }
-
 protected:
-	bool m_CanBeDeleted{ false };
-	bool m_UsesController{ false };
-	int m_ControllerID{};
-
 	GameObject* m_pParent{};
-
+	bool m_CanBeDeleted{ false };
 	std::vector<GameObject*> m_pChildren{};
+
 	void AddToChildVector(GameObject* pChild);
 	void RemoveFromChildren(GameObject* pParent) const;
+
 private:
 	void RemoveComponents();
 	//Just accesses the component and marks it for deletion
@@ -109,7 +98,7 @@ void GameObject::RemoveComponent() const
 		if (const auto& comp = dynamic_pointer_cast<T>(component))
 		{
 			//Just accesses the component and marks it for deletion
-			//This is done in the cpp because the template really does not like it when acces the component here.
+			//This is done in the cpp because the template really does not like it when access the component here.
 			MarkComponentForDeletionUtility(comp.get());
 		}
 	}

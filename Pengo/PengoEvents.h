@@ -11,7 +11,8 @@ enum class GameEvent
 {
 	CollidingWithIce,
 	IceBlockDestroyed,
-	SnowBeeKilled
+	SnowBeeKilled,
+	Moving
 };
 
 
@@ -31,7 +32,7 @@ public:
 		switch (event)
 		{
 
-		case GameEvent::CollidingWithIce:
+		case GameEvent::Moving:
 		{
 
 

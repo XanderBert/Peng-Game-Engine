@@ -2,6 +2,7 @@
 #include "BoxCollider.h"
 #include "Color.h"
 #include "Controller.h"
+#include "Controller.h"
 #include "DirectionComponent.h"
 #include "IceBlock.h"
 #include "IceBlockTrigger.h"
@@ -13,20 +14,31 @@
 #include "PengoState.h"
 #include "PlayerCommands.h"
 #include "InputComponent.h"
+#include "controllerComponent.h"
+#include "Controller.h"
 
 
 Pengo::Pengo() : GameObject()
 {
 
-	//Input Component
-	const auto inputComponent = AddComponent<InputComponent>();
-	inputComponent->AddBinding(SDLK_w, new MoveCommand(this, { 0, -1 }));
-	inputComponent->AddBinding(SDLK_s, new MoveCommand(this, { 0,1 }));
-	inputComponent->AddBinding(SDLK_a, new MoveCommand(this, { -1,0 }));
-	inputComponent->AddBinding(SDLK_d, new MoveCommand(this, { 1,0 }));
+	std::cout << "PENGO CREATED\n";
+
+	////Input Component
+	//const auto inputComponent = AddComponent<InputComponent>();
+	//inputComponent->AddBinding(SDLK_w, new MoveCommand(this, { 0, -1 }));
+	//inputComponent->AddBinding(SDLK_s, new MoveCommand(this, { 0,1 }));
+	//inputComponent->AddBinding(SDLK_a, new MoveCommand(this, { -1,0 }));
+	//inputComponent->AddBinding(SDLK_d, new MoveCommand(this, { 1,0 }));
+
+	//Controller Component
+
+
+
+
 
 	//Direction Component
 	const auto directionComponent = AddComponent<DirectionComponent>();
+	directionComponent->SetDirection({ 1,0 });
 
 
 	//make Trigger component??

@@ -9,49 +9,12 @@ InputManager::InputManager()
 }
 
 InputManager::~InputManager()
-{
-	//for (const auto& command : m_KeyboardCommands)
-	//{
-	//	delete command.second;
-	//}
-}
+{}
 
 bool InputManager::ProcessInput()
 {
-	//Reset the input
-	m_Input = 0;
-
-	//Check if a new controller is contected
-	CheckIfControllerNeedsToBeAdded();
-
-	//Update the controllers
-	for (const auto& controller : m_pControllers)
-	{
-		controller->Update();
-	}
-
-	SDL_Event e;
-	while (SDL_PollEvent(&e))
-	{
-		//Exit the game
-		if (e.type == SDL_QUIT) { return false; }
-
-		//Store when a key is pressed
-		if (e.type == SDL_KEYDOWN)
-		{
-			m_Input = e.key.keysym.sym;
-
-			//Execute the command for the corresponding key
-			if (m_KeyboardCommands.contains(m_Input))
-			{
-				m_KeyboardCommands[m_Input]->Execute();
-			}
-		}
-	}
-
-	//Updates Imgui Input
-	ImGui_ImplSDL2_ProcessEvent(&e);
-	return true;
+	UpdateControllersInput();
+	return UpdateKeyboardInput();
 }
 
 std::vector<Controller*> InputManager::GetUsedControllers()
@@ -81,7 +44,7 @@ std::vector<Controller*> InputManager::GetControllers()
 	return controllers;
 }
 
-bool InputManager::GetButtonPressed(SDL_KeyCode key) const
+bool InputManager::GetButtonPressed(SDL_Keycode key) const
 {
 	return key == m_Input;
 }
@@ -99,28 +62,40 @@ bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButt
 	return false;
 }
 
-void InputManager::RegisterCommand(SDL_Keycode key, Controller::ControllerButton /*controllerButton*/, Command* command)
-{
-	m_KeyboardCommands.insert(std::make_pair(key, command));
-	//m_ControllerCommands.insert(std::make_pair(controllerButton, command));
-}
 
-void InputManager::RegisterCommand(SDL_Keycode key, Command* command)
+void InputManager::UpdateControllersInput()
 {
-	m_KeyboardCommands.insert(std::make_pair(key, command));
-}
+	//Check if a new controller is contected
+	CheckIfControllerNeedsToBeAdded();
 
-void InputManager::RegisterCommand(Controller::ControllerButton /*controllerButton*/, Command* /*command*/)
-{
-	//m_ControllerCommands.insert(std::make_pair(controllerButton, command));
-}
-
-void InputManager::HandleInput(Controller::ControllerButton /*key*/)
-{
-	/*if (m_ControllerCommands.contains(key))
+	//Update the controllers
+	for (const auto& controller : m_pControllers)
 	{
-		m_ControllerCommands[key]->Execute();
-	}*/
+		controller->Update();
+	}
+}
+
+bool InputManager::UpdateKeyboardInput()
+{
+	//Reset the input
+	m_Input = 0;
+	SDL_Event e;
+	while (SDL_PollEvent(&e))
+	{
+		//Exit the game
+		if (e.type == SDL_QUIT) { return false; }
+
+		//Store when a key is pressed
+		if (e.type == SDL_KEYDOWN)
+		{
+			m_Input = e.key.keysym.sym;
+		}
+	}
+
+	//Updates Imgui Input
+	ImGui_ImplSDL2_ProcessEvent(&e);
+
+	return true;
 }
 
 void InputManager::CheckIfControllerNeedsToBeAdded()

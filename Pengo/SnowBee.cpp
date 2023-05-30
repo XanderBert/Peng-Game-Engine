@@ -17,16 +17,6 @@ SnowBee::SnowBee()
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
 	spriteRenderer->SetSpriteSize(m_SpriteSize);
 
-	//Spawinging Animation
-	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 48,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 64,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 80,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::None);
-	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::None);
-
 	// All other animations
 	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::Down);
@@ -38,6 +28,17 @@ SnowBee::SnowBee()
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
 
+	//Spawinging Animation
+	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 48,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 64,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 80,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::None);
+
+
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 16,16 });
 
@@ -47,6 +48,9 @@ SnowBee::SnowBee()
 
 	AddComponent<VelocityComponent>()->SetVelocity(20);
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
+	AddComponent<MoveComponent>();
+
+	//Snow Bee only plays the last 2 frames of the spawning animation.?
 }
 
 SnowBee::~SnowBee()

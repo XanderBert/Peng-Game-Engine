@@ -18,8 +18,6 @@ public:
 	virtual void Update() override;
 	virtual void OnCollision(GameObject* other) override;
 
-	void MoveIceBlock(glm::vec2 direction) const;
-
 	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
 
 

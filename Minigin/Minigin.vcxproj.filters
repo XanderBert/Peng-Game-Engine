@@ -85,6 +85,12 @@
     <Filter Include="Resource Files\Components\VelocityComponent">
       <UniqueIdentifier>{f46a6ed2-a33c-4f16-83ee-7f6adc6cf34e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Components\Controller">
+      <UniqueIdentifier>{3881d034-9fdb-419e-9988-f3da9b45244a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\MoveComponent">
+      <UniqueIdentifier>{7e67bc99-5297-4c4d-8f28-194365ce9e15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
@@ -228,8 +234,11 @@
     <ClInclude Include="VelocityComponent.h">
       <Filter>Resource Files\Components\VelocityComponent</Filter>
     </ClInclude>
+    <ClInclude Include="ControllerComponent.h">
+      <Filter>Resource Files\Components\Controller</Filter>
+    </ClInclude>
     <ClInclude Include="MoveComponent.h">
-      <Filter>Resource Files\Components</Filter>
+      <Filter>Resource Files\Components\MoveComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -362,8 +371,11 @@
     <ClCompile Include="VelocityComponent.cpp">
       <Filter>Resource Files\Components\VelocityComponent</Filter>
     </ClCompile>
+    <ClCompile Include="ControllerComponent.cpp">
+      <Filter>Resource Files\Components\Controller</Filter>
+    </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
-      <Filter>Resource Files\Components</Filter>
+      <Filter>Resource Files\Components\MoveComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

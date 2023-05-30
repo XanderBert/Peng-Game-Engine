@@ -9,7 +9,7 @@ class InputComponent final : public Component
 {
 public:
 	InputComponent(GameObject* owner);
-	~InputComponent() = default;
+	virtual ~InputComponent()  override = default;
 
 	InputComponent(const InputComponent& other) = delete;
 	InputComponent(InputComponent&& other) = delete;
@@ -17,7 +17,7 @@ public:
 	InputComponent& operator=(InputComponent&& other) = delete;
 
 	//Called each frame
-	virtual void Update() override {}
+	virtual void Update() override;
 
 	//Called at a fixed time step
 	//Used for physics & networking
@@ -31,6 +31,30 @@ public:
 	virtual void Render() override {}
 
 	void AddBinding(SDL_Keycode key, Command* command);
+	std::unordered_map<SDL_Keycode, Command*>& GetKeyboardCommands() { return m_KeyboardCommands; }
+
+	template<typename T>
+
+	std::vector<SDL_Keycode> GetKeysOfCommand();
 private:
+	//I will use more memory by storing the commands twice.
+	//But now i dont need to be searching trough all the commands to find wich one is from wich actor
+	std::unordered_map<SDL_Keycode, Command*> m_KeyboardCommands{};
 	null_InputManager* m_pInputManager;
 };
+
+template<typename T>
+inline std::vector<SDL_Keycode> InputComponent::GetKeysOfCommand()
+{
+	std::vector<SDL_Keycode> keys;
+
+	for (const auto& keyMap : m_KeyboardCommands)
+	{
+		if (dynamic_cast<T>(keyMap.second))
+		{
+			keys.emplace_back(keyMap.first);
+		}
+	}
+
+	return keys;
+}

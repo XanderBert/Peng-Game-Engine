@@ -17,7 +17,7 @@ void MoveComponent::Update()
 		const auto velocity = m_pOwner->GetComponent<VelocityComponent>();
 		const auto transform = m_pOwner->GetComponent<Transform>();
 
-		if(direction && velocity && transform)
+		if (direction && velocity && transform)
 		{
 			const auto movement{ direction->GetDirection() * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM() };
 			transform->SetWorldPosition(transform->GetWorldPosition() + movement);

@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "AudioServiceDebug.h"
+#include "ControllerComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "FontRenderer.h"
@@ -17,6 +18,7 @@
 #include "glm/vec2.hpp"
 #include "imgui.h"
 #include "IceBlock.h"
+#include "InputComponent.h"
 #include "Pengo.h"
 #include "WallRow.h"
 #include "ServiceLocator.h"
@@ -40,9 +42,26 @@ void load()
 	fontRendererFPS->SetFont("Lingua.otf", 20);
 	scene.Add(go);
 
+
+
+
 	PengoLevelLoader levelLoader;
 	PengoLevel* level01 = levelLoader.LoadLevel("Level1.xml");
 	level01->AddGameObjectsToScene(&scene);
+
+
+	auto object = new Pengo();
+	const auto controllerComponent = object->AddComponent<ControllerComponent>();
+	controllerComponent->SetControllerIndex(0);
+	controllerComponent->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(object, { -1, 0 }));
+	controllerComponent->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(object, { 1, 0 }));
+	controllerComponent->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(object, { 0, -1 }));
+	controllerComponent->AddBinding(Controller::ControllerButton::DPadDown, new MoveCommand(object, { 0, 1 }));
+
+	object->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
+	scene.Add(object);
+
+	//Player2
 
 
 

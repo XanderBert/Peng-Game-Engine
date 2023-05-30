@@ -12,12 +12,14 @@ IceBlock::IceBlock()
 	, m_pTrgger{ new IceBlockTrigger(this) }
 
 {
-	
+
 	const auto texture = AddComponent<TextureRenderer>();
 	texture->SetTexture("Ice_Block.png");
 
 	const auto sprite = AddComponent<SpriteRenderer>();
 	sprite->SetSpriteSize(m_SpriteSize);
+
+
 
 	for (size_t i{}; i < m_NrFrames; ++i)
 	{
@@ -60,18 +62,9 @@ void IceBlock::OnCollision(GameObject* other)
 	if (GetComponent<MoveComponent>()->CanMove())
 	{
 		GetComponent<SpriteRenderer>()->Play();
+		GetComponent<MoveComponent>()->SetCanMove(false);
 	}
 }
-
-void IceBlock::MoveIceBlock(glm::vec2 direction) const
-{
-	std::cout << "Move IceBlock" << std::endl;
-	std::cout << "Direction: " << direction.x << " " << direction.y << std::endl;
-	
-	GetComponent<DirectionComponent>()->SetDirection(direction);
-	GetComponent<MoveComponent>()->SetCanMove(true);
-}
-
 
 
 void IceBlock::UpdateSpriteLogic()

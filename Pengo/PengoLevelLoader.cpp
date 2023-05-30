@@ -1,5 +1,8 @@
 ﻿#include "PengoLevelLoader.h"
 #include <fstream>
+
+#include "ControllerComponent.h"
+#include "InputComponent.h"
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
 #include "ServiceLocator.h"
@@ -40,7 +43,16 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	}
 	else if (type == "player")
 	{
+
+		std::cout << "Player created";
 		object = new Pengo();
+
+		auto inputComponent = object->AddComponent<InputComponent>();
+		inputComponent->AddBinding(SDLK_w, new MoveCommand(object, { 0, -1 }));
+		inputComponent->AddBinding(SDLK_s, new MoveCommand(object, { 0,1 }));
+		inputComponent->AddBinding(SDLK_a, new MoveCommand(object, { -1,0 }));
+		inputComponent->AddBinding(SDLK_d, new MoveCommand(object, { 1,0 }));
+
 	}
 	else if (type == "snowBee")
 	{

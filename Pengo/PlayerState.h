@@ -11,6 +11,7 @@ public:
 	virtual PlayerState* HandleInput() = 0;
 	virtual void Update() = 0;
 	virtual void OnCollision(GameObject* other) = 0;
+
 private:
 	virtual void OnEnter() = 0;
 protected:
