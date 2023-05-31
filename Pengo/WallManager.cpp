@@ -1,38 +1,64 @@
 ﻿#include "WallManager.h"
-
-#include <algorithm>
-
 #include "BoxCollider.h"
-#include "Scene.h"
-#include "SceneManager.h"
-#include "Transform.h"
-#include "Wall.h"
-
+#include "DirectionComponent.h"
+#include "SpriteRenderer.h"
+#include "TextureRenderer.h"
 
 WallManager::WallManager()
-	:m_WallCoordinates{{50,74},{50,58},{50,66},{50,50}}
 {
-	//Get the collider sizes from map.
-	//Add collisions to wall -> Collision detection could happen on a wall then and not on a wall manager wich makes more sense
 
-	GetComponent<Transform>()->SetWorldPosition(m_WallCoordinates[0]);
-
-	const auto scene = SceneManager::GetInstance().GetActiveScene();
-	for (const auto wallCoord : m_WallCoordinates)
+	for (size_t i = 0; i < 2; ++i)
 	{
-		const auto wallChild = new Wall();
-		wallChild->GetComponent<Transform>()->SetLocalPosition(wallCoord);
-		//wallChild->SetParent(this, false);
-		scene->Add(wallChild);
+		const auto horizontalWall = new GameObject{};
+		horizontalWall->SetTag("Wall");
 
-		m_Walls.push_back(wallChild);
+		horizontalWall->AddComponent<TextureRenderer>()->SetTexture("Wall_Horizontal.png");
+
+		const auto spriteRenderer = horizontalWall->AddComponent<SpriteRenderer>();
+		spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::None);
+		spriteRenderer->AddSpriteFrame({ 0,8 }, MovementDirection::None);
+		spriteRenderer->AddSpriteFrame({ 0,16 }, MovementDirection::None);
+		spriteRenderer->SetSpriteSize(m_HorizontalWallSize);
+		spriteRenderer->SetFrameTime(0.1f);
+		spriteRenderer->Pause();
+
+		const auto boxCollider = horizontalWall->AddComponent<BoxCollider>();
+		boxCollider->SetColliderSize(m_HorizontalWallSize);
+
+		const auto directionComponent = horizontalWall->AddComponent<DirectionComponent>();
+		directionComponent->SetDirection({ 0,0 });
+
+
+		horizontalWall->GetComponent<Transform>()->SetWorldPosition({ m_WallOffset,m_WallOffset + m_VerticalWallSize.y * i });
+
+		m_pHorizontalWalls.emplace_back(horizontalWall);
 	}
 
-	const auto wallCollider = m_Walls[m_Walls.size() - 1 ]->AddComponent<BoxCollider>();
-	wallCollider->SetColliderSize({ 8, 32 });
-	//wallCollider->DebugRender(true);
-}
+	for (size_t i = 0; i < 2; ++i)
+	{
+		const auto verticalWall = new GameObject{};
+		verticalWall->SetTag("Wall");
 
-WallManager::~WallManager()
-{
+		verticalWall->AddComponent<TextureRenderer>()->SetTexture("Wall_Vertical.png");
+
+		const auto spriteRenderer = verticalWall->AddComponent<SpriteRenderer>();
+		spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::None);
+		spriteRenderer->AddSpriteFrame({ 8,0 }, MovementDirection::None);
+		spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::None);
+		spriteRenderer->SetSpriteSize(m_VerticalWallSize);
+		spriteRenderer->SetFrameTime(0.1f);
+		spriteRenderer->Pause();
+
+		const auto boxCollider = verticalWall->AddComponent<BoxCollider>();
+		boxCollider->SetColliderSize(m_VerticalWallSize);
+
+		const auto directionComponent = verticalWall->AddComponent<DirectionComponent>();
+		directionComponent->SetDirection({ 0,0 });
+
+
+		verticalWall->GetComponent<Transform>()->SetWorldPosition({ m_WallOffset + ((m_HorizontalWallSize.x - m_HorizontalWallSize.y) * i),m_WallOffset });
+
+		m_pHorizontalWalls.emplace_back(verticalWall);
+	}
+
 }

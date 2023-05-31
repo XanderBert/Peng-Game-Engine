@@ -2,11 +2,12 @@
 #include "GameObject.h"
 #include "Scene.h"
 
+class WallManager;
 class PengoLevel final
 {
 public:
 	PengoLevel();
-	~PengoLevel() = default;
+	~PengoLevel();
 
 	PengoLevel(const PengoLevel& other) = delete;
 	PengoLevel(PengoLevel&& other)noexcept = delete;
@@ -17,4 +18,5 @@ public:
 	void AddGameObjectsToScene(Scene* pScene);
 private:
 	std::vector<GameObject*> m_pGameObjects;
+	WallManager* m_pWallManager;
 };

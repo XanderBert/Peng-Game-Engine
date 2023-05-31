@@ -52,7 +52,6 @@ Pengo::Pengo() : GameObject()
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
 	spriteRenderer->SetSpriteSize({ 16,16 });
 
-
 	//Is used for attacking, moving and idle
 	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::Down);

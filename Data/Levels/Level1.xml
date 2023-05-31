@@ -2,10 +2,7 @@
   <objects>
   <!--x= 58 - 540-->
   <!--y= 18 - 340-->
-    <object type="wallHorizontal" x="50" y="10" />
-    <object type="wallHorizontal" x="50" y="350" />
-    <object type="wallVertical" x="50" y="18" />
-    <object type="wallVertical" x="546" y="18" />
+
 
     
 

@@ -62,6 +62,13 @@ public:
 	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/) {}
 	std::vector<GameObject*> GetCollidingObjects() const;
 
+
+	//Don't know if i should use Tags or Id's
+	//I chose Tags for readability in the code although this will result in less performance
+	//I could use a map with a string as key and a int as value to reduce the performance hit?
+	void SetTag(const std::string& tag) { m_Tag = tag; }
+	std::string GetTag() const { return m_Tag; }
+
 protected:
 	GameObject* m_pParent{};
 	bool m_CanBeDeleted{ false };
@@ -74,6 +81,8 @@ private:
 	void RemoveComponents();
 	//Just accesses the component and marks it for deletion
 	void MarkComponentForDeletionUtility(Component* component) const;
+
+	std::string m_Tag{};
 };
 
 template<typename T>

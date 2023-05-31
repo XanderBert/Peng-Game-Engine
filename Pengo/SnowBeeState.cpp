@@ -3,6 +3,7 @@
 #include "GameObjectStorage.h"
 #include "IceBlock.h"
 #include "MoveComponent.h"
+#include "Pengo.h"
 #include "SnowBee.h"
 #include "SpriteRenderer.h"
 #include "TriggerComponent.h"
@@ -82,12 +83,12 @@ void SnowBeeMovingState::Update()
 void SnowBeeMovingState::OnCollision(GameObject* other, bool isTrigger)
 {
 	SnowBeeState::OnCollision(other, isTrigger);
-	if(!isTrigger)
+	if (!isTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 		ChangeMovement();
 	}
-	
+
 }
 
 void SnowBeeMovingState::OnEnter()
@@ -144,7 +145,7 @@ void SnowbeeAttackingState::OnCollision(GameObject* other, bool isTrigger)
 		other->GetComponent<SpriteRenderer>()->Play();
 		m_pActor->GetComponent<GameObjectStorage>()->AddGameObjectToVector(other);
 	}
-	else if(!isTrigger)
+	else if (!isTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 		ChangeMovement();
@@ -205,29 +206,86 @@ void SnowBeeDyingState::OnEnter()
 		spriteRenderer->SetFrameTime(0.2f);
 		spriteRenderer->SetAnimationFrame(0);
 
+		//TODO DIfferantiate between enter bc of Ice or because of Concussion
+
 		//Get the IceBlock
 		if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
 		{
-			const auto iceBlock = storage->GetGameObject();
 
-			//Get the direction of the IceBlock
-			if (const auto direction = iceBlock->GetComponent<DirectionComponent>())
+			if(const auto iceBlock = storage->GetGameObject())
 			{
-				//Get the SnowBee direction
-				if (const auto SnowBeeirection = m_pActor->GetComponent<DirectionComponent>())
+				//Get the direction of the IceBlock
+				if (const auto direction = iceBlock->GetComponent<DirectionComponent>())
 				{
-					//Set the SnowBee direction to the opposite of the IceBlock direction
-					SnowBeeirection->SetDirection(-direction->GetDirection());
-
-					//Stop the Movment Of the SnowBee
-					if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+					//Get the SnowBee direction
+					if (const auto SnowBeeirection = m_pActor->GetComponent<DirectionComponent>())
 					{
-						moveComponent->SetCanMove(false);
+						//Set the SnowBee direction to the opposite of the IceBlock direction
+						SnowBeeirection->SetDirection(-direction->GetDirection());
+
+						//Stop the Movment Of the SnowBee
+						if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+						{
+							moveComponent->SetCanMove(false);
+						}
 					}
 				}
 			}
 		}
 	}
+}
+
+
+
+
+
+
+//CONCUSSED
+//
+//
+SnowBeeState* SnowBeeConcussedState::HandleInput()
+{
+	if (m_GoInDyingState)
+	{
+		return new SnowBeeDyingState{ m_pActor };
+	}
+
+	if (m_ConcussedTime <= 0)
+	{
+		return new SnowBeeMovingState{ m_pActor };
+	}
+	return nullptr;
+}
+
+void SnowBeeConcussedState::Update()
+{
+	m_ConcussedTime -= TimeM::GetInstance().GetDeltaTimeM();
+}
+
+void SnowBeeConcussedState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
+{
+	//SnowBeeState::OnCollision(other, isTrigger);
+	m_GoInDyingState = true;
+}
+
+void SnowBeeConcussedState::OnEnter()
+{
+	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	{
+		spriteRenderer->SetOffset({ 0,80 });
+		spriteRenderer->SetFrameTime(0.2f);
+		spriteRenderer->SetAnimationFrame(0);
+	}
+	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+	{
+		moveComponent->SetCanMove(false);
+	}
+
+	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	{
+		directionComponent->SetDirection({ 0, 0 });
+	}
+
 }
 
 
@@ -243,11 +301,25 @@ SnowBeeState* SnowBeeState::HandleInput()
 		return new SnowBeeDyingState(m_pActor);
 	}
 
+	if (m_IsConcussed)
+	{
+		return new SnowBeeConcussedState(m_pActor);
+	}
+
 	return nullptr;
 }
 
 void SnowBeeState::OnCollision(GameObject* other, bool /*isTrigger*/)
 {
+	if (other->GetTag() == "Wall")
+	{
+		if (other->GetComponent<SpriteRenderer>()->IsPlaying())
+		{
+			m_IsConcussed = true;
+		}
+	}
+
+
 	if (const auto triggerComponent = other->GetComponent<TriggerComponent>())
 	{
 		//If it is an IceBlock it collided with

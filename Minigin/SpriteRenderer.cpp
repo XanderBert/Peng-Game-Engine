@@ -36,15 +36,18 @@ void SpriteRenderer::Update()
 	{
 		m_IsNotInit = false;
 		m_AnimationFrame = 0;
+
+		if (const auto direction = m_pOwner->GetComponent<DirectionComponent>())
+		{
+			SetMovementDirection(direction->GetDirection());
+		}
+		else
+		{
+			SetMovementDirection(MovementDirection::None);
+		}
+
 		SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[0]);
-
-
-
-
-
-		SetMovementDirection(m_MovementDirection);
 	}
-
 
 	if (m_IsPlaying)
 	{
@@ -90,9 +93,9 @@ void SpriteRenderer::SetTexture(const std::string& texturePath)
 
 void SpriteRenderer::SetMovementDirection(MovementDirection value)
 {
+	m_MovementDirection = value;
 	const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
 	m_AnimationFrame %= size;
-	m_MovementDirection = value;
 }
 
 MovementDirection SpriteRenderer::ConvertMovementDirection(const glm::vec2& direction)

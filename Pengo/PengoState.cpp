@@ -9,6 +9,7 @@
 #include "InputComponent.h"
 #include "SnowBee.h"
 #include "TriggerComponent.h"
+#include "SnowBeeState.h"
 
 //
 //Attacking State
@@ -111,6 +112,11 @@ void AttackingState::OnEnter()
 void AttackingState::OnCollision(GameObject* other, bool isTrigger)
 {
 	m_IsHit = IsHit(other, isTrigger);
+
+	if (other->GetTag() == "Wall")
+	{
+		other->GetComponent<SpriteRenderer>()->Play();
+	}
 }
 
 
@@ -265,8 +271,17 @@ bool PengoState::IsHit(GameObject* other, bool isTrigger)
 {
 	if (isTrigger) { return false; }
 
-	if (dynamic_cast<SnowBee*>(other))
+	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
 	{
+		if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()))
+		{
+			return false;
+		}
+
+		if (dynamic_cast<SnowBeeDyingState*>(snowBee->GetState()))
+		{
+			return false;
+		}
 		return true;
 	}
 

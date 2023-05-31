@@ -1,22 +1,27 @@
 ﻿#pragma once
-#include <glm/vec2.hpp>
 #include "GameObject.h"
-#include "Wall.h"
 
-
-class WallManager final : public GameObject
+class WallManager final
 {
 public:
 	WallManager();
-	virtual ~WallManager() override;
+	~WallManager() = default;
 
 	WallManager(const WallManager& other) = delete;
-	WallManager(WallManager&& other)noexcept = delete;
+	WallManager(WallManager&& other) = delete;
 	WallManager& operator=(const WallManager& other) = delete;
-	WallManager& operator=(WallManager&& other)noexcept = delete;
-private:
-	std::vector<glm::vec2> m_WallCoordinates{};
-	std::vector<Wall*> m_Walls{};
+	WallManager& operator=(WallManager&& other) = delete;
 
-	void CalculateWallRows();
+	std::vector<GameObject*> GetHorizontalWalls() const { return m_pHorizontalWalls; }
+	std::vector<GameObject*> GetVerticalWalls() const { return m_pVerticalWalls; }
+
+private:
+	std::vector<GameObject*>m_pHorizontalWalls{};
+	std::vector<GameObject*>m_pVerticalWalls{};
+
+	glm::vec2 m_HorizontalWallSize{ 224,8 };
+	glm::vec2 m_VerticalWallSize{ 8,256 };
+
+	int m_WallOffset{ 50 };
+
 };

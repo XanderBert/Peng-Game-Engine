@@ -1,6 +1,6 @@
 ﻿#include "PengoLevel.h"
 #include "ServiceLocator.h"
-#include <iostream>
+#include "WallManager.h"
 
 PengoLevel::PengoLevel()
 {
@@ -13,6 +13,16 @@ PengoLevel::PengoLevel()
 	//
 	//
 
+	m_pWallManager = new WallManager();
+	for (const auto wall : m_pWallManager->GetHorizontalWalls())
+	{
+		AddGameObject(wall);
+	}
+
+	for (const auto wall : m_pWallManager->GetVerticalWalls())
+	{
+		AddGameObject(wall);
+	}
 
 #ifndef _DEBUG
 	audioService.Play(1);
@@ -21,12 +31,14 @@ PengoLevel::PengoLevel()
 
 }
 
+PengoLevel::~PengoLevel()
+{
+	delete m_pWallManager;
+}
+
 void PengoLevel::AddGameObject(GameObject* pGameObject)
 {
 	m_pGameObjects.emplace_back(pGameObject);
-
-
-
 
 }
 

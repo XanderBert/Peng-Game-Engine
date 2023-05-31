@@ -20,6 +20,8 @@ public:
 	virtual void LateUpdate() override;
 	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 
+
+	PlayerState* GetState() const { return m_pState; }
 private:
 
 	glm::vec2 m_SpriteSize{ 16,16 };
