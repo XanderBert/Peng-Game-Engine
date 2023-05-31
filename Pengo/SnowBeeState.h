@@ -1,7 +1,5 @@
 ﻿#pragma once
-#include "IceBlock.h"
 #include "PlayerState.h"
-#include "SnowBee.h"
 
 class SnowBeeState : public PlayerState
 {
@@ -11,11 +9,9 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override = 0;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 protected:
 	void ChangeMovement();
-	void Move();
-	void StopMovement();
 
 	bool m_IsHit{};
 	//Multiplies the the direction of the previous location to prevent tunneling
@@ -36,7 +32,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
 };
@@ -51,7 +47,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
 };
@@ -67,7 +63,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
 };
@@ -82,7 +78,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
 };

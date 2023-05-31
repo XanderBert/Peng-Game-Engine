@@ -9,7 +9,7 @@ class InputComponent final : public Component
 {
 public:
 	InputComponent(GameObject* owner);
-	virtual ~InputComponent()  override = default;
+	virtual ~InputComponent()  override;
 
 	InputComponent(const InputComponent& other) = delete;
 	InputComponent(InputComponent&& other) = delete;

@@ -1,5 +1,6 @@
 ﻿#include "ControllerComponent.h"
 #include "ServiceLocator.h"
+#include "VelocityComponent.h"
 
 ControllerComponent::ControllerComponent(GameObject* owner)
 	: Component(owner)
@@ -7,46 +8,49 @@ ControllerComponent::ControllerComponent(GameObject* owner)
 {
 }
 
+ControllerComponent::~ControllerComponent()
+{
+	for (const auto& command : m_ControllerCommands)
+	{
+		delete command.second;
+	}
+}
+
 
 void ControllerComponent::Update()
 {
-	const auto controller = m_pInputManager->GetController(m_ControllerID);
+	if (!m_IsInitialized)
+	{
+		throw std::runtime_error("ControllerComponent not initialized\nCall The RegisterController(int index) Function");
+	}
 
 	for (const auto& command : m_ControllerCommands)
 	{
-		if (controller->IsPressed(command.first))
+		if (m_pController->IsPressed(command.first))
 		{
 			command.second->Execute();
+			return;
 		}
 	}
-
 }
 
 void ControllerComponent::AddBinding(Controller::ControllerButton button, Command* command)
 {
-
 	m_ControllerCommands.emplace(button, command);
 }
 
-void ControllerComponent::SetControllerIndex(int index)
+void ControllerComponent::RegisterController(int index)
 {
-
 	if (index < 0 || index > 4)
 	{
 		throw std::runtime_error("Controller index out of range, It should be between 0 and 4");
 	}
 
-
 	m_ControllerID = index;
+	m_pController = m_pInputManager->AddController(m_ControllerID);
+	m_IsInitialized = true;
 
-	const auto& controllers = ServiceLocator::GetInstance().InputManager.GetService().GetControllers();
 
-	for (const auto& controller : controllers)
-	{
-		if (controller->GetControllerID() == index)
-		{
-			controller->SetActor(m_pOwner);
-		}
-	}
-
+	const auto velocity = m_pOwner->GetComponent<VelocityComponent>()->GetVelocity();
+	m_pOwner->GetComponent<VelocityComponent>()->SetVelocity(velocity / 2.f);
 }

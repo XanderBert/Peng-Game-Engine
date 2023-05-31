@@ -240,6 +240,9 @@
     <ClInclude Include="MoveComponent.h">
       <Filter>Resource Files\Components\MoveComponent</Filter>
     </ClInclude>
+    <ClInclude Include="TriggerComponent.h">
+      <Filter>Resource Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -376,6 +379,9 @@
     </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Resource Files\Components\MoveComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerComponent.cpp">
+      <Filter>Resource Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -52,7 +52,7 @@ void SpriteRenderer::Update()
 		}
 		else
 		{
-			m_MovementDirection = MovementDirection::None;
+			SetMovementDirection(MovementDirection::None);
 		}
 
 
@@ -185,8 +185,9 @@ void SpriteRenderer::UpdateAnimationFrame()
 {
 	if (m_AccumulatedFrameTime > m_FrameTime)
 	{
-		const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
-		++m_AnimationFrame %= size;
+		++m_AnimationFrame;
 		m_AccumulatedFrameTime = 0.f;
 	}
+	const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+	m_AnimationFrame %= size;
 }

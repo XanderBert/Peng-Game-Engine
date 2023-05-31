@@ -284,6 +284,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="TimeM.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformEx.h" />
+    <ClInclude Include="TriggerComponent.h" />
     <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +337,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="TimeM.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformEx.cpp" />
+    <ClCompile Include="TriggerComponent.cpp" />
     <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

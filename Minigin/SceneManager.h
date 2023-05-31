@@ -15,7 +15,6 @@ public:
 	virtual void FixedUpdate(float fixedTimeMStep);
 	virtual void LateUpdate();
 	virtual void Render();
-	virtual std::vector<GameActor*> GetGameActorsOfScene(const std::string& sceneName) const;
 	virtual Scene* GetActiveScene() const { return m_scenes[m_scenes.size() - 1].get(); }
 
 private:

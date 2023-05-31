@@ -46,3 +46,24 @@ bool MoveComponent::CanMove() const
 {
 	return m_CanMove;
 }
+
+void MoveComponent::ResetMovement()
+{
+	if (const auto transform = m_pOwner->GetComponent<Transform>())
+	{
+		if (const auto directionComponent = m_pOwner->GetComponent<DirectionComponent>())
+		{
+			transform->SetWorldPosition(transform->GetLastWorldPosition() + (-directionComponent->GetDirection() * m_TunnelingMulitplier));
+		}
+	}
+}
+
+void MoveComponent::SetTunnelingMultiplier(float multiplier)
+{
+	m_TunnelingMulitplier = multiplier;
+}
+
+float MoveComponent::GetTunnelingMultiplier() const
+{
+	return m_TunnelingMulitplier;
+}

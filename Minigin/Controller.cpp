@@ -25,32 +25,14 @@ public:
 
 		//There are 4 virtual ports numbered from 0-4 on witch a controller can be connected
 		XInputGetState(m_ControllerIndex, &m_CurrentState);
-
 	}
-
-	//bool IsControllerConnectedOnPort(int controllerIndex)
-	//{
-	//	//Get the state of the controller index and check if its connected
-	//	const bool isControllerConnectedOnPort{ XInputGetState(controllerIndex, &m_CurrentState) == ERROR_SUCCESS };
-
-	//	//Reset the currentState to the one of this controller
-	//	XInputGetState(m_ControllerIndex, &m_CurrentState);
-
-	//	return isControllerConnectedOnPort;
-	//}
 
 	void Update()
 	{
 		UpdateState();
-
-		//wButtons
 		const auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
 		m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
 		m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
-
-
-		//use observer pattern???
-		if (!m_IsInUse) CheckAndSetInUse();
 	}
 
 	bool IsDownThisFrame(unsigned int button) const { return m_ButtonsPressedThisFrame & button; }
@@ -98,7 +80,6 @@ public:
 	}
 
 	int GetControllerID() const { return  m_ControllerIndex; }
-	bool GetIsInUse() const { return m_IsInUse; }
 
 	WORD GetButtonsPressedThisFrame() const { return m_ButtonsPressedThisFrame; }
 	WORD GetButtonsPressed() const { return m_CurrentState.Gamepad.wButtons; }
@@ -113,16 +94,6 @@ private:
 	int m_ControllerIndex{};
 
 	const glm::vec2 m_ThumbStickDeadZones{ 0.05f, 0.02f };
-
-	bool m_IsInUse{ false };
-	void CheckAndSetInUse()
-	{
-		if (IsDownThisFrame(static_cast<unsigned int>(ControllerButton::Start)))
-		{
-			std::cout << "Start has been pressed, Controller: " << GetControllerID() << " is in use now.\n";
-			m_IsInUse = true;
-		}
-	}
 };
 
 
@@ -184,22 +155,4 @@ WORD Controller::GetPressedButtons() const
 	return pImpl->GetButtonsPressed();
 }
 
-bool Controller::GetIsInUse() const
-{
-	return pImpl->GetIsInUse();
-}
 
-bool Controller::IsControllerConnectedOnPort(int /*controllerIndex*/) const
-{
-	return false;//pImpl->IsControllerConnectedOnPort(controllerIndex);
-}
-
-void Controller::SetActor(GameObject* gameActor)
-{
-	m_pActor = gameActor;
-}
-
-GameObject* Controller::GetActor() const
-{
-	return m_pActor;
-}

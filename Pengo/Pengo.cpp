@@ -5,34 +5,27 @@
 #include "Controller.h"
 #include "DirectionComponent.h"
 #include "IceBlock.h"
-#include "IceBlockTrigger.h"
 #include "ObserverComponent.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "PengoEvents.h"
-#include "PengoIceBlockTrigger.h"
 #include "PengoState.h"
 #include "PlayerCommands.h"
 #include "InputComponent.h"
 #include "controllerComponent.h"
 #include "Controller.h"
+#include "TriggerComponent.h"
 
 
 Pengo::Pengo() : GameObject()
 {
-
-	std::cout << "PENGO CREATED\n";
-
-	////Input Component
-	//const auto inputComponent = AddComponent<InputComponent>();
-	//inputComponent->AddBinding(SDLK_w, new MoveCommand(this, { 0, -1 }));
-	//inputComponent->AddBinding(SDLK_s, new MoveCommand(this, { 0,1 }));
-	//inputComponent->AddBinding(SDLK_a, new MoveCommand(this, { -1,0 }));
-	//inputComponent->AddBinding(SDLK_d, new MoveCommand(this, { 1,0 }));
-
-	//Controller Component
-
-
+	//When Pengo is using a controller component, Somehow the Execute event (move) gets triggered twice per frame.
+	//This should not be because there is 1 update trigger and no loop triggering the event?
+	//Test if it is exactly a 2:1 ratio -> It is exatly a 2:1 ratio
+	//This means that there are really 2 triggers to the execute event per frame.
+	//So there is no synchronization issue due to concurrency.
+	//Right now its hacked to work by dividing the velocity by 2.
+	//This needs to be fixed (in the future).
 
 
 
@@ -41,12 +34,13 @@ Pengo::Pengo() : GameObject()
 	directionComponent->SetDirection({ 1,0 });
 
 
-	//make Trigger component??
-	//This will be a BoxCollider Component.
-	//Will it have extra features?
-	//Can i just add 2 box colliders to the same object?
-	//how will i diffrerentiate between the 2?
-	m_pIceBlockTrigger = new PengoIceBlockTrigger(this);
+	//Trigger Component
+	const auto triggerComponent = AddComponent<TriggerComponent>();
+	triggerComponent->DebugRender(true);
+	triggerComponent->SetColliderSize({ 10,10 });// -> It is self colliding???
+	triggerComponent->SetOffsetMultiplier({ 10 });
+	triggerComponent->SetColliderOffset({ 3,3 });
+
 
 	//Texture Component
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
@@ -72,18 +66,13 @@ Pengo::Pengo() : GameObject()
 	boxCollision->SetColliderSize({ 16,16 });
 
 
-	//Audio Component Needs to be made!
+	//Audio Component Needs to be made?
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
 
 	const auto observerComponent = AddComponent<ObserverComponent>();
 	observerComponent->AddObserver(std::make_shared<PengoEvent>());
 
-
-	//Does state need a component?
 	m_pState = new MovingState(this);
-
-
-	//Make Velocity and direction component
 	AddComponent<VelocityComponent>()->SetVelocity(200);
 }
 
@@ -104,18 +93,17 @@ void Pengo::LateUpdate()
 	GameObject::LateUpdate();
 }
 
-void Pengo::OnCollision(GameObject* other)
+void Pengo::OnCollision(GameObject* other, bool isTrigger)
 {
-	if (dynamic_cast<PengoIceBlockTrigger*>(other)) { return; }
+	if (dynamic_cast<Pengo*>(other)) { return; }
+	m_pState->OnCollision(other, isTrigger);
+	if (isTrigger) return;
 
-	GameObject::OnCollision(other);
-	m_pState->OnCollision(other);
-
-	if (dynamic_cast<IceBlockTrigger*>(other))
-	{
-		GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::CollidingWithIce);
-		return;
-	}
+	//if (dynamic_cast<IceBlock*>(other))
+	//{
+	//	GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::CollidingWithIce);
+	//	return;
+	//}
 
 	StopMovement();
 }

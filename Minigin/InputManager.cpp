@@ -3,10 +3,7 @@
 #include "imgui_impl_sdl2.h"
 
 InputManager::InputManager()
-{
-	m_pControllers.push_back(std::make_unique<Controller>(0));
-	m_pControllers.push_back(std::make_unique<Controller>(1));
-}
+{}
 
 InputManager::~InputManager()
 {}
@@ -17,18 +14,10 @@ bool InputManager::ProcessInput()
 	return UpdateKeyboardInput();
 }
 
-std::vector<Controller*> InputManager::GetUsedControllers()
+Controller* InputManager::AddController(int controllerIndex)
 {
-	std::vector<Controller*> controllers{};
-
-	for (const auto& controller : m_pControllers)
-	{
-		if (controller->GetIsInUse())
-		{
-			controllers.push_back(controller.get());
-		}
-	}
-	return controllers;
+	m_pControllers.emplace_back(std::make_unique<Controller>(controllerIndex));
+	return m_pControllers.back().get();
 }
 
 std::vector<Controller*> InputManager::GetControllers()
@@ -37,9 +26,7 @@ std::vector<Controller*> InputManager::GetControllers()
 
 	for (const auto& controller : m_pControllers)
 	{
-
 		controllers.push_back(controller.get());
-
 	}
 	return controllers;
 }
@@ -63,11 +50,8 @@ bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButt
 }
 
 
-void InputManager::UpdateControllersInput()
+void InputManager::UpdateControllersInput() const
 {
-	//Check if a new controller is contected
-	CheckIfControllerNeedsToBeAdded();
-
 	//Update the controllers
 	for (const auto& controller : m_pControllers)
 	{
@@ -96,13 +80,4 @@ bool InputManager::UpdateKeyboardInput()
 	ImGui_ImplSDL2_ProcessEvent(&e);
 
 	return true;
-}
-
-void InputManager::CheckIfControllerNeedsToBeAdded()
-{
-	const int index{ static_cast<int>(m_pControllers.size()) };
-	if (m_pControllers[0]->IsControllerConnectedOnPort(index))
-	{
-		m_pControllers.push_back(std::make_unique<Controller>(index));
-	}
 }

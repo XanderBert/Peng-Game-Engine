@@ -18,8 +18,8 @@ public:
 	null_CollisionManager& operator=(null_CollisionManager&& other) = delete;
 
 	virtual void Update() = 0;
-	virtual void AddBoxCollider([[maybe_unused]] BoxCollider* boxCollider) = 0;
-	virtual void UnRegisterBoxCollider([[maybe_unused]] BoxCollider* boxCollider) = 0;
+	virtual void AddBoxCollider(BoxCollider* boxCollider) = 0;
+	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) = 0;
 };
 
 class CollisionManager final : public null_CollisionManager
@@ -38,7 +38,7 @@ public:
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
 private:
 	void CollisionWorker();
-	void CheckCollisionAsync(size_t index);
+	//void CheckCollisionAsync(size_t index);
 	void CheckCollisionRange(size_t from, size_t to);
 	static bool _CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
 

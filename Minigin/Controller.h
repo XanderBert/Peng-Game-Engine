@@ -53,16 +53,7 @@ public:
 
 	unsigned short GetPressedButtons() const;
 
-	bool GetIsInUse() const;
-	bool IsControllerConnectedOnPort(int controllerIndex) const;
-
-	void SetActor(GameObject* gameActor);
-	GameObject* GetActor() const;
-
 private:
 	class ControllerImpl;
 	std::unique_ptr<ControllerImpl> pImpl{};
-
-
-	GameObject* m_pActor{};
 };

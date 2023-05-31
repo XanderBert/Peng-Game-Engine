@@ -52,7 +52,7 @@ void load()
 
 	auto object = new Pengo();
 	const auto controllerComponent = object->AddComponent<ControllerComponent>();
-	controllerComponent->SetControllerIndex(0);
+	controllerComponent->RegisterController(0);
 	controllerComponent->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(object, { -1, 0 }));
 	controllerComponent->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(object, { 1, 0 }));
 	controllerComponent->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(object, { 0, -1 }));
@@ -62,42 +62,6 @@ void load()
 	scene.Add(object);
 
 	//Player2
-
-
-
-
-	//Player1
-	/*const auto gameac = new Pengo();
-	gameac->SetControllerIndex(0);
-	scene.Add(gameac);*/
-
-	//const auto wallManager = new WallManager();
-	//scene.Add(wallManager);
-
-
-	//auto ice = new IceBlock();
-	//ice->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
-	//scene.Add(ice);
-
-	//ice = new IceBlock();
-	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,100 });
-	//scene.Add(ice);
-
-	//ice = new IceBlock();
-	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,50 });
-	//scene.Add(ice);
-
-	//ice = new IceBlock();
-	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,66 });
-	//scene.Add(ice);
-
-	//ice = new IceBlock();
-	//ice->GetComponent<Transform>()->SetWorldPosition({ 116,82 });
-	//scene.Add(ice);
-
-	//const auto snowBee = new SnowBee();
-	//scene.Add(snowBee);
-
 }
 
 int main(int, char* [])

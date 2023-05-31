@@ -4,7 +4,6 @@
 #include "DirectionComponent.h"
 #include "TimeM.h"
 #include "Transform.h"
-#include "GameActor.h"
 #include "PengoEvents.h"
 #include "VelocityComponent.h"
 
@@ -20,8 +19,6 @@ public:
 
 	void Execute() override
 	{
-
-		std::cout << "Move Command Triggered\n";
 		if (const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })
 		{
 			directionComponent->SetDirection(m_MovementDirection);

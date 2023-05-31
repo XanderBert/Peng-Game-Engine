@@ -25,6 +25,9 @@ public:
 
 	void SetVelocity(float velocity);
 	float GetVelocity() const;
+
+
+
 private:
 	float m_Velocity{ 0.f };
 };

@@ -9,7 +9,7 @@ class ControllerComponent final : public Component
 {
 public:
 	ControllerComponent(GameObject* owner);
-	virtual  ~ControllerComponent() override = default;
+	virtual  ~ControllerComponent() override;
 
 	ControllerComponent(const ControllerComponent& other) = delete;
 	ControllerComponent(ControllerComponent&& other) noexcept = delete;
@@ -28,13 +28,16 @@ public:
 	std::vector<Controller::ControllerButton> GetButtonsOfCommand();
 
 	//This can range between 0 & 4
-	void SetControllerIndex(int index);
+	void RegisterController(int index);
+	Controller* GetController() const { return m_pController; }
+
 	int GetControllerIndex() const { return m_ControllerID; }
 private:
 	std::unordered_map<Controller::ControllerButton, Command*> m_ControllerCommands{};
 	null_InputManager* m_pInputManager;
-
+	Controller* m_pController{};
 	int m_ControllerID{};
+	bool m_IsInitialized{ false };
 };
 
 template <typename T>

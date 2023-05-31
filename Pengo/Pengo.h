@@ -1,7 +1,5 @@
 ﻿#pragma once
-#include "GameActor.h"
 #include "IceBlock.h"
-#include "PengoIceBlockTrigger.h"
 #include "PlayerCommands.h"
 #include "PlayerState.h"
 
@@ -19,13 +17,11 @@ public:
 	//Called each frame
 	virtual void Update() override;
 	virtual void LateUpdate() override;
-	virtual void OnCollision(GameObject* other) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 
 	PlayerState* GetState() const { return m_pState; }
-	PengoIceBlockTrigger* GetPengoIceBlockTrigger() const { return m_pIceBlockTrigger; }
 
 private:
-	PengoIceBlockTrigger* m_pIceBlockTrigger{};
 	PlayerState* m_pState;
 
 	//Multiplies the the direction of the previous location to prevent tunneling

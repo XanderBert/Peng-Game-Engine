@@ -1,12 +1,10 @@
 ﻿#include "SnowBeeState.h"
-
 #include "DirectionComponent.h"
-#include "IceBlockTrigger.h"
+#include "IceBlock.h"
 #include "MoveComponent.h"
-#include "PengoIceBlockTrigger.h"
 #include "SnowBee.h"
 #include "SpriteRenderer.h"
-#include "VelocityComponent.h"
+#include "TriggerComponent.h"
 
 //
 //-- Spawning -
@@ -31,9 +29,9 @@ void SnowBeeSpawningState::Update()
 
 }
 
-void SnowBeeSpawningState::OnCollision(GameObject* other)
+void SnowBeeSpawningState::OnCollision(GameObject* other, bool isTrigger)
 {
-	SnowBeeState::OnCollision(other);
+	SnowBeeState::OnCollision(other, isTrigger);
 }
 
 void SnowBeeSpawningState::OnEnter()
@@ -69,13 +67,12 @@ SnowBeeState* SnowBeeMovingState::HandleInput()
 
 void SnowBeeMovingState::Update()
 {
-	//Move();
 }
 
-void SnowBeeMovingState::OnCollision(GameObject* other)
+void SnowBeeMovingState::OnCollision(GameObject* other, bool isTrigger)
 {
-	SnowBeeState::OnCollision(other);
-	StopMovement();
+	SnowBeeState::OnCollision(other, isTrigger);
+	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	ChangeMovement();
 }
 
@@ -114,11 +111,11 @@ void SnowbeeAttackingState::Update()
 {
 }
 
-void SnowbeeAttackingState::OnCollision(GameObject* other)
+void SnowbeeAttackingState::OnCollision(GameObject* other, bool isTrigger)
 {
 
-	SnowBeeState::OnCollision(other);
-	StopMovement();
+	SnowBeeState::OnCollision(other, isTrigger);
+	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	ChangeMovement();
 }
 
@@ -151,9 +148,9 @@ void SnowBeeDyingState::Update()
 	}
 }
 
-void SnowBeeDyingState::OnCollision(GameObject* other)
+void SnowBeeDyingState::OnCollision(GameObject* other, bool isTrigger)
 {
-	SnowBeeState::OnCollision(other);
+	SnowBeeState::OnCollision(other, isTrigger);
 }
 
 void SnowBeeDyingState::OnEnter()
@@ -197,15 +194,22 @@ SnowBeeState* SnowBeeState::HandleInput()
 	return nullptr;
 }
 
-void SnowBeeState::OnCollision(GameObject* other)
+void SnowBeeState::OnCollision(GameObject* other, bool /*isTrigger*/)
 {
-	if (const auto iceBlock = dynamic_cast<IceBlock*>(other))
+
+	if (const auto triggerComponent = other->GetComponent<TriggerComponent>())
 	{
-		if (iceBlock->GetComponent<MoveComponent>()->CanMove())
+		//If it is an IceBlock it collided with
+		if (triggerComponent->GetTag() == "IceBlockTrigger")
 		{
-			m_IsHit = true;
-			dynamic_cast<SnowBee*>(m_pActor)->SetHittedIceBlock(iceBlock);
+			//If te iceblock is in its it hitted state
+			if (other->GetComponent<SpriteRenderer>()->IsPlaying())
+			{
+				m_IsHit = true;
+				dynamic_cast<SnowBee*>(m_pActor)->SetHittedIceBlock(other);
+			}
 		}
+
 	}
 }
 
@@ -238,18 +242,6 @@ void SnowBeeState::ChangeMovement()
 			}
 
 			directionComponent->SetDirection(newDirection);
-		}
-	}
-}
-
-//Reset Last Position -> Can be placed in the MoveComponent
-void SnowBeeState::StopMovement()
-{
-	if (const auto transform = m_pActor->GetComponent<Transform>())
-	{
-		if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
-		{
-			transform->SetWorldPosition(transform->GetLastWorldPosition() + (-directionComponent->GetDirection() * m_TunnelingMultiplier));
 		}
 	}
 }

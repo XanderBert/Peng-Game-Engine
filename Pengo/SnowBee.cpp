@@ -1,12 +1,10 @@
 ﻿#include "SnowBee.h"
-
 #include "IceBlock.h"
-#include "IceBlockTrigger.h"
 #include "MoveComponent.h"
 #include "Pengo.h"
 #include "ServiceLocator.h"
+#include "SnowBeeState.h"
 #include "SpriteRenderer.h"
-#include "TimeM.h"
 #include "Transform.h"
 
 SnowBee::SnowBee()
@@ -49,8 +47,6 @@ SnowBee::SnowBee()
 	AddComponent<VelocityComponent>()->SetVelocity(20);
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
 	AddComponent<MoveComponent>();
-
-	//Snow Bee only plays the last 2 frames of the spawning animation.?
 }
 
 SnowBee::~SnowBee()
@@ -69,15 +65,14 @@ void SnowBee::LateUpdate()
 	GameObject::LateUpdate();
 }
 
-void SnowBee::OnCollision(GameObject* other)
+void SnowBee::OnCollision(GameObject* other, bool isTrigger)
 {
-	if (dynamic_cast<PengoIceBlockTrigger*>(other) || dynamic_cast<IceBlockTrigger*>(other))
+	m_pState->OnCollision(other, isTrigger);
+	if (isTrigger)
 	{
 		return;
 	}
 
-	GameObject::OnCollision(other);
-	m_pState->OnCollision(other);
 }
 
 void SnowBee::UpdateState()

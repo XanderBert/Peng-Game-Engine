@@ -22,6 +22,8 @@ GameObject* Component::GetGameObject() const
 	return m_pOwner;
 }
 
+
+//Just set it private????
 //Once a owner has been set this function won't anything.
 void Component::SetGameObject(GameObject* owner)
 {

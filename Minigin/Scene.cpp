@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include "GameActor.h"
 #include "GameObject.h"
 #include "ServiceLocator.h"
 
@@ -37,20 +36,6 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-std::vector<GameActor*> Scene::GetAllGameActors() const
-{
-	std::vector<GameActor*> gameActors{};
-
-	for (auto& gameActor : m_objects)
-	{
-		if (typeid(gameActor.get()) == typeid(GameActor*))
-		{
-			gameActors.emplace_back(dynamic_cast<GameActor*>(gameActor.get()));
-		}
-	}
-
-	return gameActors;
-}
 
 void Scene::Update()
 {

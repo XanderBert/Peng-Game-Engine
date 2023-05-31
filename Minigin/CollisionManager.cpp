@@ -87,7 +87,13 @@ void CollisionManager::Update()
 				continue;
 			}
 
-			collider->GetGameObject()->OnCollision(collidingCollider);
+			//If it self colliding skip it, Could happen if you have multiple colliders and or triggers on one game object
+			if (collidingCollider == collider->GetGameObject())
+			{
+				continue;
+			}
+
+			collider->GetGameObject()->OnCollision(collidingCollider, collider->GetIsTrigger());
 		}
 
 		collider->ClearCollidingObjects();
@@ -156,30 +162,30 @@ void CollisionManager::CollisionWorker()
 		task();
 	}
 }
-
-void CollisionManager::CheckCollisionAsync(size_t index)
-{
-	std::unique_lock lock(m_CollisionMutex);
-
-	BoxCollider* colliderA = m_BoxColliders[index];
-
-	for (size_t j = index + 1; j < m_BoxColliders.size(); ++j)
-	{
-		BoxCollider* colliderB = m_BoxColliders[j];
-
-
-		// Check if the BoxColliders are colliding
-		if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
-		{
-			// Add the objects as colliding objects
-			// As of now they are stored with a mutex in the BoxCollider Component.
-			// I don't know if i need to go with that or if i should store a std::vector<std::vector<GameObjects*>> in this class to store the collisions.
-			// This approach avoids the need for a mutex in the BoxCollider component but requires additional memory allocation.
-			colliderA->AddCollidingObject(colliderB->GetGameObject());
-			colliderB->AddCollidingObject(colliderA->GetGameObject());
-		}
-	}
-}
+//
+//void CollisionManager::CheckCollisionAsync(size_t index)
+//{
+//	std::unique_lock lock(m_CollisionMutex);
+//
+//	BoxCollider* colliderA = m_BoxColliders[index];
+//
+//	for (size_t j = index + 1; j < m_BoxColliders.size(); ++j)
+//	{
+//		BoxCollider* colliderB = m_BoxColliders[j];
+//
+//
+//		 Check if the BoxColliders are colliding
+//		if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
+//		{
+//			 Add the objects as colliding objects
+//			 As of now they are stored with a mutex in the BoxCollider Component.
+//			 I don't know if i need to go with that or if i should store a std::vector<std::vector<GameObjects*>> in this class to store the collisions.
+//			 This approach avoids the need for a mutex in the BoxCollider component but requires additional memory allocation.
+//			colliderA->AddCollidingObject(colliderB->GetGameObject());
+//			colliderB->AddCollidingObject(colliderA->GetGameObject());
+//		}
+//	}
+//}
 
 void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 {
@@ -191,6 +197,12 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 		for (size_t j = i + 1; j < m_BoxColliders.size(); ++j)
 		{
 			BoxCollider* colliderB = m_BoxColliders[j];
+
+			if (colliderA->CanBeDeleted() || colliderB->CanBeDeleted())
+			{
+				continue;
+			}
+
 
 			// Check if the BoxColliders are colliding
 			if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))

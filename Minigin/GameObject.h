@@ -59,7 +59,7 @@ public:
 
 	//
 	//Collision
-	virtual void OnCollision(GameObject* /*other*/) {}
+	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/) {}
 	std::vector<GameObject*> GetCollidingObjects() const;
 
 protected:

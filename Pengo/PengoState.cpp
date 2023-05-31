@@ -4,14 +4,10 @@
 #include "Pengo.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
-#include "IceBlock.h"
-#include "IceBlockTrigger.h"
 #include "MoveComponent.h"
 #include "DirectionComponent.h"
 #include "InputComponent.h"
-
-
-//Add Standstil State
+#include "TriggerComponent.h"
 
 //
 //Attacking State
@@ -60,25 +56,35 @@ void AttackingState::Update()
 {
 	m_TimeUntilIdle -= TimeM::GetInstance().GetDeltaTimeM();
 
-	//Componentn -> m_pActor->GetChild()->GetComponent<TriggerComponent>->GetCollidingObjects();
-	for (const auto& collidingGameObjects : dynamic_cast<Pengo*>(m_pActor)->GetPengoIceBlockTrigger()->GetCollidingObjects())
+	if (const auto triggerComp = m_pActor->GetComponent<TriggerComponent>())
 	{
-		if (collidingGameObjects->CanBeDeleted()) continue;
 
-		if (const auto iceBlockTrigger = dynamic_cast<IceBlockTrigger*>(collidingGameObjects))
+		//Gets all the colliding objects of the pengo Trigger
+		for (const auto& collidingGameObject : triggerComp->GetCollidingObjects())
 		{
-			const auto iceBlock = iceBlockTrigger->GetParent();
 
-			if (const auto direction = m_pActor->GetComponent<DirectionComponent>())
+			//Skips the Colliding objects that can be deleted or the pengo itself
+			if (collidingGameObject->CanBeDeleted() || collidingGameObject == m_pActor) continue;
+
+
+			//Checks if the colliding object has a trigger component
+			if (const auto iceBlockTrigger = collidingGameObject->GetComponent<TriggerComponent>())
 			{
-				//Move the iceblock
-				iceBlock->GetComponent<MoveComponent>()->SetCanMove(true);
-				iceBlock->GetComponent<DirectionComponent>()->SetDirection(direction->GetDirection());
 
+				//checks if the colliding object with a trigger is the actual IceBlockTrigger
+				if (iceBlockTrigger->GetTag() == "IceBlockTrigger")
+				{
+					if (const auto direction = m_pActor->GetComponent<DirectionComponent>())
+					{
+						//Move the move the IceBlock
+						collidingGameObject->GetComponent<MoveComponent>()->SetCanMove(true);
+						collidingGameObject->GetComponent<DirectionComponent>()->SetDirection(direction->GetDirection());
+
+					}
+				}
 			}
 		}
 	}
-
 }
 
 void AttackingState::OnEnter()
@@ -91,12 +97,9 @@ void AttackingState::OnEnter()
 
 	//Play attacking sound
 	ServiceLocator::GetInstance().AudioService.GetService().Play(0);
-
-
-	//std::cout << "Attacking State" << std::endl;
 }
 
-void AttackingState::OnCollision(GameObject* /*other*/)
+void AttackingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
 {
 }
 
@@ -164,7 +167,7 @@ void MovingState::Update()
 	m_TimeUntilIdle -= TimeM::GetInstance().GetDeltaTimeM();
 }
 
-void MovingState::OnCollision(GameObject* /*other*/)
+void MovingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
 {
 }
 
@@ -182,7 +185,7 @@ void MovingState::OnEnter()
 
 
 //ALL STATES
-void PengoState::OnCollision(GameObject* /*other*/)
+void PengoState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
 {
 
 }
@@ -221,7 +224,7 @@ PengoState* IdleState::HandleInput()
 
 		for (const auto button : buttons)
 		{
-			if (inputManager.GetController(controllerComp->GetControllerIndex())->IsPressed(button))
+			if (controllerComp->GetController()->IsDown(button))
 			{
 				return new MovingState(m_pActor);
 			}
@@ -235,9 +238,9 @@ void IdleState::Update()
 {
 }
 
-void IdleState::OnCollision(GameObject* other)
+void IdleState::OnCollision(GameObject* other, bool isTrigger)
 {
-	PengoState::OnCollision(other);
+	PengoState::OnCollision(other, isTrigger);
 }
 
 void IdleState::OnEnter()
@@ -247,6 +250,4 @@ void IdleState::OnEnter()
 		spriteRenderer->Pause();
 		spriteRenderer->SetOffset({ 0,0 });
 	}
-
-	std::cout << "Idle State" << std::endl;
 }

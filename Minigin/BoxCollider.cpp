@@ -11,25 +11,22 @@ BoxCollider::BoxCollider(GameObject* owner) : Component(owner)
 
 BoxCollider::~BoxCollider()
 {
+	//Is this not a viable solution? TODO Check this out!
+	//ServiceLocator::GetInstance().CollisionManager.GetService().RemoveBoxCollider(this);
 }
 
-void BoxCollider::Update()
-{
-}
+void BoxCollider::Update() {}
 
-void BoxCollider::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
-{
-}
+void BoxCollider::FixedUpdate(float /*fixedTimeMStep*/) {}
 
-void BoxCollider::LateUpdate()
-{
-}
+void BoxCollider::LateUpdate() {}
 
 void BoxCollider::Render()
 {
 	if (m_DebugRender)
+	{
 		ServiceLocator::GetInstance().Renderer.GetService().RenderRect(GetCollider());
-
+	}
 }
 
 void BoxCollider::SetColliderSize(const glm::vec2& size)
@@ -51,12 +48,23 @@ void BoxCollider::DebugRender(bool isDebugRendering)
 
 SDL_Rect BoxCollider::GetCollider() const
 {
+	if (m_pOwner->CanBeDeleted())
+	{
+		return SDL_Rect{ 0,0,0,0 };
+	}
 
-	//Todo: this will make the dirty flag pattern obsolete for the objects that will use collision?
 	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
-
 	return SDL_Rect{ m_Collider.x + static_cast<int>(position.x),m_Collider.y + static_cast<int>(position.y), m_Collider.w, m_Collider.h };
+}
 
+void BoxCollider::SetIsTrigger(bool isTrigger)
+{
+	m_IsTrigger = isTrigger;
+}
+
+bool BoxCollider::GetIsTrigger() const
+{
+	return m_IsTrigger;
 }
 
 void BoxCollider::ClearCollidingObjects()

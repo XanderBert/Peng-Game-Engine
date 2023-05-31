@@ -60,12 +60,6 @@
     <ClCompile Include="IceBlock.cpp">
       <Filter>Source Files\IceBlock</Filter>
     </ClCompile>
-    <ClCompile Include="IceBlockTrigger.cpp">
-      <Filter>Source Files\IceBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="PengoIceBlockTrigger.cpp">
-      <Filter>Source Files\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>PlayerState</Filter>
     </ClCompile>
@@ -103,12 +97,6 @@
     </ClInclude>
     <ClInclude Include="IceBlock.h">
       <Filter>Source Files\IceBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="IceBlockTrigger.h">
-      <Filter>Source Files\IceBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="PengoIceBlockTrigger.h">
-      <Filter>Source Files\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>PlayerState</Filter>

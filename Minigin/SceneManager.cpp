@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "TimeM.h"
-#include "GameActor.h"
 #include "ServiceLocator.h"
 
 void SceneManager::Update()
@@ -37,11 +36,6 @@ void SceneManager::Render()
 	{
 		scene->Render();
 	}
-}
-
-std::vector<GameActor*> SceneManager::GetGameActorsOfScene(const std::string& sceneName) const
-{
-	return  GetSceneByName(sceneName)->GetAllGameActors();
 }
 
 Scene& SceneManager::CreateScene(const std::string& name)

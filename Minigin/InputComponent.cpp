@@ -8,6 +8,14 @@ InputComponent::InputComponent(GameObject* owner)
 {
 }
 
+InputComponent::~InputComponent()
+{
+	for (const auto& command : m_KeyboardCommands)
+	{
+		delete command.second;
+	}
+}
+
 void InputComponent::Update()
 {
 	for (const auto& command : m_KeyboardCommands)

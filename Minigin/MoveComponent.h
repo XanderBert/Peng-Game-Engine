@@ -25,8 +25,12 @@ public:
 
 	void SetCanMove(bool canMove);
 	bool CanMove() const;
+	void ResetMovement();
+	void SetTunnelingMultiplier(float multiplier);
+	float GetTunnelingMultiplier() const;
 
 private:
 	bool m_CanMove{ false };
-	
+	float m_TunnelingMulitplier{ 2.4f };
+
 };

@@ -43,8 +43,6 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	}
 	else if (type == "player")
 	{
-
-		std::cout << "Player created";
 		object = new Pengo();
 
 		auto inputComponent = object->AddComponent<InputComponent>();

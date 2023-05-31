@@ -37,6 +37,9 @@ public:
 
 	SDL_Rect GetCollider() const;
 
+
+	void SetIsTrigger(bool isTrigger);
+	bool GetIsTrigger() const;
 	void ClearCollidingObjects();
 	void SetCollidingObjects(const std::vector<GameObject*>& pCollidingObjects);
 	void AddCollidingObject(GameObject* collider);
@@ -47,4 +50,5 @@ private:
 	std::vector<GameObject*> m_CollidingObjects;
 	SDL_Rect m_Collider{ 0,0,5,5 };
 	bool m_DebugRender{};
+	bool m_IsTrigger{ false };
 };

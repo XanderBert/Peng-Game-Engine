@@ -8,7 +8,6 @@ public:
 	void Add(GameObject* object);
 	void Remove(GameObject* object);
 	void RemoveAll();
-	std::vector<GameActor*> GetAllGameActors() const;
 
 	std::string GetName() const { return m_name; }
 

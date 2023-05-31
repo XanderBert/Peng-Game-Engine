@@ -127,7 +127,10 @@ void GameObject::MarkForDeletion()
 
 std::vector<GameObject*> GameObject::GetCollidingObjects() const
 {
-	return GetComponent<BoxCollider>()->GetCollidingObjects();
+	if(const auto boxCollider = GetComponent<BoxCollider>())
+	return boxCollider->GetCollidingObjects();
+
+	return std::vector<GameObject*>{}; // Empty vector
 }
 
 void GameObject::AddToChildVector(GameObject* pChild)
