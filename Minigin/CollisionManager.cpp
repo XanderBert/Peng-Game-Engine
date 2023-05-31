@@ -52,7 +52,7 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::Update()
 {
-	{
+	
 		std::unique_lock lock(m_CollisionMutex);
 
 		//Implement double buffering to synchronise colliding objects
@@ -68,8 +68,7 @@ void CollisionManager::Update()
 			}), m_BoxColliders.end());
 
 
-	}
-
+	
 
 	// Call OnCollision for each game object involved in a collision
 	for (auto* collider : m_CurrentCollidingObjects)
@@ -99,8 +98,6 @@ void CollisionManager::Update()
 		collider->ClearCollidingObjects();
 	}
 
-	{
-		std::unique_lock lock(m_CollisionMutex);
 
 		const size_t amountofThreads = m_ThreadPool.size();
 		const size_t amountofColliders = m_BoxColliders.size();
@@ -121,7 +118,7 @@ void CollisionManager::Update()
 			// Notify a thread that there is work to do
 			m_ConditionVariable.notify_one();
 		}
-	}
+	
 
 }
 

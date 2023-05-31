@@ -24,6 +24,12 @@ void ControllerComponent::Update()
 		throw std::runtime_error("ControllerComponent not initialized\nCall The RegisterController(int index) Function");
 	}
 
+
+	if (!m_IsEnabled)
+	{
+		return;
+	}
+
 	for (const auto& command : m_ControllerCommands)
 	{
 		if (m_pController->IsPressed(command.first))
@@ -53,4 +59,14 @@ void ControllerComponent::RegisterController(int index)
 
 	const auto velocity = m_pOwner->GetComponent<VelocityComponent>()->GetVelocity();
 	m_pOwner->GetComponent<VelocityComponent>()->SetVelocity(velocity / 2.f);
+}
+
+void ControllerComponent::EnableInput()
+{
+	m_IsEnabled = true;
+}
+
+void ControllerComponent::DisableInput()
+{
+	m_IsEnabled = false;
 }

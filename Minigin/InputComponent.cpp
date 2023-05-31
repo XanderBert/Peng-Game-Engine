@@ -18,6 +18,11 @@ InputComponent::~InputComponent()
 
 void InputComponent::Update()
 {
+	if (!m_IsEnabled)
+	{
+		return;
+	}
+
 	for (const auto& command : m_KeyboardCommands)
 	{
 		if (m_pInputManager->GetButtonPressed(command.first))
@@ -25,9 +30,20 @@ void InputComponent::Update()
 			command.second->Execute();
 		}
 	}
+
 }
 
 void InputComponent::AddBinding(SDL_Keycode key, Command* command)
 {
 	m_KeyboardCommands.insert(std::make_pair(key, command));
+}
+
+void InputComponent::EnableInput()
+{
+	m_IsEnabled = true;
+}
+
+void InputComponent::DisableInput()
+{
+	m_IsEnabled = false;
 }

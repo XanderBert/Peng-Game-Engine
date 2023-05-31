@@ -32,12 +32,17 @@ public:
 	Controller* GetController() const { return m_pController; }
 
 	int GetControllerIndex() const { return m_ControllerID; }
+
+	void EnableInput();
+	void DisableInput();
+
 private:
 	std::unordered_map<Controller::ControllerButton, Command*> m_ControllerCommands{};
 	null_InputManager* m_pInputManager;
 	Controller* m_pController{};
 	int m_ControllerID{};
 	bool m_IsInitialized{ false };
+	bool m_IsEnabled{ true };
 };
 
 template <typename T>

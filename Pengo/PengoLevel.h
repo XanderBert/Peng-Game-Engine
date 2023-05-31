@@ -5,7 +5,7 @@
 class PengoLevel final
 {
 public:
-	PengoLevel() = default;
+	PengoLevel();
 	~PengoLevel() = default;
 
 	PengoLevel(const PengoLevel& other) = delete;

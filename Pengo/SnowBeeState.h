@@ -50,6 +50,8 @@ public:
 	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
+	float m_TimeUntilAttack{ 5.5f };
+	bool m_GoInAttackState{};
 };
 
 
@@ -66,6 +68,8 @@ public:
 	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 private:
 	void OnEnter() override;
+	float m_TimeUntilMoving{ 7.5f };
+	bool m_GoInMovingState{};
 };
 
 //

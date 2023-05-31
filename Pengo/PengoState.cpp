@@ -1,5 +1,5 @@
 ﻿#include "PengoState.h"
-
+#include "GameObjectStorage.h"
 #include "ControllerComponent.h"
 #include "Pengo.h"
 #include "ServiceLocator.h"
@@ -7,6 +7,7 @@
 #include "MoveComponent.h"
 #include "DirectionComponent.h"
 #include "InputComponent.h"
+#include "SnowBee.h"
 #include "TriggerComponent.h"
 
 //
@@ -49,6 +50,8 @@ PengoState* AttackingState::HandleInput()
 		}
 	}
 
+	if (m_IsHit) { return new DyingState(m_pActor); }
+
 	return nullptr;
 }
 
@@ -80,6 +83,12 @@ void AttackingState::Update()
 						collidingGameObject->GetComponent<MoveComponent>()->SetCanMove(true);
 						collidingGameObject->GetComponent<DirectionComponent>()->SetDirection(direction->GetDirection());
 
+						//Store the IceBlock in the GameObjectStorage
+						if (const auto gameObjectStorage = m_pActor->GetComponent<GameObjectStorage>())
+						{
+							gameObjectStorage->StoreGameObject(collidingGameObject);
+						}
+
 					}
 				}
 			}
@@ -99,8 +108,9 @@ void AttackingState::OnEnter()
 	ServiceLocator::GetInstance().AudioService.GetService().Play(0);
 }
 
-void AttackingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
+void AttackingState::OnCollision(GameObject* other, bool isTrigger)
 {
+	m_IsHit = IsHit(other, isTrigger);
 }
 
 
@@ -155,7 +165,7 @@ PengoState* MovingState::HandleInput()
 		}
 	}
 
-
+	if (m_IsHit) { return new DyingState(m_pActor); }
 
 	return nullptr;
 }
@@ -165,10 +175,12 @@ void MovingState::Update()
 
 	//If there is is input reset the timer!
 	m_TimeUntilIdle -= TimeM::GetInstance().GetDeltaTimeM();
+
 }
 
-void MovingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
+void MovingState::OnCollision(GameObject* other, bool isTrigger)
 {
+	m_IsHit = IsHit(other, isTrigger);
 }
 
 void MovingState::OnEnter()
@@ -181,16 +193,105 @@ void MovingState::OnEnter()
 }
 
 
+//
+//
+//Dying state
+PengoState* DyingState::HandleInput()
+{
+	return nullptr;
+}
+
+void DyingState::Update()
+{
+	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	{
+		if (spriteRenderer->IsAnimationFinished())
+		{
+			//++m_Animations;
+			//if (m_Animations == 8)
+			//{
+			//	spriteRenderer->Pause();
+			//	std::cout << "Dying animation finished" << std::endl;
+			//}
+		}
+	}
+}
+
+void DyingState::OnCollision(GameObject* other, bool isTrigger)
+{
+	PengoState::OnCollision(other, isTrigger);
+}
+
+void DyingState::OnEnter()
+{
+	//Set Sprite to dying
+	m_pActor->GetComponent<DirectionComponent>()->SetDirection({ 0,0 });
+	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	{
+		spriteRenderer->Play();
+		spriteRenderer->SetOffset({ 0,0 });
+		spriteRenderer->SetFrameTime(0.4f);
+	}
+
+	if (const auto inputComp = m_pActor->GetComponent<InputComponent>())
+	{
+		inputComp->DisableInput();
+	}
+
+	if (const auto controllerComp = m_pActor->GetComponent<ControllerComponent>())
+	{
+		controllerComp->DisableInput();
+	}
+
+	ServiceLocator::GetInstance().AudioService.GetService().Play(2);
 
 
+	//Play dying sound
 
+	//Set CanBeDeleted to true
+
+	//Somehow restart the level
+}
+
+//
+//
 //ALL STATES
 void PengoState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
 {
 
 }
 
+bool PengoState::IsHit(GameObject* other, bool isTrigger)
+{
+	if (isTrigger) { return false; }
 
+	if (dynamic_cast<SnowBee*>(other))
+	{
+		return true;
+	}
+
+	if (const auto triggerComponent = other->GetComponent<TriggerComponent>())
+	{
+		//If it is an IceBlock it collided with
+		if (triggerComponent->GetTag() == "IceBlockTrigger")
+		{
+			if (other == m_pActor->GetComponent<GameObjectStorage>()->GetGameObject())
+			{
+				return false;
+			}
+
+			if (other->GetComponent<SpriteRenderer>()->IsPlaying() || other->GetComponent<MoveComponent>()->CanMove())
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+//
+//
 //IDLE STATE
 PengoState* IdleState::HandleInput()
 {
@@ -231,6 +332,8 @@ PengoState* IdleState::HandleInput()
 		}
 	}
 
+	if (m_IsHit) { return new DyingState(m_pActor); }
+
 	return nullptr;
 }
 
@@ -241,6 +344,7 @@ void IdleState::Update()
 void IdleState::OnCollision(GameObject* other, bool isTrigger)
 {
 	PengoState::OnCollision(other, isTrigger);
+	m_IsHit = IsHit(other, isTrigger);
 }
 
 void IdleState::OnEnter()

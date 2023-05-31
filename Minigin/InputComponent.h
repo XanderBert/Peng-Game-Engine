@@ -36,11 +36,15 @@ public:
 	template<typename T>
 
 	std::vector<SDL_Keycode> GetKeysOfCommand();
+
+	void EnableInput();
+	void DisableInput();
 private:
 	//I will use more memory by storing the commands twice.
 	//But now i dont need to be searching trough all the commands to find wich one is from wich actor
 	std::unordered_map<SDL_Keycode, Command*> m_KeyboardCommands{};
 	null_InputManager* m_pInputManager;
+	bool m_IsEnabled{ true };
 };
 
 template<typename T>

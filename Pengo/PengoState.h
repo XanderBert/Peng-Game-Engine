@@ -12,8 +12,12 @@ public:
 	virtual PengoState* HandleInput() override = 0;
 	virtual void Update() override = 0;
 	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+protected:
+	bool IsHit(GameObject* other, bool isTrigger);
+	bool m_IsHit{};
 private:
 	virtual void OnEnter() override = 0;
+
 };
 
 class IdleState final : public PengoState
@@ -53,4 +57,18 @@ public:
 private:
 	virtual void OnEnter() override;
 	float m_TimeUntilIdle{ 0.5f };
+};
+
+
+class DyingState final : public PengoState
+{
+public:
+	DyingState(GameObject* object) : PengoState{ object } { OnEnter(); }
+	~DyingState() override = default;
+	virtual PengoState* HandleInput() override;
+	virtual void Update() override;
+	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+private:
+	virtual void OnEnter() override;
+	int m_Animations{ };
 };

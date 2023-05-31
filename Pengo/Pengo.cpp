@@ -14,6 +14,7 @@
 #include "InputComponent.h"
 #include "controllerComponent.h"
 #include "Controller.h"
+#include "GameObjectStorage.h"
 #include "TriggerComponent.h"
 
 
@@ -51,6 +52,8 @@ Pengo::Pengo() : GameObject()
 	const auto spriteRenderer{ AddComponent<SpriteRenderer>() };
 	spriteRenderer->SetSpriteSize({ 16,16 });
 
+
+	//Is used for attacking, moving and idle
 	spriteRenderer->AddSpriteFrame({ 0,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 16,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 32,0 }, MovementDirection::Left);
@@ -60,11 +63,17 @@ Pengo::Pengo() : GameObject()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Right);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Right);
 
+	//is Used for dying
+	spriteRenderer->AddSpriteFrame({ 0,32 }, MovementDirection::None);
+	spriteRenderer->AddSpriteFrame({ 16,32 }, MovementDirection::None);
 
 	//Box Collider Component
 	const auto boxCollision{ AddComponent<BoxCollider>() };
-	boxCollision->SetColliderSize({ 16,16 });
+	boxCollision->SetColliderSize({ 13,13 });
+	boxCollision->DebugRender(true);
 
+	//GameObject Storage Component
+	AddComponent<GameObjectStorage>();
 
 	//Audio Component Needs to be made?
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
@@ -96,8 +105,15 @@ void Pengo::LateUpdate()
 void Pengo::OnCollision(GameObject* other, bool isTrigger)
 {
 	if (dynamic_cast<Pengo*>(other)) { return; }
+
 	m_pState->OnCollision(other, isTrigger);
+
+
+
 	if (isTrigger) return;
+
+	//If is hitted by moving ice block or by enemy go into dying state
+
 
 	//if (dynamic_cast<IceBlock*>(other))
 	//{

@@ -63,18 +63,31 @@ void SnowBeeSpawningState::OnEnter()
 SnowBeeState* SnowBeeMovingState::HandleInput()
 {
 	if (const auto baseState = SnowBeeState::HandleInput()) { return baseState; }
+	if (m_GoInAttackState)
+	{
+		return new SnowbeeAttackingState{ m_pActor };
+	}
 	return nullptr;
 }
 
 void SnowBeeMovingState::Update()
 {
+	m_TimeUntilAttack -= TimeM::GetInstance().GetDeltaTimeM();
+	if (m_TimeUntilAttack <= 0)
+	{
+		m_GoInAttackState = true;
+	}
 }
 
 void SnowBeeMovingState::OnCollision(GameObject* other, bool isTrigger)
 {
 	SnowBeeState::OnCollision(other, isTrigger);
-	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
-	ChangeMovement();
+	if(!isTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		ChangeMovement();
+	}
+	
 }
 
 void SnowBeeMovingState::OnEnter()
@@ -105,19 +118,39 @@ void SnowBeeMovingState::OnEnter()
 SnowBeeState* SnowbeeAttackingState::HandleInput()
 {
 	if (const auto baseState = SnowBeeState::HandleInput()) { return baseState; }
+	if (m_GoInMovingState)
+	{
+		return new SnowBeeMovingState{ m_pActor };
+	}
+
 	return nullptr;
 }
 
 void SnowbeeAttackingState::Update()
 {
+	m_TimeUntilMoving -= TimeM::GetInstance().GetDeltaTimeM();
+	if (m_TimeUntilMoving <= 0)
+	{
+		m_GoInMovingState = true;
+	}
 }
 
 void SnowbeeAttackingState::OnCollision(GameObject* other, bool isTrigger)
 {
-
 	SnowBeeState::OnCollision(other, isTrigger);
-	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
-	ChangeMovement();
+
+	if (dynamic_cast<IceBlock*>(other))
+	{
+		other->GetComponent<SpriteRenderer>()->Play();
+		m_pActor->GetComponent<GameObjectStorage>()->AddGameObjectToVector(other);
+	}
+	else if(!isTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		ChangeMovement();
+	}
+
+
 }
 
 void SnowbeeAttackingState::OnEnter()
@@ -125,6 +158,12 @@ void SnowbeeAttackingState::OnEnter()
 	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
 	{
 		moveComponent->SetCanMove(true);
+	}
+
+	if (const auto spriterenderer = m_pActor->GetComponent<SpriteRenderer>())
+	{
+		spriterenderer->SetOffset({ 0,32 });
+		spriterenderer->SetFrameTime(0.2f);
 	}
 }
 
@@ -165,7 +204,6 @@ void SnowBeeDyingState::OnEnter()
 		spriteRenderer->SetOffset({ 0,64 });
 		spriteRenderer->SetFrameTime(0.2f);
 		spriteRenderer->SetAnimationFrame(0);
-
 
 		//Get the IceBlock
 		if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
@@ -215,6 +253,16 @@ void SnowBeeState::OnCollision(GameObject* other, bool /*isTrigger*/)
 		//If it is an IceBlock it collided with
 		if (triggerComponent->GetTag() == "IceBlockTrigger")
 		{
+
+			//If it is one of the same objects that the snowbee attacked do nothing
+			for (const auto iceBlock : m_pActor->GetComponent<GameObjectStorage>()->GetGameObjectsFromVector())
+			{
+				if (iceBlock == other)
+				{
+					return;
+				}
+			}
+
 			//If te iceblock is in its it hitted state
 			if (other->GetComponent<SpriteRenderer>()->IsPlaying())
 			{

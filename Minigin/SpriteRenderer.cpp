@@ -37,7 +37,12 @@ void SpriteRenderer::Update()
 		m_IsNotInit = false;
 		m_AnimationFrame = 0;
 		SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[0]);
-		SetMovementDirection(ConvertMovementDirection(m_pOwner->GetComponent<DirectionComponent>()->GetDirection()));
+
+
+
+
+
+		SetMovementDirection(m_MovementDirection);
 	}
 
 
