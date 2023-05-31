@@ -1,4 +1,6 @@
 ﻿#include "SnowBee.h"
+
+#include "GameObjectStorage.h"
 #include "IceBlock.h"
 #include "MoveComponent.h"
 #include "Pengo.h"
@@ -44,9 +46,10 @@ SnowBee::SnowBee()
 
 	m_pState = new SnowBeeSpawningState(this);
 
-	AddComponent<VelocityComponent>()->SetVelocity(20);
+	AddComponent<VelocityComponent>()->SetVelocity(40);
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
 	AddComponent<MoveComponent>();
+	AddComponent<GameObjectStorage>();
 }
 
 SnowBee::~SnowBee()

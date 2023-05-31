@@ -265,6 +265,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectAltEx.h" />
     <ClInclude Include="GameObjectEx.h" />
+    <ClInclude Include="GameObjectStorage.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="InputComponent.h" />
@@ -314,6 +315,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectAltEx.cpp" />
     <ClCompile Include="GameObjectEx.cpp" />
+    <ClCompile Include="GameObjectStorage.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp">

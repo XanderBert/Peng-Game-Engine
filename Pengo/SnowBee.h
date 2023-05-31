@@ -20,19 +20,9 @@ public:
 	virtual void LateUpdate() override;
 	virtual void OnCollision(GameObject* other, bool isTrigger) override;
 
-	float GetVelocity() const { return m_velocity; }
-
-	//Store Object component
-	GameObject* GetHittedIceBlock() const { return m_pHittedIceBlock; }
-	void SetHittedIceBlock(GameObject* pIceBlock) { m_pHittedIceBlock = pIceBlock; }
-
 private:
 
-	float m_velocity{ 10 };
 	glm::vec2 m_SpriteSize{ 16,16 };
-	GameObject* m_pHittedIceBlock{};
 	PlayerState* m_pState{};
-
-
 	void UpdateState();
 };

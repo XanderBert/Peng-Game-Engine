@@ -91,6 +91,12 @@
     <Filter Include="Resource Files\Components\MoveComponent">
       <UniqueIdentifier>{7e67bc99-5297-4c4d-8f28-194365ce9e15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Components\TriggerComponent">
+      <UniqueIdentifier>{ba0055dd-5ab3-4fc8-aefb-c5c9bb40031e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Components\GameObjectStorageComponent">
+      <UniqueIdentifier>{ea8cdf93-c49f-4a9e-a1da-31e724998f7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
@@ -241,7 +247,10 @@
       <Filter>Resource Files\Components\MoveComponent</Filter>
     </ClInclude>
     <ClInclude Include="TriggerComponent.h">
-      <Filter>Resource Files\Components</Filter>
+      <Filter>Resource Files\Components\TriggerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectStorage.h">
+      <Filter>Resource Files\Components\GameObjectStorageComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -381,7 +390,10 @@
       <Filter>Resource Files\Components\MoveComponent</Filter>
     </ClCompile>
     <ClCompile Include="TriggerComponent.cpp">
-      <Filter>Resource Files\Components</Filter>
+      <Filter>Resource Files\Components\TriggerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectStorage.cpp">
+      <Filter>Resource Files\Components\GameObjectStorageComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

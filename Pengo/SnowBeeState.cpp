@@ -1,5 +1,6 @@
 ﻿#include "SnowBeeState.h"
 #include "DirectionComponent.h"
+#include "GameObjectStorage.h"
 #include "IceBlock.h"
 #include "MoveComponent.h"
 #include "SnowBee.h"
@@ -155,27 +156,40 @@ void SnowBeeDyingState::OnCollision(GameObject* other, bool isTrigger)
 
 void SnowBeeDyingState::OnEnter()
 {
+	//Set Movement Direction the same as the Incoming Movement Direction of the IceBlock
+	//And Change the sprites to the dying sprites
+
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		//Set Movement Direction the same as the Incoming Movement Direction of the Iceblock
-		const auto iceBlockDirection = dynamic_cast<SnowBee*>(m_pActor)->GetHittedIceBlock()->GetComponent<DirectionComponent>()->GetDirection();
-
+		//Change the sprites
 		spriteRenderer->SetOffset({ 0,64 });
 		spriteRenderer->SetFrameTime(0.2f);
 		spriteRenderer->SetAnimationFrame(0);
 
-		if (const auto direction = m_pActor->GetComponent<DirectionComponent>())
-		{
-			direction->SetDirection(-iceBlockDirection);
 
-			if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+		//Get the IceBlock
+		if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
+		{
+			const auto iceBlock = storage->GetGameObject();
+
+			//Get the direction of the IceBlock
+			if (const auto direction = iceBlock->GetComponent<DirectionComponent>())
 			{
-				moveComponent->SetCanMove(false);
+				//Get the SnowBee direction
+				if (const auto SnowBeeirection = m_pActor->GetComponent<DirectionComponent>())
+				{
+					//Set the SnowBee direction to the opposite of the IceBlock direction
+					SnowBeeirection->SetDirection(-direction->GetDirection());
+
+					//Stop the Movment Of the SnowBee
+					if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
+					{
+						moveComponent->SetCanMove(false);
+					}
+				}
 			}
 		}
 	}
-
-
 }
 
 
@@ -196,7 +210,6 @@ SnowBeeState* SnowBeeState::HandleInput()
 
 void SnowBeeState::OnCollision(GameObject* other, bool /*isTrigger*/)
 {
-
 	if (const auto triggerComponent = other->GetComponent<TriggerComponent>())
 	{
 		//If it is an IceBlock it collided with
@@ -206,7 +219,10 @@ void SnowBeeState::OnCollision(GameObject* other, bool /*isTrigger*/)
 			if (other->GetComponent<SpriteRenderer>()->IsPlaying())
 			{
 				m_IsHit = true;
-				dynamic_cast<SnowBee*>(m_pActor)->SetHittedIceBlock(other);
+
+				//Store the Ice Block because we will need its fire direction later
+				if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
+					storage->StoreGameObject(other);
 			}
 		}
 
