@@ -28,5 +28,4 @@ void GameObjectStorage::Render()
 void GameObjectStorage::StoreGameObject(GameObject* pGameObject)
 {
 	m_pGameObject = pGameObject;
-	//m_pGameObjects.push_back(pGameObject);
 }

@@ -123,6 +123,17 @@ MovementDirection SpriteRenderer::ConvertMovementDirection(const glm::vec2& dire
 	}
 }
 
+void SpriteRenderer::SetAnimationFrame(int animationFrame)
+{
+	if (m_MovementDirectionMap.find(m_MovementDirection)->second.size() < static_cast<unsigned int>(animationFrame))
+	{
+		throw std::exception("Animation frame out of range");
+	}
+	m_AnimationFrame = animationFrame;
+	SetSourceRect(m_MovementDirectionMap.find(m_MovementDirection)->second[m_AnimationFrame]);
+
+}
+
 void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
 {
 	//const auto oldDirection = m_pOwner->GetComponent<DirectionComponent>()->GetPreviousDirection();

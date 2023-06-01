@@ -127,10 +127,19 @@ void GameObject::MarkForDeletion()
 
 std::vector<GameObject*> GameObject::GetCollidingObjects() const
 {
-	if(const auto boxCollider = GetComponent<BoxCollider>())
-	return boxCollider->GetCollidingObjects();
+	auto vector = std::vector<GameObject*>{};
 
-	return std::vector<GameObject*>{}; // Empty vector
+	if (const auto boxCollider = GetComponent<BoxCollider>())
+	{
+		for (const auto box : boxCollider->GetCollidingBoxes())
+		{
+			vector.emplace_back(box->GetGameObject());
+		}
+	}
+
+
+
+	return vector; // Empty vector
 }
 
 void GameObject::AddToChildVector(GameObject* pChild)
@@ -157,11 +166,11 @@ void GameObject::RemoveComponents()
 			if (const auto canBeRemoved = component->CanBeDeleted())
 			{
 				//Handles Collision remove
-				if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
-				{
-					// Unregister the collider from the collision manager
-					ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(collider);
-				}
+				//if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
+				//{
+				//	// Unregister the collider from the collision manager
+				//	ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(collider);
+				//}
 
 				return canBeRemoved;
 

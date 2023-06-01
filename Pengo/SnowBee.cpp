@@ -40,7 +40,7 @@ SnowBee::SnowBee()
 
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
-	boxCollision->SetColliderSize({ 16,16 });
+	boxCollision->SetColliderSize(m_SpriteSize);
 
 	GetComponent<Transform>()->SetWorldPosition({ 250,250 });
 
@@ -68,9 +68,9 @@ void SnowBee::LateUpdate()
 	GameObject::LateUpdate();
 }
 
-void SnowBee::OnCollision(GameObject* other, bool isTrigger)
+void SnowBee::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	m_pState->OnCollision(other, isTrigger);
+	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 	if (isTrigger)
 	{
 		return;

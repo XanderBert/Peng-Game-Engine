@@ -1,13 +1,14 @@
 <game>
   <objects>
-  <!--x= 58 - 540-->
-  <!--y= 18 - 340-->
+  <!--x= 58 -->
+  <!--y= 58 -->
 
 
     
 
-    <object type="iceBlock" x="60" y="25" />
-    <object type="iceBlock" x="60" y="45" />
+    <object type="iceBlock" x="58" y="58" />
+    <object type="iceBlock" x="58" y="74" />
+    
     <object type="iceBlock" x="210" y="220" />
     <object type="iceBlock" x="230" y="220" />
     <object type="iceBlock" x="230" y="240" />

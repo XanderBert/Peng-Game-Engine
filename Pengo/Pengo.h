@@ -17,7 +17,7 @@ public:
 	//Called each frame
 	virtual void Update() override;
 	virtual void LateUpdate() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 	PlayerState* GetState() const { return m_pState; }
 

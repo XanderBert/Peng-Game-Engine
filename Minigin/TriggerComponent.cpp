@@ -12,8 +12,6 @@ TriggerComponent::TriggerComponent(GameObject* owner)
 
 TriggerComponent::~TriggerComponent()
 {
-	ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(m_pBoxCollider);
-	//This component is not managed by the GameObject itself, the "parent" component is, so we need to delete it here
 	delete m_pBoxCollider;
 }
 
@@ -77,9 +75,15 @@ SDL_Rect TriggerComponent::GetTriggerRect() const
 
 std::vector<GameObject*> TriggerComponent::GetCollidingObjects() const
 {
-	return m_pBoxCollider->GetCollidingObjects();
-}
+	std::vector<GameObject*> vector{};
+	for (const auto box : m_pBoxCollider->GetCollidingBoxes())
+	{
+		vector.emplace_back(box->GetGameObject());
 
+	}
+
+	return vector;
+}
 void TriggerComponent::DisableTrigger()
 {
 	m_IsTriggerActive = false;

@@ -28,7 +28,7 @@ Pengo::Pengo() : GameObject()
 	//Right now its hacked to work by dividing the velocity by 2.
 	//This needs to be fixed (in the future).
 
-
+	SetTag("Pengo");
 
 	//Direction Component
 	const auto directionComponent = AddComponent<DirectionComponent>();
@@ -101,14 +101,14 @@ void Pengo::LateUpdate()
 	GameObject::LateUpdate();
 }
 
-void Pengo::OnCollision(GameObject* other, bool isTrigger)
+void Pengo::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	if (dynamic_cast<Pengo*>(other)) { return; }
 
-	m_pState->OnCollision(other, isTrigger);
+	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 
 
-
+	if (isSenderTrigger) return;
 	if (isTrigger) return;
 
 	//If is hitted by moving ice block or by enemy go into dying state

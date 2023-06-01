@@ -257,6 +257,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="ControllerComponent.h" />
+    <ClInclude Include="CountdownComponent.h" />
     <ClInclude Include="DirectionComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Font.h" />
@@ -308,6 +309,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="ControllerComponent.cpp" />
+    <ClCompile Include="CountdownComponent.cpp" />
     <ClCompile Include="DirectionComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontRenderer.cpp" />

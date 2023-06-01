@@ -9,7 +9,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override = 0;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 protected:
 	void ChangeMovement();
 
@@ -33,7 +33,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
 };
@@ -48,7 +48,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
 	float m_TimeUntilAttack{ 5.5f };
@@ -66,7 +66,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
 	float m_TimeUntilMoving{ 7.5f };
@@ -83,7 +83,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
 };
@@ -98,7 +98,7 @@ public:
 
 	virtual SnowBeeState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
 	float m_ConcussedTime{ 5.f };

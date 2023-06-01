@@ -67,7 +67,7 @@ public:
 	{
 		return GetCurrentSpriteIndexForCurrentDirection() == GetLastSpriteIndexForCurrentDirection();
 	}
-	void SetAnimationFrame(int animationFrame) { m_AnimationFrame = animationFrame; }
+	void SetAnimationFrame(int animationFrame);
 private:
 	glm::vec2 m_SpriteSize{};
 

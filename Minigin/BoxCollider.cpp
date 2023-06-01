@@ -73,26 +73,30 @@ void BoxCollider::ClearCollidingObjects()
 	m_CollidingObjects.clear();
 }
 
-void BoxCollider::SetCollidingObjects(const std::vector<GameObject*>& pCollidingObjects)
+void BoxCollider::SetCollidingObjects(const std::vector<BoxCollider*>& pCollidingObjects)
 {
 	std::unique_lock lock(m_CollidingObjectsMutex);
 	m_CollidingObjects = pCollidingObjects;
 }
 
-void BoxCollider::AddCollidingObject(GameObject* collider)
+void BoxCollider::AddCollidingObject(BoxCollider* collider)
 {
 	std::unique_lock lock(m_CollidingObjectsMutex);
 	m_CollidingObjects.emplace_back(collider);
 }
 
-void BoxCollider::RemoveCollidingObject(GameObject* collider)
+void BoxCollider::RemoveCollidingObject(BoxCollider* collider)
 {
-	std::unique_lock lock(m_CollidingObjectsMutex);
+
+	//m_CollidingObjectsMutex.try_lock();
+
+	//m_CollidingObjectsMutex.lock();
 	m_CollidingObjects.erase(std::remove(m_CollidingObjects.begin(), m_CollidingObjects.end(), collider), m_CollidingObjects.end());
+	//m_CollidingObjectsMutex.unlock();
 }
 
 
-std::vector<GameObject*> BoxCollider::GetCollidingObjects() const
+std::vector<BoxCollider*> BoxCollider::GetCollidingBoxes() const
 {
 	//std::unique_lock lock(m_CollidingObjectsMutex);
 	return m_CollidingObjects;

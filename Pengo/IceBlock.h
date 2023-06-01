@@ -16,7 +16,7 @@ public:
 
 
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 	glm::vec2 GetSpriteSize() const { return m_SpriteSize; }
 

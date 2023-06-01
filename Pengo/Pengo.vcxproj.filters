@@ -37,9 +37,6 @@
     <Filter Include="Source Files\Commands">
       <UniqueIdentifier>{b1e5d76a-af71-4c76-b513-7fc5f820c0ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Walls\New Wallmang">
-      <UniqueIdentifier>{97e48775-76a0-4aaf-87f5-ba16f9cea815}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PengoMain.cpp">
@@ -47,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="Pengo.cpp">
       <Filter>Source Files\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Source Files\Walls</Filter>
     </ClCompile>
     <ClCompile Include="PengoLevelLoader.cpp">
       <Filter>Source Files\LevelHandling</Filter>
@@ -72,19 +66,13 @@
     <ClCompile Include="SnowBeeState.cpp">
       <Filter>Source Files\SnowBee</Filter>
     </ClCompile>
-    <ClCompile Include="WallRow.cpp">
-      <Filter>Source Files\Walls</Filter>
-    </ClCompile>
     <ClCompile Include="WallManager.cpp">
-      <Filter>Source Files\Walls\New Wallmang</Filter>
+      <Filter>Source Files\Walls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
       <Filter>Source Files\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Source Files\Walls</Filter>
     </ClInclude>
     <ClInclude Include="PengoLevelLoader.h">
       <Filter>Source Files\LevelHandling</Filter>
@@ -110,14 +98,11 @@
     <ClInclude Include="SnowBeeState.h">
       <Filter>Source Files\SnowBee</Filter>
     </ClInclude>
-    <ClInclude Include="WallRow.h">
-      <Filter>Source Files\Walls</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerCommands.h">
       <Filter>Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="WallManager.h">
-      <Filter>Source Files\Walls\New Wallmang</Filter>
+      <Filter>Source Files\Walls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

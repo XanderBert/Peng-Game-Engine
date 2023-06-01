@@ -3,7 +3,6 @@
 #include "PengoLevel.h"
 #include "IceBlock.h"
 #include "Pengo.h"
-#include "Wall.h"
 
 class PengoLevelLoader final
 {

@@ -11,10 +11,10 @@ public:
 
 	virtual PengoState* HandleInput() override = 0;
 	virtual void Update() override = 0;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 protected:
 	bool IsHit(GameObject* other, bool isTrigger);
-	bool m_IsHit{};
+	bool m_IsHit{ false };
 private:
 	virtual void OnEnter() override = 0;
 
@@ -28,7 +28,7 @@ public:
 
 	virtual PengoState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	virtual void OnEnter() override;
 };
@@ -40,7 +40,7 @@ public:
 	~AttackingState() override = default;
 	virtual PengoState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	virtual void OnEnter() override;
 	float m_TimeUntilIdle{ 0.3f };
@@ -53,7 +53,7 @@ public:
 	~MovingState() override = default;
 	virtual PengoState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	virtual void OnEnter() override;
 	float m_TimeUntilIdle{ 0.5f };
@@ -67,7 +67,7 @@ public:
 	~DyingState() override = default;
 	virtual PengoState* HandleInput() override;
 	virtual void Update() override;
-	virtual void OnCollision(GameObject* other, bool isTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	virtual void OnEnter() override;
 	int m_Animations{ };

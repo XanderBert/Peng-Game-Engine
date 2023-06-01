@@ -10,6 +10,7 @@
 #include "SnowBee.h"
 #include "TriggerComponent.h"
 #include "SnowBeeState.h"
+#include "CountdownComponent.h"
 
 //
 //Attacking State
@@ -109,13 +110,14 @@ void AttackingState::OnEnter()
 	ServiceLocator::GetInstance().AudioService.GetService().Play(0);
 }
 
-void AttackingState::OnCollision(GameObject* other, bool isTrigger)
+void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	m_IsHit = IsHit(other, isTrigger);
 
-	if (other->GetTag() == "Wall")
+	if (other->GetTag() == "Wall" && isSenderTrigger)
 	{
 		other->GetComponent<SpriteRenderer>()->Play();
+		other->GetComponent<CountdownComponent>()->Play();
 	}
 }
 
@@ -184,7 +186,7 @@ void MovingState::Update()
 
 }
 
-void MovingState::OnCollision(GameObject* other, bool isTrigger)
+void MovingState::OnCollision(GameObject* other, bool isTrigger, bool /*isSenderTrigger*/)
 {
 	m_IsHit = IsHit(other, isTrigger);
 }
@@ -223,9 +225,9 @@ void DyingState::Update()
 	}
 }
 
-void DyingState::OnCollision(GameObject* other, bool isTrigger)
+void DyingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	PengoState::OnCollision(other, isTrigger);
+	PengoState::OnCollision(other, isTrigger, isSenderTrigger);
 }
 
 void DyingState::OnEnter()
@@ -252,17 +254,13 @@ void DyingState::OnEnter()
 	ServiceLocator::GetInstance().AudioService.GetService().Play(2);
 
 
-	//Play dying sound
-
-	//Set CanBeDeleted to true
-
 	//Somehow restart the level
 }
 
 //
 //
 //ALL STATES
-void PengoState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
+void PengoState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/)
 {
 
 }
@@ -282,24 +280,23 @@ bool PengoState::IsHit(GameObject* other, bool isTrigger)
 		{
 			return false;
 		}
+
 		return true;
 	}
 
-	if (const auto triggerComponent = other->GetComponent<TriggerComponent>())
+	if (other->GetTag() == "IceBlock")
 	{
-		//If it is an IceBlock it collided with
-		if (triggerComponent->GetTag() == "IceBlockTrigger")
-		{
-			if (other == m_pActor->GetComponent<GameObjectStorage>()->GetGameObject())
-			{
-				return false;
-			}
 
-			if (other->GetComponent<SpriteRenderer>()->IsPlaying() || other->GetComponent<MoveComponent>()->CanMove())
-			{
-				return true;
-			}
+		if (other == m_pActor->GetComponent<GameObjectStorage>()->GetGameObject())
+		{
+			return false;
 		}
+
+		if (other->GetComponent<SpriteRenderer>()->IsPlaying() || other->GetComponent<MoveComponent>()->CanMove())
+		{
+			return true;
+		}
+
 	}
 
 	return false;
@@ -356,9 +353,9 @@ void IdleState::Update()
 {
 }
 
-void IdleState::OnCollision(GameObject* other, bool isTrigger)
+void IdleState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	PengoState::OnCollision(other, isTrigger);
+	PengoState::OnCollision(other, isTrigger, isSenderTrigger);
 	m_IsHit = IsHit(other, isTrigger);
 }
 

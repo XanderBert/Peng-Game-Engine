@@ -97,6 +97,9 @@
     <Filter Include="Resource Files\Components\GameObjectStorageComponent">
       <UniqueIdentifier>{ea8cdf93-c49f-4a9e-a1da-31e724998f7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Components\CountDownComponent">
+      <UniqueIdentifier>{e5a64033-50f2-48be-b73f-bb106bf195e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
@@ -252,6 +255,9 @@
     <ClInclude Include="GameObjectStorage.h">
       <Filter>Resource Files\Components\GameObjectStorageComponent</Filter>
     </ClInclude>
+    <ClInclude Include="CountdownComponent.h">
+      <Filter>Resource Files\Components\CountDownComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -394,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="GameObjectStorage.cpp">
       <Filter>Resource Files\Components\GameObjectStorageComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="CountdownComponent.cpp">
+      <Filter>Resource Files\Components\CountDownComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

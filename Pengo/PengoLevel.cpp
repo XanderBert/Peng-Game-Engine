@@ -14,15 +14,11 @@ PengoLevel::PengoLevel()
 	//
 
 	m_pWallManager = new WallManager();
-	for (const auto wall : m_pWallManager->GetHorizontalWalls())
+	for (const auto wall : m_pWallManager->GetWalls())
 	{
 		AddGameObject(wall);
 	}
-
-	for (const auto wall : m_pWallManager->GetVerticalWalls())
-	{
-		AddGameObject(wall);
-	}
+	AddGameObject(m_pWallManager);
 
 #ifndef _DEBUG
 	audioService.Play(1);
@@ -33,7 +29,7 @@ PengoLevel::PengoLevel()
 
 PengoLevel::~PengoLevel()
 {
-	delete m_pWallManager;
+
 }
 
 void PengoLevel::AddGameObject(GameObject* pGameObject)

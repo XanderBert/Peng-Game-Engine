@@ -10,6 +10,8 @@ IceBlock::IceBlock()
 	: GameObject()
 
 {
+	SetTag("IceBlock");
+
 	//Texture Component
 	const auto texture = AddComponent<TextureRenderer>();
 	texture->SetTexture("Ice_Block.png");
@@ -46,8 +48,8 @@ IceBlock::IceBlock()
 	//Trigger Component
 	const auto triggerComponent = AddComponent<TriggerComponent>();
 	triggerComponent->DebugRender(true);
-	triggerComponent->SetColliderSize({ m_SpriteSize.x + 3, m_SpriteSize.y + 3 });
-	triggerComponent->SetColliderOffset({ -1,-1 });
+	triggerComponent->SetColliderSize({ m_SpriteSize.x + 4, m_SpriteSize.y + 4 });
+	triggerComponent->SetColliderOffset({ -2,-2 });
 	triggerComponent->SetTag("IceBlockTrigger");
 }
 
@@ -59,9 +61,11 @@ void IceBlock::Update()
 	UpdateSpriteLogic();
 }
 
-void IceBlock::OnCollision(GameObject* /*other*/, bool /*isTrigger*/)
+void IceBlock::OnCollision(GameObject* /*other*/, bool isTrigger, bool isSenderTrigger)
 {
 	//Stop the block when it collides again an play the animation.
+	if (isTrigger) return;
+	if (isSenderTrigger) return;
 	if (GetComponent<MoveComponent>()->CanMove())
 	{
 		GetComponent<SpriteRenderer>()->Play();

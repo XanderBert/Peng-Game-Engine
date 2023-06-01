@@ -20,7 +20,6 @@
 #include "IceBlock.h"
 #include "InputComponent.h"
 #include "Pengo.h"
-#include "WallRow.h"
 #include "ServiceLocator.h"
 #include "SnowBee.h"
 #include "PengoLevel.h"
@@ -32,6 +31,13 @@ glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
 
 void load()
 {
+	auto& scene = SceneManager::GetInstance().CreateScene("Startup");
+
+
+
+
+
+
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	//FPS Counter

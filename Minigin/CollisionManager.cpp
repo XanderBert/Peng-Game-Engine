@@ -52,73 +52,73 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::Update()
 {
-	
-		std::unique_lock lock(m_CollisionMutex);
 
-		//Implement double buffering to synchronise colliding objects
-		std::swap(m_CurrentCollidingObjects, m_NextCollidingObjects);
+	std::unique_lock lock(m_CollisionMutex);
 
-		// Clear the next buffer
-		m_NextCollidingObjects.clear();
+	//Implement double buffering to synchronise colliding objects
+	std::swap(m_CurrentCollidingObjects, m_NextCollidingObjects);
 
-		// Remove any BoxColliders that have been flagged as removed
-		m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
-			{
-				return collider->CanBeDeleted();
-			}), m_BoxColliders.end());
+	// Clear the next buffer
+	m_NextCollidingObjects.clear();
+
+	// Remove any BoxColliders that have been flagged as removed
+	m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
+		{
+			return collider->CanBeDeleted();
+		}), m_BoxColliders.end());
 
 
-	
+
 
 	// Call OnCollision for each game object involved in a collision
-	for (auto* collider : m_CurrentCollidingObjects)
+	for (auto* colldinBoxestA : m_CurrentCollidingObjects)
 	{
-		const auto& collidingObjects = collider->GetCollidingObjects();
+		const auto& collidingBoxesWithA = colldinBoxestA->GetCollidingBoxes();
 
-		for (auto* collidingCollider : collidingObjects)
+		for (auto* collidingGameObjectB : collidingBoxesWithA)
 		{
 			//First i need to check each game object if there is one that is marked for deletion.
 			//If so i need to remove it from the list of colliders inside the BoxCollider.h file.
 			//Also The OnCollision should not be triggered if the object it collides with is marked for deletion.
-			if (collidingCollider->CanBeDeleted())
+			if (collidingGameObjectB->CanBeDeleted())
 			{
-				collider->RemoveCollidingObject(collidingCollider);
+				UnRegisterBoxCollider(collidingGameObjectB);
 				continue;
 			}
 
 			//If it self colliding skip it, Could happen if you have multiple colliders and or triggers on one game object
-			if (collidingCollider == collider->GetGameObject())
+			if (collidingGameObjectB->GetGameObject() == colldinBoxestA->GetGameObject())
 			{
 				continue;
 			}
 
-			collider->GetGameObject()->OnCollision(collidingCollider, collider->GetIsTrigger());
+			colldinBoxestA->GetGameObject()->OnCollision(collidingGameObjectB->GetGameObject(), collidingGameObjectB->GetIsTrigger(), colldinBoxestA->GetIsTrigger());
 		}
 
-		collider->ClearCollidingObjects();
+		colldinBoxestA->ClearCollidingObjects();
 	}
 
 
-		const size_t amountofThreads = m_ThreadPool.size();
-		const size_t amountofColliders = m_BoxColliders.size();
-		const size_t collidersPerThread = amountofColliders / amountofThreads;
+	const size_t amountofThreads = m_ThreadPool.size();
+	const size_t amountofColliders = m_BoxColliders.size();
+	const size_t collidersPerThread = amountofColliders / amountofThreads;
 
-		// Divide the work among the threads
-		for (size_t i = 0; i < amountofThreads; ++i)
-		{
-			const size_t startIndex = i * collidersPerThread;
-			const size_t endIndex = (i == amountofThreads - 1) ? amountofColliders : startIndex + collidersPerThread;
+	// Divide the work among the threads
+	for (size_t i = 0; i < amountofThreads; ++i)
+	{
+		const size_t startIndex = i * collidersPerThread;
+		const size_t endIndex = (i == amountofThreads - 1) ? amountofColliders : startIndex + collidersPerThread;
 
-			// Create the task function pointer
-			std::function<void()> task = [this, startIndex, endIndex]() { CheckCollisionRange(startIndex, endIndex); };
+		// Create the task function pointer
+		std::function<void()> task = [this, startIndex, endIndex]() { CheckCollisionRange(startIndex, endIndex); };
 
-			// Add the task to the queue
-			m_TaskQueue.push(task);
+		// Add the task to the queue
+		m_TaskQueue.push(task);
 
-			// Notify a thread that there is work to do
-			m_ConditionVariable.notify_one();
-		}
-	
+		// Notify a thread that there is work to do
+		m_ConditionVariable.notify_one();
+	}
+
 
 }
 
@@ -130,7 +130,6 @@ void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)
 
 void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
 {
-	std::unique_lock lock(m_CollisionMutex);
 	const auto it = std::ranges::find(m_BoxColliders, boxCollider);
 
 	if (it != m_BoxColliders.end())
@@ -205,18 +204,12 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 			if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
 			{
 				// Add the objects as colliding objects
-				colliderA->AddCollidingObject(colliderB->GetGameObject());
-				colliderB->AddCollidingObject(colliderA->GetGameObject());
+				colliderA->AddCollidingObject(colliderB);
+				colliderB->AddCollidingObject(colliderA);
 
 				// Add the colliders to the next colliding objects vector
 				m_NextCollidingObjects.emplace_back(colliderA);
 				m_NextCollidingObjects.emplace_back(colliderB);
-			}
-			else
-			{
-				// Remove the objects as colliding objects
-				colliderA->RemoveCollidingObject(colliderB->GetGameObject());
-				colliderB->RemoveCollidingObject(colliderA->GetGameObject());
 			}
 		}
 	}

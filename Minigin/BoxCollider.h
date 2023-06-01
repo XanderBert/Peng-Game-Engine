@@ -40,14 +40,16 @@ public:
 
 	void SetIsTrigger(bool isTrigger);
 	bool GetIsTrigger() const;
+
 	void ClearCollidingObjects();
-	void SetCollidingObjects(const std::vector<GameObject*>& pCollidingObjects);
-	void AddCollidingObject(GameObject* collider);
-	void RemoveCollidingObject(GameObject* collider);
-	std::vector<GameObject*> GetCollidingObjects() const;
+	void SetCollidingObjects(const std::vector<BoxCollider*>& pCollidingBoxes);
+	void AddCollidingObject(BoxCollider* collider);
+	void RemoveCollidingObject(BoxCollider* collider);
+
+	std::vector<BoxCollider*> GetCollidingBoxes() const;
 private:
 	std::mutex m_CollidingObjectsMutex{};
-	std::vector<GameObject*> m_CollidingObjects;
+	std::vector<BoxCollider*> m_CollidingObjects;
 	SDL_Rect m_Collider{ 0,0,5,5 };
 	bool m_DebugRender{};
 	bool m_IsTrigger{ false };
