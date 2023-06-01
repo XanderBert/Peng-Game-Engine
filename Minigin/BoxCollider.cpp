@@ -13,6 +13,8 @@ BoxCollider::~BoxCollider()
 {
 	//Is this not a viable solution? TODO Check this out!
 	//ServiceLocator::GetInstance().CollisionManager.GetService().RemoveBoxCollider(this);
+
+	//TODO This can crash because another thread is still accesing it here? the whole class should be locked or sth???
 }
 
 void BoxCollider::Update() {}
@@ -46,19 +48,26 @@ void BoxCollider::DebugRender(bool isDebugRendering)
 	m_DebugRender = isDebugRendering;
 }
 
-SDL_Rect BoxCollider::GetCollider() const
+SDL_Rect BoxCollider::GetCollider()
 {
+
+	m_CollidingObjectsMutex.lock();
+
 	if (m_pOwner->CanBeDeleted())
 	{
 		return SDL_Rect{ 0,0,0,0 };
 	}
 
 	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+
+	m_CollidingObjectsMutex.unlock();
 	return SDL_Rect{ m_Collider.x + static_cast<int>(position.x),m_Collider.y + static_cast<int>(position.y), m_Collider.w, m_Collider.h };
 }
 
 void BoxCollider::SetIsTrigger(bool isTrigger)
 {
+
+
 	m_IsTrigger = isTrigger;
 }
 

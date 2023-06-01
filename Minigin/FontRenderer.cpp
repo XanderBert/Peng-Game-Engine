@@ -53,18 +53,12 @@ void FontRenderer::LateUpdate()
 
 void FontRenderer::Render()
 {
-
-	//In your Render you always get the
-	//transformcomponent every frame, is that necessary ?
-	//Can it change somehow in between frames ?
-	
-
 	if (m_textTexture)
 	{
 		if (const auto transformComponent{ m_pOwner->GetComponent<Transform>() })
 		{
 			const auto pos = transformComponent->GetWorldPosition();
-			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x, pos.y);
+			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x + m_Offset.x, pos.y + m_Offset.y);
 		}
 	}
 }
@@ -88,4 +82,14 @@ void FontRenderer::GetColor()
 	{
 		m_color = component->GetColor();
 	}
+}
+
+void FontRenderer::SetOffset(const glm::vec2& offset)
+{
+	m_Offset = offset;
+}
+
+glm::vec2 FontRenderer::GetOffset() const
+{
+	return m_Offset;
 }

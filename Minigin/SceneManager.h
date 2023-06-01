@@ -10,17 +10,22 @@ class GameActor;
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
-	virtual Scene& CreateScene(const std::string& name);
-	virtual void Update();
-	virtual void FixedUpdate(float fixedTimeMStep);
-	virtual void LateUpdate();
-	virtual void Render();
-	virtual Scene* GetActiveScene() const { return m_scenes[m_scenes.size() - 1].get(); }
+	Scene& CreateScene(const std::string& name);
+
+	void Update();
+	void FixedUpdate(float fixedTimeMStep);
+	void LateUpdate();
+	void Render();
+
+	Scene* GetActiveScene() const;
+	void SetActiveScene(Scene* activeScene);
+	Scene* GetSceneByName(const std::string& name) const;
 
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;
+
 	std::vector<std::shared_ptr<Scene>> m_scenes;
-	Scene* GetSceneByName(const std::string& name) const;
+	Scene* m_pActiveScene{};
 };
 

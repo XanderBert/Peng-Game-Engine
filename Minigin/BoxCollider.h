@@ -35,7 +35,7 @@ public:
 
 	void DebugRender(bool isDebugRendering);
 
-	SDL_Rect GetCollider() const;
+	SDL_Rect GetCollider();
 
 
 	void SetIsTrigger(bool isTrigger);

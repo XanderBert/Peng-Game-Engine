@@ -24,14 +24,14 @@
 #include "SnowBee.h"
 #include "PengoLevel.h"
 #include "PengoLevelLoader.h"
+#include "StartScreen.h"
 
 //https://archive.org/details/arcade_pengo
 
-glm::vec<2, glm::uint> g_WindowSize{ 600, 400 };
+glm::vec<2, glm::uint> g_WindowSize{ 324, 400 };
 
 void load()
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Startup");
 
 
 
@@ -40,14 +40,14 @@ void load()
 
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	//FPS Counter
-	auto go = new GameObject();
-	const auto fpsCounter{ go->AddComponent<FPSCounter>() };
-	const auto transComponentFPS{ go->GetComponent<Transform>() };
-	transComponentFPS->SetLocalPosition({ 5, 5 });
-	const auto fontRendererFPS = go->AddComponent<FontRenderer>();
-	fontRendererFPS->SetFont("Lingua.otf", 20);
-	scene.Add(go);
+	////FPS Counter
+	//auto go = new GameObject();
+	//const auto fpsCounter{ go->AddComponent<FPSCounter>() };
+	//const auto transComponentFPS{ go->GetComponent<Transform>() };
+	//transComponentFPS->SetLocalPosition({ 5, 5 });
+	//const auto fontRendererFPS = go->AddComponent<FontRenderer>();
+	//fontRendererFPS->SetFont("Lingua.otf", 20);
+	//scene.Add(go);
 
 
 
@@ -68,7 +68,10 @@ void load()
 	object->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
 	scene.Add(object);
 
-	//Player2
+	auto& Startscene = SceneManager::GetInstance().CreateScene("Startup");
+	StartScreen* start = new StartScreen();
+	Startscene.Add(start);
+
 }
 
 int main(int, char* [])

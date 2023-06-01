@@ -210,6 +210,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="SnowBee.cpp" />
     <ClCompile Include="SnowBeeState.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +224,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="SnowBee.h" />
     <ClInclude Include="SnowBeeState.h" />
+    <ClInclude Include="StartScreen.h" />
     <ClInclude Include="WallManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

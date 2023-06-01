@@ -22,6 +22,9 @@ public:
 
 	virtual bool GetButtonPressed(SDL_Keycode) const = 0;
 	virtual bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const = 0;
+
+	virtual bool IsLeftMouseButtonPressed() const = 0;
+
 	virtual Controller* GetController(int controllerId) const = 0;
 	virtual Controller* AddController(int controllerIndex) = 0;
 };
@@ -38,14 +41,17 @@ public:
 	InputManager& operator=(InputManager&& other)noexcept = delete;
 
 	bool ProcessInput() override;
+	std::vector<Controller*> GetControllers() override;
+
 	bool GetButtonPressed(SDL_Keycode key) const override;
+	bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const override;
+
+	bool IsLeftMouseButtonPressed() const override;
 
 	Controller* GetController(int controllerId) const override { return m_pControllers[controllerId].get(); }
 	Controller* AddController(int controllerIndex) override;
 
-	std::vector<Controller*> GetControllers() override;
 
-	bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const override;
 
 private:
 	std::vector<std::unique_ptr<Controller>> m_pControllers{};

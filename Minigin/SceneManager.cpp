@@ -5,37 +5,36 @@
 
 void SceneManager::Update()
 {
-	for (auto& scene : m_scenes)
-	{
-		scene->Update();
-	}
+	GetActiveScene()->Update();
 
 	ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 }
 
 void SceneManager::FixedUpdate(float fixedTimeMStep)
 {
-	for (auto& scene : m_scenes)
-	{
-		scene->FixedUpdate(fixedTimeMStep);
-	}
+	GetActiveScene()->FixedUpdate(fixedTimeMStep);
 }
 
 void SceneManager::LateUpdate()
 {
-	for (const auto& scene : m_scenes)
-	{
-		scene->LateUpdate();
-
-	}
+	GetActiveScene()->LateUpdate();
 }
 
 void SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
-	{
-		scene->Render();
-	}
+	GetActiveScene()->Render();
+}
+
+Scene* SceneManager::GetActiveScene() const
+{
+	if (m_pActiveScene) return m_pActiveScene;
+
+	return m_scenes[m_scenes.size() - 1].get();
+}
+
+void SceneManager::SetActiveScene(Scene* activeScene)
+{
+	m_pActiveScene = activeScene;
 }
 
 Scene& SceneManager::CreateScene(const std::string& name)
@@ -55,6 +54,5 @@ Scene* SceneManager::GetSceneByName(const std::string& name) const
 		}
 	}
 
-	//Todo: Throw custom error here
 	return nullptr;
 }

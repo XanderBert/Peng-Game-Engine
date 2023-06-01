@@ -32,8 +32,11 @@ public:
 	virtual void Render() override;
 
 	void SetText(const std::string& text);
-
 	void SetFont(const std::string& fontPath, int fontSize);
+
+	void SetOffset(const glm::vec2& offset);
+	glm::vec2 GetOffset() const;
+
 private:
 	void GetColor();
 	SDL_Color m_color{};
@@ -41,4 +44,5 @@ private:
 	std::shared_ptr<Font> m_font;
 	bool m_needsUpdate{ false };
 	std::shared_ptr<Texture2D> m_textTexture;
+	glm::vec2 m_Offset{};
 };

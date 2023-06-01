@@ -49,6 +49,13 @@ bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButt
 	return false;
 }
 
+bool InputManager::IsLeftMouseButtonPressed() const
+{
+	int mouseX, mouseY;
+	const Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+	return (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+}
+
 
 void InputManager::UpdateControllersInput() const
 {
@@ -63,11 +70,14 @@ bool InputManager::UpdateKeyboardInput()
 {
 	//Reset the input
 	m_Input = 0;
+
+
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
 		//Exit the game
 		if (e.type == SDL_QUIT) { return false; }
+
 
 		//Store when a key is pressed
 		if (e.type == SDL_KEYDOWN)
