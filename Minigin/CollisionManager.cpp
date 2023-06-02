@@ -2,6 +2,7 @@
 #include "BoxCollider.h"
 #include <future>
 
+
 //Possible collision detection algorithms
 
 //Quadtree: A quadtree is a tree data structure in which each internal node has exactly four children.
@@ -28,6 +29,7 @@ CollisionManager::CollisionManager() : m_StopRequested(false)
 		m_ThreadPool.emplace_back(&CollisionManager::CollisionWorker, this);
 	}
 
+
 }
 
 CollisionManager::~CollisionManager()
@@ -53,13 +55,20 @@ CollisionManager::~CollisionManager()
 void CollisionManager::Update()
 {
 
+	// Wait for all tasks to finish
 	std::unique_lock lock(m_CollisionMutex);
+	m_ConditionVariable.wait(lock, [this]() { return m_TaskQueue.empty(); });
 
 	//Implement double buffering to synchronise colliding objects
 	std::swap(m_CurrentCollidingObjects, m_NextCollidingObjects);
-
 	// Clear the next buffer
 	m_NextCollidingObjects.clear();
+
+
+	for (size_t i{}; i < m_BoxColliders.size(); ++i)
+	{
+		m_BoxColliders[i]->SetCollidingObjects(m_CalculatingCollidersPairs[i].first->GetCollidingBoxes());
+	}
 
 	// Remove any BoxColliders that have been flagged as removed
 	m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
@@ -70,8 +79,10 @@ void CollisionManager::Update()
 
 
 
+
+
 	// Call OnCollision for each game object involved in a collision
-	for (auto* colldinBoxestA : m_CurrentCollidingObjects)
+	for (auto* colldinBoxestA : m_BoxColliders)
 	{
 		const auto& collidingBoxesWithA = colldinBoxestA->GetCollidingBoxes();
 
@@ -125,7 +136,11 @@ void CollisionManager::Update()
 void CollisionManager::AddBoxCollider(BoxCollider* boxCollider)
 {
 	std::unique_lock lock(m_CollisionMutex);
+	//For Getting And Setting in update function (Synchronized)
 	m_BoxColliders.emplace_back(boxCollider);
+
+	//For Getting And Setting in the threads (Not Synchronized)
+	m_CalculatingCollidersPairs.emplace_back(std::make_pair(boxCollider, std::vector<BoxCollider*>{}));
 }
 
 void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
@@ -158,47 +173,22 @@ void CollisionManager::CollisionWorker()
 		task();
 	}
 }
-//
-//void CollisionManager::CheckCollisionAsync(size_t index)
-//{
-//	std::unique_lock lock(m_CollisionMutex);
-//
-//	BoxCollider* colliderA = m_BoxColliders[index];
-//
-//	for (size_t j = index + 1; j < m_BoxColliders.size(); ++j)
-//	{
-//		BoxCollider* colliderB = m_BoxColliders[j];
-//
-//
-//		 Check if the BoxColliders are colliding
-//		if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
-//		{
-//			 Add the objects as colliding objects
-//			 As of now they are stored with a mutex in the BoxCollider Component.
-//			 I don't know if i need to go with that or if i should store a std::vector<std::vector<GameObjects*>> in this class to store the collisions.
-//			 This approach avoids the need for a mutex in the BoxCollider component but requires additional memory allocation.
-//			colliderA->AddCollidingObject(colliderB->GetGameObject());
-//			colliderB->AddCollidingObject(colliderA->GetGameObject());
-//		}
-//	}
-//}
 
 void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 {
 	std::unique_lock lock(m_CollisionMutex);
 	for (size_t i = from; i < to; ++i)
 	{
-		BoxCollider* colliderA = m_BoxColliders[i];
+		BoxCollider* colliderA = m_CalculatingCollidersPairs[i].first;
 
-		for (size_t j = i + 1; j < m_BoxColliders.size(); ++j)
+		for (size_t j = i + 1; j < m_CalculatingCollidersPairs.size(); ++j)
 		{
-			BoxCollider* colliderB = m_BoxColliders[j];
+			BoxCollider* colliderB = m_CalculatingCollidersPairs[j].first;
 
 			if (colliderA->CanBeDeleted() || colliderB->CanBeDeleted())
 			{
 				continue;
 			}
-
 
 			// Check if the BoxColliders are colliding
 			if (_CheckCollision(colliderA->GetCollider(), colliderB->GetCollider()))
@@ -218,6 +208,77 @@ void CollisionManager::CheckCollisionRange(size_t from, size_t to)
 bool CollisionManager::_CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB)
 {
 	//AABB Collision Check
+	return  rectA.x < rectB.x + rectB.w &&
+		rectA.x + rectA.w > rectB.x &&
+		rectA.y < rectB.y + rectB.h &&
+		rectA.y + rectA.h > rectB.y;
+}
+
+
+
+
+//----------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------
+void CollisionManagerSingleThread::Update()
+{
+	// Remove any BoxColliders that have been flagged as removed
+	m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
+		{
+			return collider->CanBeDeleted();
+		}), m_BoxColliders.end());
+
+
+
+
+	for (BoxCollider* BoxA : m_BoxColliders)
+	{
+		if (BoxA->CanBeDeleted())
+		{
+			UnRegisterBoxCollider(BoxA);
+			continue;
+		}
+
+		for (BoxCollider* BoxB : m_BoxColliders)
+		{
+			if (BoxA == BoxB) continue;
+			if (BoxB->CanBeDeleted())
+			{
+				UnRegisterBoxCollider(BoxB);
+				continue;
+			}
+
+			if (CheckCollision(BoxA->GetCollider(), BoxB->GetCollider()))
+			{
+				BoxA->AddCollidingObject(BoxB);
+				BoxB->AddCollidingObject(BoxA);
+				BoxA->GetGameObject()->OnCollision(BoxB->GetGameObject(), BoxB->GetIsTrigger(), BoxA->GetIsTrigger());
+
+			}
+
+		}
+	}
+}
+
+void CollisionManagerSingleThread::AddBoxCollider(BoxCollider* boxCollider)
+{
+	m_BoxColliders.emplace_back(boxCollider);
+}
+
+void CollisionManagerSingleThread::UnRegisterBoxCollider(BoxCollider* boxCollider)
+{
+	const auto it = std::ranges::find(m_BoxColliders, boxCollider);
+
+	if (it != m_BoxColliders.end())
+	{
+		m_BoxColliders.erase(it);
+	}
+}
+
+bool CollisionManagerSingleThread::CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB)
+{
 	return  rectA.x < rectB.x + rectB.w &&
 		rectA.x + rectA.w > rectB.x &&
 		rectA.y < rectB.y + rectB.h &&

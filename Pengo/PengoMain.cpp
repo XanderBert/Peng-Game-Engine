@@ -40,22 +40,18 @@ void load()
 
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	////FPS Counter
-	//auto go = new GameObject();
-	//const auto fpsCounter{ go->AddComponent<FPSCounter>() };
-	//const auto transComponentFPS{ go->GetComponent<Transform>() };
-	//transComponentFPS->SetLocalPosition({ 5, 5 });
-	//const auto fontRendererFPS = go->AddComponent<FontRenderer>();
-	//fontRendererFPS->SetFont("Lingua.otf", 20);
-	//scene.Add(go);
-
-
-
-
 	PengoLevelLoader levelLoader;
 	PengoLevel* level01 = levelLoader.LoadLevel("Level1.xml");
 	level01->AddGameObjectsToScene(&scene);
 
+	//FPS Counter
+	auto go = new GameObject();
+	const auto fpsCounter{ go->AddComponent<FPSCounter>() };
+	const auto transComponentFPS{ go->GetComponent<Transform>() };
+	transComponentFPS->SetLocalPosition({ 5, 5 });
+	const auto fontRendererFPS = go->AddComponent<FontRenderer>();
+	fontRendererFPS->SetFont("Fonts/8BitDragon.ttf", 20);
+	scene.Add(go);
 
 	auto object = new Pengo();
 	const auto controllerComponent = object->AddComponent<ControllerComponent>();
@@ -71,13 +67,14 @@ void load()
 	auto& Startscene = SceneManager::GetInstance().CreateScene("Startup");
 	StartScreen* start = new StartScreen();
 	Startscene.Add(start);
+	Startscene.Add(go);
 
 }
 
 int main(int, char* [])
 {
 	ServiceLocator::GetInstance().AudioService.SetService(new AudioServiceDebug());
-	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManager());
+	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManagerSingleThread());
 	ServiceLocator::GetInstance().InputManager.SetService(new InputManager());
 	ServiceLocator::GetInstance().Renderer.SetService(new Renderer());
 	ServiceLocator::GetInstance().ResourceManager.SetService(new ResourceManager());

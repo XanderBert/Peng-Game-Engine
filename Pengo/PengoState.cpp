@@ -60,42 +60,6 @@ PengoState* AttackingState::HandleInput()
 void AttackingState::Update()
 {
 	m_TimeUntilIdle -= TimeM::GetInstance().GetDeltaTimeM();
-
-	if (const auto triggerComp = m_pActor->GetComponent<TriggerComponent>())
-	{
-
-		//Gets all the colliding objects of the pengo Trigger
-		for (const auto& collidingGameObject : triggerComp->GetCollidingObjects())
-		{
-
-			//Skips the Colliding objects that can be deleted or the pengo itself
-			if (collidingGameObject->CanBeDeleted() || collidingGameObject == m_pActor) continue;
-
-
-			//Checks if the colliding object has a trigger component
-			if (const auto iceBlockTrigger = collidingGameObject->GetComponent<TriggerComponent>())
-			{
-
-				//checks if the colliding object with a trigger is the actual IceBlockTrigger
-				if (iceBlockTrigger->GetTag() == "IceBlockTrigger")
-				{
-					if (const auto direction = m_pActor->GetComponent<DirectionComponent>())
-					{
-						//Move the move the IceBlock
-						collidingGameObject->GetComponent<MoveComponent>()->SetCanMove(true);
-						collidingGameObject->GetComponent<DirectionComponent>()->SetDirection(direction->GetDirection());
-
-						//Store the IceBlock in the GameObjectStorage
-						if (const auto gameObjectStorage = m_pActor->GetComponent<GameObjectStorage>())
-						{
-							gameObjectStorage->StoreGameObject(collidingGameObject);
-						}
-
-					}
-				}
-			}
-		}
-	}
 }
 
 void AttackingState::OnEnter()
@@ -112,8 +76,21 @@ void AttackingState::OnEnter()
 
 void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	m_IsHit = IsHit(other, isTrigger);
+	if (other->GetTag() == "IceBlock" && isSenderTrigger)
+	{
 
+		//Move the move the IceBlock
+		other->GetComponent<MoveComponent>()->SetCanMove(true);
+		other->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<DirectionComponent>()->GetDirection());
+
+		//Store the IceBlock in the GameObjectStorage
+		if (const auto gameObjectStorage = m_pActor->GetComponent<GameObjectStorage>())
+		{
+			gameObjectStorage->StoreGameObject(other);
+		}
+	}
+
+	m_IsHit = IsHit(other, isTrigger);
 	if (other->GetTag() == "Wall" && isSenderTrigger)
 	{
 		other->GetComponent<SpriteRenderer>()->Play();

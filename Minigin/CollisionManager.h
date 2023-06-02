@@ -38,20 +38,41 @@ public:
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
 private:
 	void CollisionWorker();
-	//void CheckCollisionAsync(size_t index);
 	void CheckCollisionRange(size_t from, size_t to);
 	static bool _CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
 
-
 	std::vector<BoxCollider*> m_BoxColliders;
-
 	std::vector<BoxCollider*> m_CurrentCollidingObjects;
 	std::vector<BoxCollider*> m_NextCollidingObjects;
 
+
+
+	//Holds the box collider an all the objects it collides with.
+	std::vector<std::pair<BoxCollider*, std::vector<BoxCollider*>>> m_CalculatingCollidersPairs;
 
 	std::vector<std::jthread> m_ThreadPool;
 	std::queue<std::function<void()>> m_TaskQueue;
 	std::mutex m_CollisionMutex;
 	std::condition_variable m_ConditionVariable;
 	bool m_StopRequested;
+};
+
+
+class CollisionManagerSingleThread final : public null_CollisionManager
+{
+public:
+	CollisionManagerSingleThread() = default;
+	virtual ~CollisionManagerSingleThread() override = default;
+
+	CollisionManagerSingleThread(const CollisionManagerSingleThread& other) = delete;
+	CollisionManagerSingleThread(CollisionManagerSingleThread&& other) = delete;
+	CollisionManagerSingleThread& operator=(const CollisionManagerSingleThread& other) = delete;
+	CollisionManagerSingleThread& operator=(CollisionManagerSingleThread&& other) = delete;
+
+	virtual void Update();
+	virtual void AddBoxCollider(BoxCollider* boxCollider);
+	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider);
+private:
+	std::vector<BoxCollider*> m_BoxColliders;
+	bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
 };

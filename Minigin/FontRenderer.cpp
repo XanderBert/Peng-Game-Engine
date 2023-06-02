@@ -18,7 +18,7 @@ FontRenderer::~FontRenderer() = default;
 
 void FontRenderer::Update()
 {
-	m_needsUpdate = true;
+	//m_needsUpdate = true;
 
 	//needs: font, color, text
 	if (m_needsUpdate && m_font)
