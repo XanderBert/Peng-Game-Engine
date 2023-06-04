@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <functional>
 #include <vector>
 #include "GameObject.h"
 
@@ -28,6 +29,7 @@ public:
 
 	void AddStartScreen();
 	void LoadNextLevel();
+	void LoadLevel(int level);
 
 	void SetAmountOfPlayers(int amountOfPlayers);
 	int GetAmountOfPlayers() const { return m_AmountOfPlayers; }
@@ -45,11 +47,14 @@ private:
 
 	void AddObjectsToActiveScene();
 	void ResetLevel();
+	void ResetSnowbees() { m_AmountOfSnowBees = 0; }
+	void ResetLives() { m_amountOfLives = 3; }
 
 	GameObject* m_pScoreObject{};
 	GameObject* m_pHighScore{};
 	GameObject* m_pLives{};
 	GameObject* m_Fps{};
+	GameObject* m_pLevelSelection{};
 
 	int m_Score{};
 	int m_HighScore{};
@@ -58,5 +63,8 @@ private:
 	int m_AmountOfSnowBees{};
 
 	GameMode m_GameMode{ GameMode::SinglePlayer };
+
+
+	void ImGuiRenderFunction();
 
 };

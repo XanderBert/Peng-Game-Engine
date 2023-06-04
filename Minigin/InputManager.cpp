@@ -96,10 +96,12 @@ bool InputManager::UpdateKeyboardInput()
 		{
 			m_Input = e.key.keysym.sym;
 		}
+
+		//Updates Imgui Input
+		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 
-	//Updates Imgui Input
-	ImGui_ImplSDL2_ProcessEvent(&e);
+
 
 	return true;
 }

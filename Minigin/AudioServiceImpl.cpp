@@ -34,6 +34,30 @@ void AudioServiceImpl::Play(int id)
 	m_ConditionVariable.notify_one();
 }
 
+void AudioServiceImpl::Stop(int id)
+{
+	std::unique_lock lock(m_AudioMutex);
+
+	if (m_Sounds.empty() || !m_Sounds.contains(id))
+		return;
+
+	// Stop the sound on all channels
+	for (int channel = 0; channel < MIX_CHANNELS; ++channel)
+	{
+		Mix_Chunk* chunk = Mix_GetChunk(channel);
+		if (chunk != nullptr && chunk == m_Sounds.find(id)->second)
+		{
+			Mix_HaltChannel(channel);
+		}
+	}
+
+	// Remove any pending instances of the specified sound ID from the audio queue
+	while (!m_AudioQueue.empty() && m_AudioQueue.front() == id)
+	{
+		m_AudioQueue.pop();
+	}
+}
+
 Mix_Chunk* AudioServiceImpl::AddSound(const int id, const std::string& file)
 {
 	const auto pathdir = ServiceLocator::GetInstance().ResourceManager.GetService().GetDataPath() + file;

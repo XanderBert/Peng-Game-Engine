@@ -25,14 +25,13 @@ PengoLevel::PengoLevel()
 	}
 	AddGameObject(m_pWallManager);
 
-#ifndef _DEBUG
-	audioService.Play(1);
-#endif
+
 
 }
 
 PengoLevel::~PengoLevel()
 {
+
 }
 
 void PengoLevel::AddGameObject(GameObject* pGameObject)

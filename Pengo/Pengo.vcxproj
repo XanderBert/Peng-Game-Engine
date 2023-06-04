@@ -201,6 +201,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DiamondBlock.cpp" />
     <ClCompile Include="IceBlock.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Pengo.cpp" />
@@ -215,6 +216,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DiamondBlock.h" />
     <ClInclude Include="IceBlock.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Pengo.h" />

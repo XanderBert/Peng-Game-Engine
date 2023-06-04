@@ -100,6 +100,9 @@
     <Filter Include="Resource Files\Components\CountDownComponent">
       <UniqueIdentifier>{e5a64033-50f2-48be-b73f-bb106bf195e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Components\ImGuiComponent">
+      <UniqueIdentifier>{d6cfad12-2568-4d46-a0a5-114b7e099e64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
@@ -258,6 +261,9 @@
     <ClInclude Include="CountdownComponent.h">
       <Filter>Resource Files\Components\CountDownComponent</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuiComponent.h">
+      <Filter>Resource Files\Components\ImGuiComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -403,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="CountdownComponent.cpp">
       <Filter>Resource Files\Components\CountDownComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiComponent.cpp">
+      <Filter>Resource Files\Components\ImGuiComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

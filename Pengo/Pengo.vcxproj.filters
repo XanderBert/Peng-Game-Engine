@@ -78,6 +78,9 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Source Files\LevelHandling</Filter>
     </ClCompile>
+    <ClCompile Include="DiamondBlock.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pengo.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="LevelManager.h">
       <Filter>Source Files\LevelHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="DiamondBlock.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

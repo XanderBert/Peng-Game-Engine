@@ -27,7 +27,7 @@ StartScreen::StartScreen()
 	m_pOnePlayerButton->SetParent(this, true);
 	auto collider = m_pOnePlayerButton->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 80,20 });
-	collider->DebugRender(true);
+	//collider->DebugRender(true);
 	m_pOnePlayerButton->GetComponent<Transform>()->SetWorldPosition({ 30, 320 });
 	const auto font = m_pOnePlayerButton->AddComponent<FontRenderer>();
 	font->SetFont("Fonts/8BitDragon.ttf", 12);
@@ -38,8 +38,8 @@ StartScreen::StartScreen()
 	m_pVSModeButton->SetParent(this, true);
 	auto colliderVS = m_pVSModeButton->AddComponent<BoxCollider>();
 	colliderVS->SetColliderSize({ 80,20 });
-	colliderVS->DebugRender(true);
-	m_pVSModeButton->GetComponent<Transform>()->SetWorldPosition({ 120, 320 });
+	//colliderVS->DebugRender(true);
+	m_pVSModeButton->GetComponent<Transform>()->SetWorldPosition({ 110, 320 });
 	const auto fontVS = m_pVSModeButton->AddComponent<FontRenderer>();
 	fontVS->SetFont("Fonts/8BitDragon.ttf", 12);
 	fontVS->SetText("Versus Mode");
@@ -49,7 +49,7 @@ StartScreen::StartScreen()
 	m_pCoopModeButton->SetParent(this, true);
 	auto collidercoOp = m_pCoopModeButton->AddComponent<BoxCollider>();
 	collidercoOp->SetColliderSize({ 80,20 });
-	collidercoOp->DebugRender(true);
+	//collidercoOp->DebugRender(true);
 	m_pCoopModeButton->GetComponent<Transform>()->SetWorldPosition({ 210, 320 });
 	const auto fontCoOp = m_pCoopModeButton->AddComponent<FontRenderer>();
 	fontCoOp->SetFont("Fonts/8BitDragon.ttf", 12);
