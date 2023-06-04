@@ -73,7 +73,7 @@ void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 				if (box->GetGameObject()->GetTag() == "DiamondBlock")
 				{
 
-					//TODO Fix!
+
 					++m_DiamondBlockCount;
 
 					std::cout << m_DiamondBlockCount + dynamic_cast<DiamondBlock*>(box->GetGameObject())->GetDiamondBlockCount() << std::endl;

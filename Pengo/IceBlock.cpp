@@ -6,9 +6,7 @@
 #include "TextureRenderer.h"
 #include "TriggerComponent.h"
 
-IceBlock::IceBlock()
-	: GameObject()
-
+IceBlock::IceBlock() : GameObject()
 {
 	SetTag("IceBlock");
 

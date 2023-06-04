@@ -166,7 +166,7 @@ bool CollisionManager::IsInsideCollider(glm::vec2 pos, BoxCollider* collider)
 void CollisionManager::CollisionWorker()
 {
 	//Runs on a seperate thread
-	while (true)	
+	while (true)
 	{
 		//Get the task from the queue
 		std::function<void()> task;

@@ -66,6 +66,25 @@ void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 		}
 	}
 
+	if (other->GetTag() == "DiamondBlock" && isSenderTrigger)
+	{
+		if (!m_MovedIceBlock)
+		{
+			//Move the move the IceBlock
+			other->GetComponent<MoveComponent>()->SetCanMove(true);
+			other->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<DirectionComponent>()->GetDirection());
+
+
+			m_MovedIceBlock = true;
+		}
+	}
+
+
+
+
+
+
+
 	m_IsHit = IsHit(other, isTrigger, isSenderTrigger);
 
 	if (other->GetTag() == "Wall" && isSenderTrigger)

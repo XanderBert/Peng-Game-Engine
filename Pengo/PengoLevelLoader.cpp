@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "ControllerComponent.h"
+#include "DiamondBlock.h"
 #include "InputComponent.h"
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
@@ -35,6 +36,10 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	else if (type == "snowBee")
 	{
 		object = new SnowBee();
+	}
+	else if (type == "diamondBlock")
+	{
+		object = new DiamondBlock();
 	}
 	else
 	{
@@ -142,9 +147,7 @@ void PengoLevelLoader::ParseLevel() const
 				std::string inputType = objectNode->first_attribute("input")->value();
 				m_pLevel->AddGameObject(CreatePlayer({ x, y }, inputType));
 				++playersAdded;
-
 			}
-
 			continue;
 		}
 
