@@ -93,7 +93,6 @@ void CollisionManager::Update()
 			//Also The OnCollision should not be triggered if the object it collides with is marked for deletion.
 			if (collidingGameObjectB->CanBeDeleted())
 			{
-				UnRegisterBoxCollider(collidingGameObjectB);
 				continue;
 			}
 
@@ -153,10 +152,21 @@ void CollisionManager::UnRegisterBoxCollider(BoxCollider* boxCollider)
 	}
 }
 
+bool CollisionManager::IsInsideCollider(glm::vec2 pos, BoxCollider* collider)
+{
+	//Check if the position is inside the collider
+	const SDL_Rect colliderRect = collider->GetCollider();
+	if (pos.x > colliderRect.x && pos.x < colliderRect.x + colliderRect.w && pos.y > colliderRect.y && pos.y < colliderRect.y + colliderRect.h)
+	{
+		return true;
+	}
+	return false;
+}
+
 void CollisionManager::CollisionWorker()
 {
 	//Runs on a seperate thread
-	while (true)
+	while (true)	
 	{
 		//Get the task from the queue
 		std::function<void()> task;
@@ -231,33 +241,22 @@ void CollisionManagerSingleThread::Update()
 		}), m_BoxColliders.end());
 
 
-
-
 	for (BoxCollider* BoxA : m_BoxColliders)
 	{
-		if (BoxA->CanBeDeleted())
-		{
-			UnRegisterBoxCollider(BoxA);
-			continue;
-		}
+		if (DoesBoxNeedsToBeSkipped(BoxA)) { continue; }
 
 		for (BoxCollider* BoxB : m_BoxColliders)
 		{
 			if (BoxA == BoxB) continue;
-			if (BoxB->CanBeDeleted())
-			{
-				UnRegisterBoxCollider(BoxB);
-				continue;
-			}
+
+			if (DoesBoxNeedsToBeSkipped(BoxB)) { continue; }
 
 			if (CheckCollision(BoxA->GetCollider(), BoxB->GetCollider()))
 			{
 				BoxA->AddCollidingObject(BoxB);
 				BoxB->AddCollidingObject(BoxA);
 				BoxA->GetGameObject()->OnCollision(BoxB->GetGameObject(), BoxB->GetIsTrigger(), BoxA->GetIsTrigger());
-
 			}
-
 		}
 	}
 }
@@ -277,10 +276,34 @@ void CollisionManagerSingleThread::UnRegisterBoxCollider(BoxCollider* boxCollide
 	}
 }
 
+bool CollisionManagerSingleThread::IsInsideCollider(glm::vec2 pos, BoxCollider* collider)
+{
+	//Check if the position is inside the collider
+	const SDL_Rect colliderRect = collider->GetCollider();
+	if (pos.x > colliderRect.x && pos.x < colliderRect.x + colliderRect.w && pos.y > colliderRect.y && pos.y < colliderRect.y + colliderRect.h)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool CollisionManagerSingleThread::CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB)
 {
 	return  rectA.x < rectB.x + rectB.w &&
 		rectA.x + rectA.w > rectB.x &&
 		rectA.y < rectB.y + rectB.h &&
 		rectA.y + rectA.h > rectB.y;
+}
+
+bool CollisionManagerSingleThread::DoesBoxNeedsToBeSkipped(BoxCollider* boxCollider)
+{
+	if (boxCollider->CanBeDeleted())
+	{
+		return true;
+	}
+	if (boxCollider->GetGameObject()->GetScene() != SceneManager::GetInstance().GetActiveScene())
+	{
+		return true;
+	}
+	return false;
 }

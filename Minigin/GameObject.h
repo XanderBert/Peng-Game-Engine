@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <vector>
 #include <glm/vec2.hpp>
+
+#include "Scene.h"
 class Component;
 class BoxCollider;
 
@@ -69,11 +71,14 @@ public:
 	void SetTag(const std::string& tag) { m_Tag = tag; }
 	std::string GetTag() const { return m_Tag; }
 
+	Scene* GetScene() const { return m_pScene; }
+	void SetScene(Scene* pScene) { m_pScene = pScene; }
+
 protected:
 	GameObject* m_pParent{};
 	bool m_CanBeDeleted{ false };
 	std::vector<GameObject*> m_pChildren{};
-
+	Scene* m_pScene{};
 	void AddToChildVector(GameObject* pChild);
 	void RemoveFromChildren(GameObject* pParent) const;
 

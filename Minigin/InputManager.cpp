@@ -56,6 +56,18 @@ bool InputManager::IsLeftMouseButtonPressed() const
 	return (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
 }
 
+glm::vec2 InputManager::GetLeftMouseButtonPressed() const
+{
+	int mouseX, mouseY;
+	const Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+	if ((mouseState & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0)
+	{
+		return glm::vec2(static_cast<float>(mouseX), static_cast<float>(mouseY));
+	}
+
+	return glm::vec2();
+}
+
 
 void InputManager::UpdateControllersInput() const
 {

@@ -29,7 +29,7 @@ void ControllerComponent::Update()
 	{
 		return;
 	}
-
+	
 	for (const auto& command : m_ControllerCommands)
 	{
 		if (m_pController->IsPressed(command.first))

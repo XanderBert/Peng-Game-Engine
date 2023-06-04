@@ -20,6 +20,8 @@ public:
 	virtual void Update() = 0;
 	virtual void AddBoxCollider(BoxCollider* boxCollider) = 0;
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) = 0;
+
+	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) = 0;
 };
 
 class CollisionManager final : public null_CollisionManager
@@ -36,6 +38,8 @@ public:
 	virtual void Update() override;
 	virtual void AddBoxCollider(BoxCollider* boxCollider) override;
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
+
+	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
 private:
 	void CollisionWorker();
 	void CheckCollisionRange(size_t from, size_t to);
@@ -72,7 +76,11 @@ public:
 	virtual void Update();
 	virtual void AddBoxCollider(BoxCollider* boxCollider);
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider);
+
+	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
 private:
 	std::vector<BoxCollider*> m_BoxColliders;
 	bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
+	bool DoesBoxNeedsToBeSkipped(BoxCollider* boxCollider);
 };
+

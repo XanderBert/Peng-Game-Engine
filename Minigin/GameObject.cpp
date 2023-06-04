@@ -163,20 +163,8 @@ void GameObject::RemoveComponents()
 	//the memory does gets freed.
 	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
 		{
-			if (const auto canBeRemoved = component->CanBeDeleted())
-			{
-				//Handles Collision remove
-				//if (const auto collider = dynamic_cast<BoxCollider*>(component.get()))
-				//{
-				//	// Unregister the collider from the collision manager
-				//	ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(collider);
-				//}
+			return component->CanBeDeleted();
 
-				return canBeRemoved;
-
-
-			}
-			return false;
 		});
 }
 

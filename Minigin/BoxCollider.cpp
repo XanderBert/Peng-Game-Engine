@@ -11,12 +11,8 @@ BoxCollider::BoxCollider(GameObject* owner) : Component(owner)
 
 BoxCollider::~BoxCollider()
 {
+	ServiceLocator::GetInstance().CollisionManager.GetService().UnRegisterBoxCollider(this);
 
-	//f (m_CollidingObjectsMutex.try_lock())
-		//Is this not a viable solution? TODO Check this out!
-		//ServiceLocator::GetInstance().CollisionManager.GetService().RemoveBoxCollider(this);
-
-		//TODO This can crash because another thread is still accesing it here? the whole class should be locked or sth???
 }
 
 void BoxCollider::Update() {}

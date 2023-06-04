@@ -1,13 +1,11 @@
 #include "SceneManager.h"
 #include "Scene.h"
-#include "TimeM.h"
+#include "GameObject.h"
 #include "ServiceLocator.h"
 
 void SceneManager::Update()
 {
 	GetActiveScene()->Update();
-
-	ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 }
 
 void SceneManager::FixedUpdate(float fixedTimeMStep)
@@ -18,6 +16,12 @@ void SceneManager::FixedUpdate(float fixedTimeMStep)
 void SceneManager::LateUpdate()
 {
 	GetActiveScene()->LateUpdate();
+
+	if(GetActiveScene()->CanBeDeleted())
+	{
+		delete GetActiveScene();
+	}
+
 }
 
 void SceneManager::Render()
@@ -54,5 +58,5 @@ Scene* SceneManager::GetSceneByName(const std::string& name) const
 		}
 	}
 
-	return nullptr;
+	throw std::exception("Scene not found");
 }

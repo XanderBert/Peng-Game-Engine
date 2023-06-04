@@ -17,4 +17,8 @@ public:
 private:
 	glm::vec2 m_Offset{ 50,50 };
 	glm::vec2 m_ScreenSize{ 224 + m_Offset.x, 256 + m_Offset.y };
+
+	GameObject* m_pOnePlayerButton{ nullptr };
+	GameObject* m_pVSModeButton{ nullptr };
+	GameObject* m_pCoopModeButton{ nullptr };
 };

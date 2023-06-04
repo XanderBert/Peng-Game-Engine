@@ -46,12 +46,14 @@ std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigne
 {
 	//Checks if the font was already used
 	//and if so it will return it from memory
-	auto it = m_LoadedFonts.find(file);
 
-	if (it != m_LoadedFonts.end())
-	{
-		return std::shared_ptr(it->second);
-	}
+	//TODO Fix to make it also account for size
+	//auto it = m_LoadedFonts.find(file);
+
+	//if (it != m_LoadedFonts.end())
+	//{
+	//	return std::shared_ptr(it->second);
+	//}
 
 	auto fontPtr = std::make_shared<Font>(m_dataPath + file, size);
 

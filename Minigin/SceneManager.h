@@ -4,8 +4,8 @@
 #include <memory>
 #include "Singleton.h"
 
+
 class Scene;
-class GameActor;
 
 class SceneManager final : public Singleton<SceneManager>
 {
@@ -28,4 +28,3 @@ private:
 	std::vector<std::shared_ptr<Scene>> m_scenes;
 	Scene* m_pActiveScene{};
 };
-

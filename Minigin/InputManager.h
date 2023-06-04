@@ -24,6 +24,7 @@ public:
 	virtual bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const = 0;
 
 	virtual bool IsLeftMouseButtonPressed() const = 0;
+	virtual glm::vec2 GetLeftMouseButtonPressed() const = 0;
 
 	virtual Controller* GetController(int controllerId) const = 0;
 	virtual Controller* AddController(int controllerIndex) = 0;
@@ -47,6 +48,7 @@ public:
 	bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const override;
 
 	bool IsLeftMouseButtonPressed() const override;
+	glm::vec2 GetLeftMouseButtonPressed() const override;
 
 	Controller* GetController(int controllerId) const override { return m_pControllers[controllerId].get(); }
 	Controller* AddController(int controllerIndex) override;

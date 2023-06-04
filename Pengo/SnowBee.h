@@ -2,6 +2,8 @@
 #include <glm/vec2.hpp>
 #include "GameObject.h"
 #include "IceBlock.h"
+#include "Observer.h"
+#include "PengoEvents.h"
 #include "playerState.h"
 
 class SnowBee final : public GameObject
@@ -26,5 +28,8 @@ private:
 
 	glm::vec2 m_SpriteSize{ 16,16 };
 	PlayerState* m_pState{};
+	std::shared_ptr<Observer> m_pObserver{ std::make_shared<PengoEvent>() };
+
+
 	void UpdateState();
 };

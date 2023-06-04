@@ -3,6 +3,7 @@
 #include "GameObjectStorage.h"
 #include "IceBlock.h"
 #include "MoveComponent.h"
+#include "ObserverComponent.h"
 #include "Pengo.h"
 #include "SnowBee.h"
 #include "SpriteRenderer.h"
@@ -191,6 +192,9 @@ void SnowBeeDyingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, b
 
 void SnowBeeDyingState::OnEnter()
 {
+
+	m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::SnowBeeKilled);
+
 	//Set Movement Direction the same as the Incoming Movement Direction of the IceBlock
 	//And Change the sprites to the dying sprites
 
@@ -318,7 +322,6 @@ void SnowBeeState::OnCollision(GameObject* other, bool isTrigger, bool /*isSende
 	}
 
 
-
 	//If it is an IceBlock it collided with
 	if (other->GetTag() == "IceBlock")
 	{
@@ -355,8 +358,6 @@ void SnowBeeState::ChangeMovement()
 		auto newDirection = oldDirection;
 
 		// Generate a new direction until it is different from the old direction
-
-		//TODO run on seperate thread?
 		while (newDirection == oldDirection)
 		{
 			// Generate a random integer between 0 and 3

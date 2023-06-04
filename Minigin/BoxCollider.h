@@ -51,7 +51,6 @@ private:
 	std::mutex m_CollidingObjectsMutex{};
 	std::vector<BoxCollider*> m_CollidingObjects;
 	SDL_Rect m_Collider{ 0,0,5,5 };
-	glm::vec2 m_Transform;
 	bool m_DebugRender{};
 	bool m_IsTrigger{ false };
 };

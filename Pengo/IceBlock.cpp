@@ -47,7 +47,7 @@ IceBlock::IceBlock()
 
 	//Trigger Component
 	const auto triggerComponent = AddComponent<TriggerComponent>();
-	triggerComponent->DebugRender(true);
+	//triggerComponent->DebugRender(true);
 	triggerComponent->SetColliderSize({ m_SpriteSize.x + 4, m_SpriteSize.y + 4 });
 	triggerComponent->SetColliderOffset({ -2,-2 });
 	triggerComponent->SetTag("IceBlockTrigger");

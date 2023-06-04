@@ -1,10 +1,15 @@
 #pragma once
+
 #include <glm/vec2.hpp>
 #include "Command.h"
 #include "DirectionComponent.h"
+#include "MoveComponent.h"
+
 #include "TimeM.h"
 #include "Transform.h"
 #include "PengoEvents.h"
+
+#include "playerState.h"
 #include "VelocityComponent.h"
 
 class MoveCommand final : public Command
@@ -19,6 +24,12 @@ public:
 
 	void Execute() override
 	{
+		if (const auto spriteRenderer{ m_GameActor->GetComponent<SpriteRenderer>() })
+		{
+			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 })
+				return;;
+		}
+
 		if (const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })
 		{
 			directionComponent->SetDirection(m_MovementDirection);
@@ -29,6 +40,8 @@ public:
 		const auto movement{ m_MovementDirection * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM() };
 
 		transform->SetWorldPosition(transform->GetWorldPosition() + movement);
+
+
 	}
 private:
 	GameObject* m_GameActor;

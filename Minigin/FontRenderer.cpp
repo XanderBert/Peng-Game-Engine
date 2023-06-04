@@ -18,8 +18,6 @@ FontRenderer::~FontRenderer() = default;
 
 void FontRenderer::Update()
 {
-	//m_needsUpdate = true;
-
 	//needs: font, color, text
 	if (m_needsUpdate && m_font)
 	{
@@ -72,13 +70,13 @@ void FontRenderer::SetText(const std::string& text)
 void FontRenderer::SetFont(const std::string& fontPath, int fontSize)
 {
 	m_font = { ServiceLocator::GetInstance().ResourceManager.GetService().LoadFont(fontPath, fontSize) };
-	m_needsUpdate = true;
 }
 
 void FontRenderer::GetColor()
 {
 	m_color = SDL_Color(255, 255, 255);
-	if (const auto component{ m_pOwner->GetComponent<Color>() })
+	const auto component{ m_pOwner->GetComponent<Color>() };
+	if (component != nullptr)
 	{
 		m_color = component->GetColor();
 	}

@@ -1,20 +1,16 @@
 ﻿#include "Pengo.h"
 #include "BoxCollider.h"
-#include "Color.h"
-#include "Controller.h"
-#include "Controller.h"
 #include "DirectionComponent.h"
-#include "IceBlock.h"
 #include "ObserverComponent.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "PengoEvents.h"
 #include "PengoState.h"
 #include "PlayerCommands.h"
-#include "InputComponent.h"
-#include "controllerComponent.h"
-#include "Controller.h"
+
 #include "GameObjectStorage.h"
+#include "SnowBee.h"
+#include "SnowbeeState.h"
 #include "TriggerComponent.h"
 
 
@@ -30,6 +26,9 @@ Pengo::Pengo() : GameObject()
 
 	SetTag("Pengo");
 
+	//ObserverComponent
+	AddComponent<ObserverComponent>()->AddObserver(m_pObserver);
+
 	//Direction Component
 	const auto directionComponent = AddComponent<DirectionComponent>();
 	directionComponent->SetDirection({ 1,0 });
@@ -37,8 +36,7 @@ Pengo::Pengo() : GameObject()
 
 	//Trigger Component
 	const auto triggerComponent = AddComponent<TriggerComponent>();
-	triggerComponent->DebugRender(true);
-	triggerComponent->SetColliderSize({ 10,10 });// -> It is self colliding???
+	triggerComponent->SetColliderSize({ 6,10 });
 	triggerComponent->SetOffsetMultiplier({ 10 });
 	triggerComponent->SetColliderOffset({ 3,3 });
 
@@ -69,10 +67,12 @@ Pengo::Pengo() : GameObject()
 	//Box Collider Component
 	const auto boxCollision{ AddComponent<BoxCollider>() };
 	boxCollision->SetColliderSize({ 13,13 });
-	boxCollision->DebugRender(true);
 
 	//GameObject Storage Component
 	AddComponent<GameObjectStorage>();
+
+	//Move Component
+	AddComponent<MoveComponent>();
 
 	//Audio Component Needs to be made?
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(0, "Notification.wav");
@@ -80,8 +80,8 @@ Pengo::Pengo() : GameObject()
 	const auto observerComponent = AddComponent<ObserverComponent>();
 	observerComponent->AddObserver(std::make_shared<PengoEvent>());
 
-	m_pState = new MovingState(this);
 	AddComponent<VelocityComponent>()->SetVelocity(200);
+	m_pState = new MovingState(this);
 }
 
 Pengo::~Pengo()
@@ -107,31 +107,20 @@ void Pengo::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 
 	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 
-
 	if (isSenderTrigger) return;
 	if (isTrigger) return;
 
-	//If is hitted by moving ice block or by enemy go into dying state
 
+	//Dont Collide With Concussed  or Dying SnowBee
+	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
+	{
+		if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()) || dynamic_cast<SnowBeeDyingState*>(snowBee->GetState()))
+		{
+			return;
+		}
+	}
 
-	//if (dynamic_cast<IceBlock*>(other))
-	//{
-	//	GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::CollidingWithIce);
-	//	return;
-	//}
-
-	StopMovement();
-}
-
-void Pengo::StopMovement() const
-{
-	const auto transform = GetComponent<Transform>();
-	const auto direction = GetComponent<DirectionComponent>()->GetDirection();
-
-	//Tunneling still occurs with this method.
-	transform->SetWorldPosition(transform->GetLastWorldPosition() + (-direction * m_TunnelingMultiplier));
-
-
+	GetComponent<MoveComponent>()->ResetMovement();
 }
 
 void Pengo::UpdateState()
@@ -146,3 +135,4 @@ void Pengo::UpdateState()
 	}
 	m_pState->Update();
 }
+

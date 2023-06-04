@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneManager.h"
-#include "GameObject.h"
+
+class GameObject;
 class Scene final
 {
 	friend Scene& SceneManager::CreateScene(const std::string& name);
@@ -16,6 +17,9 @@ public:
 	void LateUpdate();
 	void Render() const;
 
+	void MarkForDeletion() { m_CanBeDeleted = true; }
+	bool CanBeDeleted() const { return m_CanBeDeleted; }
+
 	~Scene();
 	Scene(const Scene& other) = delete;
 	Scene(Scene&& other) = delete;
@@ -29,4 +33,5 @@ private:
 	std::vector < std::unique_ptr<GameObject>> m_objects{};
 
 	static unsigned int m_idCounter;
+	bool m_CanBeDeleted = false;
 };

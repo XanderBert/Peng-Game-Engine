@@ -15,5 +15,7 @@
 
     <object type="snowBee" x="65" y="120"/>
     <object type="snowBee" x="65" y="100"/>
+  <object type="snowBee" x="65" y="140"/>
+  <object type="snowBee" x="65" y="160"/>
   </objects>
 </game>

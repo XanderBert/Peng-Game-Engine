@@ -32,17 +32,6 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	{
 		object = new IceBlock();
 	}
-	else if (type == "player")
-	{
-		object = new Pengo();
-
-		auto inputComponent = object->AddComponent<InputComponent>();
-		inputComponent->AddBinding(SDLK_w, new MoveCommand(object, { 0, -1 }));
-		inputComponent->AddBinding(SDLK_s, new MoveCommand(object, { 0,1 }));
-		inputComponent->AddBinding(SDLK_a, new MoveCommand(object, { -1,0 }));
-		inputComponent->AddBinding(SDLK_d, new MoveCommand(object, { 1,0 }));
-
-	}
 	else if (type == "snowBee")
 	{
 		object = new SnowBee();
@@ -57,6 +46,35 @@ GameObject* PengoLevelLoader::CreateObject(const std::string& type, const glm::v
 	return object;
 }
 
+GameObject* PengoLevelLoader::CreatePlayer(const glm::vec2 location, const std::string& inputType)
+{
+
+	GameObject* object = new Pengo();
+
+	if (inputType == "keyboard")
+	{
+		const auto inputComponent = object->AddComponent<InputComponent>();
+		inputComponent->AddBinding(SDLK_w, new MoveCommand(object, { 0, -1 }));
+		inputComponent->AddBinding(SDLK_s, new MoveCommand(object, { 0,1 }));
+		inputComponent->AddBinding(SDLK_a, new MoveCommand(object, { -1,0 }));
+		inputComponent->AddBinding(SDLK_d, new MoveCommand(object, { 1,0 }));
+	}
+	else if (inputType == "controller")
+	{
+		const auto inputComponent = object->AddComponent<ControllerComponent>();
+		inputComponent->RegisterController(0);
+		inputComponent->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(object, { 0, -1 }));
+		inputComponent->AddBinding(Controller::ControllerButton::DPadDown, new MoveCommand(object, { 0,1 }));
+		inputComponent->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(object, { -1,0 }));
+		inputComponent->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(object, { 1,0 }));
+	}
+
+	//Set the location of the object
+	object->GetComponent<Transform>()->SetWorldPosition(location);
+	return object;
+
+}
+
 void PengoLevelLoader::OpenFile(const std::string& name)
 {
 	// Read the xml file into a vector
@@ -64,7 +82,6 @@ void PengoLevelLoader::OpenFile(const std::string& name)
 
 	std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
-
 
 	//Storing a copy, because when the buffer goes out of scope , the data will be deleted
 	m_XmlBuffer = buffer;
@@ -94,12 +111,42 @@ void PengoLevelLoader::ParseLevel() const
 	}
 
 
+	int playersAdded = 0;
+	int playersToAdd = 2;
+
+	if (GameMode::SinglePlayer == LevelManager::GetInstance().GetGameMode())
+	{
+		playersToAdd = 1;
+	}
+
+
+
 	for (const rapidxml::xml_node<>* objectNode = objectsNode->first_node("object"); objectNode; objectNode = objectNode->next_sibling("object"))
 	{
 		std::string objectType = objectNode->first_attribute("type")->value();
-
 		float x = std::stof(objectNode->first_attribute("x")->value());
 		float y = std::stof(objectNode->first_attribute("y")->value());
+
+		if (objectType == "snowBee")
+		{
+			if (LevelManager::GetInstance().GetGameMode() == GameMode::Versus)
+			{
+				continue;
+			}
+		}
+
+		if (objectType == "player")
+		{
+			if (playersAdded < playersToAdd)
+			{
+				std::string inputType = objectNode->first_attribute("input")->value();
+				m_pLevel->AddGameObject(CreatePlayer({ x, y }, inputType));
+				++playersAdded;
+
+			}
+
+			continue;
+		}
 
 		// Add the game object to the level class
 		m_pLevel->AddGameObject(CreateObject(objectType, glm::vec2(x, y)));

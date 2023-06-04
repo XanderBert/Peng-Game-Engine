@@ -1,6 +1,11 @@
 ﻿#include "PengoLevel.h"
+#include "Transform.h"
+#include "FontRenderer.h"
+#include "FPSCounter.h"
 #include "ServiceLocator.h"
 #include "WallManager.h"
+
+class Transform;
 
 PengoLevel::PengoLevel()
 {
@@ -24,12 +29,10 @@ PengoLevel::PengoLevel()
 	audioService.Play(1);
 #endif
 
-
 }
 
 PengoLevel::~PengoLevel()
 {
-
 }
 
 void PengoLevel::AddGameObject(GameObject* pGameObject)

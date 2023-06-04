@@ -1,7 +1,6 @@
 #include "Scene.h"
-#include "GameObject.h"
 #include "ServiceLocator.h"
-
+#include "GameObject.h"
 
 unsigned int Scene::m_idCounter = 0;
 
@@ -9,12 +8,15 @@ Scene::Scene(const std::string& name) : m_name(name)
 {
 }
 
-Scene::~Scene() = default;
+Scene::~Scene()
+{
+	RemoveAll();
+};
 
 void Scene::Add(GameObject* object)
 {
+	object->SetScene(this);
 	m_objects.emplace_back(object);
-
 	for (auto& child : object->GetChildren())
 	{
 		Add(child);
@@ -28,11 +30,12 @@ void Scene::Remove(GameObject* object)
 		Remove(child);
 	}
 
-	//	std::erase(m_objects, object);
+	//std::erase(m_objects, object);
 }
 
 void Scene::RemoveAll()
 {
+
 	m_objects.clear();
 }
 
@@ -43,6 +46,7 @@ void Scene::Update()
 	{
 		object->Update();
 	}
+	ServiceLocator::GetInstance().CollisionManager.GetService().Update();
 }
 
 void Scene::FixedUpdate(float fixedTimeMStep)

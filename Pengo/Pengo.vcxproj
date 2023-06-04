@@ -202,6 +202,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IceBlock.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PengoLevel.cpp" />
     <ClCompile Include="PengoLevelLoader.cpp" />
@@ -215,6 +216,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IceBlock.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Pengo.h" />
     <ClInclude Include="PengoEvents.h" />
     <ClInclude Include="PengoLevel.h" />

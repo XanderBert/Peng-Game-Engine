@@ -11,9 +11,9 @@ public:
 
 	virtual PengoState* HandleInput() override = 0;
 	virtual void Update() override = 0;
-	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) = 0;
 protected:
-	bool IsHit(GameObject* other, bool isTrigger);
+	bool IsHit(GameObject* other, bool isTrigger, bool isSenderTrigger);
 	bool m_IsHit{ false };
 private:
 	virtual void OnEnter() override = 0;
@@ -44,6 +44,7 @@ public:
 private:
 	virtual void OnEnter() override;
 	float m_TimeUntilIdle{ 0.3f };
+	bool m_MovedIceBlock{ false };
 };
 
 class MovingState final : public PengoState

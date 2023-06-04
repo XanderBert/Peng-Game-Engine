@@ -1,18 +1,17 @@
 #pragma once
 #include "Observer.h"
 #include "GameObject.h"
-#include "ServiceLocator.h"
-#include "SpriteRenderer.h"
-#include "PlayerState.h"
-#include "Pengo.h"
-#include "IceBlock.h"
+#include "LevelManager.h"
 
 enum class GameEvent
 {
-	CollidingWithIce,
+
 	IceBlockDestroyed,
+
 	SnowBeeKilled,
-	Moving
+	PengoControllerKilled,
+	PengoKeyboardKilled,
+	NewLevelLoaded,
 };
 
 
@@ -27,17 +26,29 @@ public:
 	PengoEvent& operator=(const PengoEvent& other) = delete;
 	PengoEvent& operator=(PengoEvent&& other)noexcept = delete;
 
+
 	virtual void Notify(GameObject* /*object*/, GameEvent event) override
 	{
 		switch (event)
 		{
 
-		case GameEvent::Moving:
+		case GameEvent::SnowBeeKilled:
 		{
-
-
+			LevelManager::GetInstance().AddScore(100);
+			LevelManager::GetInstance().SnowBeeDied();
 			break;
 		}
+		case GameEvent::PengoKeyboardKilled:
+		{
+			LevelManager::GetInstance().PlayerDied();
+			break;
 		}
-	};
+		case GameEvent::PengoControllerKilled:
+		{
+			LevelManager::GetInstance().PlayerDied();
+			break;
+		}
+
+		}
+	}
 };

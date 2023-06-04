@@ -1,5 +1,5 @@
 ﻿#include "SnowBee.h"
-
+#include "ObserverComponent.h"
 #include "GameObjectStorage.h"
 #include "IceBlock.h"
 #include "MoveComponent.h"
@@ -11,6 +11,8 @@
 
 SnowBee::SnowBee()
 {
+	AddComponent<ObserverComponent>()->AddObserver(m_pObserver);
+
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
 	textureRenderer->SetTexture("SnowBee.png");
 
@@ -50,6 +52,9 @@ SnowBee::SnowBee()
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
 	AddComponent<MoveComponent>();
 	AddComponent<GameObjectStorage>();
+
+
+	LevelManager::GetInstance().IncrementAmountOfSnowBees();
 }
 
 SnowBee::~SnowBee()

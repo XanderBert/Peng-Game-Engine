@@ -8,9 +8,9 @@
 #include "DirectionComponent.h"
 #include "InputComponent.h"
 #include "SnowBee.h"
-#include "TriggerComponent.h"
 #include "SnowBeeState.h"
 #include "CountdownComponent.h"
+#include "ObserverComponent.h"
 
 //
 //Attacking State
@@ -19,37 +19,9 @@ PengoState* AttackingState::HandleInput()
 {
 	if (m_TimeUntilIdle <= 0.f)
 	{
+
 		return new MovingState(m_pActor);
-	}
 
-	auto& serviceLocator = ServiceLocator::GetInstance();
-	const auto& inputManager = serviceLocator.InputManager.GetService();
-
-	if (const auto inputComponent = m_pActor->GetComponent<InputComponent>())
-	{
-		const std::vector<SDL_Keycode> keys = inputComponent->GetKeysOfCommand<MoveCommand*>();
-
-		for (const auto key : keys)
-		{
-			if (inputManager.GetButtonPressed(key))
-			{
-				return new MovingState(m_pActor);
-
-			}
-		}
-	}
-	//When Using Controller
-	if (const auto controllerComp = m_pActor->GetComponent<ControllerComponent>())
-	{
-		const std::vector<Controller::ControllerButton> buttons = controllerComp->GetButtonsOfCommand<MoveCommand*>();
-
-		for (const auto button : buttons)
-		{
-			if (inputManager.GetController(controllerComp->GetControllerIndex())->IsPressed(button))
-			{
-				return new MovingState(m_pActor);
-			}
-		}
 	}
 
 	if (m_IsHit) { return new DyingState(m_pActor); }
@@ -78,19 +50,24 @@ void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 {
 	if (other->GetTag() == "IceBlock" && isSenderTrigger)
 	{
-
-		//Move the move the IceBlock
-		other->GetComponent<MoveComponent>()->SetCanMove(true);
-		other->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<DirectionComponent>()->GetDirection());
-
-		//Store the IceBlock in the GameObjectStorage
-		if (const auto gameObjectStorage = m_pActor->GetComponent<GameObjectStorage>())
+		if (!m_MovedIceBlock)
 		{
-			gameObjectStorage->StoreGameObject(other);
+			//Move the move the IceBlock
+			other->GetComponent<MoveComponent>()->SetCanMove(true);
+			other->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<DirectionComponent>()->GetDirection());
+
+			//Store the IceBlock in the GameObjectStorage
+			if (const auto gameObjectStorage = m_pActor->GetComponent<GameObjectStorage>())
+			{
+				gameObjectStorage->StoreGameObject(other);
+			}
+
+			m_MovedIceBlock = true;
 		}
 	}
 
-	m_IsHit = IsHit(other, isTrigger);
+	m_IsHit = IsHit(other, isTrigger, isSenderTrigger);
+
 	if (other->GetTag() == "Wall" && isSenderTrigger)
 	{
 		other->GetComponent<SpriteRenderer>()->Play();
@@ -148,6 +125,11 @@ PengoState* MovingState::HandleInput()
 				m_TimeUntilIdle = 0.3f;
 			}
 		}
+
+		if (inputManager.GetController(controllerComp->GetControllerIndex())->IsPressed(Controller::ControllerButton::ButtonA))
+		{
+			return new AttackingState(m_pActor);
+		}
 	}
 
 	if (m_IsHit) { return new DyingState(m_pActor); }
@@ -157,15 +139,13 @@ PengoState* MovingState::HandleInput()
 
 void MovingState::Update()
 {
-
-	//If there is is input reset the timer!
 	m_TimeUntilIdle -= TimeM::GetInstance().GetDeltaTimeM();
 
 }
 
-void MovingState::OnCollision(GameObject* other, bool isTrigger, bool /*isSenderTrigger*/)
+void MovingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	m_IsHit = IsHit(other, isTrigger);
+	m_IsHit = IsHit(other, isTrigger, isSenderTrigger);
 }
 
 void MovingState::OnEnter()
@@ -190,21 +170,13 @@ void DyingState::Update()
 {
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
-		if (spriteRenderer->IsAnimationFinished())
-		{
-			//++m_Animations;
-			//if (m_Animations == 8)
-			//{
-			//	spriteRenderer->Pause();
-			//	std::cout << "Dying animation finished" << std::endl;
-			//}
-		}
+		spriteRenderer->SetAnimationFrame(0);
 	}
 }
 
-void DyingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
+void DyingState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/)
 {
-	PengoState::OnCollision(other, isTrigger, isSenderTrigger);
+
 }
 
 void DyingState::OnEnter()
@@ -221,30 +193,24 @@ void DyingState::OnEnter()
 	if (const auto inputComp = m_pActor->GetComponent<InputComponent>())
 	{
 		inputComp->DisableInput();
+		m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoKeyboardKilled);
 	}
 
 	if (const auto controllerComp = m_pActor->GetComponent<ControllerComponent>())
 	{
 		controllerComp->DisableInput();
+		m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoControllerKilled);
 	}
 
 	ServiceLocator::GetInstance().AudioService.GetService().Play(2);
-
-
-	//Somehow restart the level
 }
 
 //
 //
 //ALL STATES
-void PengoState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/)
+bool PengoState::IsHit(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
 {
-
-}
-
-bool PengoState::IsHit(GameObject* other, bool isTrigger)
-{
-	if (isTrigger) { return false; }
+	if (isSenderTrigger) { return false; }
 
 	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
 	{
@@ -263,17 +229,17 @@ bool PengoState::IsHit(GameObject* other, bool isTrigger)
 
 	if (other->GetTag() == "IceBlock")
 	{
-
+		//If it is the same iceblock as the one we are pushing
 		if (other == m_pActor->GetComponent<GameObjectStorage>()->GetGameObject())
 		{
 			return false;
 		}
 
+		//if it is a moving iceblock
 		if (other->GetComponent<SpriteRenderer>()->IsPlaying() || other->GetComponent<MoveComponent>()->CanMove())
 		{
 			return true;
 		}
-
 	}
 
 	return false;
@@ -319,6 +285,11 @@ PengoState* IdleState::HandleInput()
 				return new MovingState(m_pActor);
 			}
 		}
+
+		if (inputManager.GetController(controllerComp->GetControllerIndex())->IsPressed(Controller::ControllerButton::ButtonA))
+		{
+			return new AttackingState(m_pActor);
+		}
 	}
 
 	if (m_IsHit) { return new DyingState(m_pActor); }
@@ -332,8 +303,7 @@ void IdleState::Update()
 
 void IdleState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	PengoState::OnCollision(other, isTrigger, isSenderTrigger);
-	m_IsHit = IsHit(other, isTrigger);
+	m_IsHit = IsHit(other, isTrigger, isSenderTrigger);
 }
 
 void IdleState::OnEnter()
@@ -343,4 +313,5 @@ void IdleState::OnEnter()
 		spriteRenderer->Pause();
 		spriteRenderer->SetOffset({ 0,0 });
 	}
+
 }

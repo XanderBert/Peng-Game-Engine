@@ -23,11 +23,7 @@ public:
 
 private:
 	PlayerState* m_pState;
-
-	//Multiplies the the direction of the previous location to prevent tunneling
-	float m_TunnelingMultiplier{ 3.f };
-
-	void StopMovement() const;
+	std::shared_ptr<Observer> m_pObserver{ std::make_shared<PengoEvent>() };
 	void UpdateState();
 
 
