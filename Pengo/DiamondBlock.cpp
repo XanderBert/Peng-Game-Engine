@@ -1,4 +1,4 @@
-﻿#include "DiamondBlock.h"
+﻿#include "DiamondBlock.h"			
 #include  "BoxCollider.h"
 #include "DirectionComponent.h"
 #include "MoveComponent.h"
