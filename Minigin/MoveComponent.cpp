@@ -31,6 +31,7 @@ void MoveComponent::FixedUpdate(float /*fixedTimeMStep*/)
 
 void MoveComponent::LateUpdate()
 {
+	m_MoveChanged = false;
 }
 
 void MoveComponent::Render()
@@ -39,7 +40,12 @@ void MoveComponent::Render()
 
 void MoveComponent::SetCanMove(bool canMove)
 {
-	m_CanMove = canMove;
+
+	if(canMove != m_CanMove)
+	{
+		m_MoveChanged = true;
+		m_CanMove = canMove;
+	}
 }
 
 bool MoveComponent::CanMove() const
@@ -66,4 +72,9 @@ void MoveComponent::SetTunnelingMultiplier(float multiplier)
 float MoveComponent::GetTunnelingMultiplier() const
 {
 	return m_TunnelingMulitplier;
+}
+
+bool MoveComponent::GetMoveChanged() const
+{
+	return m_MoveChanged;
 }

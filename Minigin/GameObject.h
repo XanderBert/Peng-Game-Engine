@@ -87,7 +87,7 @@ private:
 	//Just accesses the component and marks it for deletion
 	void MarkComponentForDeletionUtility(Component* component) const;
 
-	std::string m_Tag{};
+	std::string m_Tag{ ""};
 };
 
 template<typename T>

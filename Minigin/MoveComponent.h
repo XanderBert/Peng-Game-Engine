@@ -28,9 +28,11 @@ public:
 	void ResetMovement();
 	void SetTunnelingMultiplier(float multiplier);
 	float GetTunnelingMultiplier() const;
+	bool GetMoveChanged() const;
 
 private:
 	bool m_CanMove{ false };
 	float m_TunnelingMulitplier{ 2.4f };
+	bool m_MoveChanged{ false };
 
 };

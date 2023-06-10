@@ -48,6 +48,9 @@ void DiamondBlock::Update()
 
 	//Where would i store this and check this?
 	//In the level manager? that would be the most logical place to do this
+
+
+	
 }
 
 void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
@@ -67,22 +70,46 @@ void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 		moveComp->SetCanMove(false);
 
 
-		for (const auto& box : GetComponent<BoxCollider>()->GetCollidingBoxes())
-		{
-			if (box->GetGameObject() != this)
-				if (box->GetGameObject()->GetTag() == "DiamondBlock")
-				{
-
-					//TODO Fix!
-					++m_DiamondBlockCount;
-
-					std::cout << m_DiamondBlockCount + dynamic_cast<DiamondBlock*>(box->GetGameObject())->GetDiamondBlockCount() << std::endl;
-				}
-		}
+		
 
 		//ServiceLocator::GetInstance().CollisionManager.GetService().
 	}
 
 
+
+
+		if (moveComp->GetMoveChanged())
+		{
+			const auto collider = GetComponent<BoxCollider>();
+
+				for (const auto colliderBox : collider->GetCollidingBoxes())
+				{
+					if (colliderBox->GetGameObject()->GetTag() == "DiamondBlock")
+					{
+						
+						m_DiamondBlockCount += 2;
+
+						for (const auto collderB : colliderBox->GetGameObject()->GetComponent<BoxCollider>()->GetCollidingBoxes())
+						{
+							if (collderB->GetGameObject()->GetTag() == "DiamondBlock" && collderB->GetGameObject() != this)
+							{
+								++m_DiamondBlockCount;
+
+								std::cout << "m_DiamondBlockCount: " << m_DiamondBlockCount << std::endl;
+										
+
+								break;
+
+
+							}
+						}
+						break;
+
+
+					}
+				}
+			
+
+		}
 
 }
