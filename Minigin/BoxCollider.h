@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <mutex>
 #include <SDL_rect.h>
+#include <set>
 #include <glm/vec2.hpp>
 #include "Component.h"
 
@@ -47,6 +48,8 @@ public:
 	void RemoveCollidingObject(BoxCollider* collider);
 
 	std::vector<BoxCollider*> GetCollidingBoxes() const;
+	std::set<GameObject*> GetCollidingGameObjects() const;
+
 private:
 	std::mutex m_CollidingObjectsMutex{};
 	std::vector<BoxCollider*> m_CollidingObjects;

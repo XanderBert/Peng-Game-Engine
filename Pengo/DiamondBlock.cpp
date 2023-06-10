@@ -7,6 +7,11 @@
 #include "Transform.h"
 #include "VelocityComponent.h"
 
+#include "GameObjectStorage.h"
+#include "ObserverComponent.h"
+#include "PengoEvents.h"
+
+
 DiamondBlock::DiamondBlock() : GameObject()
 {
 	SetTag("DiamondBlock");
@@ -23,16 +28,19 @@ DiamondBlock::DiamondBlock() : GameObject()
 
 	GetComponent<Transform>()->SetWorldPosition({ 77,70 });
 
-
-
-
 	//When being hit
 	//Direction Should be set as the same as the player
 	//MoveComponent should be set to true
 
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
-	AddComponent<VelocityComponent>()->SetVelocity(30);
+	AddComponent<VelocityComponent>()->SetVelocity(80);
 	AddComponent<MoveComponent>()->SetCanMove(false);
+	AddComponent<ObserverComponent>()->AddObserver(std::make_shared<PengoEvent>());
+}
+
+DiamondBlock::~DiamondBlock()
+{
+
 }
 
 
@@ -49,15 +57,11 @@ void DiamondBlock::Update()
 	//Where would i store this and check this?
 	//In the level manager? that would be the most logical place to do this
 
-
-	
 }
 
 void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	GameObject::OnCollision(other, isTrigger, isSenderTrigger);
-
-	m_DiamondBlockCount = 0;
 
 	if (isTrigger) return;
 	if (isSenderTrigger) return;
@@ -68,48 +72,33 @@ void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 	{
 		moveComp->ResetMovement();
 		moveComp->SetCanMove(false);
-
-
-		
-
-		//ServiceLocator::GetInstance().CollisionManager.GetService().
 	}
 
 
+	const auto& collidingBoxes = GetCollidingObjects();
+	std::set<GameObject*> diamondBlocks;
 
-
-		if (moveComp->GetMoveChanged())
+	//Collect the colliding blocks of THIS diamond block
+	//This will be 1 or 2 blocks
+	for (const auto& gameOBJ : collidingBoxes)
+	{
+		if (gameOBJ->GetTag() == GetTag() && gameOBJ != this)
 		{
-			const auto collider = GetComponent<BoxCollider>();
-
-				for (const auto colliderBox : collider->GetCollidingBoxes())
-				{
-					if (colliderBox->GetGameObject()->GetTag() == "DiamondBlock")
-					{
-						
-						m_DiamondBlockCount += 2;
-
-						for (const auto collderB : colliderBox->GetGameObject()->GetComponent<BoxCollider>()->GetCollidingBoxes())
-						{
-							if (collderB->GetGameObject()->GetTag() == "DiamondBlock" && collderB->GetGameObject() != this)
-							{
-								++m_DiamondBlockCount;
-
-								std::cout << "m_DiamondBlockCount: " << m_DiamondBlockCount << std::endl;
-										
-
-								break;
-
-
-							}
-						}
-						break;
-
-
-					}
-				}
-			
-
+			diamondBlocks.emplace(gameOBJ);
 		}
+	}
 
+	//Only do the rest of the check on the middle block (The one that will have 2 collisions)
+	if (diamondBlocks.size() > 1)
+	{
+		GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::DiamondBlockThreeInARow);
+		for (const auto block : diamondBlocks) block->MarkForDeletion();
+		diamondBlocks.clear();
+		MarkForDeletion();
+	}
 }
+
+
+
+
+

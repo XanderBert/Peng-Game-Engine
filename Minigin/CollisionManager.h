@@ -73,13 +73,13 @@ public:
 	CollisionManagerSingleThread& operator=(const CollisionManagerSingleThread& other) = delete;
 	CollisionManagerSingleThread& operator=(CollisionManagerSingleThread&& other) = delete;
 
-	virtual void Update();
-	virtual void AddBoxCollider(BoxCollider* boxCollider);
-	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider);
+	virtual void Update() override;
+	virtual void AddBoxCollider(BoxCollider* boxCollider) override;
+	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
 
 	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
 private:
-	std::vector<BoxCollider*> m_BoxColliders;
+	std::set<BoxCollider*> m_BoxColliders;
 	bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
 	bool DoesBoxNeedsToBeSkipped(BoxCollider* boxCollider);
 };

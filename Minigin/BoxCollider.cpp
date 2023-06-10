@@ -87,3 +87,13 @@ std::vector<BoxCollider*> BoxCollider::GetCollidingBoxes() const
 {
 	return m_CollidingObjects;
 }
+
+std::set<GameObject*> BoxCollider::GetCollidingGameObjects() const
+{
+	std::set<GameObject*> collidingGameObjects{};
+	for (auto* pBoxCollider : m_CollidingObjects)
+	{
+		collidingGameObjects.insert(pBoxCollider->GetGameObject());
+	}
+	return collidingGameObjects;
+}

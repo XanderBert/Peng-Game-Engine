@@ -12,6 +12,7 @@ enum class GameEvent
 	PengoControllerKilled,
 	PengoKeyboardKilled,
 	NewLevelLoaded,
+	DiamondBlockThreeInARow,
 };
 
 
@@ -26,6 +27,9 @@ public:
 	PengoEvent& operator=(const PengoEvent& other) = delete;
 	PengoEvent& operator=(PengoEvent&& other)noexcept = delete;
 
+
+	//Do not call any level loading functions here, this will cause undefined behaviour
+	//The deletion of items happens in a certain order and that will disrupt that order
 
 	virtual void Notify(GameObject* /*object*/, GameEvent event) override
 	{
@@ -46,6 +50,12 @@ public:
 		case GameEvent::PengoControllerKilled:
 		{
 			LevelManager::GetInstance().PlayerDied();
+			break;
+		}
+		case GameEvent::DiamondBlockThreeInARow:
+		{
+			LevelManager::GetInstance().AddScore(500);
+			LevelManager::GetInstance().LoadNextLevel();
 			break;
 		}
 

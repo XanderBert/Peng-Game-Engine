@@ -140,6 +140,8 @@ void LevelManager::AddStartScreen()
 void LevelManager::LoadNextLevel()
 {
 	const auto& sceneManager = SceneManager::GetInstance();
+
+
 	const auto activeScene = sceneManager.GetActiveScene();
 
 	//Get the next level
@@ -158,8 +160,8 @@ void LevelManager::LoadLevel(int level)
 #endif //_DEBUG
 
 
-	const auto& sceneManager = SceneManager::GetInstance();
-	sceneManager.GetActiveScene()->MarkForDeletion();
+	auto& sceneManager = SceneManager::GetInstance();
+	//const auto oldScene = sceneManager.GetActiveScene();
 
 	ResetSnowbees();
 	ResetLives();
@@ -168,7 +170,7 @@ void LevelManager::LoadLevel(int level)
 	PengoLevelLoader levelLoader;
 
 	//Create a new scene with the next level
-	auto& scene = SceneManager::GetInstance().CreateScene("Level" + std::to_string(level));
+	auto& scene = sceneManager.CreateScene("Level" + std::to_string(level));
 
 	//Load the level
 	PengoLevel* level01 = levelLoader.LoadLevel("Level" + std::to_string(level) + ".xml");
@@ -177,7 +179,8 @@ void LevelManager::LoadLevel(int level)
 	level01->AddGameObjectsToScene(&scene);
 
 	//Set the new level as active scene
-	SceneManager::GetInstance().SetActiveScene(&scene);
+	sceneManager.SetActiveScene(&scene);
+	//oldScene->MarkForDeletion();
 
 	//Add Hud elements To the scene //TODO: make a ne LevelHud Class for this(LevelManager manages levels and the hud right now).
 	AddObjectsToActiveScene();

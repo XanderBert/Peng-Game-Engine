@@ -2,6 +2,8 @@
 #include "BoxCollider.h"
 #include <future>
 
+#include "SceneManager.h"
+
 
 //Possible collision detection algorithms
 
@@ -234,11 +236,11 @@ bool CollisionManager::_CheckCollision(const SDL_Rect& rectA, const SDL_Rect& re
 //----------------------------------------------------------------------------------------
 void CollisionManagerSingleThread::Update()
 {
-	// Remove any BoxColliders that have been flagged as removed
-	m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
-		{
-			return collider->CanBeDeleted();
-		}), m_BoxColliders.end());
+	//// Remove any BoxColliders that have been flagged as removed
+	//m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
+	//	{
+	//		return collider->CanBeDeleted();
+	//	}), m_BoxColliders.end());
 
 
 	for (BoxCollider* BoxA : m_BoxColliders)
@@ -263,7 +265,7 @@ void CollisionManagerSingleThread::Update()
 
 void CollisionManagerSingleThread::AddBoxCollider(BoxCollider* boxCollider)
 {
-	m_BoxColliders.emplace_back(boxCollider);
+	m_BoxColliders.emplace(boxCollider);
 }
 
 void CollisionManagerSingleThread::UnRegisterBoxCollider(BoxCollider* boxCollider)
@@ -297,13 +299,14 @@ bool CollisionManagerSingleThread::CheckCollision(const SDL_Rect& rectA, const S
 
 bool CollisionManagerSingleThread::DoesBoxNeedsToBeSkipped(BoxCollider* boxCollider)
 {
-	if (boxCollider->CanBeDeleted())
-	{
-		return true;
-	}
 	if (boxCollider->GetGameObject()->GetScene() != SceneManager::GetInstance().GetActiveScene())
 	{
 		return true;
 	}
+	if (boxCollider->CanBeDeleted())
+	{
+		return true;
+	}
+
 	return false;
 }

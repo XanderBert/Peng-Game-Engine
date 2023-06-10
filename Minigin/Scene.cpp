@@ -17,6 +17,7 @@ void Scene::Add(GameObject* object)
 {
 	object->SetScene(this);
 	m_objects.emplace_back(object);
+
 	for (auto& child : object->GetChildren())
 	{
 		Add(child);
@@ -78,4 +79,14 @@ void Scene::Render() const
 	{
 		object->Render();
 	}
+}
+
+void Scene::MarkForDeletion()
+{
+	for (const auto& object : m_objects)
+	{
+		object->MarkForDeletion();
+
+	}
+	m_CanBeDeleted = true;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 #include "SceneManager.h"
 
 class GameObject;
@@ -17,8 +18,12 @@ public:
 	void LateUpdate();
 	void Render() const;
 
-	void MarkForDeletion() { m_CanBeDeleted = true; }
-	bool CanBeDeleted() const { return m_CanBeDeleted; }
+	void MarkForDeletion();
+
+	bool CanBeDeleted() const
+	{
+		return m_CanBeDeleted;
+	}
 
 	~Scene();
 	Scene(const Scene& other) = delete;

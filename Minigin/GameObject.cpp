@@ -3,7 +3,6 @@
 #include "Transform.h"
 #include "ServiceLocator.h"
 #include "BoxCollider.h"
-
 GameObject::GameObject()
 
 {
@@ -125,21 +124,12 @@ void GameObject::MarkForDeletion()
 
 }
 
-std::vector<GameObject*> GameObject::GetCollidingObjects() const
+std::set<GameObject*> GameObject::GetCollidingObjects() const
 {
-	auto vector = std::vector<GameObject*>{};
+	if (GetComponent<BoxCollider>() == nullptr)
+		return std::set<GameObject*>();
 
-	if (const auto boxCollider = GetComponent<BoxCollider>())
-	{
-		for (const auto box : boxCollider->GetCollidingBoxes())
-		{
-			vector.emplace_back(box->GetGameObject());
-		}
-	}
-
-
-
-	return vector; // Empty vector
+	return GetComponent<BoxCollider>()->GetCollidingGameObjects();
 }
 
 void GameObject::AddToChildVector(GameObject* pChild)

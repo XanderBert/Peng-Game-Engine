@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
 #include <memory>
-#include <unordered_map>
+#include <set>
 #include <vector>
 #include <glm/vec2.hpp>
 
-#include "Scene.h"
 class Component;
+class Scene;
 class BoxCollider;
 
 class GameObject
@@ -62,7 +62,7 @@ public:
 	//
 	//Collision
 	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) {}
-	std::vector<GameObject*> GetCollidingObjects() const;
+	std::set<GameObject*> GetCollidingObjects() const;
 
 
 	//Don't know if i should use Tags or Id's
@@ -87,7 +87,7 @@ private:
 	//Just accesses the component and marks it for deletion
 	void MarkComponentForDeletionUtility(Component* component) const;
 
-	std::string m_Tag{ ""};
+	std::string m_Tag{ "" };
 };
 
 template<typename T>

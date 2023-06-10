@@ -2,7 +2,7 @@
 #include <functional>
 #include <vector>
 #include "GameObject.h"
-
+#include "Singleton.h"
 
 enum class GameMode
 {
@@ -41,6 +41,7 @@ public:
 	void PlayerDied();
 	void SnowBeeDied();
 
+
 private:
 	LevelManager();
 	friend class Singleton<LevelManager>;
@@ -55,6 +56,9 @@ private:
 	GameObject* m_pLives{};
 	GameObject* m_Fps{};
 	GameObject* m_pLevelSelection{};
+
+
+
 
 	int m_Score{};
 	int m_HighScore{};
