@@ -6,7 +6,7 @@
 class Minigin
 {
 public:
-	explicit Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize);
+	explicit Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize, const std::string& windowName);
 	~Minigin();
 	void Run(const std::function<void()>& load);
 

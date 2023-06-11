@@ -40,7 +40,7 @@ public:
 
 	void PlayerDied();
 	void SnowBeeDied();
-
+	void DiamondThreeInARow();
 
 private:
 	LevelManager();
@@ -65,6 +65,8 @@ private:
 	int m_AmountOfPlayers{};
 	int m_amountOfLives{};
 	int m_AmountOfSnowBees{};
+	int m_AmountOfBlockTriggers{};
+
 
 	GameMode m_GameMode{ GameMode::SinglePlayer };
 

@@ -46,7 +46,7 @@ public:
 
 	void NotifyObserver(GameObject* object, const GameEvent event) const
 	{
-		for (const auto obsrv : m_Observers)
+		for (const auto& obsrv : m_Observers)
 		{
 			obsrv->Notify(object, event);
 		}

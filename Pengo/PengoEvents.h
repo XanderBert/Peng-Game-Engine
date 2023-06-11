@@ -55,8 +55,8 @@ public:
 		}
 		case GameEvent::DiamondBlockThreeInARow:
 		{
-			LevelManager::GetInstance().AddScore(500);
-			LevelManager::GetInstance().LoadNextLevel();
+			LevelManager::GetInstance().AddScore(200);
+			LevelManager::GetInstance().DiamondThreeInARow();
 			break;
 		}
 

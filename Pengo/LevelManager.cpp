@@ -24,7 +24,7 @@ void LevelManager::AddScore(int score)
 	if (m_Score >= m_HighScore)
 	{
 		m_HighScore = m_Score;
-		m_pScoreObject->GetComponent<FontRenderer>()->SetText("High Score: " + std::to_string(m_HighScore));
+		m_pHighScore->GetComponent<FontRenderer>()->SetText("High Score: " + std::to_string(m_HighScore));
 	}
 }
 
@@ -160,6 +160,7 @@ void LevelManager::LoadNextLevel()
 
 	//Get the next level
 	auto level = static_cast<int>(activeScene->GetName().back()) - 48;
+
 	++level %= 4;
 
 	LoadLevel(level);
@@ -234,3 +235,14 @@ void LevelManager::SnowBeeDied()
 		LoadNextLevel();
 	}
 }
+
+void LevelManager::DiamondThreeInARow()
+{
+	++m_AmountOfBlockTriggers;
+
+	if(m_AmountOfBlockTriggers ==3)
+	{
+		LoadNextLevel();
+	}
+}
+

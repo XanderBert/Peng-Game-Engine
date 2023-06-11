@@ -25,7 +25,7 @@ void load()
 
 int main(int, char* [])
 {
-	Minigin engine{ "../Data/", g_WindowSize };
+	Minigin engine{ "../Data/", g_WindowSize, "Pengo Xander Berten 2DAE07" };
 	engine.Run(load);
 
 	return 0;

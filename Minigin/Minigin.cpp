@@ -62,7 +62,7 @@ void PrintSDLVersion()
 //TODO: If there is time, place all data from big to small inside a class
 //Todo: Put the cold path data in a class and put a pointer to it in the component
 
-Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize)
+Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize, const std::string& windowName)
 	:fixedTimeMStep(0.2f)
 {
 	ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
@@ -82,7 +82,7 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 
 	g_window = SDL_CreateWindow
 	(
-		"Programming 4 assignment",
+		windowName.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		windowSize.x,
