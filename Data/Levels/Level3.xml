@@ -1,0 +1,99 @@
+<game>
+  <objects>
+  <!--x= 58 -->
+  <!--y= 58 -->
+	  <object type="player" x="58" y="62" input="controller"/>
+	  <object type="iceBlock" x="202" y="62" />
+	  <object type="iceBlock" x="218" y="62" />
+	  <object type="iceBlock" x="234" y="62" />
+
+
+	  <object type="iceBlock" x="58" y="78" />
+	  <object type="iceBlock" x="74" y="78" />
+	  <object type="iceBlock" x="90" y="78" />
+	  <object type="iceBlock" x="138" y="78" />
+
+	  <object type="iceBlock" x="170" y="78" />
+	  <object type="iceBlock" x="218" y="78" />
+	  <object type="iceBlock" x="234" y="78" />
+	  <object type="iceBlock" x="250" y="78" />
+
+	  <object type="iceBlock" x="90" y="94" />
+	  <object type="iceBlock" x="106" y="94" />
+	  <object type="diamondBlock" x="122" y="94" />
+
+	  <object type="iceBlock" x="170" y="94" />
+	  <object type="iceBlock" x="218" y="94" />
+	  <object type="iceBlock" x="234" y="94" />
+
+
+
+	  <object type="iceBlock" x="58" y="110" />
+	  <object type="iceBlock" x="74" y="110" />
+	  <object type="iceBlock" x="90" y="110" />
+	  <object type="iceBlock" x="106" y="110" />
+	  <object type="iceBlock" x="122" y="110" />
+	  <object type="iceBlock" x="138" y="110" />
+	  <object type="snowBee" x="170" y="110" />
+	  <object type="iceBlock" x="234" y="110" />
+	  <object type="iceBlock" x="250" y="110" />
+
+
+
+	  
+	  <object type="iceBlock" x="58" y="126" />
+	  <object type="iceBlock" x="90" y="126" />
+	  <object type="iceBlock" x="106" y="126" />
+	  <object type="iceBlock" x="122" y="126" />
+	  <object type="snowBee" x="170" y="126" />
+	  <object type="iceBlock" x="234" y="126" />
+	  <object type="diamondBlock" x="58" y="142" />
+	  <object type="iceBlock" x="90" y="142" />
+	  <object type="iceBlock" x="106" y="142" />
+	  <object type="iceBlock" x="122" y="142" />
+	  <object type="iceBlock" x="154" y="142" />
+	  <object type="iceBlock" x="234" y="142" />
+	  <object type="iceBlock" x="58" y="158" />
+	  <object type="iceBlock" x="74" y="158" />
+	  <object type="iceBlock" x="106" y="158" />
+	  <object type="iceBlock" x="122" y="158" />
+	  <object type="iceBlock" x="154" y="158" />
+	  <object type="snowBee" x="74" y="174" />
+	  <object type="iceBlock" x="106" y="174" />
+	  <object type="iceBlock" x="122" y="174" />
+	  <object type="iceBlock" x="154" y="174" />
+	  <object type="iceBlock" x="170" y="174" />
+	  <object type="iceBlock" x="202" y="174" />
+	  <object type="iceBlock" x="106" y="190" />
+  <object type="iceBlock" x="154" y="190" />
+	  <object type="iceBlock" x="170" y="190" />
+	  <object type="iceBlock" x="202" y="190" />
+	  <object type="iceBlock" x="234" y="190" />
+	  <object type="iceBlock" x="58" y="206" />
+	  <object type="iceBlock" x="74" y="206" />
+	  <object type="iceBlock" x="106" y="206" />
+	  <object type="iceBlock" x="122" y="206" />
+	  <object type="diamondBlock" x="154" y="206" />
+	  <object type="iceBlock" x="170" y="206" />
+	  <object type="snowBee" x="202" y="206" />
+	  <object type="iceBlock" x="234" y="206" />
+	  <object type="iceBlock" x="74" y="222" />
+	  <object type="iceBlock" x="106" y="222" />
+	  <object type="iceBlock" x="202" y="222" />
+	  <object type="iceBlock" x="234" y="222" />
+
+	  <object type="iceBlock" x="250" y="238" />
+	  <object type="iceBlock" x="234" y="254" />
+	  <object type="snowBee" x="250" y="254" />
+	  <object type="iceBlock" x="58" y="270" />
+	  <object type="iceBlock" x="74" y="270" />
+
+	  <object type="snowBee" x="170" y="270" />
+	  <object type="iceBlock" x="58" y="286" />
+	  <object type="iceBlock" x="154" y="286" />
+	  <object type="iceBlock" x="170" y="286" />
+	  <object type="iceBlock" x="202" y="286" />
+	  <object type="iceBlock" x="218" y="286" />
+	  <object type="player" x="250" y="286" input="keyboard"/>
+  </objects>
+</game>

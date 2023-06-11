@@ -32,13 +32,13 @@ public:
 
 class null_Renderer final : public Renderer
 {
-	virtual void Init([[maybe_unused]] SDL_Window* window) override {}
+	virtual void Init(SDL_Window* /*window*/) override {}
 	virtual void Render() const override {}
 	virtual void Destroy() override {}
-	virtual void RenderTexture([[maybe_unused]] const Texture2D& texture, [[maybe_unused]] float x, [[maybe_unused]] float y) const override {}
-	virtual void RenderTexture([[maybe_unused]] const Texture2D& texture, [[maybe_unused]] float x, [[maybe_unused]] float y, [[maybe_unused]] const SDL_Rect& srcRect) const override {}
-	virtual void RenderRect([[maybe_unused]] const SDL_Rect& rect) const override {}
+	virtual void RenderTexture(const Texture2D& /*texture*/, float /*x*/, float /*y*/) const override {}
+	virtual void RenderTexture(const Texture2D& /*texture*/, float /*x*/, float /*y*/, const SDL_Rect& /*srcRect*/) const override {}
+	virtual void RenderRect(const SDL_Rect& /*rect*/) const override {}
 	SDL_Renderer* GetSDLRenderer() const override { return nullptr; }
 	const SDL_Color& GetBackgroundColor() const override { return *new SDL_Color{ 0, 0, 0, 0 }; }
-	virtual void SetBackgroundColor([[maybe_unused]] const SDL_Color& color) override {}
+	virtual void SetBackgroundColor(const SDL_Color& /*color*/) override {}
 };

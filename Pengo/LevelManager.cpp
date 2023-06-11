@@ -114,9 +114,21 @@ void LevelManager::ImGuiRenderFunction()
 
 	const auto levelThreeButton = ImGui::Button("Level3", { 80,20 });
 
-	if (levelOneButton) LoadLevel(1);
-	if (levelTwoButton) LoadLevel(2);
-	if (levelThreeButton) LoadLevel(3);
+	if (levelOneButton)
+	{
+		ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
+		LoadLevel(1);
+	};
+	if (levelTwoButton)
+	{
+		ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
+		LoadLevel(2);
+	}
+	if (levelThreeButton)
+	{
+		ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
+		LoadLevel(3);
+	}
 	//#endif // DEBUG
 }
 
