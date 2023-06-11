@@ -16,12 +16,10 @@ SnowBeeState* SnowBeeSpawningState::HandleInput()
 {
 	if (const auto baseState = SnowBeeState::HandleInput()) { return baseState; }
 
-	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+
+	if (m_GoInMovingState)
 	{
-		if (spriteRenderer->IsAnimationFinished())
-		{
-			return new SnowBeeMovingState{ m_pActor };
-		}
+		return new SnowBeeMovingState{ m_pActor };
 	}
 
 	return nullptr;
@@ -29,7 +27,12 @@ SnowBeeState* SnowBeeSpawningState::HandleInput()
 
 void SnowBeeSpawningState::Update()
 {
+	m_TimeUntilMoving -= TimeM::GetInstance().GetDeltaTimeM();
 
+	if (m_TimeUntilMoving <= 0)
+	{
+		m_GoInMovingState = true;
+	}
 }
 
 void SnowBeeSpawningState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
@@ -53,7 +56,7 @@ void SnowBeeSpawningState::OnEnter()
 	{
 		spriteRenderer->SetOffset({ 0,0 });
 		spriteRenderer->Play();
-		spriteRenderer->SetFrameTime(0.3f);
+		spriteRenderer->SetFrameTime(0.4f);
 	}
 
 }
@@ -75,9 +78,16 @@ SnowBeeState* SnowBeeMovingState::HandleInput()
 void SnowBeeMovingState::Update()
 {
 	m_TimeUntilAttack -= TimeM::GetInstance().GetDeltaTimeM();
+	m_TimeUntilMoveChange -= TimeM::GetInstance().GetDeltaTimeM();
+
 	if (m_TimeUntilAttack <= 0)
 	{
 		m_GoInAttackState = true;
+	}
+
+	if (m_TimeUntilMoveChange <= 0)
+	{
+		ChangeMovement();
 	}
 }
 
@@ -129,6 +139,11 @@ void SnowBeeMovingState::OnEnter()
 	{
 		moveComponent->SetCanMove(true);
 	}
+
+	//Seed the pseudo random generator
+	std::srand(static_cast<unsigned>(std::time(nullptr)));
+	m_TimeUntilAttack = std::rand() % 6 + 1.f;
+	m_TimeUntilMoveChange = std::rand() % 3 + 0.5f;
 }
 
 //
@@ -211,6 +226,8 @@ void SnowbeeAttackingState::OnEnter()
 		spriterenderer->SetOffset({ 0,32 });
 		spriterenderer->SetFrameTime(0.2f);
 	}
+
+	m_TimeUntilMoving = std::rand() % 3 + 0.5f;
 }
 
 

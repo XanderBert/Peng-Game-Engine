@@ -41,8 +41,6 @@ DiamondBlock::DiamondBlock() : GameObject()
 	}
 
 
-
-
 	AddComponent<GameObjectStorage>();
 	AddComponent<DirectionComponent>()->SetDirection({ 1,0 });
 	AddComponent<VelocityComponent>()->SetVelocity(80);

@@ -155,23 +155,21 @@ void LevelManager::LoadNextLevel()
 
 void LevelManager::LoadLevel(int level)
 {
-
-	[[maybe_unused]] auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
-
-
-
+	//Delete the old scene
 	auto& sceneManager = SceneManager::GetInstance();
-
 	const auto oldScene = sceneManager.GetActiveScene();
+	oldScene->MarkForDeletion();
 
-
+	//Reset values
 	ResetSnowbees();
 	ResetLives();
 
+	//Reset the collision manager
 	ServiceLocator::GetInstance().CollisionManager.GetService().Clear();
 
-	PengoLevelLoader levelLoader;
 
+	//Load the level
+	PengoLevelLoader levelLoader;
 	//Create a new scene with the next level
 	auto& scene = sceneManager.CreateScene("Level" + std::to_string(level));
 
@@ -184,14 +182,15 @@ void LevelManager::LoadLevel(int level)
 	//Set the new level as active scene
 	sceneManager.SetActiveScene(&scene);
 
+	//Add the elements
 	AddObjectsToActiveScene();
 	ResetHud();
 
+
+	[[maybe_unused]] auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
 #ifndef _DEBUG
 	audioService.Play(1);
 #endif
-
-	oldScene->MarkForDeletion();
 }
 
 void LevelManager::SetAmountOfPlayers(int amountOfPlayers)
