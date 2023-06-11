@@ -27,4 +27,5 @@ private:
 	bool collidingWithOtherDiamondBlock = false;
 	bool m_IsInARow = false;
 	float m_InARowAnimationTimer = 3.f;
+	std::set<DiamondBlock*> m_CollidingDiamonds;
 };

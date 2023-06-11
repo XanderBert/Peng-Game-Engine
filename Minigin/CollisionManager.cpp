@@ -227,8 +227,6 @@ bool CollisionManager::_CheckCollision(const SDL_Rect& rectA, const SDL_Rect& re
 }
 
 
-
-
 //----------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------
@@ -236,13 +234,8 @@ bool CollisionManager::_CheckCollision(const SDL_Rect& rectA, const SDL_Rect& re
 //----------------------------------------------------------------------------------------
 void CollisionManagerSingleThread::Update()
 {
-	//// Remove any BoxColliders that have been flagged as removed
-	//m_BoxColliders.erase(std::remove_if(m_BoxColliders.begin(), m_BoxColliders.end(), [](BoxCollider* collider)
-	//	{
-	//		return collider->CanBeDeleted();
-	//	}), m_BoxColliders.end());
-
-
+	// I am verry well aware that this not performant at all. ~(0n^2 + n)
+	// But for the size of the game this will do the job. 
 	for (BoxCollider* BoxA : m_BoxColliders)
 	{
 		if (DoesBoxNeedsToBeSkipped(BoxA)) { continue; }
@@ -260,6 +253,11 @@ void CollisionManagerSingleThread::Update()
 				BoxA->GetGameObject()->OnCollision(BoxB->GetGameObject(), BoxB->GetIsTrigger(), BoxA->GetIsTrigger());
 			}
 		}
+	}
+
+	for (BoxCollider* BoxA : m_BoxColliders)
+	{
+		BoxA->ClearCollidingObjects();
 	}
 }
 
@@ -305,6 +303,16 @@ bool CollisionManagerSingleThread::DoesBoxNeedsToBeSkipped(BoxCollider* boxColli
 	}
 	if (boxCollider->CanBeDeleted())
 	{
+		return true;
+	}
+	if (boxCollider == nullptr)
+	{
+		assert(true && "BoxCollider is nullptr");
+		return true;
+	}
+	if (boxCollider->GetGameObject() == nullptr)
+	{
+		assert(true && "GameObject is nullptr");
 		return true;
 	}
 

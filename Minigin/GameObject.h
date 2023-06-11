@@ -54,7 +54,10 @@ public:
 
 	//
 	//Deletion
-	bool CanBeDeleted()const { return m_CanBeDeleted; }
+	bool CanBeDeleted()const
+	{
+		return m_CanBeDeleted;
+	}
 
 	//Will delete the object in the late update
 	void MarkForDeletion();

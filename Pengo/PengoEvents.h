@@ -2,6 +2,7 @@
 #include "Observer.h"
 #include "GameObject.h"
 #include "LevelManager.h"
+#include "ServiceLocator.h"
 
 enum class GameEvent
 {

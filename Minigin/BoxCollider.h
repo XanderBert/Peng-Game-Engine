@@ -48,7 +48,7 @@ public:
 	void RemoveCollidingObject(BoxCollider* collider);
 
 	std::vector<BoxCollider*> GetCollidingBoxes() const;
-	std::set<GameObject*> GetCollidingGameObjects() const;
+	std::set<GameObject*> GetCollidingGameObjects();
 
 private:
 	std::mutex m_CollidingObjectsMutex{};

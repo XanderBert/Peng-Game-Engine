@@ -15,13 +15,18 @@ void SceneManager::FixedUpdate(float fixedTimeMStep)
 
 void SceneManager::LateUpdate()
 {
-	GetActiveScene()->LateUpdate();
 
-	if(GetActiveScene()->CanBeDeleted())
+	//Here we will Go over all the scene so that old scenes are properly deleted
+	for (const auto& scene : m_scenes)
 	{
-		delete GetActiveScene();
-	}
 
+		scene->LateUpdate();
+
+		if (scene->CanBeDeleted())
+		{
+			//delete scene.get();
+		}
+	}
 }
 
 void SceneManager::Render()

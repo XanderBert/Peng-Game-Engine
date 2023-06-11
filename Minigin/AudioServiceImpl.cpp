@@ -27,7 +27,11 @@ AudioServiceImpl::~AudioServiceImpl()
 
 void AudioServiceImpl::Play(int id)
 {
+	if (isAudioInQueue(id)) return; //If the audio is already in the queue, don't add it again. (This prevents the same audio from playing multiple times at once
+
 	std::unique_lock lock(m_AudioMutex);
+
+
 
 	if (m_Sounds.empty() || !m_Sounds.contains(id)) return;
 	m_AudioQueue.push(id);
@@ -90,6 +94,34 @@ int AudioServiceImpl::GetLastId() const
 	}
 
 	return largestValue;
+}
+
+bool AudioServiceImpl::isAudioInQueue(int id)
+{
+	std::queue<int> tempQueue{};
+
+	// Create a copy of the original queue
+	{
+		m_AudioMutex.lock();
+		tempQueue = m_AudioQueue;
+		m_AudioMutex.unlock();
+	}
+
+
+
+	// Iterate through the queue
+	while (!tempQueue.empty()) {
+		// Check if the front element of the queue matches the target number
+		if (tempQueue.front() == id)
+		{
+			return true;  // Number found in the queue
+		}
+
+		// Remove the front element and move to the next one
+		tempQueue.pop();
+	}
+
+	return false;  // Number not found in the queue
 }
 
 void AudioServiceImpl::PlayAudioAsync()

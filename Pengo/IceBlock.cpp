@@ -41,7 +41,7 @@ IceBlock::IceBlock() : GameObject()
 	//Direction Component
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
 	//Move Component
-	AddComponent<MoveComponent>();
+	AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.f);
 
 	//Trigger Component
 	const auto triggerComponent = AddComponent<TriggerComponent>();
@@ -51,7 +51,10 @@ IceBlock::IceBlock() : GameObject()
 	triggerComponent->SetTag("IceBlockTrigger");
 }
 
-IceBlock::~IceBlock() = default;
+IceBlock::~IceBlock()
+{
+
+};
 
 void IceBlock::Update()
 {
@@ -68,9 +71,13 @@ void IceBlock::OnCollision(GameObject* /*other*/, bool isTrigger, bool isSenderT
 	if (moveComp->CanMove())
 	{
 		moveComp->SetCanMove(false);
-		if (moveComp->GetDistanceMoved() < 3.f)
+
+		if (moveComp->GetDistanceMoved() < 5.f)
 		{
 			GetComponent<SpriteRenderer>()->Play();
+		}else
+		{
+			moveComp->ResetMovement();
 		}
 	}
 }

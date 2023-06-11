@@ -54,15 +54,14 @@ SnowBee::SnowBee()
 	m_pState = new SnowBeeSpawningState(this);
 
 	AddComponent<VelocityComponent>()->SetVelocity(60);
-	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
+	AddComponent<DirectionComponent>()->SetDirection({ 1,0 });
 	AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.f);
 	AddComponent<GameObjectStorage>();
 
 
 	const auto wallTrigger = AddComponent<TriggerComponent>();
-	wallTrigger->SetColliderSize({18,18 });
+	wallTrigger->SetColliderSize({ 18,18 });
 	wallTrigger->EnableTrigger();
-	//wallTrigger->DebugRender(true);
 
 	LevelManager::GetInstance().IncrementAmountOfSnowBees();
 }

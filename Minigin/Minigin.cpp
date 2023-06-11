@@ -9,6 +9,7 @@
 #include <chrono>
 //#include <steam_api_common.h>
 
+#include "AudioServiceDebug.h"
 #include "imgui.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -45,7 +46,7 @@ void PrintSDLVersion()
 	version = *TTF_Linked_Version();
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
-	
+
 	SDL_MIXER_VERSION(&version)
 		printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
 			version.major, version.minor, version.patch);
@@ -64,6 +65,14 @@ void PrintSDLVersion()
 Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize)
 	:fixedTimeMStep(0.2f)
 {
+	ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
+	ServiceLocator::GetInstance().CollisionManager.SetService(new CollisionManagerSingleThread());
+	ServiceLocator::GetInstance().InputManager.SetService(new InputManager());
+	ServiceLocator::GetInstance().Renderer.SetService(new Renderer());
+	ServiceLocator::GetInstance().ResourceManager.SetService(new ResourceManager());
+
+
+
 	PrintSDLVersion();
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -102,7 +111,13 @@ Minigin::~Minigin()
 
 void Minigin::Run(const std::function<void()>& load)
 {
+
+
+
+
 	load();
+
+
 
 	const auto& renderer = ServiceLocator::GetInstance().Renderer.GetService();
 	auto& sceneManager = SceneManager::GetInstance();

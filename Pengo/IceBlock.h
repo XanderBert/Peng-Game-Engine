@@ -24,4 +24,5 @@ private:
 	const size_t m_NrFrames{ 10 };
 	const glm::vec2 m_SpriteSize{ 16,16 };
 	void UpdateSpriteLogic();
+
 };

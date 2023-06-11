@@ -225,8 +225,8 @@ void DyingState::OnEnter()
 		controllerComp->DisableInput();
 	}
 
-	ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
 	ServiceLocator::GetInstance().AudioService.GetService().Play(2);
+	ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
 }
 
 //

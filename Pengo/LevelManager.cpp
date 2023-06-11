@@ -33,17 +33,17 @@ void LevelManager::AddObjectsToActiveScene()
 	auto* activeScene = SceneManager::GetInstance().GetActiveScene();
 
 
-#ifdef _DEBUG
-	//LevelSelection
+	//#ifdef _DEBUG
+		//LevelSelection
 	m_pLevelSelection = new GameObject();
 	const auto imgui = m_pLevelSelection->AddComponent<ImGuiComponent>();
 	imgui->SetWindowName("Select Level");
 	//Bind a function of a class to the imgui component (a class is this class)
 	imgui->SetImGuiRenderFunction([this] {ImGuiRenderFunction(); });
 	activeScene->Add(m_pLevelSelection);
-#endif // DEBUG
+	//#endif // DEBUG
 
-	//FPS Counter
+		//FPS Counter
 	m_Fps = new GameObject();
 	const auto fpsCounter{ m_Fps->AddComponent<FPSCounter>() };
 	const auto transComponentFPS{ m_Fps->GetComponent<Transform>() };
@@ -102,8 +102,7 @@ void LevelManager::ResetLevel()
 
 void LevelManager::ImGuiRenderFunction()
 {
-
-#ifdef _DEBUG
+	//#ifdef _DEBUG
 	ImGui::SetWindowPos({ 0,350 });
 	ImGui::SetWindowSize({ 300,200 });
 
@@ -118,7 +117,7 @@ void LevelManager::ImGuiRenderFunction()
 	if (levelOneButton) LoadLevel(1);
 	if (levelTwoButton) LoadLevel(2);
 	if (levelThreeButton) LoadLevel(3);
-#endif // DEBUG
+	//#endif // DEBUG
 }
 
 void LevelManager::ResetHud()
@@ -139,6 +138,9 @@ void LevelManager::AddStartScreen()
 
 void LevelManager::LoadNextLevel()
 {
+
+	ServiceLocator::GetInstance().AudioService.GetService().Stop(3);
+	ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
 	const auto& sceneManager = SceneManager::GetInstance();
 
 
@@ -159,11 +161,14 @@ void LevelManager::LoadLevel(int level)
 
 
 	auto& sceneManager = SceneManager::GetInstance();
-	//const auto oldScene = sceneManager.GetActiveScene();
+
+	const auto oldScene = sceneManager.GetActiveScene();
+
 
 	ResetSnowbees();
 	ResetLives();
 
+	ServiceLocator::GetInstance().CollisionManager.GetService().Clear();
 
 	PengoLevelLoader levelLoader;
 
@@ -178,15 +183,15 @@ void LevelManager::LoadLevel(int level)
 
 	//Set the new level as active scene
 	sceneManager.SetActiveScene(&scene);
-	//oldScene->MarkForDeletion();
 
-	//Add Hud elements To the scene //TODO: make a ne LevelHud Class for this(LevelManager manages levels and the hud right now).
 	AddObjectsToActiveScene();
 	ResetHud();
 
 #ifndef _DEBUG
 	audioService.Play(1);
 #endif
+
+	oldScene->MarkForDeletion();
 }
 
 void LevelManager::SetAmountOfPlayers(int amountOfPlayers)

@@ -20,7 +20,7 @@ public:
 	virtual void Update() = 0;
 	virtual void AddBoxCollider(BoxCollider* boxCollider) = 0;
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) = 0;
-
+	virtual void Clear() = 0;
 	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) = 0;
 };
 
@@ -38,7 +38,7 @@ public:
 	virtual void Update() override;
 	virtual void AddBoxCollider(BoxCollider* boxCollider) override;
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
-
+	virtual void Clear() override {}
 	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
 private:
 	void CollisionWorker();
@@ -72,12 +72,12 @@ public:
 	CollisionManagerSingleThread(CollisionManagerSingleThread&& other) = delete;
 	CollisionManagerSingleThread& operator=(const CollisionManagerSingleThread& other) = delete;
 	CollisionManagerSingleThread& operator=(CollisionManagerSingleThread&& other) = delete;
-
+	virtual void Clear() override { m_BoxColliders.clear(); }
 	virtual void Update() override;
 	virtual void AddBoxCollider(BoxCollider* boxCollider) override;
 	virtual void UnRegisterBoxCollider(BoxCollider* boxCollider) override;
-
 	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
+
 private:
 	std::set<BoxCollider*> m_BoxColliders;
 	bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);

@@ -43,8 +43,8 @@ DiamondBlock::DiamondBlock() : GameObject()
 
 
 
-
-	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
+	AddComponent<GameObjectStorage>();
+	AddComponent<DirectionComponent>()->SetDirection({ 1,0 });
 	AddComponent<VelocityComponent>()->SetVelocity(80);
 	AddComponent<MoveComponent>()->SetCanMove(false);
 	AddComponent<ObserverComponent>()->AddObserver(std::make_shared<PengoEvent>());
@@ -75,10 +75,8 @@ void DiamondBlock::Update()
 void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	GameObject::OnCollision(other, isTrigger, isSenderTrigger);
-
-
 	const auto& collidingBoxes = GetCollidingObjects();
-	std::set<DiamondBlock*> diamondBlocks;
+
 
 	//Collect the colliding blocks of THIS diamond block
 	//This will be 1 or 2 blocks
@@ -86,18 +84,19 @@ void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 	{
 		if (gameOBJ->GetTag() == GetTag() && gameOBJ != this)
 		{
-			diamondBlocks.emplace(dynamic_cast<DiamondBlock*>(gameOBJ));
+			m_CollidingDiamonds.emplace(dynamic_cast<DiamondBlock*>(gameOBJ));
 		}
 	}
 
 	//Only do the rest of the check on the middle block (The one that will have 2 collisions)
-	if (diamondBlocks.size() > 1)
+	if (m_CollidingDiamonds.size() > 1)
 	{
-		for (const auto block : diamondBlocks)
+		for (const auto block : m_CollidingDiamonds)
 		{
 			block->SetIsInARow(true);
 		}
 		m_IsInARow = true;
+
 	}
 
 

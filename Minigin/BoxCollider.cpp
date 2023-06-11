@@ -88,24 +88,30 @@ std::vector<BoxCollider*> BoxCollider::GetCollidingBoxes() const
 	return m_CollidingObjects;
 }
 
-std::set<GameObject*> BoxCollider::GetCollidingGameObjects() const
+std::set<GameObject*> BoxCollider::GetCollidingGameObjects()
 {
 	std::set<GameObject*> collidingGameObjects{};
 
-	
-
-	for (const auto* pBoxCollider : m_CollidingObjects)
+	for (auto* pBoxCollider : m_CollidingObjects)
 	{
-		if(pBoxCollider == nullptr || pBoxCollider->m_IsTrigger)
+		if (pBoxCollider == nullptr)
 		{
+			RemoveCollidingObject(pBoxCollider);
+			continue;
+		}
+		if (pBoxCollider->GetGameObject() == nullptr)
+		{
+			assert(false);
 			continue;
 		}
 
-		if(pBoxCollider->GetGameObject() != m_pOwner && !pBoxCollider->GetGameObject()->CanBeDeleted())
+		if (pBoxCollider->m_IsTrigger) continue;
+
+		if (pBoxCollider->GetGameObject() != m_pOwner && !pBoxCollider->GetGameObject()->CanBeDeleted())
 		{
 			collidingGameObjects.insert(pBoxCollider->GetGameObject());
 		}
-		
+
 	}
 	return collidingGameObjects;
 }

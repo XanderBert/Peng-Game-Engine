@@ -392,11 +392,11 @@ void SnowBeeState::ChangeMovement()
 
 		auto newDirection = oldDirection;
 
+
 		// Generate a new direction until it is different from the old direction
 		while (newDirection == oldDirection)
 		{
 			// Generate a random integer between 0 and 3
-
 			const int numQuarterTurns = std::rand() % 9;
 
 
@@ -406,8 +406,6 @@ void SnowBeeState::ChangeMovement()
 				m_GoInAttackState = true;
 			}
 
-			newDirection = oldDirection;
-
 			// Perform the quarter turns
 			for (int i = 0; i < numQuarterTurns; ++i)
 			{
@@ -415,8 +413,9 @@ void SnowBeeState::ChangeMovement()
 				newDirection.x = -newDirection.y;
 				newDirection.y = temp;
 			}
-
-			directionComponent->SetDirection(newDirection);
 		}
+
+		directionComponent->SetDirection(newDirection);
 	}
 }
+

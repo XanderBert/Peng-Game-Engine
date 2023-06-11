@@ -28,5 +28,6 @@ private:
 	std::condition_variable m_ConditionVariable{};
 	bool m_StopRequested{};
 
+	bool isAudioInQueue(int id);
 	void PlayAudioAsync();
 };
