@@ -17,6 +17,10 @@ glm::vec<2, glm::uint> g_WindowSize{ 324, 400 };
 void load()
 {
 	LevelManager::GetInstance().AddStartScreen();
+	auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
+	audioService.AddSound(1, "Sounds/ActStart.mp3");
+	audioService.AddSound(2, "Sounds/ActOver.mp3");
+	audioService.AddSound(3, "Sounds/ActClear.mp3");
 }
 
 int main(int, char* [])

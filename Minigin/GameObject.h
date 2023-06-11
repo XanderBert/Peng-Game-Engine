@@ -69,7 +69,15 @@ public:
 	//I chose Tags for readability in the code although this will result in less performance
 	//I could use a map with a string as key and a int as value to reduce the performance hit?
 	void SetTag(const std::string& tag) { m_Tag = tag; }
-	std::string GetTag() const { return m_Tag; }
+	std::string GetTag() const
+	{
+		if (m_Tag.empty())
+		{
+			return "No Tag";
+		}
+
+		return m_Tag;
+	}
 
 	Scene* GetScene() const { return m_pScene; }
 	void SetScene(Scene* pScene) { m_pScene = pScene; }

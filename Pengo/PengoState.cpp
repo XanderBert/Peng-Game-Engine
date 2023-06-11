@@ -48,6 +48,7 @@ void AttackingState::OnEnter()
 
 void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
+
 	if (other->GetTag() == "IceBlock" && isSenderTrigger)
 	{
 		if (!m_MovedIceBlock)
@@ -78,12 +79,6 @@ void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 			m_MovedIceBlock = true;
 		}
 	}
-
-
-
-
-
-
 
 	m_IsHit = IsHit(other, isTrigger, isSenderTrigger);
 
@@ -187,9 +182,19 @@ PengoState* DyingState::HandleInput()
 
 void DyingState::Update()
 {
-	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
+	m_AnimationPlayTime -= TimeM::GetInstance().GetDeltaTimeM();
+
+	if (m_AnimationPlayTime <= 0.f)
 	{
-		spriteRenderer->SetAnimationFrame(0);
+		if (const auto inputComp = m_pActor->GetComponent<InputComponent>())
+		{
+			m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoKeyboardKilled);
+		}
+
+		if (const auto controllerComp = m_pActor->GetComponent<ControllerComponent>())
+		{
+			m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoControllerKilled);
+		}
 	}
 }
 
@@ -207,30 +212,28 @@ void DyingState::OnEnter()
 		spriteRenderer->Play();
 		spriteRenderer->SetOffset({ 0,0 });
 		spriteRenderer->SetFrameTime(0.4f);
+		spriteRenderer->SetAnimationFrame(0);
 	}
 
 	if (const auto inputComp = m_pActor->GetComponent<InputComponent>())
 	{
 		inputComp->DisableInput();
-		m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoKeyboardKilled);
 	}
 
 	if (const auto controllerComp = m_pActor->GetComponent<ControllerComponent>())
 	{
 		controllerComp->DisableInput();
-		m_pActor->GetComponent<ObserverComponent>()->NotifyObserver(m_pActor, GameEvent::PengoControllerKilled);
 	}
 
+	ServiceLocator::GetInstance().AudioService.GetService().Stop(1);
 	ServiceLocator::GetInstance().AudioService.GetService().Play(2);
 }
 
 //
 //
 //ALL STATES
-bool PengoState::IsHit(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
+bool PengoState::IsHit(GameObject* other, bool /*isTrigger*/, bool /*isSenderTrigger*/)
 {
-	if (isSenderTrigger) { return false; }
-
 	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
 	{
 		if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()))

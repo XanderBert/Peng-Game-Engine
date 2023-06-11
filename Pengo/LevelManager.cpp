@@ -65,7 +65,7 @@ void LevelManager::AddObjectsToActiveScene()
 	const auto font2 = m_pHighScore->AddComponent<FontRenderer>();
 	font2->SetFont("Fonts/8BitDragon.ttf", 10);
 	font2->SetText("High Score: 0");
-	m_pHighScore->GetComponent<Transform>()->SetLocalPosition({ 100, 5 });
+	m_pHighScore->GetComponent<Transform>()->SetLocalPosition({ 200, 5 });
 	activeScene->Add(m_pHighScore);
 }
 
@@ -155,9 +155,7 @@ void LevelManager::LoadLevel(int level)
 {
 
 	[[maybe_unused]] auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
-#ifndef _DEBUG
-	audioService.Stop(1);
-#endif //_DEBUG
+
 
 
 	auto& sceneManager = SceneManager::GetInstance();

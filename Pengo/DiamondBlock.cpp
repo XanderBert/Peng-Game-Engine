@@ -10,6 +10,7 @@
 #include "GameObjectStorage.h"
 #include "ObserverComponent.h"
 #include "PengoEvents.h"
+#include "SpriteRenderer.h"
 
 
 DiamondBlock::DiamondBlock() : GameObject()
@@ -24,7 +25,11 @@ DiamondBlock::DiamondBlock() : GameObject()
 	triggerComponent->SetColliderSize(m_TriggerSize);
 
 	const auto texture = AddComponent<TextureRenderer>();
-	texture->SetTexture("DiamondBlock.png");
+	const auto spriteRenderer = AddComponent<SpriteRenderer>();
+	spriteRenderer->SetSpriteSize(m_SpriteSize);
+	spriteRenderer->SetTexture("DiamondBlock.png");
+
+
 
 	GetComponent<Transform>()->SetWorldPosition({ 77,70 });
 
@@ -92,9 +97,9 @@ void DiamondBlock::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 	if (diamondBlocks.size() > 1)
 	{
 		GetComponent<ObserverComponent>()->NotifyObserver(this, GameEvent::DiamondBlockThreeInARow);
-		for (const auto block : diamondBlocks) block->MarkForDeletion();
+		/*for (const auto block : diamondBlocks) block->MarkForDeletion();
 		diamondBlocks.clear();
-		MarkForDeletion();
+		MarkForDeletion();*/
 	}
 }
 

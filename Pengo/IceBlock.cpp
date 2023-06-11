@@ -64,10 +64,14 @@ void IceBlock::OnCollision(GameObject* /*other*/, bool isTrigger, bool isSenderT
 	//Stop the block when it collides again an play the animation.
 	if (isTrigger) return;
 	if (isSenderTrigger) return;
-	if (GetComponent<MoveComponent>()->CanMove())
+	const auto moveComp = GetComponent<MoveComponent>();
+	if (moveComp->CanMove())
 	{
-		GetComponent<SpriteRenderer>()->Play();
-		GetComponent<MoveComponent>()->SetCanMove(false);
+		moveComp->SetCanMove(false);
+		if (moveComp->GetDistanceMoved() < 3.f)
+		{
+			GetComponent<SpriteRenderer>()->Play();
+		}
 	}
 }
 

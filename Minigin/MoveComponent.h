@@ -29,10 +29,15 @@ public:
 	void SetTunnelingMultiplier(float multiplier);
 	float GetTunnelingMultiplier() const;
 	bool GetMoveChanged() const;
+	float GetDistanceMoved() const;
 
 private:
 	bool m_CanMove{ false };
 	float m_TunnelingMulitplier{ 2.4f };
 	bool m_MoveChanged{ false };
+
+	float m_DistanceMoved{ 0.f };
+	glm::vec2 m_StartingPosition{ 0.f, 0.f };
+	glm::vec2 m_EndingPosition{ 0.f, 0.f };
 
 };

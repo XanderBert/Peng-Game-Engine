@@ -4,6 +4,7 @@
 #include "TimeM.h"
 #include "Transform.h"
 #include "VelocityComponent.h"
+#include <glm/gtx/fast_square_root.hpp> 
 
 MoveComponent::MoveComponent(GameObject* pOwner) : Component(pOwner)
 {
@@ -41,10 +42,21 @@ void MoveComponent::Render()
 void MoveComponent::SetCanMove(bool canMove)
 {
 
-	if(canMove != m_CanMove)
+	if (canMove != m_CanMove)
 	{
 		m_MoveChanged = true;
 		m_CanMove = canMove;
+	}
+
+	if (canMove)
+	{
+		m_DistanceMoved = 0.f;
+		m_StartingPosition = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+	}
+	else
+	{
+		m_EndingPosition = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+		m_DistanceMoved = glm::abs(length(m_EndingPosition - m_StartingPosition));
 	}
 }
 
@@ -77,4 +89,9 @@ float MoveComponent::GetTunnelingMultiplier() const
 bool MoveComponent::GetMoveChanged() const
 {
 	return m_MoveChanged;
+}
+
+float MoveComponent::GetDistanceMoved() const
+{
+	return m_DistanceMoved;
 }

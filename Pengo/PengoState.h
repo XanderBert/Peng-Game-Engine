@@ -11,7 +11,7 @@ public:
 
 	virtual PengoState* HandleInput() override = 0;
 	virtual void Update() override = 0;
-	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) = 0;
+	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override = 0;
 protected:
 	bool IsHit(GameObject* other, bool isTrigger, bool isSenderTrigger);
 	bool m_IsHit{ false };
@@ -72,4 +72,5 @@ public:
 private:
 	virtual void OnEnter() override;
 	int m_Animations{ };
+	float m_AnimationPlayTime{ 1.5f };
 };

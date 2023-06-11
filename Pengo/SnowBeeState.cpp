@@ -84,10 +84,31 @@ void SnowBeeMovingState::Update()
 void SnowBeeMovingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	SnowBeeState::OnCollision(other, isTrigger, isSenderTrigger);
+	if (isSenderTrigger) return;
+
+	//If it is an IceBlock it collided with
+	if (other->GetTag() == "IceBlock")
+	{
+		//If te the iceBlock was fired by pengo.
+		if (other->GetComponent<MoveComponent>()->CanMove())
+		{
+			m_IsHit = true;
+
+			//Store the Ice Block because we will need its fire direction later for the dying animation
+			if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
+			{
+				storage->StoreGameObject(other);
+			}
+
+			return;
+		}
+
+	}
+
 
 	if (isTrigger) return;
+	if (other->GetTag() == "Pengo" || other->GetTag() == "SnowBee") return;
 	ChangeMovement();
-
 }
 
 void SnowBeeMovingState::OnEnter()
@@ -96,9 +117,7 @@ void SnowBeeMovingState::OnEnter()
 	{
 		directionComponent->SetDirection({ 1, 0 });
 	}
-
-	//ChangeMovement();
-
+	ChangeMovement();
 	if (const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>())
 	{
 		spriteRenderer->SetOffset({ 0,16 });
@@ -138,20 +157,50 @@ void SnowbeeAttackingState::Update()
 void SnowbeeAttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	SnowBeeState::OnCollision(other, isTrigger, isSenderTrigger);
-	if (isTrigger) return;
+	if (isSenderTrigger) return;
+
 
 	if (other->GetTag() == "IceBlock")
 	{
+		//If it is one of the same objects that the snowbee attacked do nothing
+		for (const auto iceBlock : m_pActor->GetComponent<GameObjectStorage>()->GetGameObjectsFromVector())
+		{
+			if (iceBlock == other)
+			{
+				return;
+			}
+
+		}
+
+		//If te the iceBlock was fired by pengo.
+		if (other->GetComponent<MoveComponent>()->CanMove())
+		{
+			m_IsHit = true;
+
+			//Store the Ice Block because we will need its fire direction later for the dying animation
+			if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
+			{
+				storage->StoreGameObject(other);
+			}
+
+			return;
+		}
+
+
 		other->GetComponent<SpriteRenderer>()->Play();
 		m_pActor->GetComponent<GameObjectStorage>()->AddGameObjectToVector(other);
 	}
 
-	ChangeMovement();
 
+	if (isTrigger) return;
+	if (other->GetTag() == "Pengo" || other->GetTag() == "SnowBee") return;
+	ChangeMovement();
 }
 
 void SnowbeeAttackingState::OnEnter()
 {
+
+	m_GoInAttackState = false;
 	if (const auto moveComponent = m_pActor->GetComponent<MoveComponent>())
 	{
 		moveComponent->SetCanMove(true);
@@ -204,8 +253,6 @@ void SnowBeeDyingState::OnEnter()
 		spriteRenderer->SetOffset({ 0,64 });
 		spriteRenderer->SetFrameTime(0.2f);
 		spriteRenderer->SetAnimationFrame(0);
-
-		//TODO DIfferantiate between enter bc of Ice or because of Concussion
 
 		//Get the IceBlock
 		if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
@@ -305,11 +352,10 @@ SnowBeeState* SnowBeeState::HandleInput()
 	return nullptr;
 }
 
-void SnowBeeState::OnCollision(GameObject* other, bool isTrigger, bool /*isSenderTrigger*/)
+void SnowBeeState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	//If it collides with an active wall trigger.
 	//Go in the concussed state
-
 	if (other->GetTag() == "Wall")
 	{
 		if (isTrigger)
@@ -318,41 +364,30 @@ void SnowBeeState::OnCollision(GameObject* other, bool isTrigger, bool /*isSende
 			{
 				m_IsConcussed = true;
 			}
-		}
-	}
 
 
-	//If it is an IceBlock it collided with
-	if (other->GetTag() == "IceBlock")
-	{
-		//If it is one of the same objects that the snowbee attacked do nothing
-		for (const auto iceBlock : m_pActor->GetComponent<GameObjectStorage>()->GetGameObjectsFromVector())
-		{
-			if (iceBlock == other)
+			if (!isSenderTrigger)
 			{
-				return;
+				ChangeMovement();
 			}
+
 		}
 
-		//If te iceblock is in its it hitted state
-		if (other->GetComponent<SpriteRenderer>()->IsPlaying())
-		{
-			m_IsHit = true;
-
-			//Store the Ice Block because we will need its fire direction later
-			if (const auto storage = m_pActor->GetComponent<GameObjectStorage>())
-				storage->StoreGameObject(other);
-		}
 	}
+
 }
 
 //Change Direction -> Can be placed in the DirectionComponent
 void SnowBeeState::ChangeMovement()
 {
 	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+
 	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
 	{
-		std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed the random number generator
+		std::srand(static_cast<unsigned int>(std::time(nullptr) + std::rand()));
+
+
+		// Seed the random number generator
 		const glm::vec2 oldDirection{ directionComponent->GetDirection() };
 
 		auto newDirection = oldDirection;
@@ -361,7 +396,15 @@ void SnowBeeState::ChangeMovement()
 		while (newDirection == oldDirection)
 		{
 			// Generate a random integer between 0 and 3
-			const int numQuarterTurns = std::rand() % 4;
+
+			const int numQuarterTurns = std::rand() % 9;
+
+
+			//A chase that snow bee just will try to plow trough
+			if (numQuarterTurns == 8)
+			{
+				m_GoInAttackState = true;
+			}
 
 			newDirection = oldDirection;
 

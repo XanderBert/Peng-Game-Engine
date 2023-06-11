@@ -8,9 +8,13 @@
 #include "SnowBeeState.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
+#include "TriggerComponent.h"
 
 SnowBee::SnowBee()
 {
+
+	SetTag("SnowBee");
+
 	AddComponent<ObserverComponent>()->AddObserver(m_pObserver);
 
 	const auto textureRenderer{ AddComponent<TextureRenderer>() };
@@ -42,17 +46,23 @@ SnowBee::SnowBee()
 
 
 	const auto boxCollision{ AddComponent<BoxCollider>() };
-	boxCollision->SetColliderSize(m_SpriteSize);
+	boxCollision->SetColliderSize({ 10,10 });
+	boxCollision->SetColliderOffset({ 3,3 });
 
 	GetComponent<Transform>()->SetWorldPosition({ 250,250 });
 
 	m_pState = new SnowBeeSpawningState(this);
 
-	AddComponent<VelocityComponent>()->SetVelocity(40);
+	AddComponent<VelocityComponent>()->SetVelocity(60);
 	AddComponent<DirectionComponent>()->SetDirection({ 0,0 });
-	AddComponent<MoveComponent>();
+	AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.f);
 	AddComponent<GameObjectStorage>();
 
+
+	const auto wallTrigger = AddComponent<TriggerComponent>();
+	wallTrigger->SetColliderSize({18,18 });
+	wallTrigger->EnableTrigger();
+	//wallTrigger->DebugRender(true);
 
 	LevelManager::GetInstance().IncrementAmountOfSnowBees();
 }
@@ -76,10 +86,10 @@ void SnowBee::LateUpdate()
 void SnowBee::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
-	if (isTrigger)
-	{
-		return;
-	}
+	//if (isTrigger)
+	//{
+	//	return;
+	//}
 
 }
 

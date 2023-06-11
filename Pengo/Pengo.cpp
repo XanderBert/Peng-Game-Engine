@@ -36,7 +36,7 @@ Pengo::Pengo() : GameObject()
 
 	//Trigger Component
 	const auto triggerComponent = AddComponent<TriggerComponent>();
-	triggerComponent->SetColliderSize({ 6,10 });
+	triggerComponent->SetColliderSize({ 4,8 });
 	triggerComponent->SetOffsetMultiplier({ 10 });
 	triggerComponent->SetColliderOffset({ 3,3 });
 
@@ -66,7 +66,10 @@ Pengo::Pengo() : GameObject()
 
 	//Box Collider Component
 	const auto boxCollision{ AddComponent<BoxCollider>() };
-	boxCollision->SetColliderSize({ 13,13 });
+	boxCollision->SetColliderSize({ 11,11 });
+	boxCollision->SetColliderOffset({ 3,3 });
+	//boxCollision->DebugRender(true);
+
 
 	//GameObject Storage Component
 	AddComponent<GameObjectStorage>();
@@ -103,24 +106,25 @@ void Pengo::LateUpdate()
 
 void Pengo::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	if (dynamic_cast<Pengo*>(other)) { return; }
+	if (other->GetTag() == "Pengo") { return; }
 
 	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 
 	if (isSenderTrigger) return;
-	if (isTrigger) return;
-
-
 	//Dont Collide With Concussed  or Dying SnowBee
 	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
 	{
-		if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()) || dynamic_cast<SnowBeeDyingState*>(snowBee->GetState()))
+
+		return;
+		/*if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()) || dynamic_cast<SnowBeeDyingState*>(snowBee->GetState()))
 		{
 			return;
-		}
+		}*/
 	}
 
+	if (isTrigger) return;
 	GetComponent<MoveComponent>()->ResetMovement();
+
 }
 
 void Pengo::UpdateState()

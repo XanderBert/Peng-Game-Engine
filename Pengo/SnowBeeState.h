@@ -15,6 +15,7 @@ protected:
 
 	bool m_IsHit{};
 	bool m_IsConcussed{};
+	bool m_GoInAttackState{};
 	//Multiplies the the direction of the previous location to prevent tunneling
 	float m_TunnelingMultiplier{ 3.f };
 
@@ -52,7 +53,7 @@ public:
 private:
 	void OnEnter() override;
 	float m_TimeUntilAttack{ 5.5f };
-	bool m_GoInAttackState{};
+
 };
 
 
@@ -69,7 +70,7 @@ public:
 	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
-	float m_TimeUntilMoving{ 7.5f };
+	float m_TimeUntilMoving{ 4.5f };
 	bool m_GoInMovingState{};
 };
 
@@ -86,6 +87,8 @@ public:
 	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 private:
 	void OnEnter() override;
+	float m_AnimationPlayTime{ 1.5f };
+
 };
 
 //
