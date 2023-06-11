@@ -60,8 +60,9 @@ public:
 	static DefaultServiceLocator<null_AudioService, AudioService> AudioService;
 	static DefaultServiceLocator<null_CollisionManager, CollisionManager> CollisionManager;
 	static DefaultServiceLocator<null_InputManager, InputManager> InputManager;
-	static DefaultServiceLocator<Renderer, null_Renderer> Renderer;
-	static DefaultServiceLocator<ResourceManager, null_ResourceManager> ResourceManager;
+
+	static DefaultServiceLocator<null_Renderer, Renderer> Renderer;
+	static DefaultServiceLocator<null_ResourceManager, ResourceManager> ResourceManager;
 
 
 	static void Cleanup();
