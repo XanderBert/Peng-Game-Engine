@@ -135,7 +135,10 @@ void Minigin::Run(const std::function<void()>& load)
 		lastTimeM = currentTimeM;
 
 		auto t2 = std::chrono::high_resolution_clock::now() - currentTimeM;
+
+#ifndef _DEBUG
 		currentTimeM += std::chrono::milliseconds(17) - t2; // we want ~60 fps
 		std::this_thread::sleep_until(currentTimeM);
+#endif
 	}
 }

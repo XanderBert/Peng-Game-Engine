@@ -3,10 +3,10 @@
   <!--x= 58 -->
   <!--y= 58 -->
 
-	<object type="iceBlock" x="58" y="58" />
+	<object type="diamondBlock" x="58" y="58" />
     <object type="iceBlock" x="58" y="74" />
-    <object type="iceBlock" x="210" y="220" />
-    <object type="iceBlock" x="230" y="220" />
+    <object type="diamondBlock" x="210" y="220" />
+    <object type="diamondBlock" x="230" y="220" />
     <object type="iceBlock" x="230" y="240" />
     <object type="iceBlock" x="250" y="260" />
 
