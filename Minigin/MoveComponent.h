@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Component.h"
+#include "glm/vec2.hpp"
 
 class MoveComponent final : public Component
 {

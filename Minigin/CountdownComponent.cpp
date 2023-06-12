@@ -1,5 +1,4 @@
 ﻿#include "CountdownComponent.h"
-
 #include "TimeM.h"
 
 CountdownComponent::CountdownComponent(GameObject* owner)

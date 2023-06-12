@@ -1,21 +1,5 @@
 #include "Transform.h"
-
-#include <iostream>
-
 #include "Texture2D.h"
-
-//The SetLocalRotation function applies rotations to the local transform matrix,
-//but it does not set the dirty flag.This can cause issues with the world position updates.
-
-//The GetLocalRotation function returns a zero vector.
-//This means that it does not actually return the local rotation of the transform.
-
-//The SetWorldRotation function does not actually rotate the transform matrix.
-//It only takes the angle parameter and does nothing with it.
-
-//The GetWorldPosition function does not take a parent parameter.
-//This means that it always returns the world position relative to the parent GameObject,
-//even if the parent GameObject is null.
 
 Transform::Transform(GameObject* owner) : Component(owner)
 {
@@ -43,7 +27,6 @@ void Transform::Render()
 void Transform::SetLocalPosition(const glm::vec2& position)
 {
 	//Get parent world and add this
-
 	if (const auto parent = m_pOwner->GetParent())
 	{
 		const auto parentWorldpos = parent->GetComponent<Transform>()->GetWorldPosition();
@@ -57,7 +40,6 @@ void Transform::SetLocalPosition(const glm::vec2& position)
 }
 
 
-//This returns the world position of the transform?
 glm::vec2 Transform::GetLocalPosition()
 {
 	if (const auto parent = m_pOwner->GetParent())
@@ -117,11 +99,9 @@ void Transform::SetPositionDirty()
 	m_IsPositionDirty = true;
 }
 
-void Transform::SetLocalRotation(const glm::vec2& angle)
+void Transform::SetLocalRotation(const glm::vec2& /*angle*/)
 {
-	//Rotate Over x
-	angle;
-	//TODO: i should rotate over z?
+
 }
 
 glm::vec2 Transform::GetLocalRotation() const
@@ -129,9 +109,8 @@ glm::vec2 Transform::GetLocalRotation() const
 	return glm::vec2{};
 }
 
-void Transform::SetWorldRotation(const glm::vec2& angle)
+void Transform::SetWorldRotation(const glm::vec2& /*angle*/)
 {
-	angle;
 }
 
 glm::vec2 Transform::GetWorldRotation() const
@@ -139,11 +118,8 @@ glm::vec2 Transform::GetWorldRotation() const
 	return glm::vec2();
 }
 
-void Transform::SetLocalScale(const glm::vec2& scale)
+void Transform::SetLocalScale(const glm::vec2& /*scale*/)
 {
-	scale;
-	//m_TranformMatrixLocal[0][0] = scale.x;
-	//m_TranformMatrixLocal[1][1] = scale.y;
 }
 
 glm::vec2 Transform::GetLocalScale() const

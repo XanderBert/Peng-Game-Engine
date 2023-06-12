@@ -1,7 +1,8 @@
 ﻿#pragma once
-#include <SDL_pixels.h>
 
 #include "Component.h"
+#include "SDL_pixels.h"
+
 class Color : public Component
 {
 public:
@@ -32,5 +33,5 @@ public:
 	//RGB Color range from 0 -> 255
 	void SetColor(const SDL_Color& color);
 private:
-	SDL_Color m_color{ 255, 255, 255 };
+	SDL_Color m_Color{ 255, 255, 255 };
 };

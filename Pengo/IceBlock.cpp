@@ -1,10 +1,12 @@
 ﻿#include "IceBlock.h"
 #include "BoxCollider.h"
+#include "DirectionComponent.h"
 #include "MoveComponent.h"
 #include "Pengo.h"
 #include "SpriteRenderer.h"
 #include "TextureRenderer.h"
 #include "TriggerComponent.h"
+#include <VelocityComponent.h>
 
 IceBlock::IceBlock() : GameObject()
 {
@@ -75,7 +77,8 @@ void IceBlock::OnCollision(GameObject* /*other*/, bool isTrigger, bool isSenderT
 		if (moveComp->GetDistanceMoved() < 5.f)
 		{
 			GetComponent<SpriteRenderer>()->Play();
-		}else
+		}
+		else
 		{
 			moveComp->ResetMovement();
 		}

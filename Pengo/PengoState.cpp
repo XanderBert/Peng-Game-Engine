@@ -1,7 +1,6 @@
 ﻿#include "PengoState.h"
 #include "GameObjectStorage.h"
 #include "ControllerComponent.h"
-#include "Pengo.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "MoveComponent.h"
@@ -11,6 +10,7 @@
 #include "SnowBeeState.h"
 #include "CountdownComponent.h"
 #include "ObserverComponent.h"
+#include "PlayerCommands.h"
 
 //
 //Attacking State
@@ -88,7 +88,6 @@ void AttackingState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 		other->GetComponent<CountdownComponent>()->Play();
 	}
 }
-
 
 
 

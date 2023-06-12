@@ -1,15 +1,9 @@
 #pragma once
-
 #include <glm/vec2.hpp>
 #include "Command.h"
 #include "DirectionComponent.h"
-#include "MoveComponent.h"
-
 #include "TimeM.h"
 #include "Transform.h"
-#include "PengoEvents.h"
-
-#include "playerState.h"
 #include "VelocityComponent.h"
 
 class MoveCommand final : public Command

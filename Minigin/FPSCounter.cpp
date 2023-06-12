@@ -1,8 +1,6 @@
 ﻿#include "FPSCounter.h"
-#include <iostream>
 #include "TimeM.h"
 #include "FontRenderer.h"
-
 
 //needs: translate, font, font renderer
 FPSCounter::FPSCounter(GameObject* owner) : Component(owner)
@@ -18,7 +16,7 @@ void FPSCounter::Update()
 	CalculateFPS();
 
 	//If the fps stayed the same do not update the text
-	if(abs(m_currentFPS - currentFps) > 1.f)
+	if (abs(m_currentFPS - currentFps) > 1.f)
 	{
 		if (const auto fontRenderer = m_pOwner->GetComponent<FontRenderer>())
 		{
@@ -27,7 +25,7 @@ void FPSCounter::Update()
 	}
 }
 
-void FPSCounter::FixedUpdate( float /*fixedTimeMStep*/)
+void FPSCounter::FixedUpdate(float /*fixedTimeMStep*/)
 {
 }
 

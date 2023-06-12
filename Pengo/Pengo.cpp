@@ -7,23 +7,14 @@
 #include "PengoEvents.h"
 #include "PengoState.h"
 #include "PlayerCommands.h"
-
 #include "GameObjectStorage.h"
+#include "MoveComponent.h"
 #include "SnowBee.h"
-#include "SnowbeeState.h"
 #include "TriggerComponent.h"
-
+#include "PlayerState.h"
 
 Pengo::Pengo() : GameObject()
 {
-	//When Pengo is using a controller component, Somehow the Execute event (move) gets triggered twice per frame.
-	//This should not be because there is 1 update trigger and no loop triggering the event?
-	//Test if it is exactly a 2:1 ratio -> It is exatly a 2:1 ratio
-	//This means that there are really 2 triggers to the execute event per frame.
-	//So there is no synchronization issue due to concurrency.
-	//Right now its hacked to work by dividing the velocity by 2.
-	//This needs to be fixed (in the future).
-
 	SetTag("Pengo");
 
 	//ObserverComponent

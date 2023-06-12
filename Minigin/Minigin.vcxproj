@@ -245,12 +245,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.3\imstb_truetype.h" />
-    <ClInclude Include="Achievement.h" />
     <ClInclude Include="AudioService.h" />
     <ClInclude Include="AudioServiceDebug.h" />
     <ClInclude Include="AudioServiceImpl.h" />
     <ClInclude Include="BoxCollider.h" />
-    <ClInclude Include="CacheTestComponent.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Command.h" />
@@ -259,13 +257,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="ControllerComponent.h" />
     <ClInclude Include="CountdownComponent.h" />
     <ClInclude Include="DirectionComponent.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectAltEx.h" />
-    <ClInclude Include="GameObjectEx.h" />
     <ClInclude Include="GameObjectStorage.h" />
     <ClInclude Include="ImGuiComponent.h" />
     <ClInclude Include="InputManager.h" />
@@ -281,12 +276,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteRenderer.h" />
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="TimeM.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="TransformEx.h" />
     <ClInclude Include="TriggerComponent.h" />
     <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
@@ -299,12 +292,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_plot.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui_widgets.cpp" />
-    <ClCompile Include="Achievement.cpp" />
     <ClCompile Include="AudioService.cpp" />
     <ClCompile Include="AudioServiceDebug.cpp" />
     <ClCompile Include="AudioServiceImpl.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="CacheTestComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -316,12 +307,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectAltEx.cpp" />
-    <ClCompile Include="GameObjectEx.cpp" />
     <ClCompile Include="GameObjectStorage.cpp" />
     <ClCompile Include="ImGuiComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -337,12 +325,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureRenderer.cpp" />
     <ClCompile Include="TimeM.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TransformEx.cpp" />
     <ClCompile Include="TriggerComponent.cpp" />
     <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>

@@ -1,5 +1,4 @@
 ﻿#include "InputComponent.h"
-
 #include "ServiceLocator.h"
 
 InputComponent::InputComponent(GameObject* owner)

@@ -1,6 +1,7 @@
 ﻿#include "ControllerComponent.h"
 #include "ServiceLocator.h"
 #include "VelocityComponent.h"
+#include "InputManager.h"
 
 ControllerComponent::ControllerComponent(GameObject* owner)
 	: Component(owner)
@@ -29,7 +30,7 @@ void ControllerComponent::Update()
 	{
 		return;
 	}
-	
+
 	for (const auto& command : m_ControllerCommands)
 	{
 		if (m_pController->IsPressed(command.first))

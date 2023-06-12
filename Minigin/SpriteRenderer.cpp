@@ -1,6 +1,5 @@
 ﻿#include "SpriteRenderer.h"
 #include <stdexcept>
-
 #include "DirectionComponent.h"
 #include "InputManager.h"
 #include "TextureRenderer.h"

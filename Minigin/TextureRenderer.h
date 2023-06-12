@@ -2,9 +2,8 @@
 #include <memory>
 #include <SDL_rect.h>
 #include <string>
-#include <glm/vec2.hpp>
-
 #include "Component.h"
+#include "glm/vec2.hpp"
 
 class Texture2D;
 class TextureRenderer final : public Component

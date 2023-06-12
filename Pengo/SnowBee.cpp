@@ -1,4 +1,6 @@
 ﻿#include "SnowBee.h"
+
+#include "DirectionComponent.h"
 #include "ObserverComponent.h"
 #include "GameObjectStorage.h"
 #include "IceBlock.h"
@@ -9,6 +11,7 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "TriggerComponent.h"
+#include <VelocityComponent.h>
 
 SnowBee::SnowBee()
 {

@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include <functional>
-#include <vector>
 #include "GameObject.h"
 #include "Singleton.h"
 

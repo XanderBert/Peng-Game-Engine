@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Component.h"
-#include "BoxCollider.h"
 #include "ServiceLocator.h"
 
 class TriggerComponent final : public Component

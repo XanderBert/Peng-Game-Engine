@@ -1,7 +1,5 @@
 ﻿#include "PengoLevel.h"
 #include "Transform.h"
-#include "FontRenderer.h"
-#include "FPSCounter.h"
 #include "ServiceLocator.h"
 #include "WallManager.h"
 

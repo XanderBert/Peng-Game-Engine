@@ -1,10 +1,10 @@
 ﻿#pragma once
+#include <unordered_map>
 #include "Command.h"
 #include "Component.h"
 #include "Controller.h"
-#include "InputManager.h"
 
-
+class null_InputManager;
 class ControllerComponent final : public Component
 {
 public:

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameObject.h"
+#include "glm/vec2.hpp"
 
 class StartScreen final : public GameObject
 {

@@ -3,7 +3,7 @@
 #include <string>
 #include "Component.h"
 #include "Font.h"
-#include "TimeM.h"
+#include "glm/vec2.hpp"
 
 class Texture2D;
 class FontRenderer : public Component

@@ -1,5 +1,4 @@
 ﻿#include "MoveComponent.h"
-
 #include "DirectionComponent.h"
 #include "TimeM.h"
 #include "Transform.h"
@@ -56,7 +55,7 @@ void MoveComponent::SetCanMove(bool canMove)
 	else
 	{
 		m_EndingPosition = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
-		m_DistanceMoved = glm::abs(length(m_EndingPosition - m_StartingPosition));
+		m_DistanceMoved = glm::abs(glm::length(m_EndingPosition - m_StartingPosition));
 	}
 }
 

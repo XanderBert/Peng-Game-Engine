@@ -21,10 +21,10 @@ void Color::Render()
 
 SDL_Color Color::GetColor() const
 {
-	return m_color;
+	return m_Color;
 }
 
 void Color::SetColor(const SDL_Color& color)
 {
-	m_color = color;
+	m_Color = color;
 }

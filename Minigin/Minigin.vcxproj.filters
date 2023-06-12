@@ -40,9 +40,6 @@
     <Filter Include="Resource Files\Components">
       <UniqueIdentifier>{f2c90cb1-e347-44a8-a377-21eb54665e5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Components\Exercise">
-      <UniqueIdentifier>{a9d7a335-afaf-4fa4-a395-72ae97108d8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Singletons\Services">
       <UniqueIdentifier>{d707d6ba-9042-4a28-b3e4-6d97ce780bc4}</UniqueIdentifier>
     </Filter>
@@ -147,15 +144,6 @@
     <ClInclude Include="Component.h">
       <Filter>Resource Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TransformEx.h">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectEx.h">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectAltEx.h">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,16 +156,7 @@
     <ClInclude Include="Observer.h">
       <Filter>Source Files\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Source Files\Observer\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Achievement.h">
-      <Filter>Source Files\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="TimeM.h">
@@ -212,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
       <Filter>Resource Files\Components\Colliders\BoxCollider</Filter>
-    </ClInclude>
-    <ClInclude Include="CacheTestComponent.h">
-      <Filter>Resource Files\Components\Exercise</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>Resource Files\Components\Color</Filter>
@@ -266,9 +242,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -305,28 +278,13 @@
     <ClCompile Include="Component.cpp">
       <Filter>Resource Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformEx.cpp">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectEx.cpp">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectAltEx.cpp">
-      <Filter>Resource Files\Components\Exercise</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Achievement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="TimeM.cpp">
@@ -361,9 +319,6 @@
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Resource Files\Components\Colliders\BoxCollider</Filter>
-    </ClCompile>
-    <ClCompile Include="CacheTestComponent.cpp">
-      <Filter>Resource Files\Components\Exercise</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Resource Files\Components\Color</Filter>

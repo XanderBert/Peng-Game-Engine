@@ -3,7 +3,6 @@
 #include <Xinput.h>
 #pragma comment(lib, "xinput.lib")
 #include "Controller.h"
-#include <iostream>
 #include <glm/vec2.hpp>
 #include "SceneManager.h"
 
@@ -44,7 +43,6 @@ public:
 
 	auto GetLeftThumbValue()const
 	{
-		//Todo: Make 1 function that takes a enum class?
 		float thumbLX{ static_cast<float>(m_CurrentState.Gamepad.sThumbLX) };
 		float thumbLY{ static_cast<float>(m_CurrentState.Gamepad.sThumbLY) };
 

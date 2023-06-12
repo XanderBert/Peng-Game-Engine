@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <mutex>
-#include <SDL_rect.h>
 #include <set>
-#include <glm/vec2.hpp>
 #include "Component.h"
+#include "SDL_rect.h"
+#include "glm/vec2.hpp"
 
 
 class BoxCollider final : public Component

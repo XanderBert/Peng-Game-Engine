@@ -1,5 +1,4 @@
 ﻿#include "TriggerComponent.h"
-
 #include "DirectionComponent.h"
 
 TriggerComponent::TriggerComponent(GameObject* owner)

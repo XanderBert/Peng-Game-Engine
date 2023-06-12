@@ -1,8 +1,5 @@
 #include <stdexcept>
 #include "Renderer.h"
-
-#include <iostream>
-
 #include "SceneManager.h"
 #include "Texture2D.h"
 #include "Imgui.h"

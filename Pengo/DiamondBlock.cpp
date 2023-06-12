@@ -4,13 +4,12 @@
 #include "MoveComponent.h"
 #include "TriggerComponent.h"
 #include "TextureRenderer.h"
-#include "Transform.h"
 #include "VelocityComponent.h"
-
 #include "GameObjectStorage.h"
 #include "ObserverComponent.h"
 #include "PengoEvents.h"
 #include "SpriteRenderer.h"
+#include "TimeM.h"
 
 
 DiamondBlock::DiamondBlock() : GameObject()

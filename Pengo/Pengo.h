@@ -1,8 +1,11 @@
 ﻿#pragma once
-#include "IceBlock.h"
-#include "PlayerCommands.h"
-#include "PlayerState.h"
+#include "GameObject.h"
+#include "PengoEvents.h"
 
+
+class PlayerState;
+class IceBlock;
+class Observer;
 class Pengo final : public GameObject
 {
 public:

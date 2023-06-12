@@ -1,10 +1,7 @@
 ﻿#include "FontRenderer.h"
-
-#include <iostream>
 #include <SDL_pixels.h>
 #include <SDL_ttf.h>
 #include <stdexcept>
-
 #include "Color.h"
 #include "ServiceLocator.h"
 #include "Texture2D.h"

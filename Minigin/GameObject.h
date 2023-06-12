@@ -1,9 +1,8 @@
 #pragma once
-#include <iostream>
 #include <memory>
 #include <set>
+#include <string>
 #include <vector>
-#include <glm/vec2.hpp>
 
 class Component;
 class Scene;

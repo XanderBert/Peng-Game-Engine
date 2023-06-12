@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <SDL_keycode.h>
-
 #include "Command.h"
 #include "Component.h"
 #include "InputManager.h"

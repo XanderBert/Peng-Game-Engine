@@ -1,9 +1,9 @@
 ﻿#include "PengoLevelLoader.h"
 #include <fstream>
-
 #include "ControllerComponent.h"
 #include "DiamondBlock.h"
 #include "InputComponent.h"
+#include "PlayerCommands.h"
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
 #include "ServiceLocator.h"

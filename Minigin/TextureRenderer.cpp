@@ -1,8 +1,5 @@
 ﻿#include "Component.h"
 #include "TextureRenderer.h"
-
-#include <iostream>
-
 #include "ResourceManager.h"
 #include "ServiceLocator.h"
 #include "Texture2D.h"

@@ -1,6 +1,5 @@
 #include <SDL.h>
 #include "Texture2D.h"
-#include "ResourceManager.h"
 #include "ServiceLocator.h"
 
 

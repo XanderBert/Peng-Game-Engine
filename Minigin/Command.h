@@ -5,8 +5,7 @@ class GameActor;
 
 //You want your event and action code stored here?
 //You can inherit from this class
-//Keep track of the commands (To Undo) (This can fix tunneling to undo the move on collision?)
-
+//Keep track of the commands (To Undo) 
 //https://www.youtube.com/watch?v=mSZuEbAkJCo
 
 class Command

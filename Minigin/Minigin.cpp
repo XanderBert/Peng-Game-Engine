@@ -56,12 +56,6 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-
-//TODO: Implement something like juce's safe pointers.
-//Holds a pointer to some type of Component, which automatically becomes null if the component is deleted.
-//TODO: If there is time, place all data from big to small inside a class
-//Todo: Put the cold path data in a class and put a pointer to it in the component
-
 Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize, const std::string& windowName)
 	:fixedTimeMStep(0.2f)
 {
