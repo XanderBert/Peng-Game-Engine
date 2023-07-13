@@ -56,7 +56,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize, const std::string& windowName)
+Minigin::Minigin(const std::string& dataPath, const glm::vec2 windowSize, const std::string& windowName)
 	:fixedTimeMStep(0.2f)
 {
 	ServiceLocator::GetInstance().AudioService.SetService(new AudioService());
@@ -79,8 +79,8 @@ Minigin::Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windo
 		windowName.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		windowSize.x,
-		windowSize.y,
+		static_cast<UINT32>(windowSize.x),
+		static_cast<UINT32>(windowSize.y),
 		SDL_WINDOW_OPENGL
 	);
 

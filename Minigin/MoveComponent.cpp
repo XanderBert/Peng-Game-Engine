@@ -1,4 +1,8 @@
 ﻿#include "MoveComponent.h"
+
+#include <iostream>
+
+
 #include "DirectionComponent.h"
 #include "TimeM.h"
 #include "Transform.h"
@@ -11,18 +15,28 @@ MoveComponent::MoveComponent(GameObject* pOwner) : Component(pOwner)
 
 void MoveComponent::Update()
 {
+	m_IsMovingThisFrame = false;
+
 	if (m_CanMove)
 	{
 		const auto direction = m_pOwner->GetComponent<DirectionComponent>();
 		const auto velocity = m_pOwner->GetComponent<VelocityComponent>();
 		const auto transform = m_pOwner->GetComponent<Transform>();
 
-		if (direction && velocity && transform)
+		if (direction != nullptr && velocity != nullptr && transform != nullptr)
 		{
 			const auto movement{ direction->GetDirection() * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM() };
+
+			if (abs(movement.x) > FLT_EPSILON || abs(movement.y) > FLT_EPSILON)
+			{
+				m_IsMovingThisFrame = true;
+			} 
+
 			transform->SetWorldPosition(transform->GetWorldPosition() + movement);
 		}
 	}
+
+	m_CanMove = false;
 }
 
 void MoveComponent::FixedUpdate(float /*fixedTimeMStep*/)
@@ -93,4 +107,9 @@ bool MoveComponent::GetMoveChanged() const
 float MoveComponent::GetDistanceMoved() const
 {
 	return m_DistanceMoved;
+}
+
+bool MoveComponent::IsMovingThisFrame() const
+{
+	return m_IsMovingThisFrame;
 }

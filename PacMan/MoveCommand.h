@@ -1,10 +1,11 @@
 #pragma once
 #include <glm/vec2.hpp>
+
 #include "Command.h"
 #include "DirectionComponent.h"
-#include "TimeM.h"
-#include "Transform.h"
-#include "VelocityComponent.h"
+#include "GameObject.h"
+#include "SpriteRenderer.h"
+#include "MoveComponent.h"
 
 class MoveCommand final : public Command
 {
@@ -29,16 +30,9 @@ public:
 			directionComponent->SetDirection(m_MovementDirection);
 		}
 
-		const auto transform = m_GameActor->GetComponent<Transform>();
-		const auto velocity = m_GameActor->GetComponent<VelocityComponent>();
-		const auto movement{ m_MovementDirection * velocity->GetVelocity() * TimeM::GetInstance().GetDeltaTimeM() };
-
-		transform->SetWorldPosition(transform->GetWorldPosition() + movement);
-
-
+		m_GameActor->GetComponent<MoveComponent>()->SetCanMove(true);
 	}
 private:
 	GameObject* m_GameActor;
 	glm::vec2 m_MovementDirection;
 };
-

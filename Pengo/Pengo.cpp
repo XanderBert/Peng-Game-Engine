@@ -102,15 +102,13 @@ void Pengo::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 
 	if (isSenderTrigger) return;
+
 	//Dont Collide With Concussed  or Dying SnowBee
 	if (const auto snowBee = dynamic_cast<SnowBee*>(other))
 	{
 
 		return;
-		/*if (dynamic_cast<SnowBeeConcussedState*>(snowBee->GetState()) || dynamic_cast<SnowBeeDyingState*>(snowBee->GetState()))
-		{
-			return;
-		}*/
+
 	}
 
 	if (isTrigger) return;

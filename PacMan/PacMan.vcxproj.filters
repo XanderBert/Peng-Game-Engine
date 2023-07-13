@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{2472c6bc-c794-450a-85a0-f2640676b581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{913ac47a-ce4f-4330-ba60-747c882dea83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\PacMan">
+      <UniqueIdentifier>{28ed5765-6688-4214-9587-d40dd57f5ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{e7f01353-38d5-4145-bac0-8666751d87ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\InputHandler">
+      <UniqueIdentifier>{f41ea690-cda8-4a20-93bd-3de8aa286489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\State">
+      <UniqueIdentifier>{99cee863-da5e-48da-986f-04f0c9243968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\PacDots">
+      <UniqueIdentifier>{18c978e1-63d2-4d85-8c4c-5654a60fa651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters">
+      <UniqueIdentifier>{79725725-dbfd-4c11-9d03-05450b7c2415}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PacManMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacMan.cpp">
+      <Filter>GameObjects\PacMan</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Components\InputHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>Components\State</Filter>
+    </ClCompile>
+    <ClCompile Include="PacManState.cpp">
+      <Filter>GameObjects\PacMan</Filter>
+    </ClCompile>
+    <ClCompile Include="PacDot.cpp">
+      <Filter>GameObjects\PacDots</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PacMan.h">
+      <Filter>GameObjects\PacMan</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchInputCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Components\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>Components\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManState.h">
+      <Filter>GameObjects\PacMan</Filter>
+    </ClInclude>
+    <ClInclude Include="PacDot.h">
+      <Filter>GameObjects\PacDots</Filter>
+    </ClInclude>
+    <ClInclude Include="PacDotComponent.h">
+      <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

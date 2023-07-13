@@ -1,12 +1,13 @@
 #pragma once
-#include <string>
 #include <functional>
-#include <glm/fwd.hpp>
+#include <string>
+#include <glm/vec2.hpp>
+
 
 class Minigin
 {
 public:
-	explicit Minigin(const std::string& dataPath, const glm::vec<2, glm::uint> windowSize, const std::string& windowName);
+	explicit Minigin(const std::string& dataPath, const glm::vec2 windowSize, const std::string& windowName);
 	~Minigin();
 	void Run(const std::function<void()>& load);
 

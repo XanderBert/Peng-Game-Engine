@@ -36,6 +36,7 @@ public:
 
 	std::vector<SDL_Keycode> GetKeysOfCommand();
 
+	bool IsEnabled() const { return m_IsEnabled; }
 	void EnableInput();
 	void DisableInput();
 private:

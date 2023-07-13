@@ -8,11 +8,11 @@ class Component;
 class Scene;
 class BoxCollider;
 
-class GameObject
+class GameObject final
 {
 public:
 	GameObject();
-	virtual ~GameObject();
+	~GameObject();
 
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -20,18 +20,18 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 	//Called each frame
-	virtual void Update();
+	void Update();
 
 	//Called at a fixed time step
 	//Used for physics & networking
-	virtual void FixedUpdate(float fixedTimeMStep);
+	void FixedUpdate(float fixedTimeMStep);
 
 	//Called after the Update()c
 	//Used for camera and deletion of objects -> Deletion could be handled by the double buffer pattern
-	virtual void LateUpdate();
+	void LateUpdate();
 
 	//Called each frame
-	virtual void Render() const;
+	void Render() const;
 
 
 	//
@@ -63,23 +63,8 @@ public:
 
 	//
 	//Collision
-	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) {}
+	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger);
 	std::set<GameObject*> GetCollidingObjects() const;
-
-
-	//Don't know if i should use Tags or Id's
-	//I chose Tags for readability in the code although this will result in less performance
-	//I could use a map with a string as key and a int as value to reduce the performance hit?
-	void SetTag(const std::string& tag) { m_Tag = tag; }
-	std::string GetTag() const
-	{
-		if (m_Tag.empty())
-		{
-			return "No Tag";
-		}
-
-		return m_Tag;
-	}
 
 	Scene* GetScene() const { return m_pScene; }
 	void SetScene(Scene* pScene) { m_pScene = pScene; }
@@ -97,7 +82,6 @@ private:
 	//Just accesses the component and marks it for deletion
 	void MarkComponentForDeletionUtility(Component* component) const;
 
-	std::string m_Tag{ "" };
 };
 
 template<typename T>

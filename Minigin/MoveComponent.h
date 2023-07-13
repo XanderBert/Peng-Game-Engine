@@ -31,11 +31,13 @@ public:
 	float GetTunnelingMultiplier() const;
 	bool GetMoveChanged() const;
 	float GetDistanceMoved() const;
+	bool IsMovingThisFrame() const;
 
 private:
 	bool m_CanMove{ false };
 	float m_TunnelingMulitplier{ 2.4f };
 	bool m_MoveChanged{ false };
+	bool m_IsMovingThisFrame{ false };
 
 	float m_DistanceMoved{ 0.f };
 	glm::vec2 m_StartingPosition{ 0.f, 0.f };

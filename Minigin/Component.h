@@ -26,6 +26,8 @@ public:
 	//Called each frame
 	virtual void Render() = 0;
 
+	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) {}
+
 	void MarkForDeletion();
 	bool CanBeDeleted() const;
 

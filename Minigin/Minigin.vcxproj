@@ -268,7 +268,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="ObserverComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -318,7 +317,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     </ClCompile>
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
-    <ClCompile Include="ObserverComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

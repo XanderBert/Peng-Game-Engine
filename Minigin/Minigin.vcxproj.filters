@@ -31,9 +31,6 @@
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{2293b7c6-1ff5-4b6a-9d72-7079d1c24c30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Observer\Events">
-      <UniqueIdentifier>{12392fe8-dcbd-49cc-b983-a2a05c91d7cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{4d6dbacc-cbde-4f12-a274-56f6f3081246}</UniqueIdentifier>
     </Filter>
@@ -69,9 +66,6 @@
     </Filter>
     <Filter Include="Resource Files\Components\Transform">
       <UniqueIdentifier>{c283f7d2-1ae2-4fa9-bdc9-80b4308a0d5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Components\Observer">
-      <UniqueIdentifier>{42697225-31e6-42da-8256-788101c92f39}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\Components\InputComponent">
       <UniqueIdentifier>{1aefc779-ab90-4d45-b159-bd91da115583}</UniqueIdentifier>
@@ -210,9 +204,6 @@
     <ClInclude Include="Transform.h">
       <Filter>Resource Files\Components\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="ObserverComponent.h">
-      <Filter>Resource Files\Components\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>Resource Files\Components\InputComponent</Filter>
     </ClInclude>
@@ -337,9 +328,6 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Resource Files\Components\Transform</Filter>
-    </ClCompile>
-    <ClCompile Include="ObserverComponent.cpp">
-      <Filter>Resource Files\Components\Observer</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>Resource Files\Components\InputComponent</Filter>

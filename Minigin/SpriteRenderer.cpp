@@ -94,6 +94,9 @@ void SpriteRenderer::SetMovementDirection(MovementDirection value)
 {
 	m_MovementDirection = value;
 	const auto size = m_MovementDirectionMap.find(m_MovementDirection)->second.size();
+
+	assert(size > 0 && "No Sprite Frames for this Direction");
+
 	m_AnimationFrame %= size;
 }
 

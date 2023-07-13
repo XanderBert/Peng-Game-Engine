@@ -57,9 +57,9 @@ void ControllerComponent::RegisterController(int index)
 	m_pController = m_pInputManager->AddController(m_ControllerID);
 	m_IsInitialized = true;
 
-
-	const auto velocity = m_pOwner->GetComponent<VelocityComponent>()->GetVelocity();
-	m_pOwner->GetComponent<VelocityComponent>()->SetVelocity(velocity / 2.f);
+	//TODO
+	//const auto velocity = m_pOwner->GetComponent<VelocityComponent>()->GetVelocity();
+	//m_pOwner->GetComponent<VelocityComponent>()->SetVelocity(velocity / 2.f);
 }
 
 void ControllerComponent::EnableInput()

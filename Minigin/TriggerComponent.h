@@ -31,7 +31,7 @@ public:
 
 	void DisableTrigger();
 	void EnableTrigger();
-
+	//TODO
 	std::string GetTag() const;
 	void SetTag(const std::string& tag);
 

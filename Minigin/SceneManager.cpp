@@ -36,7 +36,11 @@ void SceneManager::Render()
 
 Scene* SceneManager::GetActiveScene() const
 {
+	assert(!m_scenes.empty() && "There are no active scenes.");
+
 	if (m_pActiveScene) return m_pActiveScene;
+
+	if (m_scenes.empty()) return nullptr;
 
 	return m_scenes[m_scenes.size() - 1].get();
 }
