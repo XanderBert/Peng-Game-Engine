@@ -1,12 +1,10 @@
 #include "PacMan.h"
-
 #include "DirectionComponent.h"
 #include "GameObject.h"
 #include "InputHandler.h"
 #include "MoveComponent.h"
 #include "SpriteRenderer.h"
 #include "TextureRenderer.h"
-#include "MoveCommand.h"
 #include "StateComponent.h"
 #include "VelocityComponent.h"
 #include "CountdownComponent.h"
@@ -71,7 +69,7 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 	collider->DebugRender(true);
 #endif // DEBUG
 
-
+	//Trigger Component
 	const auto trigger = m_pGameObject->AddComponent<TriggerComponent>();
 	trigger->SetColliderSize({ 6, 6 });
 	trigger->SetColliderOffset({ 3,3 });
@@ -81,13 +79,13 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 	trigger->DebugRender(true);
 #endif // _DEBUG
 
-
+	//PacMan Component
 	const auto pacMan  = m_pGameObject->AddComponent<PacManComponent>();
 	//pacMan->SetLives(3);
 
-
+	//Transform Component
 	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 10,10 });
 
-
+	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
 }

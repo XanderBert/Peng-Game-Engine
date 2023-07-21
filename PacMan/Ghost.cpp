@@ -1,5 +1,4 @@
 #include "Ghost.h"
-
 #include "DirectionComponent.h"
 #include "GameObject.h"
 #include "GhostState.h"
@@ -11,7 +10,7 @@
 #include "BoxCollider.h"
 #include "GameObjectStorage.h"
 #include "Transform.h"
-#include <CountdownComponent.h>
+#include "CountdownComponent.h"
 #include "GhostComponent.h"
 #include "TriggerComponent.h"
 #include "TeleportComponent.h"
@@ -39,7 +38,6 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Down);
 
-	
 	//Move Component
 	const auto move = m_pGameObject->AddComponent<MoveComponent>();
 	move->SetTunnelingMultiplier(1.1f);
@@ -69,8 +67,6 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	trigger->DebugRender(true);
 #endif // _DEBUG
 
-	
-
 	//Transform Component
 	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
 
@@ -91,5 +87,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	const auto state = m_pGameObject->AddComponent<StateComponent>();
 	state->SetState(new GhostMoveState(m_pGameObject));
 
+
+	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
 }
