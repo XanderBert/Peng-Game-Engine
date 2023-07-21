@@ -16,4 +16,10 @@ public:
 	void FixedUpdate(float /*fixedTimeMStep*/) override {}
 	void LateUpdate() override {}
 	void Render() override {}
+
+	void Die();
+
+private:
+	int m_Lives = 3;
+
 };

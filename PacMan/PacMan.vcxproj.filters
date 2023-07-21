@@ -81,6 +81,9 @@
     <ClCompile Include="GhostComponent.cpp">
       <Filter>Components\ObjectFilters\Ghost</Filter>
     </ClCompile>
+    <ClCompile Include="PacManComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MoveCommand.h">

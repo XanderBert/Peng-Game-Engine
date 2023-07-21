@@ -161,6 +161,7 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="PacDot.cpp" />
     <ClCompile Include="PacMan.cpp" />
+    <ClCompile Include="PacManComponent.cpp" />
     <ClCompile Include="PacManMain.cpp" />
     <ClCompile Include="PacManState.cpp" />
     <ClCompile Include="StateComponent.cpp" />

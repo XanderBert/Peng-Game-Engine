@@ -1,7 +1,9 @@
 #include "PacManState.h"
 #include "CountdownComponent.h"
+#include "GhostComponent.h"
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
+#include "PacManComponent.h"
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
 
@@ -53,6 +55,11 @@ void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool is
 	if (other->GetComponent<WallComponent>() && isSenderTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+	}
+
+	if(other->GetComponent<GhostComponent>()&& !isSenderTrigger)
+	{
+		m_pActor->GetComponent<PacManComponent>()->Die();
 	}
 }
 
