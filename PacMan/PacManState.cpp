@@ -1,11 +1,9 @@
 #include "PacManState.h"
-
-#include <iostream>
-
 #include "CountdownComponent.h"
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
 #include "SpriteRenderer.h"
+#include "WallComponent.h"
 
 //MOVE
 //
@@ -33,7 +31,8 @@ void PacManMoveState::Update()
 	{
 		timer->ResetTime();
 		timer->Pause();
-	}else
+	}
+	else
 	{
 		timer->Play();
 	}
@@ -47,7 +46,13 @@ void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool /*
 	if(other->GetComponent<PacDotComponent>())
 	{
 		other->MarkForDeletion();
-		//Increase points here
+		// TODO Increase points here
+	}
+
+
+	if(other->GetComponent<WallComponent>())
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}
 }
 
@@ -56,7 +61,7 @@ void PacManMoveState::OnEnter()
 	
 	if(const auto timer = m_pActor->GetComponent<CountdownComponent>())
 	{
-		timer->SetTime(0.3f);
+		timer->SetTime(0.1f);
 		timer->Pause();
 	}
 

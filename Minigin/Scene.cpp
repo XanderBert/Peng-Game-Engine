@@ -41,10 +41,26 @@ void Scene::RemoveAll()
 }
 
 
+std::vector<GameObject*> Scene::GetObjects() const
+{
+	std::vector<GameObject*> gameObjects;
+
+	gameObjects.reserve(m_objects.size());
+
+	for(const auto& gameObject : m_objects)
+	{
+		gameObjects.emplace_back(gameObject.get());
+	}
+
+	return gameObjects;
+}
+
 void Scene::Update()
 {
 	for (auto& object : m_objects)
 	{
+		if(object == nullptr) assert(false);
+
 		object->Update();
 	}
 	ServiceLocator::GetInstance().CollisionManager.GetService().Update();

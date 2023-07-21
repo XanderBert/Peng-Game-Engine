@@ -151,22 +151,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="PacDot.cpp" />
     <ClCompile Include="PacMan.cpp" />
     <ClCompile Include="PacManMain.cpp" />
     <ClCompile Include="PacManState.cpp" />
     <ClCompile Include="StateComponent.cpp" />
+    <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GhostState.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="PacDot.h" />
     <ClInclude Include="PacDotComponent.h" />
     <ClInclude Include="PacMan.h" />
+    <ClInclude Include="PacManComponent.h" />
     <ClInclude Include="PacManState.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="SwitchInputCommand.h" />
+    <ClInclude Include="WallComponent.h" />
+    <ClInclude Include="WallManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

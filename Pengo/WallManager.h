@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#include "WallManager.h"
+#pragma once
 #include "GameObject.h"
 #include "glm/vec2.hpp"
 
@@ -7,6 +8,7 @@ class WallManager final : public GameObject
 public:
 	WallManager();
 	~WallManager() override = default;
+
 
 	WallManager(const WallManager& other) = delete;
 	WallManager(WallManager&& other) = delete;

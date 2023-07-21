@@ -11,6 +11,7 @@
 #include "VelocityComponent.h"
 #include "CountdownComponent.h"
 #include "BoxCollider.h"
+#include "PacManComponent.h"
 
 PacMan::PacMan() : m_pGameObject{new GameObject() }
 {
@@ -40,7 +41,7 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 
 
 	//Move Component
-	m_pGameObject->AddComponent<MoveComponent>();
+	m_pGameObject->AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.1f);
 
 
 	//Velocity Component
@@ -58,15 +59,17 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 	//Countdown Component
 	const auto timerComponent = m_pGameObject->AddComponent<CountdownComponent>();
 
-	//Collider Comonent
+	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
-	collider->SetColliderSize({ 16, 16 });
-	collider->SetColliderOffset({ -1,-1 });
+	collider->SetColliderSize({ 11, 11 });
+	collider->SetColliderOffset({ 1,1 });
 
 
 #ifdef _DEBUG
 	collider->DebugRender(true);
 #endif // DEBUG
 
-	
+
+	const auto pacMan  = m_pGameObject->AddComponent<PacManComponent>();
+	//pacMan->SetLives(3);
 }

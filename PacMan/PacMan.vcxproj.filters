@@ -37,6 +37,12 @@
     <Filter Include="Components\ObjectFilters">
       <UniqueIdentifier>{79725725-dbfd-4c11-9d03-05450b7c2415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Walls">
+      <UniqueIdentifier>{9a3de3f8-9fdf-4719-b946-4387426a490b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Ghost">
+      <UniqueIdentifier>{b9f43c5e-4536-4d31-8551-4bbb2fc6c292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -56,6 +62,15 @@
     </ClCompile>
     <ClCompile Include="PacDot.cpp">
       <Filter>GameObjects\PacDots</Filter>
+    </ClCompile>
+    <ClCompile Include="WallManager.cpp">
+      <Filter>GameObjects\Walls</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>GameObjects\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostState.cpp">
+      <Filter>GameObjects\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +96,21 @@
       <Filter>GameObjects\PacDots</Filter>
     </ClInclude>
     <ClInclude Include="PacDotComponent.h">
+      <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+    <ClInclude Include="WallManager.h">
+      <Filter>GameObjects\Walls</Filter>
+    </ClInclude>
+    <ClInclude Include="WallComponent.h">
+      <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>GameObjects\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostState.h">
+      <Filter>GameObjects\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManComponent.h">
       <Filter>Components\ObjectFilters</Filter>
     </ClInclude>
   </ItemGroup>

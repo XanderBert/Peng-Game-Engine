@@ -19,8 +19,9 @@ public:
 
 	void StoreGameObject(GameObject* pGameObject);
 	void AddGameObjectToVector(GameObject* pGameObject) { m_pGameObjects.push_back(pGameObject); }
-	std::vector<GameObject*> GetGameObjectsFromVector() const { return m_pGameObjects; }
-	GameObject* GetGameObject() const { return m_pGameObject; }
+
+	std::vector<GameObject*> GetStoredObjects() const { return m_pGameObjects; }
+	GameObject* GetStoredObject() const { return m_pGameObject; }
 
 private:
 	GameObject* m_pGameObject{};

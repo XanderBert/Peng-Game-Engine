@@ -92,7 +92,8 @@ std::shared_ptr <T> GameObject::AddComponent()
 	auto pComponent = std::make_shared<T>(this);
 
 	m_pComponents.emplace_back(pComponent);
-
+	m_pComponents.shrink_to_fit();
+	
 	return dynamic_pointer_cast<T>(m_pComponents.back());
 }
 

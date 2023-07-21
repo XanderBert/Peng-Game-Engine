@@ -12,6 +12,7 @@ public:
 	void RemoveAll();
 
 	std::string GetName() const { return m_name; }
+	std::vector<GameObject*> GetObjects() const;
 
 	void Update();
 	void FixedUpdate(float fixedTimeMStep);

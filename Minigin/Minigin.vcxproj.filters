@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Objects">
-      <UniqueIdentifier>{d91df7b1-0a25-4e36-adb8-90bbdfdffec1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Singletons">
       <UniqueIdentifier>{5e665dc9-dcc0-43d1-b77a-2b474c8528f9}</UniqueIdentifier>
     </Filter>
@@ -94,13 +91,16 @@
     <Filter Include="Resource Files\Components\ImGuiComponent">
       <UniqueIdentifier>{d6cfad12-2568-4d46-a0a5-114b7e099e64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Command\Objects">
+      <UniqueIdentifier>{d91df7b1-0a25-4e36-adb8-90bbdfdffec1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minigin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Command\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Header Files</Filter>
@@ -240,7 +240,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Command\Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.3\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>

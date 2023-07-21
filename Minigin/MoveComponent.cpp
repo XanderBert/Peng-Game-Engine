@@ -58,8 +58,9 @@ void MoveComponent::SetCanMove(bool canMove)
 	if (canMove != m_CanMove)
 	{
 		m_MoveChanged = true;
-		m_CanMove = canMove;
 	}
+
+	m_CanMove = canMove;
 
 	if (canMove)
 	{

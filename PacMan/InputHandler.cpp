@@ -31,7 +31,7 @@ void InputHandler::Update()
 {
 }
 
-void InputHandler::FixedUpdate(float fixedTimeMStep)
+void InputHandler::FixedUpdate(float /*fixedTimeMStep*/)
 {
 }
 
