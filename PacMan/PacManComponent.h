@@ -13,7 +13,7 @@ public:
 	PacManComponent& operator=(PacManComponent&& other) = delete;
 
 	void Update() override {}
-	void FixedUpdate(float fixedTimeMStep) override {}
+	void FixedUpdate(float /*fixedTimeMStep*/) override {}
 	void LateUpdate() override {}
 	void Render() override {}
 };

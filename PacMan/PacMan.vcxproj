@@ -86,6 +86,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\RapidXML;$(SolutionDir)Minigin;$(SolutionDir)3rdParty\SDL2_mixer\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\imgui-1.89.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,6 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\RapidXML;$(SolutionDir)Minigin;$(SolutionDir)3rdParty\SDL2_mixer\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\imgui-1.89.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\RapidXML;$(SolutionDir)Minigin;$(SolutionDir)3rdParty\SDL2_mixer\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\imgui-1.89.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +143,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\RapidXML;$(SolutionDir)Minigin;$(SolutionDir)3rdParty\SDL2_mixer\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\imgui-1.89.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="GhostComponent.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="PacDot.cpp" />
@@ -163,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="MoveCommand.h" />
@@ -173,6 +179,7 @@
     <ClInclude Include="PacManState.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="SwitchInputCommand.h" />
+    <ClInclude Include="TeleportComponent.h" />
     <ClInclude Include="WallComponent.h" />
     <ClInclude Include="WallManager.h" />
   </ItemGroup>

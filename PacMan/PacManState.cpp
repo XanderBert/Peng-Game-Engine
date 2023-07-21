@@ -36,11 +36,10 @@ void PacManMoveState::Update()
 	{
 		timer->Play();
 	}
-
-
+	
 }
 
-void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool /*isSenderTrigger*/)
+void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
 {
 
 	if(other->GetComponent<PacDotComponent>())
@@ -50,7 +49,8 @@ void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool /*
 	}
 
 
-	if(other->GetComponent<WallComponent>())
+	//The Ghost Trigger is colliding with a wall
+	if (other->GetComponent<WallComponent>() && isSenderTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}

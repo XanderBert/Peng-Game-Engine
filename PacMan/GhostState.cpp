@@ -1,12 +1,18 @@
 ﻿#include "GhostState.h"
 
+#include <iostream>
+
+#include "CountdownComponent.h"
 #include "DirectionComponent.h"
 #include "GameObjectStorage.h"
+#include "GhostComponent.h"
 #include "MoveComponent.h"
 #include "PacManComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Transform.h"
+#include "PacDotComponent.h"
+#include "WallComponent.h"
 
 GhostMoveState::GhostMoveState(GameObject* object) : State(object)
 {
@@ -21,6 +27,10 @@ State* GhostMoveState::HandleInput()
 void GhostMoveState::Update()
 {
 	const auto storage = m_pActor->GetComponent<GameObjectStorage>();
+
+	//--
+	//Find pac Man
+	//--
 
 	//If Pacman is not valid
 	if(storage->GetStoredObject() == nullptr || storage->GetStoredObject()->GetComponent<PacManComponent>() == nullptr)
@@ -41,83 +51,66 @@ void GhostMoveState::Update()
 		{
 			assert(false && "Pacman not found");
 		}
+
+
+		m_pActor->GetComponent<CountdownComponent>()->ResetTime();
 	}
 
+
+	//Get the location of pacman and the ghost
 	const auto pacMan = storage->GetStoredObject();
 	const auto pacManLocation = pacMan->GetComponent<Transform>()->GetWorldPosition();
 	const auto vector = pacManLocation - m_pActor->GetComponent<Transform>()->GetWorldPosition();
 
-	if(glm::abs(vector.x) > glm::abs(vector.y))
+
+	if(m_pActor->GetComponent<CountdownComponent>()->GetTime() < 0.f) 
 	{
-		if(vector.x > 0)
+		m_pActor->GetComponent<CountdownComponent>()->ResetTime();
+
+		//Set the Direction
+		if (glm::abs(vector.x) > glm::abs(vector.y))
 		{
-			m_pActor->GetComponent<DirectionComponent>()->SetDirection({ 1,0 });
+			if (vector.x > 0)
+			{
+				m_pActor->GetComponent<GhostComponent>()->ChangeDirection({ 1,0 });
+			}
+			else
+			{
+				m_pActor->GetComponent<GhostComponent>()->ChangeDirection({ -1,0 });
+			}
 		}
 		else
 		{
-			m_pActor->GetComponent<DirectionComponent>()->SetDirection({ -1,0 });
-		}
+			if (vector.y > 0)
+			{
+				m_pActor->GetComponent<GhostComponent>()->ChangeDirection({ 0,1 });
+			}
+			else
+			{
+				m_pActor->GetComponent<GhostComponent>()->ChangeDirection({ 0,-1 });
+			}
+		}		
 	}
-	else
-	{
-		if (vector.y > 0)
-		{
-			m_pActor->GetComponent<DirectionComponent>()->SetDirection({ 0,1 });
-		}
-		else
-		{
-			m_pActor->GetComponent<DirectionComponent>()->SetDirection({ 0,-1 });
-		}
-	}
-
-
-	//Find towards wich direction pacman is located. Try to move in that direction.
-	//Collide? Try to move in another direction.
-	//Collide again? find in wich directio pacman is and try to move towards that direction.
+	
 	m_pActor->GetComponent<MoveComponent>()->SetCanMove(true);
 
 }
 
-void GhostMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
+void GhostMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
 {
-	m_pActor->GetComponent<MoveComponent>()->ResetMovement();
-
-	if (const auto directionComponent = m_pActor->GetComponent<DirectionComponent>())
+	//The Ghost Trigger is colliding with a wall
+	if(other->GetComponent<WallComponent>() && isSenderTrigger)
 	{
-		std::srand(static_cast<unsigned int>(std::time(nullptr) + std::rand()));
-
-
-		// Seed the random number generator
-		const glm::vec2 oldDirection{ directionComponent->GetDirection() };
-
-		auto newDirection = oldDirection;
-
-
-		// Generate a new direction until it is different from the old direction
-		while (newDirection == oldDirection)
-		{
-			// Generate a random integer between 0 and 3
-			const int numQuarterTurns = std::rand() % 4;
-			
-			// Perform the quarter turns
-			for (int i = 0; i < numQuarterTurns; ++i)
-			{
-				const float temp = newDirection.x;
-				newDirection.x = -newDirection.y;
-				newDirection.y = temp;
-			}
-		}
-
-		directionComponent->SetDirection(newDirection);
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		m_pActor->GetComponent<GhostComponent>()->ChangeToRandomDirection();
 	}
 }
 
 void GhostMoveState::OnEnter()
 {
-	
+	m_pActor->GetComponent<CountdownComponent>()->SetTime(1.0f);
+	m_pActor->GetComponent<CountdownComponent>()->Play();
 }
-
-
 
 
 
@@ -147,7 +140,7 @@ void GhostConcusedState::Update()
 {
 }
 
-void GhostConcusedState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
+void GhostConcusedState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/)
 {
 }
 

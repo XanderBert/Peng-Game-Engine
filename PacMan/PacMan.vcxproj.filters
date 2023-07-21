@@ -43,6 +43,12 @@
     <Filter Include="GameObjects\Ghost">
       <UniqueIdentifier>{b9f43c5e-4536-4d31-8551-4bbb2fc6c292}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\ObjectFilters\Ghost">
+      <UniqueIdentifier>{e27c3c73-ce2d-44a1-bf44-b404e5454e0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\TeleportComponent">
+      <UniqueIdentifier>{b0faadfd-9c08-4ac7-ad79-f0453d58f0ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -71,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="GhostState.cpp">
       <Filter>GameObjects\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostComponent.cpp">
+      <Filter>Components\ObjectFilters\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="PacManComponent.h">
       <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostComponent.h">
+      <Filter>Components\ObjectFilters\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="TeleportComponent.h">
+      <Filter>Components\TeleportComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

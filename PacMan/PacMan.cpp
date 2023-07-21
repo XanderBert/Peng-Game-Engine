@@ -12,6 +12,8 @@
 #include "CountdownComponent.h"
 #include "BoxCollider.h"
 #include "PacManComponent.h"
+#include "TeleportComponent.h"
+#include "TriggerComponent.h"
 
 PacMan::PacMan() : m_pGameObject{new GameObject() }
 {
@@ -35,18 +37,20 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 	spriteRenderer->AddSpriteFrame({ 0,48 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 16,48 }, MovementDirection::Down);
 
+	spriteRenderer->SetFrameTime(0.05f);
+
 	//Direction Component
 	const auto directionComponent = m_pGameObject->AddComponent<DirectionComponent>();
 	directionComponent->SetDirection({ 1,0 });
 
 
 	//Move Component
-	m_pGameObject->AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.1f);
+	m_pGameObject->AddComponent<MoveComponent>()->SetTunnelingMultiplier(1.f);
 
 
 	//Velocity Component
 	const auto velocityComponent = m_pGameObject->AddComponent<VelocityComponent>();
-	velocityComponent->SetVelocity(1200.f);
+	velocityComponent->SetVelocity(200.f);
 
 
 	//Input Component
@@ -63,13 +67,27 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 11, 11 });
 	collider->SetColliderOffset({ 1,1 });
-
-
 #ifdef _DEBUG
 	collider->DebugRender(true);
 #endif // DEBUG
 
 
+	const auto trigger = m_pGameObject->AddComponent<TriggerComponent>();
+	trigger->SetColliderSize({ 6, 6 });
+	trigger->SetColliderOffset({ 3,3 });
+	trigger->SetOffsetMultiplier(2.f);
+
+#ifdef _DEBUG
+	trigger->DebugRender(true);
+#endif // _DEBUG
+
+
 	const auto pacMan  = m_pGameObject->AddComponent<PacManComponent>();
 	//pacMan->SetLives(3);
+
+
+	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 10,10 });
+
+
+	m_pGameObject->AddComponent<TeleportComponent>();
 }

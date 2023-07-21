@@ -15,11 +15,13 @@
 #include "WallManager.h"
 #include "Ghost.h"
 
-glm::vec2 g_WindowSize{ 324, 400 };
+glm::vec2 g_WindowSize{ 224, 300 };
 
 
 void load()
 {
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
 	//LevelManager::GetInstance().AddStartScreen();
 	//auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
 	auto& Startscene = SceneManager::GetInstance().CreateScene("Level0");
@@ -27,6 +29,9 @@ void load()
 
 	Startscene.Add(PacMan().GetPacMan());
 	Startscene.Add(PacDot(50,50).GetGameObject());
+	Startscene.Add(Ghost().GetGameObject());
+	Startscene.Add(Ghost().GetGameObject());
+	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
 
 	WallManager wallManager{};

@@ -18,7 +18,7 @@ public:
 
 	void SetTime(float time) { m_Time = time; m_InitTime = time; }
 	float GetTime() const { return m_Time; }
-	bool IsTimeUp() const { return m_Time <= 0.f; }
+	bool IsTimeUp() const { return m_Time < 0.f; }
 
 	void AddTime(float time) { m_Time += time; }
 	void SubtractTime(float time) { m_Time -= time; }

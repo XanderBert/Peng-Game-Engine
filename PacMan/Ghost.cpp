@@ -11,6 +11,10 @@
 #include "BoxCollider.h"
 #include "GameObjectStorage.h"
 #include "Transform.h"
+#include <CountdownComponent.h>
+#include "GhostComponent.h"
+#include "TriggerComponent.h"
+#include "TeleportComponent.h"
 
 Ghost::Ghost() : m_pGameObject{ new GameObject() }
 {
@@ -35,11 +39,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Down);
 
-
-	//State Component
-	const auto state = m_pGameObject->AddComponent<StateComponent>();
-	state->SetState(new GhostMoveState(m_pGameObject));
-
+	
 	//Move Component
 	const auto move = m_pGameObject->AddComponent<MoveComponent>();
 	move->SetTunnelingMultiplier(1.1f);
@@ -51,16 +51,45 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 
 	//Velocity Component
 	const auto velocity = m_pGameObject->AddComponent<VelocityComponent>();
-	velocity->SetVelocity(100.f);
+	velocity->SetVelocity(50.f);
 
 
 	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
-	collider->SetColliderSize({ 12,12 });
+	collider->SetColliderSize({ 14,14 });
+	//collider->DebugRender(true);
+
+	//Trigger Component
+	const auto trigger = m_pGameObject->AddComponent<TriggerComponent>();
+	trigger->SetColliderSize({ 6, 6 });
+	trigger->SetColliderOffset({ 5,5 });
+	trigger->SetOffsetMultiplier(4.f);
+
+#ifdef _DEBUG
+	trigger->DebugRender(true);
+#endif // _DEBUG
+
+	
 
 	//Transform Component
-	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 50,50 });
+	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
 
 	//Storage for pacMan
 	m_pGameObject->AddComponent<GameObjectStorage>();
+
+	//Timer Component
+	const auto countDown = m_pGameObject->AddComponent<CountdownComponent>();
+	countDown->SetTime(2.5f);
+	countDown->Pause();
+
+
+	//Ghost Component
+	const auto Ghost = m_pGameObject->AddComponent<GhostComponent>();
+	Ghost->ChangeToRandomDirection();
+
+	//State Component
+	const auto state = m_pGameObject->AddComponent<StateComponent>();
+	state->SetState(new GhostMoveState(m_pGameObject));
+
+	m_pGameObject->AddComponent<TeleportComponent>();
 }
