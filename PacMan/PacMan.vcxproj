@@ -159,11 +159,13 @@
     <ClCompile Include="GhostComponent.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="IntersectionTile.cpp" />
     <ClCompile Include="PacDot.cpp" />
     <ClCompile Include="PacMan.cpp" />
     <ClCompile Include="PacManComponent.cpp" />
     <ClCompile Include="PacManMain.cpp" />
     <ClCompile Include="PacManState.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
@@ -172,12 +174,16 @@
     <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostState.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="IntersectionComponent.h" />
+    <ClInclude Include="IntersectionTile.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="PacDot.h" />
     <ClInclude Include="PacDotComponent.h" />
     <ClInclude Include="PacMan.h" />
     <ClInclude Include="PacManComponent.h" />
     <ClInclude Include="PacManState.h" />
+    <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="PowerUpComponent.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="SwitchInputCommand.h" />
     <ClInclude Include="TeleportComponent.h" />

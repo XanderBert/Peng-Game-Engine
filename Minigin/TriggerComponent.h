@@ -25,15 +25,13 @@ public:
 	void DebugRender(bool isDebugRendering) const;
 
 	SDL_Rect GetTriggerRect()const;
+	glm::vec2 GetColliderMiddlePoint() const;
 
 	std::vector<GameObject*> GetCollidingObjects() const;
 
 
 	void DisableTrigger();
 	void EnableTrigger();
-	//TODO
-	std::string GetTag() const;
-	void SetTag(const std::string& tag);
 
 private:
 	glm::vec2 m_Offset;
@@ -44,5 +42,4 @@ private:
 	//Otherwise it will stay static at the location of the object
 	bool m_IsPlacedInFrontOfObject{ true };
 	float m_OffsetMultiplier{ 2.f };
-	std::string m_Tag{};
 };

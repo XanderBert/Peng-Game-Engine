@@ -1,18 +1,44 @@
 ﻿#pragma once
+#include <glm/vec2.hpp>
+
 #include "GameObject.h"
 #include "PacManState.h"
 
 
-class GhostMoveState final : public State
+class ChaseState final : public State
 {
 public:
-	GhostMoveState(GameObject* object);
-	~GhostMoveState() override = default;
+	ChaseState(GameObject* object);
+	~ChaseState() override = default;
 
-	GhostMoveState(const GhostMoveState& other) = delete;
-	GhostMoveState(GhostMoveState&& other) = delete;
-	GhostMoveState& operator=(const GhostMoveState& other) = delete;
-	GhostMoveState& operator=(GhostMoveState&& other) = delete;
+	ChaseState(const ChaseState& other) = delete;
+	ChaseState(ChaseState&& other) = delete;
+	ChaseState& operator=(const ChaseState& other) = delete;
+	ChaseState& operator=(ChaseState&& other) = delete;
+
+	State* HandleInput() override;
+	void Update() override;
+	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+
+private:
+
+	glm::vec2 m_Target{};
+
+	void OnEnter() override;
+	glm::vec2 CalculateDirection() const;
+	void StorePacMan();
+};
+
+class ScatterState final : public State
+{
+public:
+	ScatterState(GameObject* object);
+	~ScatterState() override = default;
+
+	ScatterState(const ScatterState& other) = delete;
+	ScatterState(ScatterState&& other) = delete;
+	ScatterState& operator=(const ScatterState& other) = delete;
+	ScatterState& operator=(ScatterState&& other) = delete;
 
 	State* HandleInput() override;
 	void Update() override;
@@ -22,16 +48,16 @@ private:
 	void OnEnter() override;
 };
 
-class GhostConcusedState final : public State
+class FrightenedState final : public State
 {
 public:
-	GhostConcusedState(GameObject* object);
-	~GhostConcusedState() override = default;
+	FrightenedState(GameObject* object);
+	~FrightenedState() override = default;
 
-	GhostConcusedState(const GhostConcusedState& other) = delete;
-	GhostConcusedState(GhostConcusedState&& other) = delete;
-	GhostConcusedState& operator=(const GhostConcusedState& other) = delete;
-	GhostConcusedState& operator=(GhostConcusedState&& other) = delete;
+	FrightenedState(const FrightenedState& other) = delete;
+	FrightenedState(FrightenedState&& other) = delete;
+	FrightenedState& operator=(const FrightenedState& other) = delete;
+	FrightenedState& operator=(FrightenedState&& other) = delete;
 
 	State* HandleInput() override;
 	void Update() override;

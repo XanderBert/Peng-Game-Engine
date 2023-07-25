@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "WallManager.h"
 #include "Ghost.h"
+#include "IntersectionTile.h"
 
 glm::vec2 g_WindowSize{ 224, 300 };
 
@@ -29,6 +30,7 @@ void load()
 
 	Startscene.Add(PacMan().GetPacMan());
 	Startscene.Add(PacDot(50,50).GetGameObject());
+
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
@@ -85,9 +87,79 @@ void load()
 	wallManager.AddWall("Walls/Wall_59x19_34x18.png");
 	wallManager.AddWall("Walls/Wall_131x19_34x18.png");
 
-
-
 	wallManager.AddWallsToScene(Startscene);
+
+
+	//  , { {-1,0}, {1,0}, {0, 1}, {0, -1} }
+	Startscene.Add(IntersectionTile({4,4},{{1,0}, {0, 1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,36},{{1,0}, {0, 1},{0,-1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,60},{{1,0},{0,-1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,156},{{1,0},{0,1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,180},{{1,0},{0,-1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,204},{{1,0},{0,1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({4,228},{{1,0},{0,-1}}).GetGameObject());
+
+	Startscene.Add(IntersectionTile({44,4},{{-1,0}, {1,0}, {0, 1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({44,36}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({44,60},{{-1, 0}, {0,-1}, {0,1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({44,108}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({44,156}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({44,180}, {  {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({44,204}, { {-1,0},   {0, -1} }).GetGameObject());
+
+	Startscene.Add(IntersectionTile({68,36}, { {-1,0},   {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,60}, { {1, 0} ,   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,84}, { {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,108}, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,132}, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,156}, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({68,180}, { {1, 0} ,   {-1, 0},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,204 }, { {1, 0} ,   {0, -1}}).GetGameObject());
+	
+	Startscene.Add(IntersectionTile({ 92,4 }, { {-1, 0} ,   {0, 1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,36 }, { {-1, 0} ,   {1, 0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,60 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,84 }, { {-1, 0} ,   {1, 0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,156 }, { {-1, 0} ,{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,180 }, { {-1, 0} ,{1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,204 }, { {-1, 0} ,{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 92,228 }, { {-1, 0},{1,0} ,{0,-1} }).GetGameObject());
+
+	Startscene.Add(IntersectionTile({ 116,4 }, { {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,36 }, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,60 }, { {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,84 }, { {1, 0} ,   {-1, 0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,156 }, { {1, 0} ,{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,180 }, { {1, 0} ,{-1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,204 }, { {1, 0} ,{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 116,228 }, { {1, 0},{-1,0} ,{0,-1} }).GetGameObject());
+
+	Startscene.Add(IntersectionTile({ 140 ,36 }, { {1,0},   {-1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,60 }, { {-1, 0} ,   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,84 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,108 }, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,132 }, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,156 }, { {-1, 0} ,   {1, 0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,180 }, { {-1, 0} ,   {1, 0},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 140 ,204 }, { {-1, 0} ,   {0, -1} }).GetGameObject());
+
+
+	Startscene.Add(IntersectionTile({ 164,4 }, { {1,0}, {-1,0}, {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,36 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,60 }, { {1, 0}, {0,-1}, {0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,108 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,156 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,180 }, { {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 164,204 }, { {1,0},   {0, -1} }).GetGameObject());
+
+
+	Startscene.Add(IntersectionTile({ 204,4 }, { {-1,0}, {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,36 }, { {-1,0}, {0, 1},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,60 }, { {-1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,156 }, { {-1,0},{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,180 }, { {-1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,204 }, { {-1,0},{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 204,228 }, { {-1,0},{0,-1} }).GetGameObject());
 }
 
 int main(int, char* [])

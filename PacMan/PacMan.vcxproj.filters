@@ -49,6 +49,12 @@
     <Filter Include="Components\TeleportComponent">
       <UniqueIdentifier>{b0faadfd-9c08-4ac7-ad79-f0453d58f0ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\IntersectionTile">
+      <UniqueIdentifier>{5216db31-e9de-472e-8f4e-60b143fcda1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\PowerUp">
+      <UniqueIdentifier>{bb51ca05-719f-4aae-afba-2a29bab0bc8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -82,7 +88,13 @@
       <Filter>Components\ObjectFilters\Ghost</Filter>
     </ClCompile>
     <ClCompile Include="PacManComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components\ObjectFilters</Filter>
+    </ClCompile>
+    <ClCompile Include="IntersectionTile.cpp">
+      <Filter>GameObjects\IntersectionTile</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>GameObjects\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +142,18 @@
     </ClInclude>
     <ClInclude Include="TeleportComponent.h">
       <Filter>Components\TeleportComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionTile.h">
+      <Filter>GameObjects\IntersectionTile</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionComponent.h">
+      <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUpComponent.h">
+      <Filter>Components\ObjectFilters</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>GameObjects\Ghost</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

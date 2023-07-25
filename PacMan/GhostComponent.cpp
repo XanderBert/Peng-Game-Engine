@@ -1,5 +1,5 @@
 #include "GhostComponent.h"
-
+#include "glm/vec2.hpp"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "TextureRenderer.h"
@@ -64,36 +64,8 @@ void GhostComponent::ChangeToRandomDirection()
     }
 }
 
-void GhostComponent::ChangeDirection(const glm::vec2& direction)
+void GhostComponent::ChangeDirection(const glm::vec2& /*direction*/)
 {
-    // Check if there's any direction change within the last 0.1 seconds
-    bool hasRecentDirectionChange = false;
-    for (const auto& directionChange : m_DirectionChanges)
-    {
-        if (TimeM::GetInstance().GetElapsed() - directionChange.second <= 3.5f)
-        {
-            hasRecentDirectionChange = true;
-            break;
-        }
-    }
-
-    if (hasRecentDirectionChange && direction == -m_pOwner->GetComponent<DirectionComponent>()->GetDirection())
-    {
-        return;
-    }
-
-    m_pOwner->GetComponent<DirectionComponent>()->SetDirection(direction);
-
-    std::pair newDirectionChange{ direction, TimeM::GetInstance().GetElapsed() };
-    m_DirectionChanges.emplace_back(newDirectionChange);
-
-    // Delete all direction changes that are older than 3.6 sec
-    m_DirectionChanges.erase(
-        std::remove_if(m_DirectionChanges.begin(), m_DirectionChanges.end(),
-            [](const std::pair<glm::vec2, float>& directionChange)
-            {
-                return TimeM::GetInstance().GetElapsed() - directionChange.second > 3.6f;
-            }),
-        m_DirectionChanges.end());
+   
 
 }

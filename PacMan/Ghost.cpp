@@ -55,7 +55,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 14,14 });
-	//collider->DebugRender(true);
+	collider->DebugRender(true);
 
 	//Trigger Component
 	const auto trigger = m_pGameObject->AddComponent<TriggerComponent>();
@@ -68,7 +68,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 #endif // _DEBUG
 
 	//Transform Component
-	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 100,100 });
+	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 44,83 });
 
 	//Storage for pacMan
 	m_pGameObject->AddComponent<GameObjectStorage>();
@@ -85,7 +85,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 
 	//State Component
 	const auto state = m_pGameObject->AddComponent<StateComponent>();
-	state->SetState(new GhostMoveState(m_pGameObject));
+	state->SetState(new ChaseState(m_pGameObject));
 
 
 	//Teleport Component

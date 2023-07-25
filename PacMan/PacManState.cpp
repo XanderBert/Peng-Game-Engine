@@ -4,6 +4,7 @@
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
 #include "PacManComponent.h"
+#include "PowerUpComponent.h"
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
 
@@ -41,7 +42,7 @@ void PacManMoveState::Update()
 	
 }
 
-void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
+void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 
 	if(other->GetComponent<PacDotComponent>())
@@ -57,9 +58,16 @@ void PacManMoveState::OnCollision(GameObject* other, bool /*isTrigger*/, bool is
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}
 
-	if(other->GetComponent<GhostComponent>()&& !isSenderTrigger)
+
+	//Colliding with a ghost
+	if(other->GetComponent<GhostComponent>()&& !isSenderTrigger && !isTrigger)
 	{
 		m_pActor->GetComponent<PacManComponent>()->Die();
+	}
+
+	if(other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		//Alert All Ghost to change state
 	}
 }
 

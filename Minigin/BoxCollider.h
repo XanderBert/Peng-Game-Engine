@@ -37,6 +37,7 @@ public:
 	void DebugRender(bool isDebugRendering);
 
 	SDL_Rect GetCollider();
+	glm::vec2 GetColliderMiddlePoint() const;
 
 
 	void SetIsTrigger(bool isTrigger);

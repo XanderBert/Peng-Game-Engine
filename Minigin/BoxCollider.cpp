@@ -52,6 +52,17 @@ SDL_Rect BoxCollider::GetCollider()
 	return SDL_Rect{ m_Collider.x + static_cast<int>(position.x),m_Collider.y + static_cast<int>(position.y), m_Collider.w, m_Collider.h };
 }
 
+glm::vec2 BoxCollider::GetColliderMiddlePoint() const
+{
+	//Top left
+	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+	const auto x = position.x + m_Collider.w / 2.f;
+	const auto y = position.y + m_Collider.h / 2.f;
+
+
+	return glm::vec2(x + m_Collider.x, y + m_Collider.y);
+}
+
 void BoxCollider::SetIsTrigger(bool isTrigger)
 {
 	m_IsTrigger = isTrigger;

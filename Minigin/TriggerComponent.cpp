@@ -23,6 +23,9 @@ void TriggerComponent::Update()
 	{
 		const auto direction = directionComponent->GetDirection();
 		m_pBoxCollider->SetColliderOffset({ m_OffsetMultiplier * direction.x + m_Offset.x, m_OffsetMultiplier * direction.y + m_Offset.y });
+	}else
+	{
+		m_pBoxCollider->SetColliderOffset({ m_OffsetMultiplier * m_Offset.x, m_OffsetMultiplier * m_Offset.y });
 	}
 }
 
@@ -72,6 +75,11 @@ SDL_Rect TriggerComponent::GetTriggerRect() const
 	return m_pBoxCollider->GetCollider();
 }
 
+glm::vec2 TriggerComponent::GetColliderMiddlePoint() const
+{
+	return m_pBoxCollider->GetColliderMiddlePoint();
+}
+
 std::vector<GameObject*> TriggerComponent::GetCollidingObjects() const
 {
 	std::vector<GameObject*> vector{};
@@ -91,14 +99,4 @@ void TriggerComponent::DisableTrigger()
 void TriggerComponent::EnableTrigger()
 {
 	m_IsTriggerActive = true;
-}
-
-std::string TriggerComponent::GetTag() const
-{
-	return m_Tag;
-}
-
-void TriggerComponent::SetTag(const std::string& tag)
-{
-	m_Tag = tag;
 }
