@@ -80,7 +80,10 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 #endif // _DEBUG
 
 	//PacMan Component
-	const auto pacMan  = m_pGameObject->AddComponent<PacManComponent>();
+
+
+
+	const auto pacMan = m_pGameObject->AddComponent<PacManComponent>();
 	//pacMan->SetLives(3);
 
 	//Transform Component

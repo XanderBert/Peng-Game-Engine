@@ -53,7 +53,6 @@ void SpriteRenderer::Update()
 		//Set Texture Direction
 		if (const auto directionComponent = m_pOwner->GetComponent<DirectionComponent>())
 		{
-			//if (directionComponent->GetDirection() == m_MovementDirection)
 
 			SetMovementDirection(directionComponent->GetDirection());
 		}
@@ -138,13 +137,6 @@ void SpriteRenderer::SetAnimationFrame(int animationFrame)
 
 void SpriteRenderer::SetMovementDirection(const glm::vec2& direction)
 {
-	//const auto oldDirection = m_pOwner->GetComponent<DirectionComponent>()->GetPreviousDirection();
-
-	//if (direction == oldDirection)
-	//{
-	//	return;
-	//}
-
 	SetMovementDirection(ConvertMovementDirection(direction));
 }
 
@@ -175,6 +167,25 @@ glm::vec2 SpriteRenderer::GetMovementDirectionVector() const
 void SpriteRenderer::AddSpriteFrame(const glm::vec2& position, MovementDirection direction)
 {
 	m_MovementDirectionMap.find(direction)->second.push_back(position);
+}
+
+void SpriteRenderer::ResetSpriteFrames()
+{
+	m_MovementDirectionMap.clear();
+
+	m_MovementDirectionMap =
+	{
+	{MovementDirection::Up, {}},
+	{MovementDirection::Down, {}},
+	{MovementDirection::Left, {}},
+	{MovementDirection::Right, {}},
+	{MovementDirection::None, {}}
+	};
+}
+
+int SpriteRenderer::GetNumberOfSprites() const
+{
+	return static_cast<int>(m_MovementDirectionMap.size());
 }
 
 void SpriteRenderer::SetOffset(const glm::vec2& offset)

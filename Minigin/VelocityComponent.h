@@ -26,8 +26,11 @@ public:
 	void SetVelocity(float velocity);
 	float GetVelocity() const;
 
+	void SetVelocityPercentage(const float percentage);
+
 
 
 private:
 	float m_Velocity{ 0.f };
+	float m_InitialVelocity{ 0.f };
 };

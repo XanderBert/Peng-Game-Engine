@@ -65,4 +65,8 @@ public:
 
 private:
 	void OnEnter() override;
+
+	bool m_wasDirectionChanged = false;
+	float m_directionChangeTime = 0.0f;
+	glm::vec2 m_previousDirection = glm::vec2(0.0f);
 };

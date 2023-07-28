@@ -1,6 +1,5 @@
 #include "PacManState.h"
 #include "CountdownComponent.h"
-#include "GhostComponent.h"
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
 #include "PacManComponent.h"
@@ -58,16 +57,12 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}
 
-
-	//Colliding with a ghost
-	if(other->GetComponent<GhostComponent>()&& !isSenderTrigger && !isTrigger)
-	{
-		m_pActor->GetComponent<PacManComponent>()->Die();
-	}
-
+	
 	if(other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
 	{
 		//Alert All Ghost to change state
+		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PowerUpEaten);
+		other->MarkForDeletion();
 	}
 }
 

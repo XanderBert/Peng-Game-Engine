@@ -1,10 +1,12 @@
 ﻿#pragma once
 #include "Component.h"
+#include "PowerUpObserver.h"
 
 class PacManComponent final : public Component
 {
 public:
-	PacManComponent(GameObject* pParent) : Component(pParent) {}
+	PacManComponent(GameObject* pParent) : Component(pParent)
+	{}
 	~PacManComponent() override = default;
 
 	PacManComponent(const PacManComponent& other) = delete;
@@ -19,7 +21,11 @@ public:
 
 	void Die();
 
+	void AttachObserver(Observer* observer);
+	void NotifyObservers(GameEvent event);
+
 private:
 	int m_Lives = 3;
+	std::vector<std::unique_ptr<Observer>> m_Observers;
 
 };

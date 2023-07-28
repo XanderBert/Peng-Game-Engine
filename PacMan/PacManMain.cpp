@@ -15,6 +15,8 @@
 #include "WallManager.h"
 #include "Ghost.h"
 #include "IntersectionTile.h"
+#include "PacManComponent.h"
+#include "PowerUp.h"
 
 glm::vec2 g_WindowSize{ 224, 300 };
 
@@ -27,9 +29,17 @@ void load()
 	//auto& audioService = ServiceLocator::GetInstance().AudioService.GetService();
 	auto& Startscene = SceneManager::GetInstance().CreateScene("Level0");
 
+	auto observer = new PowerUpObserver();
 
-	Startscene.Add(PacMan().GetPacMan());
-	Startscene.Add(PacDot(50,50).GetGameObject());
+	const auto pacMan = PacMan();
+	pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
+
+	Startscene.Add(pacMan.GetPacMan());
+	//Startscene.Add(PacDot(50,50).GetGameObject());
+
+	Startscene.Add(PowerUp("Cherry.png", { 50,50 }).GetGameObject());
+
+
 
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
@@ -160,6 +170,15 @@ void load()
 	Startscene.Add(IntersectionTile({ 204,180 }, { {-1,0},{0,-1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 204,204 }, { {-1,0},{0,1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 204,228 }, { {-1,0},{0,-1} }).GetGameObject());
+
+
+
+
+	Startscene.Add(IntersectionTile({ 20,180 }, { {-1,0},{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 20,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 188,180 }, { {1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 188,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
+
 }
 
 int main(int, char* [])

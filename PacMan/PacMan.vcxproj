@@ -166,6 +166,7 @@
     <ClCompile Include="PacManMain.cpp" />
     <ClCompile Include="PacManState.cpp" />
     <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="PowerUpObserver.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="WallManager.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="PacManState.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpComponent.h" />
+    <ClInclude Include="PowerUpObserver.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="SwitchInputCommand.h" />
     <ClInclude Include="TeleportComponent.h" />

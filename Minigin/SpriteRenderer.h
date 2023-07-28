@@ -46,6 +46,8 @@ public:
 
 	void SetSpriteSize(const glm::vec2& spriteSize) { m_SpriteSize = spriteSize; }
 	void AddSpriteFrame(const glm::vec2& position, MovementDirection direction);
+	void ResetSpriteFrames();
+	int GetNumberOfSprites() const;
 
 	void SetOffset(const glm::vec2& offset);
 

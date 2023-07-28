@@ -17,16 +17,19 @@ public:
 	GhostComponent& operator=(GhostComponent&& other) = delete;
 
 
-	void ChangeToRandomDirection();
-	void ChangeDirection(const glm::vec2& direction);
-
+	void ChangeToRandomDirection() const;
+	
 	void Update() override {}
 	void FixedUpdate(float /*fixedTimeMStep*/) override {}
 	void LateUpdate() override {}
 	void Render() override {}
 
+	std::string GetTexturePath() const;
+	void InitScaredSprites();
+	void InitChaseAndScatterSprites();
+
 private:
-	std::vector<std::pair<glm::vec2, float>> m_DirectionChanges;
+	std::string m_TexturePath{};
 
 };
 

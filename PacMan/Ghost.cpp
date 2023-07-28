@@ -68,7 +68,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 #endif // _DEBUG
 
 	//Transform Component
-	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 44,83 });
+	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 68,100 });
 
 	//Storage for pacMan
 	m_pGameObject->AddComponent<GameObjectStorage>();
@@ -77,8 +77,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	const auto countDown = m_pGameObject->AddComponent<CountdownComponent>();
 	countDown->SetTime(2.5f);
 	countDown->Pause();
-
-
+	
 	//Ghost Component
 	const auto Ghost = m_pGameObject->AddComponent<GhostComponent>();
 	Ghost->ChangeToRandomDirection();
@@ -86,8 +85,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	//State Component
 	const auto state = m_pGameObject->AddComponent<StateComponent>();
 	state->SetState(new ChaseState(m_pGameObject));
-
-
+	
 	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
 }
