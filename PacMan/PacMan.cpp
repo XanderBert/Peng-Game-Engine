@@ -9,7 +9,10 @@
 #include "VelocityComponent.h"
 #include "CountdownComponent.h"
 #include "BoxCollider.h"
+#include "GameObjectStorage.h"
 #include "PacManComponent.h"
+#include "Scene.h"
+#include "ScoreComponent.h"
 #include "TeleportComponent.h"
 #include "TriggerComponent.h"
 
@@ -91,4 +94,18 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 
 	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
+
+
+	//Score Storage
+	const auto storage = m_pGameObject->AddComponent<GameObjectStorage>();
+
+	for(const auto& object : SceneManager::GetInstance().GetActiveScene()->GetObjects())
+	{
+		if (object->GetComponent<ScoreComponent>() != nullptr)
+		{
+			storage->StoreGameObject(object);
+		}
+	}
+
+
 }

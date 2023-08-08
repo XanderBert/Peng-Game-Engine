@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "WallManager.h"
 #include "Ghost.h"
+#include "Hud.h"
 #include "IntersectionTile.h"
 #include "PacManComponent.h"
 #include "PowerUp.h"
@@ -45,6 +46,8 @@ void load()
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
+
+	Startscene.Add(Hud().GetGameObject());
 
 	WallManager wallManager{};
 	wallManager.AddWall("Walls/Wall_0x0_5x80.png");

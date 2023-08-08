@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Component.h"
 
 class IntersectionComponent final : public Component

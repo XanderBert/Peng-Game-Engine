@@ -50,6 +50,30 @@
     <Filter Include="Observers">
       <UniqueIdentifier>{6c169f76-1e86-42f8-826e-ed89b54bd86d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Hud">
+      <UniqueIdentifier>{b7aff8b4-9125-4f64-a714-f08fe45b2b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Intersection">
+      <UniqueIdentifier>{fd571c1a-677e-42b4-8470-48f9b972d677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\PacDot">
+      <UniqueIdentifier>{158ff7cb-656a-4f12-9593-ede35ccb9589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\PacMan">
+      <UniqueIdentifier>{30ba0deb-4e86-47fa-8192-a552d93d5c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\PowerUp">
+      <UniqueIdentifier>{cf31f136-b514-4e5e-9ada-17f5b7e553e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Wall">
+      <UniqueIdentifier>{570f59f0-7133-4b07-9cf3-15a4d99fa6aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Hud">
+      <UniqueIdentifier>{c88f0f67-3123-4ef3-9dad-508c0765f1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Score">
+      <UniqueIdentifier>{8db484f0-ddf8-43a2-9cda-a25e5aae54f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -82,9 +106,6 @@
     <ClCompile Include="GhostComponent.cpp">
       <Filter>Components\ObjectFilters\Ghost</Filter>
     </ClCompile>
-    <ClCompile Include="PacManComponent.cpp">
-      <Filter>Components\ObjectFilters</Filter>
-    </ClCompile>
     <ClCompile Include="IntersectionTile.cpp">
       <Filter>GameObjects\IntersectionTile</Filter>
     </ClCompile>
@@ -93,6 +114,12 @@
     </ClCompile>
     <ClCompile Include="PowerUpObserver.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
+      <Filter>GameObjects\Hud</Filter>
+    </ClCompile>
+    <ClCompile Include="PacManComponent.cpp">
+      <Filter>Components\ObjectFilters\PacMan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,23 +144,14 @@
     <ClInclude Include="PacDot.h">
       <Filter>GameObjects\PacDots</Filter>
     </ClInclude>
-    <ClInclude Include="PacDotComponent.h">
-      <Filter>Components\ObjectFilters</Filter>
-    </ClInclude>
     <ClInclude Include="WallManager.h">
       <Filter>GameObjects\Walls</Filter>
-    </ClInclude>
-    <ClInclude Include="WallComponent.h">
-      <Filter>Components\ObjectFilters</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
       <Filter>GameObjects\Ghost</Filter>
     </ClInclude>
     <ClInclude Include="GhostState.h">
       <Filter>GameObjects\Ghost</Filter>
-    </ClInclude>
-    <ClInclude Include="PacManComponent.h">
-      <Filter>Components\ObjectFilters</Filter>
     </ClInclude>
     <ClInclude Include="GhostComponent.h">
       <Filter>Components\ObjectFilters\Ghost</Filter>
@@ -144,17 +162,35 @@
     <ClInclude Include="IntersectionTile.h">
       <Filter>GameObjects\IntersectionTile</Filter>
     </ClInclude>
-    <ClInclude Include="IntersectionComponent.h">
-      <Filter>Components\ObjectFilters</Filter>
-    </ClInclude>
-    <ClInclude Include="PowerUpComponent.h">
-      <Filter>Components\ObjectFilters</Filter>
-    </ClInclude>
     <ClInclude Include="PowerUp.h">
       <Filter>GameObjects\PowerUp</Filter>
     </ClInclude>
     <ClInclude Include="PowerUpObserver.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>GameObjects\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionComponent.h">
+      <Filter>Components\ObjectFilters\Intersection</Filter>
+    </ClInclude>
+    <ClInclude Include="PacDotComponent.h">
+      <Filter>Components\ObjectFilters\PacDot</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManComponent.h">
+      <Filter>Components\ObjectFilters\PacMan</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUpComponent.h">
+      <Filter>Components\ObjectFilters\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="WallComponent.h">
+      <Filter>Components\ObjectFilters\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="HudComponent.h">
+      <Filter>Components\ObjectFilters\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components\ObjectFilters\Score</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

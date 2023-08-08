@@ -1,9 +1,11 @@
 #include "PacManState.h"
 #include "CountdownComponent.h"
+#include "GameObjectStorage.h"
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
 #include "PacManComponent.h"
 #include "PowerUpComponent.h"
+#include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
 
@@ -48,6 +50,8 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 	{
 		other->MarkForDeletion();
 		// TODO Increase points here
+
+		m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject()->GetComponent<ScoreComponent>()->IncreaseScore(10);
 	}
 
 

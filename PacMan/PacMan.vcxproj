@@ -158,6 +158,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostComponent.cpp" />
     <ClCompile Include="GhostState.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="IntersectionTile.cpp" />
     <ClCompile Include="PacDot.cpp" />
@@ -174,6 +175,8 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostState.h" />
+    <ClInclude Include="Hud.h" />
+    <ClInclude Include="HudComponent.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="IntersectionComponent.h" />
     <ClInclude Include="IntersectionTile.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpComponent.h" />
     <ClInclude Include="PowerUpObserver.h" />
+    <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="SwitchInputCommand.h" />
     <ClInclude Include="TeleportComponent.h" />

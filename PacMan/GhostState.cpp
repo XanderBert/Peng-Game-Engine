@@ -315,9 +315,7 @@ void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 			{
 				number = std::rand() % intersection->GetDirections().size();
 			}
-
-
-
+			
 			// Check if the direction is changing
 			if (directionComponent->GetDirection() != m_previousDirection) 
 			{
