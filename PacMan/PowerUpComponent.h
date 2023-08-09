@@ -1,9 +1,5 @@
 ﻿#pragma once
 #include "Component.h"
-enum class GameEvent
-{
-	PowerUpEaten
-};
 
 
 class PowerUpComponent final : public Component

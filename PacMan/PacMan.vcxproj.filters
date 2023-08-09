@@ -71,9 +71,6 @@
     <Filter Include="Components\ObjectFilters\Hud">
       <UniqueIdentifier>{c88f0f67-3123-4ef3-9dad-508c0765f1ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\ObjectFilters\Score">
-      <UniqueIdentifier>{8db484f0-ddf8-43a2-9cda-a25e5aae54f0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -112,14 +109,14 @@
     <ClCompile Include="PowerUp.cpp">
       <Filter>GameObjects\PowerUp</Filter>
     </ClCompile>
-    <ClCompile Include="PowerUpObserver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Hud.cpp">
       <Filter>GameObjects\Hud</Filter>
     </ClCompile>
     <ClCompile Include="PacManComponent.cpp">
       <Filter>Components\ObjectFilters\PacMan</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUpObserver.cpp">
+      <Filter>Observers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +187,10 @@
       <Filter>Components\ObjectFilters\Hud</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
-      <Filter>Components\ObjectFilters\Score</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

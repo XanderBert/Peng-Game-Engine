@@ -10,13 +10,14 @@
 #include "CountdownComponent.h"
 #include "BoxCollider.h"
 #include "GameObjectStorage.h"
+#include "HealthComponent.h"
 #include "PacManComponent.h"
 #include "Scene.h"
 #include "ScoreComponent.h"
 #include "TeleportComponent.h"
 #include "TriggerComponent.h"
 
-PacMan::PacMan() : m_pGameObject{new GameObject() }
+PacMan::PacMan() : m_pGameObject{ new GameObject() }
 {
 	//Texture Component
 	const auto textureRenderer{ m_pGameObject->AddComponent<TextureRenderer>() };
@@ -97,15 +98,18 @@ PacMan::PacMan() : m_pGameObject{new GameObject() }
 
 
 	//Score Storage
-	const auto storage = m_pGameObject->AddComponent<GameObjectStorage>();
+	//const auto storage = m_pGameObject->AddComponent<GameObjectStorage>();
 
-	for(const auto& object : SceneManager::GetInstance().GetActiveScene()->GetObjects())
-	{
-		if (object->GetComponent<ScoreComponent>() != nullptr)
-		{
-			storage->StoreGameObject(object);
-		}
-	}
+	//for(const auto& object : SceneManager::GetInstance().GetActiveScene()->GetObjects())
+	//{
+	//	if (object->GetComponent<ScoreComponent>() != nullptr)
+	//	{
+	//		storage->StoreGameObject(object);
+	//	}
+	//}
+
+	m_pGameObject->AddComponent<ScoreComponent>();
+	m_pGameObject->AddComponent<HealthComponent>();
 
 
 }

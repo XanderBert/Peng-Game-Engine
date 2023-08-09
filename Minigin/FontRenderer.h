@@ -32,6 +32,8 @@ public:
 	virtual void Render() override;
 
 	void SetText(const std::string& text);
+	std::string GetText() const;
+
 	void SetFont(const std::string& fontPath, int fontSize);
 
 	void SetOffset(const glm::vec2& offset);

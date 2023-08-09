@@ -18,7 +18,9 @@ PowerUp::PowerUp(const std::string& textureLocation, const glm::vec2& location) 
 	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 16,16 });
+#ifdef _DEBUG
 	collider->DebugRender(true);
+#endif // _DEBUG
 
 	//Transform Component
 	m_pGameObject->GetComponent<Transform>()->SetWorldPosition(location);

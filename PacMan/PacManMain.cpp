@@ -36,7 +36,83 @@ void load()
 	pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
 
 	Startscene.Add(pacMan.GetPacMan());
-	//Startscene.Add(PacDot(50,50).GetGameObject());
+
+
+	//Row_01
+	Startscene.Add(PacDot(11, 11).GetGameObject());
+	Startscene.Add(PacDot(11, 19).GetGameObject());
+	Startscene.Add(PacDot(11, 35).GetGameObject());
+	Startscene.Add(PacDot(11, 43).GetGameObject());
+	Startscene.Add(PacDot(11, 51).GetGameObject());
+	Startscene.Add(PacDot(11, 59).GetGameObject());
+	Startscene.Add(PacDot(11, 67).GetGameObject());
+	Startscene.Add(PacDot(11, 163).GetGameObject());
+	Startscene.Add(PacDot(11, 171).GetGameObject());
+	Startscene.Add(PacDot(11, 179).GetGameObject());
+	Startscene.Add(PacDot(11, 211).GetGameObject());
+	Startscene.Add(PacDot(11, 219).GetGameObject());
+	Startscene.Add(PacDot(11, 227).GetGameObject());
+	Startscene.Add(PacDot(11, 235).GetGameObject());
+	//Row_02
+	Startscene.Add(PacDot(19, 11).GetGameObject());
+	Startscene.Add(PacDot(19, 43).GetGameObject());
+	Startscene.Add(PacDot(19, 67).GetGameObject());
+	Startscene.Add(PacDot(19, 163).GetGameObject());
+	Startscene.Add(PacDot(19, 187).GetGameObject());
+	Startscene.Add(PacDot(19, 211).GetGameObject());
+	Startscene.Add(PacDot(19, 235).GetGameObject());
+	//Row_03
+	Startscene.Add(PacDot(27, 11).GetGameObject());
+	Startscene.Add(PacDot(27, 43).GetGameObject());
+	Startscene.Add(PacDot(27, 67).GetGameObject());
+	Startscene.Add(PacDot(27, 163).GetGameObject());
+	Startscene.Add(PacDot(27, 187).GetGameObject());
+	Startscene.Add(PacDot(27, 195).GetGameObject());
+	Startscene.Add(PacDot(27, 203).GetGameObject());
+	Startscene.Add(PacDot(27, 211).GetGameObject());
+	Startscene.Add(PacDot(27, 235).GetGameObject());
+	//Row_04
+	Startscene.Add(PacDot(35, 11).GetGameObject());
+	Startscene.Add(PacDot(35, 35).GetGameObject());
+	Startscene.Add(PacDot(35, 67).GetGameObject());
+	Startscene.Add(PacDot(35, 163).GetGameObject());
+	Startscene.Add(PacDot(35, 235).GetGameObject());
+	//Row_05
+	Startscene.Add(PacDot(43, 11).GetGameObject());
+	Startscene.Add(PacDot(43, 35).GetGameObject());
+	Startscene.Add(PacDot(43, 67).GetGameObject());
+	Startscene.Add(PacDot(43, 163).GetGameObject());
+	Startscene.Add(PacDot(43, 235).GetGameObject());
+	//Row_06
+	Startscene.Add(PacDot(51, 11).GetGameObject());
+	Startscene.Add(PacDot(51, 19).GetGameObject());
+	Startscene.Add(PacDot(51, 27).GetGameObject());
+	Startscene.Add(PacDot(51, 35).GetGameObject());
+	Startscene.Add(PacDot(51, 43).GetGameObject());
+	Startscene.Add(PacDot(51, 51).GetGameObject());
+	Startscene.Add(PacDot(51, 59).GetGameObject());
+	Startscene.Add(PacDot(51, 67).GetGameObject());
+	Startscene.Add(PacDot(51, 75).GetGameObject());
+	Startscene.Add(PacDot(51, 75).GetGameObject());
+	Startscene.Add(PacDot(51, 83).GetGameObject());
+	Startscene.Add(PacDot(51, 91).GetGameObject());
+	Startscene.Add(PacDot(51, 99).GetGameObject());
+	Startscene.Add(PacDot(51, 107).GetGameObject());
+	Startscene.Add(PacDot(51, 115).GetGameObject());
+	Startscene.Add(PacDot(51, 123).GetGameObject());
+	Startscene.Add(PacDot(51, 131).GetGameObject());
+	Startscene.Add(PacDot(51, 139).GetGameObject());
+	Startscene.Add(PacDot(51, 147).GetGameObject());
+	Startscene.Add(PacDot(51, 155).GetGameObject());
+	Startscene.Add(PacDot(51, 163).GetGameObject());
+	Startscene.Add(PacDot(51, 171).GetGameObject());
+	Startscene.Add(PacDot(51, 179).GetGameObject());
+	Startscene.Add(PacDot(51, 187).GetGameObject());
+	Startscene.Add(PacDot(51, 195).GetGameObject());
+	Startscene.Add(PacDot(51, 203).GetGameObject());
+	Startscene.Add(PacDot(51, 211).GetGameObject());
+	Startscene.Add(PacDot(51, 235).GetGameObject());
+
 
 	Startscene.Add(PowerUp("Cherry.png", { 50,50 }).GetGameObject());
 
@@ -104,32 +180,32 @@ void load()
 
 
 	//  , { {-1,0}, {1,0}, {0, 1}, {0, -1} }
-	Startscene.Add(IntersectionTile({4,4},{{1,0}, {0, 1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,36},{{1,0}, {0, 1},{0,-1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,60},{{1,0},{0,-1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,156},{{1,0},{0,1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,180},{{1,0},{0,-1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,204},{{1,0},{0,1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({4,228},{{1,0},{0,-1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,4 }, { {1,0}, {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,36 }, { {1,0}, {0, 1},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,60 }, { {1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,156 }, { {1,0},{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,180 }, { {1,0},{0,-1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,204 }, { {1,0},{0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 4,228 }, { {1,0},{0,-1} }).GetGameObject());
 
-	Startscene.Add(IntersectionTile({44,4},{{-1,0}, {1,0}, {0, 1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({44,36}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({44,60},{{-1, 0}, {0,-1}, {0,1}}).GetGameObject());
-	Startscene.Add(IntersectionTile({44,108}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({44,156}, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({44,180}, {  {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({44,204}, { {-1,0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,4 }, { {-1,0}, {1,0}, {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,36 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,60 }, { {-1, 0}, {0,-1}, {0,1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,108 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,156 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,180 }, { {1,0}, {0, 1}, {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 44,204 }, { {-1,0},   {0, -1} }).GetGameObject());
 
-	Startscene.Add(IntersectionTile({68,36}, { {-1,0},   {1, 0} ,   {0, 1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,60}, { {1, 0} ,   {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,84}, { {1, 0} ,   {0, 1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,108}, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,132}, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,156}, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({68,180}, { {1, 0} ,   {-1, 0},   {0, 1} }).GetGameObject());
-	Startscene.Add(IntersectionTile({ 68,204 }, { {1, 0} ,   {0, -1}}).GetGameObject());
-	
-	Startscene.Add(IntersectionTile({ 92,4 }, { {-1, 0} ,   {0, 1}}).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,36 }, { {-1,0},   {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,60 }, { {1, 0} ,   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,84 }, { {1, 0} ,   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,108 }, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,132 }, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,156 }, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,180 }, { {1, 0} ,   {-1, 0},   {0, 1} }).GetGameObject());
+	Startscene.Add(IntersectionTile({ 68,204 }, { {1, 0} ,   {0, -1} }).GetGameObject());
+
+	Startscene.Add(IntersectionTile({ 92,4 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 92,36 }, { {-1, 0} ,   {1, 0},   {0, -1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 92,60 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 92,84 }, { {-1, 0} ,   {1, 0},{0,-1} }).GetGameObject());

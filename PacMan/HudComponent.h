@@ -1,11 +1,31 @@
 #pragma once
+#include <iostream>
+
 #include "Component.h"
 #include "FontRenderer.h"
+#include "GameObjectStorage.h"
+#include "HealthComponent.h"
+#include "PacManComponent.h"
+#include "Scene.h"
+#include "SceneManager.h"
+#include "ScoreComponent.h"
 
 class HudComponent final : public Component
 {
 public:
-	HudComponent(GameObject* pParent) : Component(pParent) {}
+	HudComponent(GameObject* pParent) : Component(pParent)
+	{
+		for (const auto& object : SceneManager::GetInstance().GetActiveScene()->GetObjects())
+		{
+			if (object->GetComponent<PacManComponent>())
+			{
+				m_pOwner->AddComponent<GameObjectStorage>()->StoreGameObject(object);
+			}
+		}
+
+
+		m_pOwner->AddComponent<GameObjectStorage>();
+	}
 	~HudComponent() override = default;
 
 	HudComponent(const HudComponent& other) = delete;
@@ -18,20 +38,20 @@ public:
 	void LateUpdate() override {}
 	void Render() override {}
 
-	void SetLives(const int lives) { m_Lives = lives; }
-
-private:
-	int m_Lives;
-	int m_OldLives;
 };
 
 inline void HudComponent::Update()
 {
+	const auto pacman = m_pOwner->GetComponent<GameObjectStorage>()->GetStoredObject();
+	const auto lives = pacman->GetComponent<HealthComponent>()->GetHealth();
+	const auto score = pacman->GetComponent<ScoreComponent>()->GetScore();
 
-	if(m_OldLives != m_Lives)
+
+	const auto font = m_pOwner->GetComponent<FontRenderer>();
+
+	if (font->GetText() != "Lives: " + std::to_string(lives) + "\tScore: " + std::to_string(score))
 	{
-		const auto font = m_pOwner->GetComponent<FontRenderer>();
-		font->SetText("Lives: " + std::to_string(m_Lives));
-		m_OldLives = m_Lives;
+		font->SetText("Lives: " + std::to_string(lives) + "\tScore: " + std::to_string(score));
 	}
+
 }

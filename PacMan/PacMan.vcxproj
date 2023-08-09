@@ -175,6 +175,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostState.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="HudComponent.h" />
     <ClInclude Include="InputHandler.h" />

@@ -64,6 +64,11 @@ void FontRenderer::SetText(const std::string& text)
 	if (m_font) m_needsUpdate = true;
 }
 
+std::string FontRenderer::GetText() const
+{
+	return m_text;
+}
+
 void FontRenderer::SetFont(const std::string& fontPath, int fontSize)
 {
 	m_font = { ServiceLocator::GetInstance().ResourceManager.GetService().LoadFont(fontPath, fontSize) };

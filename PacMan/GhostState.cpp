@@ -11,6 +11,7 @@
 #include "WallComponent.h"
 #include "IntersectionComponent.h"
 #include "StateComponent.h"
+#include "TimeM.h"
 #include "TriggerComponent.h"
 #include "VelocityComponent.h"
 
@@ -29,9 +30,8 @@ void ChaseState::Update()
 	// Move
 	m_pActor->GetComponent<MoveComponent>()->SetCanMove(true);
 
-
 	//Store Pacman in the storage component if needed.
-	StorePacMan();
+	m_pActor->GetComponent<GhostComponent>()->StorePacMan();
 
 	//Set pacman As the target
 	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
@@ -43,74 +43,23 @@ void ChaseState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTri
 	//Colliding with a ghost
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		other->GetComponent<PacManComponent>()->Die();
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
 		return;
 	}
 
 
 	//The Ghost  is colliding with a Intersection Trigger
-	if(other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
+	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{
 		//If the ghost is not in the center of the intersection -> return
-		if(glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint()) >= 2.f) return;
-
+		if (glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint()) >= 2.f) return;
 		const auto possibleDirections = other->GetComponent<IntersectionComponent>()->GetDirections();
-		const auto desiredDirection = CalculateDirection();
-
-
-		const auto directionComponent = m_pActor->GetComponent<DirectionComponent>();
-
-		//Go over every possible direction. 
-		for (const auto& direction : possibleDirections)
-		{
-			// If the desired direction is available, set that direction
-			if (direction == desiredDirection)
-			{
-				// Calculate the dot product between the desired direction and the current direction
-				const float dotProduct = glm::dot(desiredDirection, directionComponent->GetDirection());
-
-				// If the dot product is -1, it's a 180-degree turn, so skip it
-				if (glm::abs(dotProduct + 1.0f) < std::numeric_limits<float>::epsilon())
-				{
-					continue;
-				}
-
-
-				directionComponent->SetDirection(desiredDirection);
-				return;
-			}
-		}
-
-		// If the desired direction is not available, choose another direction
-		const std::vector<glm::vec2> desiredDirections{ {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
-		for (const auto& desiredDir : desiredDirections)
-		{
-			// Calculate the dot product between the desired direction and the current direction
-			const float dotProduct = glm::dot(desiredDir, directionComponent->GetDirection());
-
-			// If the dot product is -1, it's a 180-degree turn, so skip it
-			if (glm::abs(dotProduct + 1.0f) < std::numeric_limits<float>::epsilon())
-			{
-				continue;
-			}
-
-			// Check if the alternative direction is available
-			for (const auto& direction : possibleDirections)
-			{
-				if (direction == desiredDir)
-				{
-					directionComponent->SetDirection(desiredDir);
-					return;
-				}
-			}
-		}
-		// If no valid direction is found
-		// directionComponent->SetDirection(possibleDirections[0]);
+		m_pActor->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<GhostComponent>()->GetDirectionOfVector(possibleDirections, m_Target));
 	}
 
 
 	//The Ghost Trigger is colliding with a wall
-	if(other->GetComponent<WallComponent>() && isSenderTrigger)
+	if (other->GetComponent<WallComponent>() && isSenderTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 		return;
@@ -123,70 +72,12 @@ void ChaseState::OnEnter()
 	m_pActor->GetComponent<CountdownComponent>()->Play();
 	m_pActor->GetComponent<VelocityComponent>()->SetVelocityPercentage(95.f);
 
+	//Store Pacman in the storage component if needed.
+	m_pActor->GetComponent<GhostComponent>()->StorePacMan();
 
-
-	StorePacMan();
 	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
 	m_Target = pacMan->GetComponent<Transform>()->GetWorldPosition();
 }
-
-glm::vec2 ChaseState::CalculateDirection() const
-{
-	const auto worldPos = m_pActor->GetComponent<Transform>()->GetWorldPosition();
-	const auto vector = m_Target - worldPos;
-
-	if (glm::abs(vector.x) > glm::abs(vector.y))
-	{
-		if (vector.x > 0)
-		{
-			return	{ 1,0 };
-		}
-
-		return	{- 1,0 };
-		
-	}
-	
-	if (vector.y > 0)
-	{
-		return{ 0,1 };
-	}
-
-	return { 0,-1 };
-}
-
-void ChaseState::StorePacMan()
-{
-	//--
-	//Find pac Man
-	//--
-
-	const auto storage = m_pActor->GetComponent<GameObjectStorage>();
-	if (storage->GetStoredObject() == nullptr || storage->GetStoredObject()->GetComponent<PacManComponent>() == nullptr)
-	{
-		//Get All objects in the scene
-		const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-
-		//Find the object with the pacman component and store it in the ghost
-		for (const auto& object : objects)
-		{
-			if (object->GetComponent<PacManComponent>())
-			{
-				storage->StoreGameObject(object);
-			}
-		}
-
-		if (storage->GetStoredObject()->GetComponent<PacManComponent>() == nullptr)
-		{
-			assert(false && "Pacman not found");
-		}
-	}
-}
-
-
-
-
-
-
 
 
 
@@ -223,11 +114,11 @@ void ScatterState::Update()
 
 void ScatterState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	
+
 	//Colliding with a ghost
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		other->GetComponent<PacManComponent>()->Die();
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, m_pActor);
 		return;
 	}
 
@@ -256,10 +147,6 @@ void ScatterState::OnEnter()
 
 
 
-
-
-
-
 FrightenedState::FrightenedState(GameObject* object) : State(object)
 {
 	OnEnter();
@@ -267,7 +154,7 @@ FrightenedState::FrightenedState(GameObject* object) : State(object)
 
 State* FrightenedState::HandleInput()
 {
-	if(m_pActor->GetComponent<CountdownComponent>()->IsTimeUp())
+	if (m_pActor->GetComponent<CountdownComponent>()->IsTimeUp())
 	{
 		return new ChaseState(m_pActor);
 	}
@@ -284,11 +171,12 @@ void FrightenedState::Update()
 
 void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	//Colliding with a ghost
+	//Colliding with PacMan
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		m_pActor->GetComponent<Transform>()->SetWorldPosition({ 68,90 });
-		m_pActor->GetComponent<StateComponent>()->SetState(new ChaseState(m_pActor));
+
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::GhostEaten, m_pActor);
+
 		return;
 	}
 
@@ -298,7 +186,7 @@ void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 		return;
 	}
-	
+
 	if (other->GetComponent<IntersectionComponent>() != nullptr)
 	{
 		//If the ghost is not in the center of the intersection -> return
@@ -315,21 +203,21 @@ void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 			{
 				number = std::rand() % intersection->GetDirections().size();
 			}
-			
+
 			// Check if the direction is changing
-			if (directionComponent->GetDirection() != m_previousDirection) 
+			if (directionComponent->GetDirection() != m_previousDirection)
 			{
 				m_wasDirectionChanged = true;
 				m_directionChangeTime = 0.0f;
 				m_previousDirection = directionComponent->GetDirection();
 			}
 
-			if (m_wasDirectionChanged && m_directionChangeTime < 0.1f) 
+			if (m_wasDirectionChanged && m_directionChangeTime < 0.1f)
 			{
-				
+
 				directionComponent->SetDirection(m_previousDirection);
 			}
-			else 
+			else
 			{
 				m_wasDirectionChanged = false;
 				directionComponent->SetDirection(intersection->GetDirections().at(number));
@@ -349,4 +237,84 @@ void FrightenedState::OnEnter()
 
 	m_pActor->GetComponent<GhostComponent>()->InitScaredSprites();
 	m_pActor->GetComponent<VelocityComponent>()->SetVelocityPercentage(60.f);
+}
+
+
+
+
+
+
+
+CorneringState::CorneringState(GameObject* object) : State(object)
+{
+	OnEnter();
+}
+
+State* CorneringState::HandleInput()
+{
+	return nullptr;
+}
+
+void CorneringState::Update()
+{
+	// Move
+	m_pActor->GetComponent<MoveComponent>()->SetCanMove(true);
+
+	//Store Pacman in the storage component if needed.
+	m_pActor->GetComponent<GhostComponent>()->StorePacMan();
+
+	//Get Pacman
+	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
+
+	//Try to figure out where pacman is going.
+	const auto pacManDirection = pacMan->GetComponent<DirectionComponent>()->GetDirection();
+	const auto pacManVelocity = pacMan->GetComponent<VelocityComponent>()->GetVelocity();
+	constexpr float timeModifier = 1.5f;
+	const auto pacManExpectedPosition = pacMan->GetComponent<Transform>()->GetWorldPosition() + (pacManDirection * pacManVelocity * timeModifier);
+	m_Target = pacManExpectedPosition;
+}
+
+void CorneringState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
+{
+	//Colliding with a ghost
+	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		return;
+	}
+
+
+	//The Ghost  is colliding with a Intersection Trigger
+	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
+	{
+		//If the ghost is not in the center of the intersection -> return
+		if (glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint()) >= 2.f) return;
+
+		const auto possibleDirections = other->GetComponent<IntersectionComponent>()->GetDirections();
+		const auto newDirection = m_pActor->GetComponent<GhostComponent>()->GetDirectionOfVector(possibleDirections, m_Target);
+
+		m_pActor->GetComponent<DirectionComponent>()->SetDirection(newDirection);
+	}
+
+
+	//The Ghost Trigger is colliding with a wall
+	if (other->GetComponent<WallComponent>() && isSenderTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		return;
+	}
+}
+
+void CorneringState::OnEnter()
+{
+
+	m_pActor->GetComponent<GhostComponent>()->InitChaseAndScatterSprites();
+	m_pActor->GetComponent<CountdownComponent>()->Play();
+	m_pActor->GetComponent<VelocityComponent>()->SetVelocityPercentage(95.f);
+
+	//Store Pacman in the storage component if needed.
+	m_pActor->GetComponent<GhostComponent>()->StorePacMan();
+
+	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
+	m_Target = pacMan->GetComponent<Transform>()->GetWorldPosition();
 }

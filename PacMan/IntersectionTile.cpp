@@ -10,7 +10,9 @@ IntersectionTile::IntersectionTile(const glm::vec2& position, const std::vector<
 	trigger->SetColliderSize({ 4,4 });
 	trigger->SetColliderOffset({ 6,6 });
 	trigger->SetOffsetMultiplier(1.f);
+#ifdef _DEBUG
 	trigger->DebugRender(true);
+#endif // _DEBUG
 
 
 	m_pGameObject->AddComponent<IntersectionComponent>()->SetDirections(possibleDirection);

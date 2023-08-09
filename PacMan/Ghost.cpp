@@ -19,7 +19,6 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 {
 	//Texture Component
 	const auto textureRenderer = m_pGameObject->AddComponent<TextureRenderer>();
-	textureRenderer->SetTexture("GhostRed.png");
 
 	//Sprite Component
 	const auto spriteRenderer = m_pGameObject->AddComponent<SpriteRenderer>();
@@ -45,7 +44,7 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 
 	//Direction Component
 	const auto direction = m_pGameObject->AddComponent<DirectionComponent>();
-	direction->SetDirection({1,0});
+	direction->SetDirection({ 1,0 });
 
 	//Velocity Component
 	const auto velocity = m_pGameObject->AddComponent<VelocityComponent>();
@@ -55,7 +54,11 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 14,14 });
+
+#ifdef _DEBUG
 	collider->DebugRender(true);
+#endif // _DEBUG
+
 
 	//Trigger Component
 	const auto trigger = m_pGameObject->AddComponent<TriggerComponent>();
@@ -77,15 +80,18 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	const auto countDown = m_pGameObject->AddComponent<CountdownComponent>();
 	countDown->SetTime(2.5f);
 	countDown->Pause();
-	
+
 	//Ghost Component
 	const auto Ghost = m_pGameObject->AddComponent<GhostComponent>();
 	Ghost->ChangeToRandomDirection();
 
 	//State Component
 	const auto state = m_pGameObject->AddComponent<StateComponent>();
-	state->SetState(new ChaseState(m_pGameObject));
-	
+
+	Ghost->SetupTextureAndState();
+
+
+
 	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
 }

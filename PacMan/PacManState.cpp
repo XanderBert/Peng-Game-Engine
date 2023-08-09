@@ -8,6 +8,7 @@
 #include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
+#include "PowerUpObserver.h"
 
 //MOVE
 //
@@ -19,7 +20,7 @@ PacManMoveState::PacManMoveState(GameObject* object) : State(object)
 
 State* PacManMoveState::HandleInput()
 {
-	if(m_pActor->GetComponent<CountdownComponent>()->IsTimeUp())
+	if (m_pActor->GetComponent<CountdownComponent>()->IsTimeUp())
 	{
 		return new PacManIdleState(m_pActor);
 	}
@@ -31,7 +32,7 @@ void PacManMoveState::Update()
 {
 	const auto timer = m_pActor->GetComponent<CountdownComponent>();
 
-	if(m_pActor->GetComponent<MoveComponent>()->IsMovingThisFrame())
+	if (m_pActor->GetComponent<MoveComponent>()->IsMovingThisFrame())
 	{
 		timer->ResetTime();
 		timer->Pause();
@@ -40,18 +41,16 @@ void PacManMoveState::Update()
 	{
 		timer->Play();
 	}
-	
+
 }
 
 void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 
-	if(other->GetComponent<PacDotComponent>())
+	if (other->GetComponent<PacDotComponent>())
 	{
+		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacDotEaten, m_pActor);
 		other->MarkForDeletion();
-		// TODO Increase points here
-
-		m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject()->GetComponent<ScoreComponent>()->IncreaseScore(10);
 	}
 
 
@@ -61,19 +60,19 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}
 
-	
-	if(other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
+
+	if (other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
 	{
 		//Alert All Ghost to change state
-		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PowerUpEaten);
+		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PowerUpEaten, m_pActor);
 		other->MarkForDeletion();
 	}
 }
 
 void PacManMoveState::OnEnter()
 {
-	
-	if(const auto timer = m_pActor->GetComponent<CountdownComponent>())
+
+	if (const auto timer = m_pActor->GetComponent<CountdownComponent>())
 	{
 		timer->SetTime(0.1f);
 		timer->Pause();
@@ -94,9 +93,9 @@ PacManIdleState::PacManIdleState(GameObject* object) : State(object)
 
 State* PacManIdleState::HandleInput()
 {
-	
+
 	if (m_pActor->GetComponent<MoveComponent>()->IsMovingThisFrame())
-	{		
+	{
 		return new PacManMoveState(m_pActor);
 	}
 

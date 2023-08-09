@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <glm/vec2.hpp>
-
 #include "GameObject.h"
 #include "PacManState.h"
 
@@ -21,12 +20,10 @@ public:
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 private:
-
 	glm::vec2 m_Target{};
-
 	void OnEnter() override;
-	glm::vec2 CalculateDirection() const;
-	void StorePacMan();
+
+
 };
 
 class ScatterState final : public State
@@ -70,3 +67,26 @@ private:
 	float m_directionChangeTime = 0.0f;
 	glm::vec2 m_previousDirection = glm::vec2(0.0f);
 };
+
+
+class CorneringState final : public State
+{
+public:
+	CorneringState(GameObject* object);
+	~CorneringState() override = default;
+
+	CorneringState(const CorneringState& other) = delete;
+	CorneringState(CorneringState&& other) = delete;
+	CorneringState& operator=(const CorneringState& other) = delete;
+	CorneringState& operator=(CorneringState&& other) = delete;
+
+	State* HandleInput() override;
+	void Update() override;
+	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+
+private:
+	glm::vec2 m_Target{};
+	void OnEnter() override;
+};
+
+

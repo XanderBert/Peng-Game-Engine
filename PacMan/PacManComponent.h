@@ -19,13 +19,10 @@ public:
 	void LateUpdate() override {}
 	void Render() override {}
 
-	void Die();
-
 	void AttachObserver(Observer* observer);
-	void NotifyObservers(GameEvent event);
+	void NotifyObservers(GameEvent event, GameObject* object);
 
 private:
-	int m_Lives = 3;
 	std::vector<std::unique_ptr<Observer>> m_Observers;
 
 };
