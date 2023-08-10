@@ -74,14 +74,18 @@ void load()
 	//Row_04
 	Startscene.Add(PacDot(35, 11).GetGameObject());
 	Startscene.Add(PacDot(35, 35).GetGameObject());
+	Startscene.Add(PacDot(35, 43).GetGameObject());
 	Startscene.Add(PacDot(35, 67).GetGameObject());
 	Startscene.Add(PacDot(35, 163).GetGameObject());
+	Startscene.Add(PacDot(35, 211).GetGameObject());
 	Startscene.Add(PacDot(35, 235).GetGameObject());
 	//Row_05
 	Startscene.Add(PacDot(43, 11).GetGameObject());
 	Startscene.Add(PacDot(43, 35).GetGameObject());
+	Startscene.Add(PacDot(43, 43).GetGameObject());
 	Startscene.Add(PacDot(43, 67).GetGameObject());
 	Startscene.Add(PacDot(43, 163).GetGameObject());
+	Startscene.Add(PacDot(43, 211).GetGameObject());
 	Startscene.Add(PacDot(43, 235).GetGameObject());
 	//Row_06
 	Startscene.Add(PacDot(51, 11).GetGameObject());
@@ -112,6 +116,204 @@ void load()
 	Startscene.Add(PacDot(51, 203).GetGameObject());
 	Startscene.Add(PacDot(51, 211).GetGameObject());
 	Startscene.Add(PacDot(51, 235).GetGameObject());
+	//Row_07
+	Startscene.Add(PacDot(59, 11).GetGameObject());
+	Startscene.Add(PacDot(59, 43).GetGameObject());
+	Startscene.Add(PacDot(59, 163).GetGameObject());
+	Startscene.Add(PacDot(59, 187).GetGameObject());
+	Startscene.Add(PacDot(59, 235).GetGameObject());
+	//Row_08
+	Startscene.Add(PacDot(67, 11).GetGameObject());
+	Startscene.Add(PacDot(67, 43).GetGameObject());
+	Startscene.Add(PacDot(67, 163).GetGameObject());
+	Startscene.Add(PacDot(67, 187).GetGameObject());
+	Startscene.Add(PacDot(67, 235).GetGameObject());
+	//Row_09
+	Startscene.Add(PacDot(75, 11).GetGameObject());
+	Startscene.Add(PacDot(75, 43).GetGameObject());
+	Startscene.Add(PacDot(75, 51).GetGameObject());
+	Startscene.Add(PacDot(75, 59).GetGameObject());
+	Startscene.Add(PacDot(75, 67).GetGameObject());
+	Startscene.Add(PacDot(75, 163).GetGameObject());
+	Startscene.Add(PacDot(75, 187).GetGameObject());
+	Startscene.Add(PacDot(75, 195).GetGameObject());
+	Startscene.Add(PacDot(75, 203).GetGameObject());
+	Startscene.Add(PacDot(75, 211).GetGameObject());
+	Startscene.Add(PacDot(75, 235).GetGameObject());
+	//Row_10
+	Startscene.Add(PacDot(83, 11).GetGameObject());
+	Startscene.Add(PacDot(83, 43).GetGameObject());
+	Startscene.Add(PacDot(83, 67).GetGameObject());
+	Startscene.Add(PacDot(83, 163).GetGameObject());
+	Startscene.Add(PacDot(83, 187).GetGameObject());
+	Startscene.Add(PacDot(83, 211).GetGameObject());
+	Startscene.Add(PacDot(83, 235).GetGameObject());
+	//Row_11
+	Startscene.Add(PacDot(91, 11).GetGameObject());
+	Startscene.Add(PacDot(91, 43).GetGameObject());
+	Startscene.Add(PacDot(91, 67).GetGameObject());
+	Startscene.Add(PacDot(91, 163).GetGameObject());
+	Startscene.Add(PacDot(91, 187).GetGameObject());
+	Startscene.Add(PacDot(91, 211).GetGameObject());
+	Startscene.Add(PacDot(91, 235).GetGameObject());
+	//Row_12
+	Startscene.Add(PacDot(99, 11).GetGameObject());
+	Startscene.Add(PacDot(99, 19).GetGameObject());
+	Startscene.Add(PacDot(99, 27).GetGameObject());
+	Startscene.Add(PacDot(99, 35).GetGameObject());
+	Startscene.Add(PacDot(99, 43).GetGameObject());
+	Startscene.Add(PacDot(99, 67).GetGameObject());
+	Startscene.Add(PacDot(99, 163).GetGameObject());
+	Startscene.Add(PacDot(99, 171).GetGameObject());
+	Startscene.Add(PacDot(99, 179).GetGameObject());
+	Startscene.Add(PacDot(99, 187).GetGameObject());;
+	Startscene.Add(PacDot(99, 211).GetGameObject());
+	Startscene.Add(PacDot(99, 219).GetGameObject());
+	Startscene.Add(PacDot(99, 227).GetGameObject());
+	Startscene.Add(PacDot(99, 235).GetGameObject());
+	//Row_13
+	Startscene.Add(PacDot(107, 43).GetGameObject());
+	Startscene.Add(PacDot(107, 235).GetGameObject());
+	//Row_14
+	Startscene.Add(PacDot(115, 43).GetGameObject());
+	Startscene.Add(PacDot(115, 235).GetGameObject());
+	//Row_12
+	Startscene.Add(PacDot(123, 11).GetGameObject());
+	Startscene.Add(PacDot(123, 19).GetGameObject());
+	Startscene.Add(PacDot(123, 27).GetGameObject());
+	Startscene.Add(PacDot(123, 35).GetGameObject());
+	Startscene.Add(PacDot(123, 43).GetGameObject());
+	Startscene.Add(PacDot(123, 67).GetGameObject());
+	Startscene.Add(PacDot(123, 163).GetGameObject());
+	Startscene.Add(PacDot(123, 171).GetGameObject());
+	Startscene.Add(PacDot(123, 179).GetGameObject());
+	Startscene.Add(PacDot(123, 187).GetGameObject());;
+	Startscene.Add(PacDot(123, 211).GetGameObject());
+	Startscene.Add(PacDot(123, 219).GetGameObject());
+	Startscene.Add(PacDot(123, 227).GetGameObject());
+	Startscene.Add(PacDot(123, 235).GetGameObject());
+	//Row_11
+	Startscene.Add(PacDot(131, 11).GetGameObject());
+	Startscene.Add(PacDot(131, 43).GetGameObject());
+	Startscene.Add(PacDot(131, 67).GetGameObject());
+	Startscene.Add(PacDot(131, 163).GetGameObject());
+	Startscene.Add(PacDot(131, 187).GetGameObject());
+	Startscene.Add(PacDot(131, 211).GetGameObject());
+	Startscene.Add(PacDot(131, 235).GetGameObject());
+	//Row_10
+	Startscene.Add(PacDot(139, 11).GetGameObject());
+	Startscene.Add(PacDot(139, 43).GetGameObject());
+	Startscene.Add(PacDot(139, 67).GetGameObject());
+	Startscene.Add(PacDot(139, 163).GetGameObject());
+	Startscene.Add(PacDot(139, 187).GetGameObject());
+	Startscene.Add(PacDot(139, 211).GetGameObject());
+	Startscene.Add(PacDot(139, 235).GetGameObject());
+	//Row_09
+	Startscene.Add(PacDot(147, 11).GetGameObject());
+	Startscene.Add(PacDot(147, 43).GetGameObject());
+	Startscene.Add(PacDot(147, 51).GetGameObject());
+	Startscene.Add(PacDot(147, 59).GetGameObject());
+	Startscene.Add(PacDot(147, 67).GetGameObject());
+	Startscene.Add(PacDot(147, 163).GetGameObject());
+	Startscene.Add(PacDot(147, 187).GetGameObject());
+	Startscene.Add(PacDot(147, 195).GetGameObject());
+	Startscene.Add(PacDot(147, 203).GetGameObject());
+	Startscene.Add(PacDot(147, 211).GetGameObject());
+	Startscene.Add(PacDot(147, 235).GetGameObject());
+	//Row_08
+	Startscene.Add(PacDot(155, 11).GetGameObject());
+	Startscene.Add(PacDot(155, 43).GetGameObject());
+	Startscene.Add(PacDot(155, 163).GetGameObject());
+	Startscene.Add(PacDot(155, 187).GetGameObject());
+	Startscene.Add(PacDot(155, 235).GetGameObject());
+	//Row_07
+	Startscene.Add(PacDot(163, 11).GetGameObject());
+	Startscene.Add(PacDot(163, 43).GetGameObject());
+	Startscene.Add(PacDot(163, 163).GetGameObject());
+	Startscene.Add(PacDot(163, 187).GetGameObject());
+	Startscene.Add(PacDot(163, 235).GetGameObject());
+	//Row_06
+	Startscene.Add(PacDot(171, 11).GetGameObject());
+	Startscene.Add(PacDot(171, 19).GetGameObject());
+	Startscene.Add(PacDot(171, 27).GetGameObject());
+	Startscene.Add(PacDot(171, 35).GetGameObject());
+	Startscene.Add(PacDot(171, 43).GetGameObject());
+	Startscene.Add(PacDot(171, 51).GetGameObject());
+	Startscene.Add(PacDot(171, 59).GetGameObject());
+	Startscene.Add(PacDot(171, 67).GetGameObject());
+	Startscene.Add(PacDot(171, 75).GetGameObject());
+	Startscene.Add(PacDot(171, 75).GetGameObject());
+	Startscene.Add(PacDot(171, 83).GetGameObject());
+	Startscene.Add(PacDot(171, 91).GetGameObject());
+	Startscene.Add(PacDot(171, 99).GetGameObject());
+	Startscene.Add(PacDot(171, 107).GetGameObject());
+	Startscene.Add(PacDot(171, 115).GetGameObject());
+	Startscene.Add(PacDot(171, 123).GetGameObject());
+	Startscene.Add(PacDot(171, 131).GetGameObject());
+	Startscene.Add(PacDot(171, 139).GetGameObject());
+	Startscene.Add(PacDot(171, 147).GetGameObject());
+	Startscene.Add(PacDot(171, 155).GetGameObject());
+	Startscene.Add(PacDot(171, 163).GetGameObject());
+	Startscene.Add(PacDot(171, 171).GetGameObject());
+	Startscene.Add(PacDot(171, 179).GetGameObject());
+	Startscene.Add(PacDot(171, 187).GetGameObject());
+	Startscene.Add(PacDot(171, 195).GetGameObject());
+	Startscene.Add(PacDot(171, 203).GetGameObject());
+	Startscene.Add(PacDot(171, 211).GetGameObject());
+	Startscene.Add(PacDot(171, 235).GetGameObject());
+	//Row_05
+	Startscene.Add(PacDot(179, 11).GetGameObject());
+	Startscene.Add(PacDot(179, 35).GetGameObject());
+	Startscene.Add(PacDot(179, 43).GetGameObject());
+	Startscene.Add(PacDot(179, 67).GetGameObject());
+	Startscene.Add(PacDot(179, 163).GetGameObject());
+	Startscene.Add(PacDot(179, 211).GetGameObject());
+	Startscene.Add(PacDot(179, 235).GetGameObject());
+	//Row_04
+	Startscene.Add(PacDot(187, 11).GetGameObject());
+	Startscene.Add(PacDot(187, 35).GetGameObject());
+	Startscene.Add(PacDot(187, 43).GetGameObject());
+	Startscene.Add(PacDot(187, 67).GetGameObject());
+	Startscene.Add(PacDot(187, 163).GetGameObject());
+	Startscene.Add(PacDot(187, 211).GetGameObject());
+	Startscene.Add(PacDot(187, 235).GetGameObject());
+	//Row_03
+	Startscene.Add(PacDot(195, 11).GetGameObject());
+	Startscene.Add(PacDot(195, 43).GetGameObject());
+	Startscene.Add(PacDot(195, 67).GetGameObject());
+	Startscene.Add(PacDot(195, 163).GetGameObject());
+	Startscene.Add(PacDot(195, 187).GetGameObject());
+	Startscene.Add(PacDot(195, 195).GetGameObject());
+	Startscene.Add(PacDot(195, 203).GetGameObject());
+	Startscene.Add(PacDot(195, 211).GetGameObject());
+	Startscene.Add(PacDot(195, 235).GetGameObject());
+	//Row_02
+	Startscene.Add(PacDot(203, 11).GetGameObject());
+	Startscene.Add(PacDot(203, 43).GetGameObject());
+	Startscene.Add(PacDot(203, 67).GetGameObject());
+	Startscene.Add(PacDot(203, 163).GetGameObject());
+	Startscene.Add(PacDot(203, 187).GetGameObject());
+	Startscene.Add(PacDot(203, 211).GetGameObject());
+	Startscene.Add(PacDot(203, 235).GetGameObject());
+	//Row_01
+	Startscene.Add(PacDot(211, 11).GetGameObject());
+	Startscene.Add(PacDot(211, 19).GetGameObject());
+	Startscene.Add(PacDot(211, 35).GetGameObject());
+	Startscene.Add(PacDot(211, 43).GetGameObject());
+	Startscene.Add(PacDot(211, 51).GetGameObject());
+	Startscene.Add(PacDot(211, 59).GetGameObject());
+	Startscene.Add(PacDot(211, 67).GetGameObject());
+	Startscene.Add(PacDot(211, 163).GetGameObject());
+	Startscene.Add(PacDot(211, 171).GetGameObject());
+	Startscene.Add(PacDot(211, 179).GetGameObject());
+	Startscene.Add(PacDot(211, 211).GetGameObject());
+	Startscene.Add(PacDot(211, 219).GetGameObject());
+	Startscene.Add(PacDot(211, 227).GetGameObject());
+	Startscene.Add(PacDot(211, 235).GetGameObject());
+
+
+
+
 
 
 	Startscene.Add(PowerUp("Cherry.png", { 50,50 }).GetGameObject());
