@@ -90,3 +90,20 @@ private:
 };
 
 
+class IdleState final : public State
+{
+public:
+	IdleState(GameObject* object);
+	~IdleState() override = default;
+
+	IdleState(const IdleState& other) = delete;
+	IdleState(IdleState&& other) = delete;
+	IdleState& operator=(const IdleState& other) = delete;
+	IdleState& operator=(IdleState&& other) = delete;
+
+	State* HandleInput() override;
+	void Update() override;
+	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+private:
+	void OnEnter() override;
+};

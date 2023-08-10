@@ -1,66 +1,106 @@
 #include "GhostComponent.h"
 
+#include <iostream>
+
+#include "CountdownComponent.h"
 #include "DirectionComponent.h"
 #include "GameObjectStorage.h"
 #include "GhostState.h"
 #include "PacManComponent.h"
+#include "Renderer.h"
 #include "glm/vec2.hpp"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "StateComponent.h"
 #include "TextureRenderer.h"
 
 GhostComponent::GhostComponent(GameObject* pParent) : Component(pParent)
 {
-	const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
+	++m_StatGhostNumber;
+	m_GhostNumber = m_StatGhostNumber;
+	m_pOwner->GetComponent<Transform>()->SetWorldPosition({ 88 + (11 * m_GhostNumber),104 });
+	SetupTexture();
 
-	int ghosts = 0;
-
-	for (const auto gameObject : objects)
-	{
-		if (gameObject->GetComponent<GhostComponent>())
-		{
-			++ghosts;
-			m_GhostNumber = ghosts;
-		}
-	}
-
-	m_TexturePath = "GhostRed.png";
 
 }
 
+GhostComponent::~GhostComponent()
+{
+}
 
-void GhostComponent::SetupTextureAndState()
+
+void GhostComponent::SetupTexture()
 {
 	switch (m_GhostNumber)
 	{
-	case 0:
-		//Clyde Clyde alternates between chasing and fleeing.
-		m_TexturePath = "GhostOrange.png";
-		m_pOwner->GetComponent<StateComponent>()->SetState(new ChaseState{ m_pOwner });
-		break;
 	case 1:
-
-		//Setup Blinky
-		m_TexturePath = "GhostRed.png";
-		m_pOwner->GetComponent<StateComponent>()->SetState(new ChaseState{ m_pOwner });
-
+		m_TexturePath = "GhostOrange.png";
 		break;
 	case 2:
-		//Inky
-		m_pOwner->GetComponent<StateComponent>()->SetState(new CorneringState{ m_pOwner });
+		m_TexturePath = "GhostRed.png";
+		break;
+	case 3:
 		m_TexturePath = "GhostBlue.png";
 		break;
 
-	case 3:
-		//Pinky
-		m_pOwner->GetComponent<StateComponent>()->SetState(new CorneringState{ m_pOwner });
+	case 4:
 		m_TexturePath = "GhostPink.png";
 		break;
 	}
 
 	m_pOwner->GetComponent<TextureRenderer>()->SetTexture(m_TexturePath);
+}
+
+State* GhostComponent::GetRandomPossibleState() const
+{
+	//It would be best using a registration mechanism where each state type registers itself with the factory
+	//Todo: Implement a registration mechanism for the states When there is time left.
+
+	switch (m_GhostNumber)
+	{
+	case 1:
+	{
+		//Clyde Clyde alternates between chasing and fleeing.
+		const auto number = std::rand() % 2;
+		if (number)
+		{
+			return new ChaseState(m_pOwner);
+		}
+
+		return new ScatterState(m_pOwner);
+		break;
+	}
+
+	case 2: {
+		//Blinky
+		return new ChaseState(m_pOwner);
+		break;
+	}
+		  //Pinky and Inky
+	case 3:
+	{
+		return new CorneringState(m_pOwner);
+		break;
+	}
+	case 4:
+	{
+
+		return new CorneringState(m_pOwner);
+		break;
+	}
+
+	}
+
+	return nullptr;
+
+}
+
+void GhostComponent::Render()
+{
+	std::cout << "Target: " << m_Target.x << " " << m_Target.y << "\n";
+	ServiceLocator::GetInstance().Renderer.GetService().RenderRect(m_Target, { 255, 100, 10 });
 }
 
 void GhostComponent::ChangeToRandomDirection() const
@@ -238,4 +278,9 @@ void GhostComponent::InitChaseAndScatterSprites()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Down);
 
+}
+
+void GhostComponent::SetupStates()
+{
+	m_pOwner->GetComponent<StateComponent>()->SetState(new IdleState{ m_pOwner });
 }

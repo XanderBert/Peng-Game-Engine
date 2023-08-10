@@ -177,7 +177,7 @@ void load()
 	//Row_14
 	Startscene.Add(PacDot(115, 43).GetGameObject());
 	Startscene.Add(PacDot(115, 235).GetGameObject());
-	//Row_12
+	//Row_15
 	Startscene.Add(PacDot(123, 11).GetGameObject());
 	Startscene.Add(PacDot(123, 19).GetGameObject());
 	Startscene.Add(PacDot(123, 27).GetGameObject());
@@ -192,7 +192,7 @@ void load()
 	Startscene.Add(PacDot(123, 219).GetGameObject());
 	Startscene.Add(PacDot(123, 227).GetGameObject());
 	Startscene.Add(PacDot(123, 235).GetGameObject());
-	//Row_11
+	//Row_16
 	Startscene.Add(PacDot(131, 11).GetGameObject());
 	Startscene.Add(PacDot(131, 43).GetGameObject());
 	Startscene.Add(PacDot(131, 67).GetGameObject());
@@ -200,7 +200,7 @@ void load()
 	Startscene.Add(PacDot(131, 187).GetGameObject());
 	Startscene.Add(PacDot(131, 211).GetGameObject());
 	Startscene.Add(PacDot(131, 235).GetGameObject());
-	//Row_10
+	//Row_17
 	Startscene.Add(PacDot(139, 11).GetGameObject());
 	Startscene.Add(PacDot(139, 43).GetGameObject());
 	Startscene.Add(PacDot(139, 67).GetGameObject());
@@ -208,7 +208,7 @@ void load()
 	Startscene.Add(PacDot(139, 187).GetGameObject());
 	Startscene.Add(PacDot(139, 211).GetGameObject());
 	Startscene.Add(PacDot(139, 235).GetGameObject());
-	//Row_09
+	//Row_18
 	Startscene.Add(PacDot(147, 11).GetGameObject());
 	Startscene.Add(PacDot(147, 43).GetGameObject());
 	Startscene.Add(PacDot(147, 51).GetGameObject());
@@ -220,19 +220,19 @@ void load()
 	Startscene.Add(PacDot(147, 203).GetGameObject());
 	Startscene.Add(PacDot(147, 211).GetGameObject());
 	Startscene.Add(PacDot(147, 235).GetGameObject());
-	//Row_08
+	//Row_19
 	Startscene.Add(PacDot(155, 11).GetGameObject());
 	Startscene.Add(PacDot(155, 43).GetGameObject());
 	Startscene.Add(PacDot(155, 163).GetGameObject());
 	Startscene.Add(PacDot(155, 187).GetGameObject());
 	Startscene.Add(PacDot(155, 235).GetGameObject());
-	//Row_07
+	//Row_20
 	Startscene.Add(PacDot(163, 11).GetGameObject());
 	Startscene.Add(PacDot(163, 43).GetGameObject());
 	Startscene.Add(PacDot(163, 163).GetGameObject());
 	Startscene.Add(PacDot(163, 187).GetGameObject());
 	Startscene.Add(PacDot(163, 235).GetGameObject());
-	//Row_06
+	//Row_21
 	Startscene.Add(PacDot(171, 11).GetGameObject());
 	Startscene.Add(PacDot(171, 19).GetGameObject());
 	Startscene.Add(PacDot(171, 27).GetGameObject());
@@ -261,7 +261,7 @@ void load()
 	Startscene.Add(PacDot(171, 203).GetGameObject());
 	Startscene.Add(PacDot(171, 211).GetGameObject());
 	Startscene.Add(PacDot(171, 235).GetGameObject());
-	//Row_05
+	//Row_2
 	Startscene.Add(PacDot(179, 11).GetGameObject());
 	Startscene.Add(PacDot(179, 35).GetGameObject());
 	Startscene.Add(PacDot(179, 43).GetGameObject());
@@ -269,7 +269,7 @@ void load()
 	Startscene.Add(PacDot(179, 163).GetGameObject());
 	Startscene.Add(PacDot(179, 211).GetGameObject());
 	Startscene.Add(PacDot(179, 235).GetGameObject());
-	//Row_04
+	//Row_23
 	Startscene.Add(PacDot(187, 11).GetGameObject());
 	Startscene.Add(PacDot(187, 35).GetGameObject());
 	Startscene.Add(PacDot(187, 43).GetGameObject());
@@ -277,7 +277,7 @@ void load()
 	Startscene.Add(PacDot(187, 163).GetGameObject());
 	Startscene.Add(PacDot(187, 211).GetGameObject());
 	Startscene.Add(PacDot(187, 235).GetGameObject());
-	//Row_03
+	//Row_24
 	Startscene.Add(PacDot(195, 11).GetGameObject());
 	Startscene.Add(PacDot(195, 43).GetGameObject());
 	Startscene.Add(PacDot(195, 67).GetGameObject());
@@ -287,7 +287,7 @@ void load()
 	Startscene.Add(PacDot(195, 203).GetGameObject());
 	Startscene.Add(PacDot(195, 211).GetGameObject());
 	Startscene.Add(PacDot(195, 235).GetGameObject());
-	//Row_02
+	//Row_25
 	Startscene.Add(PacDot(203, 11).GetGameObject());
 	Startscene.Add(PacDot(203, 43).GetGameObject());
 	Startscene.Add(PacDot(203, 67).GetGameObject());
@@ -295,7 +295,7 @@ void load()
 	Startscene.Add(PacDot(203, 187).GetGameObject());
 	Startscene.Add(PacDot(203, 211).GetGameObject());
 	Startscene.Add(PacDot(203, 235).GetGameObject());
-	//Row_01
+	//Row_26
 	Startscene.Add(PacDot(211, 11).GetGameObject());
 	Startscene.Add(PacDot(211, 19).GetGameObject());
 	Startscene.Add(PacDot(211, 35).GetGameObject());
@@ -312,13 +312,10 @@ void load()
 	Startscene.Add(PacDot(211, 235).GetGameObject());
 
 
-
-
-
-
-	Startscene.Add(PowerUp("Cherry.png", { 50,50 }).GetGameObject());
-
-
+	Startscene.Add(PowerUp("PacBoost.png", { 8,24 }).GetGameObject());
+	Startscene.Add(PowerUp("PacBoost.png", { 8,184 }).GetGameObject());
+	Startscene.Add(PowerUp("PacBoost.png", { 208,24 }).GetGameObject());
+	Startscene.Add(PowerUp("PacBoost.png", { 208,184 }).GetGameObject());
 
 	Startscene.Add(Ghost().GetGameObject());
 	Startscene.Add(Ghost().GetGameObject());
@@ -377,6 +374,14 @@ void load()
 	wallManager.AddWall("Walls/Wall_179x19_26x18.png");
 	wallManager.AddWall("Walls/Wall_59x19_34x18.png");
 	wallManager.AddWall("Walls/Wall_131x19_34x18.png");
+	//Ghost StartingBox
+	wallManager.AddWall("Walls/Wall_84x100_20x4.png");
+	wallManager.AddWall("Walls/Wall_120x100_20x4.png");
+	wallManager.AddWall("Walls/Wall_84x104_4x28.png");
+	wallManager.AddWall("Walls/Wall_136x104_4x28.png");
+	wallManager.AddWall("Walls/Wall_88x128_48x4.png");
+
+
 
 	wallManager.AddWallsToScene(Startscene);
 
@@ -459,6 +464,11 @@ void load()
 	Startscene.Add(IntersectionTile({ 20,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 188,180 }, { {1,0},{0,-1} }).GetGameObject());
 	Startscene.Add(IntersectionTile({ 188,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
+
+
+
+
+	Startscene.Add(IntersectionTile({ 104,84 }, { {-1,0},{1,0} }).GetGameObject());
 
 }
 

@@ -85,7 +85,17 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 
 void Renderer::RenderRect(const SDL_Rect& rect) const
 {
-
 	SDL_SetRenderDrawColor(GetSDLRenderer(), 255, 1, 1, 255);
 	SDL_RenderDrawRect(GetSDLRenderer(), &rect);
+}
+
+void Renderer::RenderRect(const glm::vec2& rect, glm::vec3 color) const
+{
+	SDL_Rect r;
+	r.x = static_cast<int>(rect.x);
+	r.y = static_cast<int>(rect.y);
+	r.w = 30;
+	r.h = 30;
+	SDL_SetRenderDrawColor(GetSDLRenderer(), static_cast<Uint8>(color.r), static_cast<Uint8>(color.g), static_cast<Uint8>(color.b), 255);
+	SDL_RenderDrawRect(GetSDLRenderer(), &r);
 }

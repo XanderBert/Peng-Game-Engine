@@ -20,6 +20,7 @@ public:
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 	void SetState(State* pState);
+	State* GetState() const { return m_pState.get(); }
 private:
 	std::unique_ptr<State> m_pState;
 };

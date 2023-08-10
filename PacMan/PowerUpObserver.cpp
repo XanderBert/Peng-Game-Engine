@@ -1,5 +1,6 @@
 #include "PowerUpObserver.h"
 
+#include "DirectionComponent.h"
 #include "GameObjectStorage.h"
 #include "GhostState.h"
 #include "GhostComponent.h"
@@ -21,7 +22,16 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 		{
 			if (object->GetComponent<GhostComponent>())
 			{
-				object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
+
+				const auto state = object->GetComponent<StateComponent>();
+
+				//Only change state if the ghost is not in the idle state
+				if (typeid(*state->GetState()) != typeid(IdleState))
+				{
+					object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
+				}
+
+
 			}
 		}
 
@@ -38,11 +48,18 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 
 	else if (event == GameEvent::GhostEaten)
 	{
-		//Gain Points
+
+		//Fetch Pacman of the ghost storage, Update its score of that pacman
 		gameObject->GetComponent<GameObjectStorage>()->GetStoredObject()->GetComponent<ScoreComponent>()->IncreaseScore(200);
 
-		gameObject->GetComponent<Transform>()->SetWorldPosition({ 68,90 });
-		gameObject->GetComponent<StateComponent>()->SetState(new ChaseState(gameObject));
+		//Set the ghost back to its start position
+		gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<GhostComponent>()->GetStartPosition());
+
+		//Set the direction of the ghost upwards
+		gameObject->GetComponent<DirectionComponent>()->SetDirection({ 0,-1 });
+
+		//Set the according state of the ghost
+		gameObject->GetComponent<StateComponent>()->SetState(gameObject->GetComponent<GhostComponent>()->GetRandomPossibleState());
 
 	}
 

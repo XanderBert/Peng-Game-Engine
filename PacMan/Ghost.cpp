@@ -40,7 +40,6 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 	//Move Component
 	const auto move = m_pGameObject->AddComponent<MoveComponent>();
 	move->SetTunnelingMultiplier(1.1f);
-	move->SetCanMove(true);
 
 	//Direction Component
 	const auto direction = m_pGameObject->AddComponent<DirectionComponent>();
@@ -78,19 +77,15 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 
 	//Timer Component
 	const auto countDown = m_pGameObject->AddComponent<CountdownComponent>();
-	countDown->SetTime(2.5f);
-	countDown->Pause();
 
 	//Ghost Component
 	const auto Ghost = m_pGameObject->AddComponent<GhostComponent>();
-	Ghost->ChangeToRandomDirection();
-
 	//State Component
 	const auto state = m_pGameObject->AddComponent<StateComponent>();
 
-	Ghost->SetupTextureAndState();
+	
 
-
+	Ghost->SetupStates();
 
 	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();

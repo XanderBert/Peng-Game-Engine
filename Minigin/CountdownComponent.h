@@ -27,8 +27,11 @@ public:
 	void Play() { m_Play = true; }
 	void Pause() { m_Play = false; }
 
+	void SetDebugMode(const bool isDebugMode) { m_DebugMode = isDebugMode; }
+
 private:
 	bool m_Play{ false };
+	bool m_DebugMode{ false };
 	float m_Time{};
 	float m_InitTime{};
 };
