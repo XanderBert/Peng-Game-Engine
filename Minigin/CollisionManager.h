@@ -79,7 +79,7 @@ public:
 	virtual bool IsInsideCollider(glm::vec2 pos, BoxCollider* collider) override;
 
 private:
-	std::set<BoxCollider*> m_BoxColliders;
+	std::unordered_set<BoxCollider*> m_BoxColliders;
 	bool CheckCollision(const SDL_Rect& rectA, const SDL_Rect& rectB);
 	bool DoesBoxNeedsToBeSkipped(BoxCollider* boxCollider);
 };

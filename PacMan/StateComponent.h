@@ -17,7 +17,9 @@ public:
 	void FixedUpdate(float fixedTimeMStep) override;
 	void LateUpdate() override;
 	void Render() override;
+
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 	void SetState(State* pState);
 	State* GetState() const { return m_pState.get(); }

@@ -1,5 +1,7 @@
 ﻿#include "DirectionComponent.h"
 
+class GhostComponent;
+
 DirectionComponent::DirectionComponent(GameObject* owner) : Component(owner)
 {
 }

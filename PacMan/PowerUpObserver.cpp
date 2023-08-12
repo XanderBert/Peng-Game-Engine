@@ -66,8 +66,11 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 	else if (event == GameEvent::PacManDied)
 	{
 		//Gain Points
-		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(-100);
-		gameObject->GetComponent<HealthComponent>()->TakeDamage(1);
+
+		//const auto pacman = gameObject->GetComponent<GameObjectStorage>()->GetStoredObject();
+
+		//pacman->GetComponent<ScoreComponent>()->IncreaseScore(-100);
+		//pacman->GetComponent<HealthComponent>()->TakeDamage(1);
 
 	}
 }

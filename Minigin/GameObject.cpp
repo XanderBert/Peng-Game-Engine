@@ -124,11 +124,19 @@ void GameObject::MarkForDeletion()
 
 }
 
-void GameObject::OnCollision(GameObject* other , bool isTrigger, bool isSenderTrigger)
+void GameObject::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
 	for (const auto& component : m_pComponents)
 	{
 		component->OnCollision(other, isTrigger, isSenderTrigger);
+	}
+}
+
+void GameObject::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
+{
+	for (const auto& component : m_pComponents)
+	{
+		component->OnCollisionEnter(other, isTrigger, isSenderTrigger);
 	}
 }
 
@@ -159,12 +167,12 @@ void GameObject::RemoveComponents()
 	// Remove components that can be deleted
 	//Does it get deleted out of the vector?
 	//the memory does gets freed.
-	if(m_pComponents.size() > 0)
-	std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
-		{
-			return component->CanBeDeleted();
+	if (m_pComponents.size() > 0)
+		std::erase_if(m_pComponents, [](const std::shared_ptr<Component>& component)
+			{
+				return component->CanBeDeleted();
 
-		});
+			});
 }
 
 void GameObject::MarkComponentForDeletionUtility(Component* component) const

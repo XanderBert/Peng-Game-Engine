@@ -18,9 +18,12 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 private:
 	glm::vec2 m_Target{};
+	glm::vec2 m_NewDirection{1,0};
+
 	void OnEnter() override;
 
 
@@ -40,6 +43,7 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 private:
 	void OnEnter() override;
@@ -59,6 +63,7 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 
 private:
 	void OnEnter() override;
@@ -83,6 +88,7 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 
 private:
 	glm::vec2 m_Target{};
@@ -104,6 +110,7 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 private:
 	void OnEnter() override;
 };

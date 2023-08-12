@@ -27,6 +27,7 @@ public:
 	virtual void Render() = 0;
 
 	virtual void OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) {}
+	virtual void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) {}
 
 	void MarkForDeletion();
 	bool CanBeDeleted() const;

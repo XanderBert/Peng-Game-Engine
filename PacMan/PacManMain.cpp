@@ -37,7 +37,7 @@ void load()
 
 	Startscene.Add(pacMan.GetPacMan());
 
-
+#ifndef _DEBUG
 	//Row_01
 	Startscene.Add(PacDot(11, 11).GetGameObject());
 	Startscene.Add(PacDot(11, 19).GetGameObject());
@@ -310,6 +310,10 @@ void load()
 	Startscene.Add(PacDot(211, 219).GetGameObject());
 	Startscene.Add(PacDot(211, 227).GetGameObject());
 	Startscene.Add(PacDot(211, 235).GetGameObject());
+#endif // !_Debug
+
+
+
 
 
 	Startscene.Add(PowerUp("PacBoost.png", { 8,24 }).GetGameObject());

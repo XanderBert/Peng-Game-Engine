@@ -23,7 +23,8 @@ void TriggerComponent::Update()
 	{
 		const auto direction = directionComponent->GetDirection();
 		m_pBoxCollider->SetColliderOffset({ m_OffsetMultiplier * direction.x + m_Offset.x, m_OffsetMultiplier * direction.y + m_Offset.y });
-	}else
+	}
+	else
 	{
 		m_pBoxCollider->SetColliderOffset({ m_OffsetMultiplier * m_Offset.x, m_OffsetMultiplier * m_Offset.y });
 	}
@@ -83,6 +84,7 @@ glm::vec2 TriggerComponent::GetColliderMiddlePoint() const
 std::vector<GameObject*> TriggerComponent::GetCollidingObjects() const
 {
 	std::vector<GameObject*> vector{};
+
 	for (const auto box : m_pBoxCollider->GetCollidingBoxes())
 	{
 		vector.emplace_back(box->GetGameObject());

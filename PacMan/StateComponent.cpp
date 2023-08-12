@@ -1,8 +1,8 @@
 #include "StateComponent.h"
 
 StateComponent::StateComponent(GameObject* pOwner)
-: Component(pOwner)
-, m_pState{std::make_unique<PacManMoveState>(pOwner)}
+	: Component(pOwner)
+	, m_pState{ std::make_unique<PacManMoveState>(pOwner) }
 {
 }
 
@@ -36,6 +36,12 @@ void StateComponent::OnCollision(GameObject* other, bool isTrigger, bool isSende
 {
 	m_pState->OnCollision(other, isTrigger, isSenderTrigger);
 }
+
+void StateComponent::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
+{
+	m_pState->OnCollisionEnter(other, isTrigger, isSenderTrigger);
+}
+
 
 void StateComponent::SetState(State* pState)
 {

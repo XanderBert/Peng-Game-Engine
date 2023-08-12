@@ -46,21 +46,22 @@ void BoxCollider::DebugRender(bool isDebugRendering)
 	m_DebugRender = isDebugRendering;
 }
 
-SDL_Rect BoxCollider::GetCollider()
+SDL_Rect BoxCollider::GetCollider() const
 {
 	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+
 	return SDL_Rect{ m_Collider.x + static_cast<int>(position.x),m_Collider.y + static_cast<int>(position.y), m_Collider.w, m_Collider.h };
 }
 
 glm::vec2 BoxCollider::GetColliderMiddlePoint() const
 {
+	const auto collider = GetCollider();
+
 	//Top left
-	const auto position = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
-	const auto x = position.x + m_Collider.w / 2.f;
-	const auto y = position.y + m_Collider.h / 2.f;
+	const auto x = collider.w / 2.f;
+	const auto y = collider.h / 2.f;
 
-
-	return glm::vec2(x + m_Collider.x, y + m_Collider.y);
+	return { static_cast<float>(collider.x) + x,static_cast<float>(collider.y) + y };
 }
 
 void BoxCollider::SetIsTrigger(bool isTrigger)
@@ -73,56 +74,48 @@ bool BoxCollider::GetIsTrigger() const
 	return m_IsTrigger;
 }
 
-void BoxCollider::ClearCollidingObjects()
+std::unordered_set<BoxCollider*> BoxCollider::GetCollidingBoxes() const
 {
-	m_CollidingObjects.clear();
+	return m_CollidedWith;
 }
 
-void BoxCollider::SetCollidingObjects(const std::vector<BoxCollider*>& pCollidingObjects)
-{
-	m_CollidingObjects = pCollidingObjects;
-}
-
-void BoxCollider::AddCollidingObject(BoxCollider* collider)
-{
-	m_CollidingObjects.emplace_back(collider);
-}
-
-void BoxCollider::RemoveCollidingObject(BoxCollider* collider)
-{
-	m_CollidingObjects.erase(std::remove(m_CollidingObjects.begin(), m_CollidingObjects.end(), collider), m_CollidingObjects.end());
-}
-
-
-std::vector<BoxCollider*> BoxCollider::GetCollidingBoxes() const
-{
-	return m_CollidingObjects;
-}
-
-std::set<GameObject*> BoxCollider::GetCollidingGameObjects()
+std::set<GameObject*> BoxCollider::GetCollidingGameObjects() const
 {
 	std::set<GameObject*> collidingGameObjects{};
 
-	for (auto* pBoxCollider : m_CollidingObjects)
+	for (const auto* pBoxCollider : m_CollidedWith)
 	{
 		if (pBoxCollider == nullptr)
 		{
-			RemoveCollidingObject(pBoxCollider);
+			assert(false && "BoxCollider is nullptr");
 			continue;
 		}
 		if (pBoxCollider->GetGameObject() == nullptr)
 		{
-			assert(false);
+			assert(false && "GameObject is nullptr");
 			continue;
 		}
-
-		if (pBoxCollider->m_IsTrigger) continue;
 
 		if (pBoxCollider->GetGameObject() != m_pOwner && !pBoxCollider->GetGameObject()->CanBeDeleted())
 		{
 			collidingGameObjects.insert(pBoxCollider->GetGameObject());
 		}
-
 	}
+
 	return collidingGameObjects;
+}
+
+bool BoxCollider::HasCollidedWith(BoxCollider* collider) const
+{
+	return m_CollidedWith.contains(collider);
+}
+
+void BoxCollider::MarkCollidedWith(BoxCollider* collider)
+{
+	m_CollidedWith.insert(collider);
+}
+
+void BoxCollider::ClearCollidedWith(BoxCollider* collider)
+{
+	m_CollidedWith.erase(collider);
 }

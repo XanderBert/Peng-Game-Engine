@@ -4,7 +4,7 @@
 class State
 {
 public:
-	State(GameObject* object):m_pActor(object){};
+	State(GameObject* object) :m_pActor(object) {};
 	virtual ~State() = default;
 
 
@@ -16,6 +16,7 @@ public:
 	virtual State* HandleInput() = 0;
 	virtual void Update() = 0;
 	virtual void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) = 0;
+	virtual void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) = 0;
 
 protected:
 	GameObject* m_pActor{};
@@ -36,10 +37,11 @@ public:
 	PacManMoveState(PacManMoveState&& other) = delete;
 	PacManMoveState& operator=(const PacManMoveState& other) = delete;
 	PacManMoveState& operator=(PacManMoveState&& other) = delete;
-	
+
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 
 private:
 	void OnEnter() override;
@@ -59,6 +61,7 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 
 private:
 	void OnEnter() override;

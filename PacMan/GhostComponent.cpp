@@ -31,6 +31,22 @@ GhostComponent::~GhostComponent()
 }
 
 
+void GhostComponent::CenterGhost(const glm::vec2& colliderCenter, const glm::vec2& ghostCenter)
+{
+	const auto difference = colliderCenter - ghostCenter;
+	const auto pos = m_pOwner->GetComponent<Transform>()->GetWorldPosition();
+
+	//if horizontal center y
+	if (m_pOwner->GetComponent<DirectionComponent>()->GetDirection().y == 0)
+	{
+		m_pOwner->GetComponent<Transform>()->SetWorldPosition({ pos.x, pos.y + difference.y });
+	}
+	else
+	{
+		m_pOwner->GetComponent<Transform>()->SetWorldPosition({ pos.x + difference.x, pos.y });
+	}
+}
+
 void GhostComponent::SetupTexture()
 {
 	switch (m_GhostNumber)
@@ -99,8 +115,8 @@ State* GhostComponent::GetRandomPossibleState() const
 
 void GhostComponent::Render()
 {
-	std::cout << "Target: " << m_Target.x << " " << m_Target.y << "\n";
-	ServiceLocator::GetInstance().Renderer.GetService().RenderRect(m_Target, { 255, 100, 10 });
+
+	ServiceLocator::GetInstance().Renderer.GetService().RenderRect(m_Target, { 255,200,100 });
 }
 
 void GhostComponent::ChangeToRandomDirection() const

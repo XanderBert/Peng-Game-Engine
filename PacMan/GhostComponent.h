@@ -2,7 +2,9 @@
 #include <glm/vec2.hpp>
 
 #include "Component.h"
+#include "DirectionComponent.h"
 #include "PacManState.h"
+#include "ServiceLocator.h"
 
 
 class GhostComponent final : public Component
@@ -16,7 +18,10 @@ public:
 	GhostComponent& operator=(const GhostComponent& other) = delete;
 	GhostComponent& operator=(GhostComponent&& other) = delete;
 
-	void Update() override {}
+	void Update() override
+	{
+
+	}
 	void FixedUpdate(float /*fixedTimeMStep*/) override {}
 	void LateUpdate() override {}
 	void Render() override;
@@ -47,11 +52,20 @@ public:
 	//target
 	void SetTarget(const glm::vec2& target) { m_Target = target; }
 
+	//Cornering
+	void SetCornering(bool isCornering) { m_IsCornering = isCornering; }
+	bool IsCornering() const { return m_IsCornering; }
+
+	//Position
+	void CenterGhost(const glm::vec2& colliderCenter, const glm::vec2& ghostCenter);
+
 private:
 	inline static int m_StatGhostNumber{};
 	int m_GhostNumber{};
 	std::string m_TexturePath{};
-	glm::vec2 m_SpawnPosition{ 104,100 };
+	glm::vec2 m_SpawnPosition{ 104,90 };
+
+	bool m_IsCornering = true;
 	void SetupTexture();
 
 	glm::vec2 m_Target{};

@@ -64,6 +64,7 @@ public:
 	//
 	//Collision
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger);
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger);
 	std::set<GameObject*> GetCollidingObjects() const;
 
 	Scene* GetScene() const { return m_pScene; }
@@ -93,7 +94,7 @@ std::shared_ptr <T> GameObject::AddComponent()
 
 	m_pComponents.emplace_back(pComponent);
 	m_pComponents.shrink_to_fit();
-	
+
 	return dynamic_pointer_cast<T>(m_pComponents.back());
 }
 

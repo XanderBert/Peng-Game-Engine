@@ -30,13 +30,29 @@ void ChaseState::Update()
 	// Move
 	m_pActor->GetComponent<MoveComponent>()->SetCanMove(true);
 
-	//Store Pacman in the storage component if needed.
-	m_pActor->GetComponent<GhostComponent>()->StorePacMan();
+
+	if (!m_pActor->GetComponent<GhostComponent>()->IsCornering())
+	{
+		//Store Pacman in the storage component if needed.
+		m_pActor->GetComponent<GhostComponent>()->StorePacMan();
+
+		//Set pacman As the target
+		const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
+		m_Target = pacMan->GetComponent<Transform>()->GetWorldPosition();
+		m_pActor->GetComponent<GhostComponent>()->SetTarget(m_Target);
+		return;
+	}
 
 
-	//Set pacman As the target
-	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
-	m_Target = pacMan->GetComponent<Transform>()->GetWorldPosition();
+	const auto distance = glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), m_Target);
+	std::cout << "Distance: " << std::to_string(distance) << "\n";
+
+	if (distance <= 1.0f && m_pActor->GetComponent<GhostComponent>()->IsCornering())
+	{
+		m_pActor->GetComponent<DirectionComponent>()->SetDirection(m_NewDirection);
+		//m_pActor->GetComponent<Transform>()->SetWorldPosition(m_Target - glm::vec2{8,8});
+		m_pActor->GetComponent<GhostComponent>()->SetCornering(false);
+	}
 
 	m_pActor->GetComponent<GhostComponent>()->SetTarget(m_Target);
 
@@ -52,22 +68,42 @@ void ChaseState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTri
 		return;
 	}
 
+	if (other->GetComponent<IntersectionComponent>())
+	{
+		m_Target = other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint();
+		return;
+	}
 
+
+
+	//The Ghost Trigger is colliding with a wall
+	if (other->GetComponent<WallComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		return;
+	}
+}
+
+void ChaseState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
+{
 	//The Ghost  is colliding with a Intersection Trigger
 	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{
 		//If the ghost is not in the center of the intersection -> return
-		if (glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint()) >= 2.f) return;
+		//Move the ghost a bit forward, Then let it turn
+		const auto transform = m_pActor->GetComponent<Transform>();
 		const auto possibleDirections = other->GetComponent<IntersectionComponent>()->GetDirections();
-		m_pActor->GetComponent<DirectionComponent>()->SetDirection(m_pActor->GetComponent<GhostComponent>()->GetDirectionOfVector(possibleDirections, m_Target));
-	}
+
+		m_NewDirection = m_pActor->GetComponent<GhostComponent>()->GetDirectionOfVector(possibleDirections, m_Target);
+		if (m_NewDirection == m_pActor->GetComponent<DirectionComponent>()->GetDirection()) { return; }
+
+		m_pActor->GetComponent<GhostComponent>()->SetCornering(true);
+		m_Target = other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint();
+
+		m_pActor->GetComponent<GhostComponent>()->CenterGhost(m_Target, m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint());
 
 
-	//The Ghost Trigger is colliding with a wall
-	if (other->GetComponent<WallComponent>() && isSenderTrigger)
-	{
-		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
-		return;
+		std::cout << "Intersection Collision\n";
 	}
 }
 
@@ -83,7 +119,6 @@ void ChaseState::OnEnter()
 	const auto pacMan = m_pActor->GetComponent<GameObjectStorage>()->GetStoredObject();
 	m_Target = pacMan->GetComponent<Transform>()->GetWorldPosition();
 }
-
 
 
 
@@ -109,16 +144,16 @@ State* ScatterState::HandleInput()
 
 void ScatterState::Update()
 {
-	//Make a ghost component for every ghost. make different cases for it?
-
-	//if(m_pActor->GetComponent<GhostComponent>()->GetTexturePath() == "GhostBlue.png")
-	//{
-	//	
-	//}
 }
 
 void ScatterState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
+	//The Ghost Trigger is colliding with a wall
+	if (other->GetComponent<WallComponent>() && isSenderTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+		return;
+	}
 
 	//Colliding with a ghost
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
@@ -126,13 +161,12 @@ void ScatterState::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, m_pActor);
 		return;
 	}
+}
 
-	//The Ghost Trigger is colliding with a wall
-	if (other->GetComponent<WallComponent>() && isSenderTrigger)
-	{
-		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
-		return;
-	}
+void ScatterState::OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/)
+{
+
+
 }
 
 void ScatterState::OnEnter()
@@ -302,7 +336,9 @@ void CorneringState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{
 		//If the ghost is not in the center of the intersection -> return
-		if (glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint()) >= 2.f) return;
+		const auto distance = glm::distance(m_pActor->GetComponent<BoxCollider>()->GetColliderMiddlePoint(), other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint());
+
+		if (distance >= 2.f) return;
 
 		const auto possibleDirections = other->GetComponent<IntersectionComponent>()->GetDirections();
 		const auto newDirection = m_pActor->GetComponent<GhostComponent>()->GetDirectionOfVector(possibleDirections, m_Target);
@@ -318,6 +354,7 @@ void CorneringState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 		return;
 	}
 }
+
 
 void CorneringState::OnEnter()
 {

@@ -96,6 +96,7 @@ void SpriteRenderer::SetMovementDirection(MovementDirection value)
 
 	assert(size > 0 && "No Sprite Frames for this Direction");
 
+
 	m_AnimationFrame %= size;
 }
 

@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <mutex>
 #include <set>
+#include <unordered_set>
+
 #include "Component.h"
 #include "SDL_rect.h"
 #include "glm/vec2.hpp"
@@ -36,25 +38,26 @@ public:
 
 	void DebugRender(bool isDebugRendering);
 
-	SDL_Rect GetCollider();
+	SDL_Rect GetCollider() const;
 	glm::vec2 GetColliderMiddlePoint() const;
 
 
 	void SetIsTrigger(bool isTrigger);
 	bool GetIsTrigger() const;
 
-	void ClearCollidingObjects();
-	void SetCollidingObjects(const std::vector<BoxCollider*>& pCollidingBoxes);
-	void AddCollidingObject(BoxCollider* collider);
-	void RemoveCollidingObject(BoxCollider* collider);
+	std::unordered_set<BoxCollider*> GetCollidingBoxes() const;
+	std::set<GameObject*> GetCollidingGameObjects() const;
 
-	std::vector<BoxCollider*> GetCollidingBoxes() const;
-	std::set<GameObject*> GetCollidingGameObjects();
+	bool HasCollidedWith(BoxCollider* collider) const;
+
+	void MarkCollidedWith(BoxCollider* collider);
+
+	void ClearCollidedWith(BoxCollider* collider);
 
 private:
-	std::mutex m_CollidingObjectsMutex{};
-	std::vector<BoxCollider*> m_CollidingObjects;
 	SDL_Rect m_Collider{ 0,0,5,5 };
+	std::unordered_set<BoxCollider*> m_CollidedWith;
+
 	bool m_DebugRender{};
 	bool m_IsTrigger{ false };
 };
