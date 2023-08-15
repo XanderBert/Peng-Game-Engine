@@ -22,7 +22,7 @@ public:
 	virtual void RenderTexture(const Texture2D& texture, float x, float y) const = 0;
 	virtual void RenderTexture(const Texture2D& texture, float x, float y, const SDL_Rect& srcRect) const = 0;
 	virtual void RenderRect(const SDL_Rect& rect) const = 0;
-	virtual void RenderRect(const glm::vec2& rect, glm::vec3 color) const = 0;
+	virtual void RenderRect(const glm::vec2& rect, glm::vec3 color, glm::vec2 size) const = 0;
 	virtual SDL_Renderer* GetSDLRenderer() const = 0;
 	virtual const SDL_Color& GetBackgroundColor() const = 0;
 	virtual void SetBackgroundColor(const SDL_Color& color) = 0;
@@ -43,7 +43,7 @@ public:
 	virtual void RenderTexture(const Texture2D& texture, float x, float y) const override;
 	virtual void RenderTexture(const Texture2D& texture, float x, float y, const SDL_Rect& srcRect) const override;
 	virtual void RenderRect(const SDL_Rect& rect) const override;
-	virtual void RenderRect(const glm::vec2& rect, glm::vec3 color) const  override;
+	virtual void RenderRect(const glm::vec2& rect, glm::vec3 color, glm::vec2 size) const  override;
 	virtual SDL_Renderer* GetSDLRenderer() const override { return m_renderer; }
 	virtual const SDL_Color& GetBackgroundColor() const  override { return m_clearColor; }
 	virtual void SetBackgroundColor(const SDL_Color& color)  override { m_clearColor = color; }

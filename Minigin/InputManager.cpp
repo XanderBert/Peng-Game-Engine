@@ -11,6 +11,7 @@ InputManager::~InputManager()
 bool InputManager::ProcessInput()
 {
 	UpdateControllersInput();
+
 	return UpdateKeyboardInput();
 }
 

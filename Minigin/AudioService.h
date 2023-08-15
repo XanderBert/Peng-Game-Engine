@@ -16,6 +16,8 @@ public:
 	virtual void Play(int id) = 0;
 	virtual void Stop(int id) = 0;
 
+	virtual void ToggleMute() = 0;
+
 	virtual void AddSound(const int id, const std::string& file) = 0;
 	virtual int GetLastId()const = 0;
 };
@@ -33,6 +35,10 @@ public:
 
 	virtual void Play(int id) override;
 	virtual void Stop(int id) override;
+
+	virtual void ToggleMute() override;
+
+
 	virtual void AddSound(const int id, const std::string& file) override;
 	virtual int GetLastId() const override;
 

@@ -38,7 +38,7 @@ void FontRenderer::Update()
 	}
 }
 
-void FontRenderer::FixedUpdate([[maybe_unused]] float fixedTimeMStep)
+void FontRenderer::FixedUpdate(float /*fixedTimeMStep*/)
 {
 }
 
@@ -53,6 +53,7 @@ void FontRenderer::Render()
 		if (const auto transformComponent{ m_pOwner->GetComponent<Transform>() })
 		{
 			const auto pos = transformComponent->GetWorldPosition();
+
 			ServiceLocator::GetInstance().Renderer.GetService().RenderTexture(*m_textTexture, pos.x + m_Offset.x, pos.y + m_Offset.y);
 		}
 	}

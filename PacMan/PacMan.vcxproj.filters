@@ -71,6 +71,33 @@
     <Filter Include="Components\ObjectFilters\Hud">
       <UniqueIdentifier>{c88f0f67-3123-4ef3-9dad-508c0765f1ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Singletons">
+      <UniqueIdentifier>{effeb08a-e0bb-42e4-b918-ec0ecaba8bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\LevelLoader">
+      <UniqueIdentifier>{5c0c4b93-7434-4587-b1a2-95c6b70e8a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\FPSCounter">
+      <UniqueIdentifier>{ff7f2527-aa48-4d1e-b0e7-da4819c93d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Screens">
+      <UniqueIdentifier>{1f189b96-59eb-4bbf-9ac1-395244b4477f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Screens\StartScreen">
+      <UniqueIdentifier>{b21d8fd7-8d56-4492-a71d-83cbbf1afcca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Screens\EndingScreen">
+      <UniqueIdentifier>{f90616a1-a158-42a4-ba5f-e8b81d98071b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Screens">
+      <UniqueIdentifier>{4758df34-0977-462b-a5df-b950f5efaae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Screens\StartScreen">
+      <UniqueIdentifier>{a521c142-a182-4776-9c6e-2ef6915d6c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Screens\EndingScreen">
+      <UniqueIdentifier>{e42c679e-9ae0-4e85-8645-76d5bc31dc1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -117,6 +144,24 @@
     </ClCompile>
     <ClCompile Include="PowerUpObserver.cpp">
       <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScreen.cpp">
+      <Filter>GameObjects\Screens\StartScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScreenComponent.cpp">
+      <Filter>Components\ObjectFilters\Screens\StartScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Singletons\LevelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCounter.cpp">
+      <Filter>GameObjects\FPSCounter</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScreen.cpp">
+      <Filter>GameObjects\Screens\EndingScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScreenComponent.cpp">
+      <Filter>Components\ObjectFilters\Screens\EndingScreen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +236,24 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreen.h">
+      <Filter>GameObjects\Screens\StartScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreenComponent.h">
+      <Filter>Components\ObjectFilters\Screens\StartScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Singletons\LevelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCounter.h">
+      <Filter>GameObjects\FPSCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScreen.h">
+      <Filter>GameObjects\Screens\EndingScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScreenComponent.h">
+      <Filter>Components\ObjectFilters\Screens\EndingScreen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

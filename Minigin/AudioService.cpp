@@ -20,6 +20,12 @@ void AudioService::Stop(int id)
 	m_Impl->Stop(id);
 }
 
+void AudioService::ToggleMute()
+{
+	m_Impl->ToggleMute();
+}
+
+
 void AudioService::AddSound(const int id, const std::string& file)
 {
 	m_Impl->AddSound(id, file);

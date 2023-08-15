@@ -3,7 +3,7 @@
 #include "ControllerComponent.h"
 #include "InputComponent.h"
 
-class InputHandler final : public Component 
+class InputHandler final : public Component
 {
 public:
 	InputHandler(GameObject* pParent);
@@ -19,9 +19,15 @@ public:
 	void LateUpdate() override;
 	void Render() override;
 
+	void SetupInput(const bool IsPlayingWithController);
 
+	void SetMultiplayer(bool multiplayer) { m_Multiplayer = multiplayer; }
+	bool IsMultiplayer() const { return m_Multiplayer; }
 private:
 	ControllerComponent* m_pController;
 	InputComponent* m_pKeyboard;
+
+	bool m_Multiplayer{};
+	inline static int m_ControllerID{};
 };
 

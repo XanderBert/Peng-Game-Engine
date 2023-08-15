@@ -26,9 +26,9 @@ StartScreen::StartScreen()
 	m_pOnePlayerButton = new GameObject();
 	m_pOnePlayerButton->SetParent(this, true);
 	auto collider = m_pOnePlayerButton->AddComponent<BoxCollider>();
-	collider->SetColliderSize({ 80,20 });
-	//collider->DebugRender(true);
-	m_pOnePlayerButton->GetComponent<Transform>()->SetWorldPosition({ 30, 320 });
+	collider->SetColliderSize({ 80,20 }); s
+		//collider->DebugRender(true);
+		m_pOnePlayerButton->GetComponent<Transform>()->SetWorldPosition({ 30, 320 });
 	const auto font = m_pOnePlayerButton->AddComponent<FontRenderer>();
 	font->SetFont("Fonts/8BitDragon.ttf", 12);
 	font->SetText("1 Player");

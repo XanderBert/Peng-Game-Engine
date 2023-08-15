@@ -1,6 +1,7 @@
 #include "GhostComponent.h"
 
 #include <iostream>
+#include <random>
 
 #include "CountdownComponent.h"
 #include "DirectionComponent.h"
@@ -18,12 +19,14 @@
 
 GhostComponent::GhostComponent(GameObject* pParent) : Component(pParent)
 {
+	//When going to he next level ghosts gets remade ->? So the static counter is increased
+	m_StatGhostNumber = (m_StatGhostNumber % 4);
 	++m_StatGhostNumber;
+
 	m_GhostNumber = m_StatGhostNumber;
-	m_pOwner->GetComponent<Transform>()->SetWorldPosition({ 88 + (11 * m_GhostNumber),104 });
+
+	m_pOwner->GetComponent<Transform>()->SetWorldPosition({ 77.5 + (11 * m_GhostNumber),104 });
 	SetupTexture();
-
-
 }
 
 GhostComponent::~GhostComponent()
@@ -115,35 +118,44 @@ State* GhostComponent::GetRandomPossibleState() const
 
 void GhostComponent::Render()
 {
-
-	ServiceLocator::GetInstance().Renderer.GetService().RenderRect(m_Target, { 255,200,100 });
+#ifdef _DEBUG
+	ServiceLocator::GetInstance().Renderer.GetService().RenderRect(m_Target, { 255,200,100 }, { 5,5 });
+#endif // _DEBUG
 }
 
-void GhostComponent::ChangeToRandomDirection() const
+glm::vec2 GhostComponent::GetRandomPossibleDirection(const std::vector<glm::vec2>& possibleDirections) const
 {
 	if (const auto directionComponent = m_pOwner->GetComponent<DirectionComponent>())
 	{
 		const glm::vec2 oldDirection{ directionComponent->GetDirection() };
 
-		auto newDirection = oldDirection;
-
-		// Generate a new direction until it is different from the old direction and not opposite (180-degree turn)
-		while (newDirection == oldDirection || glm::abs(glm::dot(newDirection, oldDirection) + 1.f) < FLT_EPSILON)
+		// Create a list of valid new directions that are not opposite to the old direction
+		std::vector<glm::vec2> validNewDirections;
+		for (const auto& newDirection : possibleDirections)
 		{
-			// Generate a random integer between 1 and 3 (to avoid full 180-degree turns)
-			const int numQuarterTurns = 1 + std::rand() % 3;
-
-			// Perform the quarter turns
-			for (int i = 0; i < numQuarterTurns; ++i)
+			if (glm::abs(glm::dot(newDirection, oldDirection) + 1.f) >= FLT_EPSILON)
 			{
-				const float temp = newDirection.x;
-				newDirection.x = -newDirection.y;
-				newDirection.y = temp;
+				validNewDirections.push_back(newDirection);
 			}
 		}
 
-		directionComponent->SetDirection(newDirection);
+		if (validNewDirections.empty())
+		{
+			// No valid directions found, do not change direction
+			assert(false && "No valid directions found, do not change direction");
+			return { 1,0 };
+		}
+
+		// Select a random valid new direction
+		const int randomIndex = std::rand() % validNewDirections.size();
+		return validNewDirections[randomIndex];
 	}
+	else
+	{
+		assert(false && "No DirectionComponent found");
+	}
+
+	return { 1,0 };
 }
 
 glm::vec2 GhostComponent::GetDirectionOfVector(const std::vector<glm::vec2>& possibleDirections, const glm::vec2& target) const
@@ -294,6 +306,23 @@ void GhostComponent::InitChaseAndScatterSprites()
 	spriteRenderer->AddSpriteFrame({ 96,0 }, MovementDirection::Down);
 	spriteRenderer->AddSpriteFrame({ 112,0 }, MovementDirection::Down);
 
+}
+
+void GhostComponent::InitEyesSprites()
+{
+	const auto spriteRenderer = m_pOwner->GetComponent<SpriteRenderer>();
+	spriteRenderer->ResetSpriteFrames();
+	spriteRenderer->SetTexture("GhostEyes.png");
+
+
+	const auto x = 16;
+	for (size_t i{}; i < 3; ++i)
+	{
+		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Down);
+		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Up);
+		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Left);
+		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Right);
+	}
 }
 
 void GhostComponent::SetupStates()

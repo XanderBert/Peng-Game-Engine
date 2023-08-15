@@ -84,32 +84,15 @@ PacMan::PacMan() : m_pGameObject{ new GameObject() }
 #endif // _DEBUG
 
 	//PacMan Component
-
-
-
 	const auto pacMan = m_pGameObject->AddComponent<PacManComponent>();
-	//pacMan->SetLives(3);
+
 
 	//Transform Component
-	m_pGameObject->GetComponent<Transform>()->SetWorldPosition({ 10,10 });
+	m_pGameObject->GetComponent<Transform>()->SetWorldPosition(pacMan->GetSpawnPos());
 
 	//Teleport Component
 	m_pGameObject->AddComponent<TeleportComponent>();
 
-
-	//Score Storage
-	//const auto storage = m_pGameObject->AddComponent<GameObjectStorage>();
-
-	//for(const auto& object : SceneManager::GetInstance().GetActiveScene()->GetObjects())
-	//{
-	//	if (object->GetComponent<ScoreComponent>() != nullptr)
-	//	{
-	//		storage->StoreGameObject(object);
-	//	}
-	//}
-
 	m_pGameObject->AddComponent<ScoreComponent>();
 	m_pGameObject->AddComponent<HealthComponent>();
-
-
 }

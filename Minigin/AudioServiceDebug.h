@@ -15,6 +15,7 @@ public:
 	void Play(int id) override;
 	void Stop(int id) override;
 	void AddSound(const int id, const std::string& file) override;
+	void ToggleMute() override {}
 	int GetLastId()const override;
 
 private:

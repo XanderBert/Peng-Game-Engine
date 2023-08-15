@@ -20,8 +20,7 @@ public:
 	{
 		if (const auto spriteRenderer{ m_GameActor->GetComponent<SpriteRenderer>() })
 		{
-			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 })
-				return;
+			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 }) return;
 		}
 
 		if (const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })

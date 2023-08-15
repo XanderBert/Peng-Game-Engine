@@ -11,7 +11,7 @@ IntersectionTile::IntersectionTile(const glm::vec2& position, const std::vector<
 	trigger->SetColliderOffset({ 6,6 });
 	trigger->SetOffsetMultiplier(1.f);
 
-	trigger->DebugRender(true);
+	//trigger->DebugRender(true);
 
 
 

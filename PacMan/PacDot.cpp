@@ -26,7 +26,5 @@ void PacDot::Initialize()
 
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
 	collider->SetColliderSize({ 4, 4 });
-	collider->SetColliderOffset({-1,-1});
-
-	
+	collider->SetColliderOffset({ -1,-1 });
 }

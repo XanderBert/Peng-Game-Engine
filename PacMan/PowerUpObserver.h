@@ -6,7 +6,6 @@ enum class GameEvent
 	PacDotEaten,
 	GhostEaten,
 	PacManDied,
-
 };
 
 class PowerUpObserver final : public Observer
@@ -14,5 +13,9 @@ class PowerUpObserver final : public Observer
 public:
 	void Notify(GameObject* gameObject, GameEvent event) override;
 	~PowerUpObserver()override;
+private:
+	bool IsLevelCompleted();
+	void LoadNextLevel();
+	int m_PacDotEatenSoundIndex{};
 };
 

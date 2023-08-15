@@ -5,6 +5,10 @@
 #include "GhostState.h"
 #include "GhostComponent.h"
 #include "HealthComponent.h"
+#include "LevelLoader.h"
+#include "PacDotComponent.h"
+#include "PacManComponent.h"
+#include "PowerUpComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "StateComponent.h"
@@ -16,6 +20,8 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 {
 	if (event == GameEvent::PowerUpEaten)
 	{
+		ServiceLocator::GetInstance().AudioService.GetService().Play(2);
+
 		//Set Ghosts in Frightened State
 		const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
 		for (const auto& object : objects)
@@ -30,51 +36,113 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 				{
 					object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
 				}
-
-
 			}
 		}
 
 		//Gain Points
 		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(50);
-	}
 
+
+		if (IsLevelCompleted())
+		{
+			LoadNextLevel();
+		}
+	}
 
 	else if (event == GameEvent::PacDotEaten)
 	{
 		//Gain Points
 		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(10);
+		ServiceLocator::GetInstance().AudioService.GetService().Play(++m_PacDotEatenSoundIndex % 2);
+
+		if (IsLevelCompleted())
+		{
+			LoadNextLevel();
+		}
 	}
 
 	else if (event == GameEvent::GhostEaten)
 	{
+		ServiceLocator::GetInstance().AudioService.GetService().Play(3);
+		ServiceLocator::GetInstance().AudioService.GetService().Play(4);
+
+		gameObject->GetComponent<StateComponent>()->SetState(new WasEatenState{ gameObject });
+
+		//Check how many ghosts are already eaten.
+		auto ghostsEaten = 0;
+		for (const auto gameObj : gameObject->GetScene()->GetObjects())
+		{
+			if (gameObj->GetComponent<GhostComponent>() != nullptr)
+			{
+				auto state = gameObj->GetComponent<StateComponent>()->GetState();
+
+				if (typeid(*state) == typeid(WasEatenState))
+				{
+					++ghostsEaten;
+				}
+			}
+		}
+
+
+		//added score = 200 * 2^(ghosts eaten)
+		const auto score = static_cast<int>(200 * std::pow(2, (ghostsEaten - 1)));
 
 		//Fetch Pacman of the ghost storage, Update its score of that pacman
-		gameObject->GetComponent<GameObjectStorage>()->GetStoredObject()->GetComponent<ScoreComponent>()->IncreaseScore(200);
+		gameObject->GetComponent<GameObjectStorage>()->GetStoredObject()->GetComponent<ScoreComponent>()->IncreaseScore(score);
 
-		//Set the ghost back to its start position
-		gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<GhostComponent>()->GetStartPosition());
-
-		//Set the direction of the ghost upwards
-		gameObject->GetComponent<DirectionComponent>()->SetDirection({ 0,-1 });
-
-		//Set the according state of the ghost
-		gameObject->GetComponent<StateComponent>()->SetState(gameObject->GetComponent<GhostComponent>()->GetRandomPossibleState());
-
+		gameObject->GetComponent<GhostComponent>()->InitEyesSprites();
 	}
 
 	else if (event == GameEvent::PacManDied)
 	{
+
+		ServiceLocator::GetInstance().AudioService.GetService().Play(6);
+
 		//Gain Points
+		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(-100);
+		gameObject->GetComponent<HealthComponent>()->TakeDamage(1);
 
-		//const auto pacman = gameObject->GetComponent<GameObjectStorage>()->GetStoredObject();
 
-		//pacman->GetComponent<ScoreComponent>()->IncreaseScore(-100);
-		//pacman->GetComponent<HealthComponent>()->TakeDamage(1);
+		//Teleport to start
+		//gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<PacManComponent>()->GetSpawnPos());
+
 
 	}
 }
 
 PowerUpObserver::~PowerUpObserver()
 {
+}
+
+bool PowerUpObserver::IsLevelCompleted()
+{
+	const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
+	auto amountOfDotsLeft = 0;
+	
+
+	//The last eaton pacdot or powerup is just marked for deletion, so it is still in the scene until next frame.
+	//So i need to check if the scene has only 1 object left (or less then 2).
+	for (const auto object : objects)
+	{
+		if (object->GetComponent<PacDotComponent>() != nullptr || object->GetComponent<PowerUpComponent>() != nullptr)
+		{
+			++amountOfDotsLeft;
+
+			if(amountOfDotsLeft > 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	
+
+
+	return true;
+}
+
+void PowerUpObserver::LoadNextLevel()
+{
+	auto id = LevelLoader::GetInstance().GetLevelId();
+	LevelLoader::GetInstance().LoadLevel(++id);
 }

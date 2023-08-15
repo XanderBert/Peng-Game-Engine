@@ -88,7 +88,6 @@ std::vector<GameObject*> TriggerComponent::GetCollidingObjects() const
 	for (const auto box : m_pBoxCollider->GetCollidingBoxes())
 	{
 		vector.emplace_back(box->GetGameObject());
-
 	}
 
 	return vector;

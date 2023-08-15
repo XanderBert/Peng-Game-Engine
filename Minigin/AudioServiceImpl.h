@@ -17,6 +17,9 @@ public:
 
 	void Play(int id);
 	void Stop(int id);
+
+	void ToggleMute();
+
 	Mix_Chunk* AddSound(const int id, const std::string& file);
 	int GetLastId() const;
 
@@ -27,6 +30,8 @@ private:
 	std::mutex m_AudioMutex{};
 	std::condition_variable m_ConditionVariable{};
 	bool m_StopRequested{};
+
+	bool m_Muted{};
 
 	bool isAudioInQueue(int id);
 	void PlayAudioAsync();

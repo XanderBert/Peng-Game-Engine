@@ -62,6 +62,13 @@ void AudioServiceImpl::Stop(int id)
 	}
 }
 
+void AudioServiceImpl::ToggleMute()
+{
+	m_Muted = !m_Muted;
+}
+
+
+
 Mix_Chunk* AudioServiceImpl::AddSound(const int id, const std::string& file)
 {
 	const auto pathdir = ServiceLocator::GetInstance().ResourceManager.GetService().GetDataPath() + file;
@@ -126,7 +133,7 @@ bool AudioServiceImpl::isAudioInQueue(int id)
 
 void AudioServiceImpl::PlayAudioAsync()
 {
-	while (true)
+	while (!m_Muted)
 	{
 		int audioData;
 

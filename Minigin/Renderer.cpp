@@ -89,13 +89,14 @@ void Renderer::RenderRect(const SDL_Rect& rect) const
 	SDL_RenderDrawRect(GetSDLRenderer(), &rect);
 }
 
-void Renderer::RenderRect(const glm::vec2& rect, glm::vec3 color) const
+void Renderer::RenderRect(const glm::vec2& rect, glm::vec3 color, glm::vec2 size) const
 {
 	SDL_Rect r;
 	r.x = static_cast<int>(rect.x);
 	r.y = static_cast<int>(rect.y);
-	r.w = 30;
-	r.h = 30;
+	r.w = static_cast<int>(size.x);
+	r.h = static_cast<int>(size.y);
+
 	SDL_SetRenderDrawColor(GetSDLRenderer(), static_cast<Uint8>(color.r), static_cast<Uint8>(color.g), static_cast<Uint8>(color.b), 255);
 	SDL_RenderDrawRect(GetSDLRenderer(), &r);
 }

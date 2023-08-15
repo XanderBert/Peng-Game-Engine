@@ -22,7 +22,7 @@ public:
 
 private:
 	glm::vec2 m_Target{};
-	glm::vec2 m_NewDirection{1,0};
+	glm::vec2 m_NewDirection{ 1,0 };
 
 	void OnEnter() override;
 
@@ -47,6 +47,8 @@ public:
 
 private:
 	void OnEnter() override;
+	glm::vec2 m_Target{};
+	glm::vec2 m_NewDirection{ 1,0 };
 };
 
 class FrightenedState final : public State
@@ -63,14 +65,13 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
-	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 private:
 	void OnEnter() override;
 
-	bool m_wasDirectionChanged = false;
-	float m_directionChangeTime = 0.0f;
-	glm::vec2 m_previousDirection = glm::vec2(0.0f);
+	glm::vec2 m_NewDirection{ 1,0 };
+	glm::vec2 m_Target{};
 };
 
 
@@ -88,10 +89,12 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
-	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
 
 private:
 	glm::vec2 m_Target{};
+	glm::vec2 m_NewDirection{ 1,0 };
+
 	void OnEnter() override;
 };
 
@@ -110,6 +113,26 @@ public:
 	State* HandleInput() override;
 	void Update() override;
 	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
+private:
+	void OnEnter() override;
+};
+
+
+class WasEatenState final : public State
+{
+public:
+	WasEatenState(GameObject* object);
+	~WasEatenState() override = default;
+
+	WasEatenState(const WasEatenState& other) = delete;
+	WasEatenState(WasEatenState&& other) = delete;
+	WasEatenState& operator=(const WasEatenState& other) = delete;
+	WasEatenState& operator=(WasEatenState&& other) = delete;
+
+	State* HandleInput() override;
+	void Update() override;
+	void OnCollision(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {};
 	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 private:
 	void OnEnter() override;

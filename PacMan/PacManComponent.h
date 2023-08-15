@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Component.h"
 #include "PowerUpObserver.h"
+#include "glm/vec2.hpp"
 
 class PacManComponent final : public Component
 {
@@ -22,7 +23,10 @@ public:
 	void AttachObserver(Observer* observer);
 	void NotifyObservers(GameEvent event, GameObject* object);
 
+	glm::vec2 GetSpawnPos() const { return m_SpawnPos; }
+
 private:
 	std::vector<std::unique_ptr<Observer>> m_Observers;
+	glm::vec2 m_SpawnPos{ 104, 132 };
 
 };

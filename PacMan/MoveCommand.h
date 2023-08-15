@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "SpriteRenderer.h"
 #include "MoveComponent.h"
+#include "TimeM.h"
+#include "VelocityComponent.h"
 
 class MoveCommand final : public Command
 {
@@ -21,14 +23,29 @@ public:
 	{
 		if (const auto spriteRenderer{ m_GameActor->GetComponent<SpriteRenderer>() })
 		{
-			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 })
-				return;
+			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 }) return;
 		}
+
+
+
+		////Cornerning advantage for pacman
+		//const auto transform = m_GameActor->GetComponent<Transform>();
+		//if (m_GameActor->GetComponent<DirectionComponent>()->GetDirection() != m_MovementDirection)
+		//{
+		//	const auto velocity = m_GameActor->GetComponent<VelocityComponent>()->GetVelocity();
+		//	const auto movement{ m_MovementDirection * velocity * TimeM::GetInstance().GetDeltaTimeM() * 4.f };
+
+		//	transform->SetWorldPosition(transform->GetWorldPosition() + movement);
+		//}
+
 
 		if (const auto directionComponent{ m_GameActor->GetComponent<DirectionComponent>() })
 		{
 			directionComponent->SetDirection(m_MovementDirection);
 		}
+
+
+
 
 		m_GameActor->GetComponent<MoveComponent>()->SetCanMove(true);
 	}

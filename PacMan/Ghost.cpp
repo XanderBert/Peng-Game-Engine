@@ -52,8 +52,8 @@ Ghost::Ghost() : m_pGameObject{ new GameObject() }
 
 	//Collider Component
 	const auto collider = m_pGameObject->AddComponent<BoxCollider>();
-	collider->SetColliderSize({ 10,10 });
-	collider->SetColliderOffset({ 3,3 });
+	collider->SetColliderSize({ 12,12 });
+	collider->SetColliderOffset({ 4,4 });
 
 #ifdef _DEBUG
 	collider->DebugRender(true);
