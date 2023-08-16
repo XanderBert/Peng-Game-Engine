@@ -12,13 +12,21 @@
 #include "PacManComponent.h"
 #include "PowerUp.h"
 #include "PowerUpObserver.h"
+#include "rapidxml_print.hpp"
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
+
+#include "SkipLevelCommand.h"
 #include "StartScreen.h"
 #include "VelocityComponent.h"
 #include "WallManager.h"
+#include <fstream>
+#include <iostream>
 
 
 Scene* LevelLoader::LoadLevel(const int levelId, GameMode gameMode)
 {
+
 	m_GameMode = gameMode;
 	return LoadLevel(levelId);
 }
@@ -68,6 +76,12 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 	return &level1;
 }
 
+Scene* LevelLoader::LoadNextLevel()
+{
+	++m_LevelId;
+	return LoadLevel(m_LevelId);
+}
+
 void LevelLoader::LoadStartScene()
 {
 	auto& startScreen = SceneManager::GetInstance().CreateScene("Level0");
@@ -78,10 +92,15 @@ void LevelLoader::LoadStartScene()
 
 Scene* LevelLoader::LoadEndingScreen()
 {
+	SaveHighScore();
+
+
 	//Get the scenemanager
 	SceneManager& sceneManager = SceneManager::GetInstance();
 
-	//Get the highScore and save it as a string
+
+
+
 	std::string text{};
 	for (const auto object : sceneManager.GetActiveScene()->GetObjects())
 	{
@@ -90,13 +109,19 @@ Scene* LevelLoader::LoadEndingScreen()
 			if (hud->IsMultiplayer())
 			{
 				text += "Player 1: " + std::to_string(hud->GetHighScore()[0]) + " Player 2: " + std::to_string(hud->GetHighScore()[1]);
+				text += " HighScore: " + std::to_string(m_AllHighScores[0]);
 			}
 			else
 			{
-				text += "HighScore: " + std::to_string(hud->GetHighScore()[0]);
+				text += "Player 1: " + std::to_string(hud->GetHighScore()[0]);
+				text += " HighScore: " + std::to_string(m_AllHighScores[0]);
 			}
 		}
 	}
+
+
+
+	//Get the highScore and save it as a string
 
 
 
@@ -588,4 +613,93 @@ void LevelLoader::LoadPacMan(Scene& scene, int amount)
 
 		scene.Add(pacMan.GetPacMan());
 	}
+}
+
+void LevelLoader::SaveHighScore()
+{
+	//Load the potential new high scores
+	//Get the scenemanager
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	for (const auto object : sceneManager.GetActiveScene()->GetObjects())
+	{
+		if (const auto hud = object->GetComponent<HudComponent>())
+		{
+			m_NewHighScores.emplace_back(hud->GetHighScore()[0]);
+		}
+	}
+
+
+	// Load existing high scores from the XML file if it exists
+	std::vector<int> existingHighScores;
+
+
+	if (std::ifstream inFile("highscores.xml"); inFile.is_open())
+	{
+		std::vector<char> buffer((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+		buffer.push_back('\0');
+
+		rapidxml::xml_document<> doc;
+		doc.parse<0>(&buffer[0]);
+
+		rapidxml::xml_node<>* root = doc.first_node("highscores");
+		if (root)
+		{
+			for (rapidxml::xml_node<>* scoreNode = root->first_node("score"); scoreNode; scoreNode = scoreNode->next_sibling())
+			{
+				int score = std::stoi(scoreNode->value());
+				existingHighScores.push_back(score);
+			}
+		}
+
+		doc.clear();
+	}
+
+	// Combine existing high scores and new high scores
+	m_AllHighScores.insert(m_AllHighScores.end(), existingHighScores.begin(), existingHighScores.end());
+	m_AllHighScores.insert(m_AllHighScores.end(), m_NewHighScores.begin(), m_NewHighScores.end());
+
+	// Sort the combined high scores in descending order
+	std::ranges::sort(m_AllHighScores, std::greater<int>());
+
+	// Create an XML document
+	rapidxml::xml_document<> doc;
+
+	// Create a declaration (<?xml version="1.0"?>)
+	rapidxml::xml_node<>* declaration = doc.allocate_node(rapidxml::node_declaration);
+	declaration->append_attribute(doc.allocate_attribute("version", "1.0"));
+	//declaration->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
+
+	doc.append_node(declaration);
+
+	// Create a root node
+	rapidxml::xml_node<>* root = doc.allocate_node(rapidxml::node_element, "highscores");
+	doc.append_node(root);
+
+	// Write each high score as a new node
+	for (int score : m_AllHighScores)
+	{
+		// Convert the score to string
+		std::string scoreStr = std::to_string(score);
+
+		// Create a score node
+		rapidxml::xml_node<>* scoreNode = doc.allocate_node(rapidxml::node_element, "score", doc.allocate_string(scoreStr.c_str()));
+		root->append_node(scoreNode);
+	}
+
+	// Save the XML to a file
+	std::ofstream outFile("highscores.xml");
+	if (outFile.is_open())
+	{
+		outFile << doc;
+		outFile.close();
+	}
+	else
+	{
+		// Print an error message if the file couldn't be opened
+		std::cout << "Error: Unable to open highscores.xml for writing." << std::endl;
+	}
+
+	// Free the allocated memory
+	doc.clear();
+
 }

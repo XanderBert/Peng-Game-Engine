@@ -28,6 +28,7 @@ private:
 	InputComponent* m_pKeyboard;
 
 	bool m_Multiplayer{};
+	bool m_OriginalController{};
 	inline static int m_ControllerID{};
 };
 

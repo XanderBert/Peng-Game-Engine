@@ -14,6 +14,8 @@ class LevelLoader final : public Singleton<LevelLoader>
 public:
 	static Scene* LoadLevel(const int levelId, GameMode gameMode);
 	static Scene* LoadLevel(const int levelId);
+	static Scene* LoadNextLevel();
+
 	static void LoadStartScene();
 	static Scene* LoadEndingScreen();
 
@@ -34,8 +36,12 @@ private:
 	static void LoadPacDot(Scene& scene);
 	static void LoadPacMan(Scene& scene, int amount);
 
+	static void SaveHighScore();
+
 	inline static std::vector<GameObject*> m_pGhosts{};
 	inline static int m_LevelId{};
 	inline static int m_AmountOfLevels{ 3 };
 	inline static GameMode m_GameMode{ GameMode::SinglePlayer };
+	inline static std::vector<int> m_NewHighScores{};
+	inline static std::vector<int> m_AllHighScores{};
 };

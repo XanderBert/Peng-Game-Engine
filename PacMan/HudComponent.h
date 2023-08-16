@@ -11,6 +11,7 @@
 #include "SceneManager.h"
 #include "ScoreComponent.h"
 #include "ServiceLocator.h"
+#include "SkipLevelCommand.h"
 
 class HudComponent final : public Component
 {
@@ -77,7 +78,14 @@ private:
 inline void HudComponent::Update()
 {
 	UpdateAudio();
+	const auto& serviceLocator = ServiceLocator::GetInstance();
+	const auto& inputService = serviceLocator.InputManager.GetService();
 
+
+	if (inputService.GetButtonPressed(SDLK_F1))
+	{
+		SkipLevelCommand().Execute();
+	}
 
 	if (!m_IsMultiplayer)
 	{

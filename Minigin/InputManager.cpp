@@ -32,13 +32,13 @@ std::vector<Controller*> InputManager::GetControllers()
 	return controllers;
 }
 
-bool InputManager::GetButtonPressed(SDL_Keycode key) const
+bool InputManager::GetButtonDown(SDL_Keycode key) const
 {
 	auto it = m_KeyStates.find(key);
 	return it != m_KeyStates.end() && it->second;
 }
 
-bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const
+bool InputManager::GetButtonDown(int controllerId, Controller::ControllerButton controllerButton) const
 {
 	for (const auto& controller : m_pControllers)
 	{
@@ -49,6 +49,11 @@ bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButt
 	}
 
 	return false;
+}
+
+bool InputManager::GetButtonPressed(SDL_Keycode key) const
+{
+	return key == m_Input;
 }
 
 bool InputManager::IsLeftMouseButtonPressed() const
@@ -82,6 +87,8 @@ void InputManager::UpdateControllersInput() const
 
 bool InputManager::UpdateKeyboardInput()
 {
+	m_Input = 0;
+
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
@@ -92,6 +99,8 @@ bool InputManager::UpdateKeyboardInput()
 		if (e.type == SDL_KEYDOWN)
 		{
 			m_KeyStates[e.key.keysym.sym] = true;
+			m_Input = e.key.keysym.sym;
+
 		}
 		else if (e.type == SDL_KEYUP)
 		{
@@ -102,8 +111,6 @@ bool InputManager::UpdateKeyboardInput()
 		//Updates Imgui Input
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
-
-
 
 	return true;
 }

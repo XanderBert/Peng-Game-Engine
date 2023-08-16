@@ -24,7 +24,7 @@ void InputComponent::Update()
 
 	for (const auto& command : m_KeyboardCommands)
 	{
-		if (m_pInputManager->GetButtonPressed(command.first))
+		if (m_pInputManager->GetButtonDown(command.first))
 		{
 			command.second->Execute();
 		}

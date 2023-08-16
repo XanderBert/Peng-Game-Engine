@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/vec2.hpp>
-
 #include "Command.h"
 #include "DirectionComponent.h"
 #include "GameObject.h"
@@ -27,7 +26,7 @@ public:
 		}
 
 
-
+		//Todo fine tune this
 		////Cornerning advantage for pacman
 		//const auto transform = m_GameActor->GetComponent<Transform>();
 		//if (m_GameActor->GetComponent<DirectionComponent>()->GetDirection() != m_MovementDirection)
@@ -43,8 +42,6 @@ public:
 		{
 			directionComponent->SetDirection(m_MovementDirection);
 		}
-
-
 
 
 		m_GameActor->GetComponent<MoveComponent>()->SetCanMove(true);

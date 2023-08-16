@@ -255,5 +255,8 @@
     <ClInclude Include="EndingScreenComponent.h">
       <Filter>Components\ObjectFilters\Screens\EndingScreen</Filter>
     </ClInclude>
+    <ClInclude Include="SkipLevelCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

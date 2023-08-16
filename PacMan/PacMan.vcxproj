@@ -265,6 +265,7 @@
     <ClInclude Include="PowerUpComponent.h" />
     <ClInclude Include="PowerUpObserver.h" />
     <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="SkipLevelCommand.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="StartScreenComponent.h" />
     <ClInclude Include="StateComponent.h" />

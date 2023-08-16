@@ -52,7 +52,7 @@ PacMan::PacMan() : m_pGameObject{ new GameObject() }
 
 	//Velocity Component
 	const auto velocityComponent = m_pGameObject->AddComponent<VelocityComponent>();
-	velocityComponent->SetVelocity(200.f);
+	velocityComponent->SetVelocity(100.f);
 
 
 	//Input Component

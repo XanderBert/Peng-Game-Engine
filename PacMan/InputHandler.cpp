@@ -5,6 +5,7 @@
 #include "MoveCommand.h"
 #include "PacManComponent.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
 #include "SwitchInputCommand.h"
 
 InputHandler::InputHandler(GameObject* pParent)
@@ -36,6 +37,13 @@ InputHandler::InputHandler(GameObject* pParent)
 
 void InputHandler::Update()
 {
+	//Multiplayer controller players cannot switch to keyboard
+	if (m_OriginalController && m_Multiplayer)return;
+
+	if (ServiceLocator::GetInstance().InputManager.GetService().GetButtonPressed(SDLK_F2))
+	{
+		SwitchInputCommand(m_pOwner).Execute();
+	}
 }
 
 void InputHandler::FixedUpdate(float /*fixedTimeMStep*/)
@@ -52,70 +60,22 @@ void InputHandler::Render()
 
 void InputHandler::SetupInput(const bool IsPlayingWithController)
 {
-
-	//Multiplayer
-	if (m_Multiplayer)
-	{
-		if (IsPlayingWithController)
-		{
-			//Movement
-			m_pController->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(m_pOwner, { 0,-1 }));
-			m_pController->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(m_pOwner, { 1,0 }));
-			m_pController->AddBinding(Controller::ControllerButton::DPadDown, new MoveCommand(m_pOwner, { 0,1 }));
-			m_pController->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(m_pOwner, { -1,0 }));
-
-			//Disable Keyboard
-			m_pKeyboard->DisableInput();
-		}
-		else
-		{
-			//Movement
-			m_pKeyboard->AddBinding(SDLK_w, new MoveCommand(m_pOwner, { 0,-1 }));
-			m_pKeyboard->AddBinding(SDLK_d, new MoveCommand(m_pOwner, { 1,0 }));
-			m_pKeyboard->AddBinding(SDLK_s, new MoveCommand(m_pOwner, { 0,1 }));
-			m_pKeyboard->AddBinding(SDLK_a, new MoveCommand(m_pOwner, { -1,0 }));
-
-			//Disable Controller
-			m_pController->DisableInput();
-		}
-
-		return;
-	}
+	m_OriginalController = IsPlayingWithController;
 
 
-
-	//Singleplayer
-	if (IsPlayingWithController)
-	{
-		//Movement
-		m_pController->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(m_pOwner, { 0,-1 }));
-		m_pController->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(m_pOwner, { 1,0 }));
-		m_pController->AddBinding(Controller::ControllerButton::DPadDown, new MoveCommand(m_pOwner, { 0,1 }));
-		m_pController->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(m_pOwner, { -1,0 }));
-
-		//Switch Input
-		m_pController->AddBinding(Controller::ControllerButton::ButtonA, new SwitchInputCommand(m_pOwner));
-
-		//Disable Keyboard
-		m_pKeyboard->DisableInput();
-
-	}
-	else
-	{
-		//Movement
-		m_pKeyboard->AddBinding(SDLK_w, new MoveCommand(m_pOwner, { 0,-1 }));
-		m_pKeyboard->AddBinding(SDLK_d, new MoveCommand(m_pOwner, { 1,0 }));
-		m_pKeyboard->AddBinding(SDLK_s, new MoveCommand(m_pOwner, { 0,1 }));
-		m_pKeyboard->AddBinding(SDLK_a, new MoveCommand(m_pOwner, { -1,0 }));
+	//Movement
+	m_pController->AddBinding(Controller::ControllerButton::DPadUp, new MoveCommand(m_pOwner, { 0,-1 }));
+	m_pController->AddBinding(Controller::ControllerButton::DPadRight, new MoveCommand(m_pOwner, { 1,0 }));
+	m_pController->AddBinding(Controller::ControllerButton::DPadDown, new MoveCommand(m_pOwner, { 0,1 }));
+	m_pController->AddBinding(Controller::ControllerButton::DPadLeft, new MoveCommand(m_pOwner, { -1,0 }));
 
 
+	//Movement
+	m_pKeyboard->AddBinding(SDLK_w, new MoveCommand(m_pOwner, { 0,-1 }));
+	m_pKeyboard->AddBinding(SDLK_d, new MoveCommand(m_pOwner, { 1,0 }));
+	m_pKeyboard->AddBinding(SDLK_s, new MoveCommand(m_pOwner, { 0,1 }));
+	m_pKeyboard->AddBinding(SDLK_a, new MoveCommand(m_pOwner, { -1,0 }));
 
-		//Switch Input
-		m_pKeyboard->AddBinding(SDLK_TAB, new SwitchInputCommand(m_pOwner));
-
-		//Disable Controller
-		m_pController->DisableInput();
-	}
-
-
+	if (m_OriginalController) m_pKeyboard->DisableInput();
+	else m_pController->DisableInput();
 }

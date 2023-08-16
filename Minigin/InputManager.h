@@ -19,8 +19,10 @@ public:
 	virtual bool ProcessInput() = 0;
 	virtual std::vector<Controller*> GetControllers() = 0;
 
-	virtual bool GetButtonPressed(SDL_Keycode) const = 0;
-	virtual bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const = 0;
+	virtual bool GetButtonDown(SDL_Keycode) const = 0;
+	virtual bool GetButtonDown(int controllerId, Controller::ControllerButton controllerButton) const = 0;
+
+	virtual bool GetButtonPressed(SDL_Keycode key) const = 0;
 
 	virtual bool IsLeftMouseButtonPressed() const = 0;
 	virtual glm::vec2 GetLeftMouseButtonPressed() const = 0;
@@ -43,8 +45,10 @@ public:
 	bool ProcessInput() override;
 	std::vector<Controller*> GetControllers() override;
 
+	bool GetButtonDown(SDL_Keycode key) const override;
+	bool GetButtonDown(int controllerId, Controller::ControllerButton controllerButton) const override;
+
 	bool GetButtonPressed(SDL_Keycode key) const override;
-	bool GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const override;
 
 	bool IsLeftMouseButtonPressed() const override;
 	glm::vec2 GetLeftMouseButtonPressed() const override;
@@ -57,6 +61,7 @@ public:
 private:
 	std::vector<std::unique_ptr<Controller>> m_pControllers{};
 	std::unordered_map<SDL_Keycode, bool> m_KeyStates;
+	SDL_Keycode m_Input{};
 	void UpdateControllersInput() const;
 	bool UpdateKeyboardInput();
 };

@@ -17,4 +17,6 @@ public:
 	void LateUpdate() override {}
 	void Render() override {}
 
+	void SafeHighscoreToXML();
+
 };

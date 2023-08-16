@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "iostream"
-class GameActor;
 
 
 //You want your event and action code stored here?
