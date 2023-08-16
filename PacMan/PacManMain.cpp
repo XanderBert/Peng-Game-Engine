@@ -7,20 +7,12 @@
 
 
 #include "Minigin.h"
-#include "PacDot.h"
 #include "ServiceLocator.h"
-#include "PacMan.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "WallManager.h"
-#include "Ghost.h"
-#include "Hud.h"
 #include "InputHandler.h"
 #include "IntersectionTile.h"
 #include "LevelLoader.h"
 #include "PacManComponent.h"
-#include "PowerUp.h"
-#include "StartScreen.h"
+
 
 glm::vec2 g_WindowSize{ 224, 300 };
 

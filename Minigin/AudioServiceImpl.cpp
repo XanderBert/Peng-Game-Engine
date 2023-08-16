@@ -1,4 +1,7 @@
 ﻿#include "AudioServiceImpl.h"
+
+#include <iostream>
+
 #include "ServiceLocator.h"
 
 AudioServiceImpl::AudioServiceImpl() : m_StopRequested(false)

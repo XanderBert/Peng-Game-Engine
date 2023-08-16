@@ -34,7 +34,8 @@ std::vector<Controller*> InputManager::GetControllers()
 
 bool InputManager::GetButtonPressed(SDL_Keycode key) const
 {
-	return key == m_Input;
+	auto it = m_KeyStates.find(key);
+	return it != m_KeyStates.end() && it->second;
 }
 
 bool InputManager::GetButtonPressed(int controllerId, Controller::ControllerButton controllerButton) const
@@ -81,22 +82,22 @@ void InputManager::UpdateControllersInput() const
 
 bool InputManager::UpdateKeyboardInput()
 {
-	//Reset the input
-	m_Input = 0;
-
-
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
 		//Exit the game
 		if (e.type == SDL_QUIT) { return false; }
 
-
-		//Store when a key is pressed
+		// Store key states
 		if (e.type == SDL_KEYDOWN)
 		{
-			m_Input = e.key.keysym.sym;
+			m_KeyStates[e.key.keysym.sym] = true;
 		}
+		else if (e.type == SDL_KEYUP)
+		{
+			m_KeyStates[e.key.keysym.sym] = false;
+		}
+
 
 		//Updates Imgui Input
 		ImGui_ImplSDL2_ProcessEvent(&e);

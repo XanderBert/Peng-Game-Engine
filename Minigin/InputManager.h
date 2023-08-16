@@ -2,7 +2,6 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
-#include "Command.h"
 #include "Controller.h"
 #include "SDL.h"
 
@@ -57,11 +56,7 @@ public:
 
 private:
 	std::vector<std::unique_ptr<Controller>> m_pControllers{};
-	SDL_Keycode m_Input{};
-
+	std::unordered_map<SDL_Keycode, bool> m_KeyStates;
 	void UpdateControllersInput() const;
 	bool UpdateKeyboardInput();
-
-
-
 };
