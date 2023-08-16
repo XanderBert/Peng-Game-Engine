@@ -1,5 +1,4 @@
 #include "PowerUpObserver.h"
-
 #include "DirectionComponent.h"
 #include "GameObjectStorage.h"
 #include "GhostState.h"
@@ -7,12 +6,14 @@
 #include "HealthComponent.h"
 #include "LevelLoader.h"
 #include "PacDotComponent.h"
+#include "LevelLoader.h"
 #include "PacManComponent.h"
 #include "PowerUpComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "StateComponent.h"
 #include "ScoreComponent.h"
+#include "SpriteRenderer.h"
 #include "Transform.h"
 
 
@@ -21,27 +22,43 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 	if (event == GameEvent::PowerUpEaten)
 	{
 		ServiceLocator::GetInstance().AudioService.GetService().Play(2);
-
-		//Set Ghosts in Frightened State
 		const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-		for (const auto& object : objects)
+
+		if (LevelLoader::GetInstance().GetGameMode() == GameMode::Vs)
 		{
-			if (object->GetComponent<GhostComponent>())
+			//Set Other Pacman in Frightened State
+
+			for (const auto& object : objects)
 			{
-
-				const auto state = object->GetComponent<StateComponent>();
-
-				//Only change state if the ghost is not in the idle state
-				if (typeid(*state->GetState()) != typeid(IdleState))
+				if (object->GetComponent<PacManComponent>() != nullptr && object != gameObject)
 				{
-					object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
+					object->GetComponent<StateComponent>()->SetState(new PacManFrightenedState{ object });
+				}
+			}
+
+		}
+		else
+		{
+			//Set Ghosts in Frightened State
+
+			for (const auto& object : objects)
+			{
+				if (object->GetComponent<GhostComponent>())
+				{
+					const auto state = object->GetComponent<StateComponent>();
+
+					//Only change state if the ghost is not in the idle state
+					if (typeid(*state->GetState()) != typeid(IdleState))
+					{
+						object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
+					}
 				}
 			}
 		}
 
+
 		//Gain Points
 		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(50);
-
 
 		if (IsLevelCompleted())
 		{
@@ -98,15 +115,17 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 
 		ServiceLocator::GetInstance().AudioService.GetService().Play(6);
 
-		//Gain Points
-		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(-100);
+		//Lose Lives Points
 		gameObject->GetComponent<HealthComponent>()->TakeDamage(1);
 
+		//Check if its game over
+		if (gameObject->GetComponent<HealthComponent>()->IsDead()) LevelLoader::GetInstance().LoadEndingScreen();
+
+		//Lose points
+		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(-100);
 
 		//Teleport to start
-		//gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<PacManComponent>()->GetSpawnPos());
-
-
+		gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<PacManComponent>()->GetSpawnPos());
 	}
 }
 
@@ -118,7 +137,7 @@ bool PowerUpObserver::IsLevelCompleted()
 {
 	const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
 	auto amountOfDotsLeft = 0;
-	
+
 
 	//The last eaton pacdot or powerup is just marked for deletion, so it is still in the scene until next frame.
 	//So i need to check if the scene has only 1 object left (or less then 2).
@@ -128,14 +147,12 @@ bool PowerUpObserver::IsLevelCompleted()
 		{
 			++amountOfDotsLeft;
 
-			if(amountOfDotsLeft > 1)
+			if (amountOfDotsLeft > 1)
 			{
 				return false;
 			}
 		}
 	}
-
-	
 
 
 	return true;

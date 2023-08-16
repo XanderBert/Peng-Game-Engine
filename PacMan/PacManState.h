@@ -66,3 +66,23 @@ public:
 private:
 	void OnEnter() override;
 };
+
+class PacManFrightenedState final : public State
+{
+public:
+	PacManFrightenedState(GameObject* object);
+	~PacManFrightenedState() override = default;
+
+	PacManFrightenedState(const PacManFrightenedState& other) = delete;
+	PacManFrightenedState(PacManFrightenedState&& other) = delete;
+	PacManFrightenedState& operator=(const PacManFrightenedState& other) = delete;
+	PacManFrightenedState& operator=(PacManFrightenedState&& other) = delete;
+
+	State* HandleInput() override;
+	void Update() override;
+	void OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+	void OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger) override;
+
+private:
+	void OnEnter() override;
+};

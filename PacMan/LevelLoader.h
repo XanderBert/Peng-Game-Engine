@@ -19,10 +19,11 @@ public:
 
 	static int GetLevelId() { return m_LevelId; }
 
+	static GameMode GetGameMode() { return m_GameMode; }
+
 private:
 	friend class Singleton<LevelLoader>;
 	LevelLoader() = default;
-
 
 
 	static void LoadInterSections(Scene& scene);
@@ -31,7 +32,7 @@ private:
 	static void LoadGhosts(Scene& scene);
 	static void LoadHud(Scene& scene);
 	static void LoadPacDot(Scene& scene);
-	static void LoadPacMan(Scene& scene);
+	static void LoadPacMan(Scene& scene, int amount);
 
 	inline static std::vector<GameObject*> m_pGhosts{};
 	inline static int m_LevelId{};

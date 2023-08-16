@@ -21,7 +21,10 @@ public:
 	{
 		m_Health -= damage;
 	}
+
 	int GetHealth() const { return m_Health; }
+	bool IsDead() const { return m_Health <= 0; }
+
 private:
 	int m_Health{ 3 };
 };

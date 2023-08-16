@@ -53,13 +53,10 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 		other->MarkForDeletion();
 	}
 
-
-	//The Ghost Trigger is colliding with a wall
 	if (other->GetComponent<WallComponent>() && isSenderTrigger)
 	{
 		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
 	}
-
 
 	if (other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
 	{
@@ -113,4 +110,71 @@ void PacManIdleState::OnCollision(GameObject* /*other*/, bool /*isTrigger*/, boo
 void PacManIdleState::OnEnter()
 {
 	m_pActor->GetComponent<SpriteRenderer>()->Pause();
+	m_pActor->GetComponent<SpriteRenderer>()->SetTexture("PacMan.png");
+}
+
+
+
+
+
+
+
+
+//Only in Vs Mode
+//
+//
+PacManFrightenedState::PacManFrightenedState(GameObject* object) : State(object)
+{
+	OnEnter();
+}
+
+State* PacManFrightenedState::HandleInput()
+{
+	if (m_pActor->GetComponent<CountdownComponent>()->IsTimeUp())
+	{
+		return new PacManIdleState(m_pActor);
+	}
+	return nullptr;
+}
+
+void PacManFrightenedState::Update()
+{
+}
+
+void PacManFrightenedState::OnCollision(GameObject* other, bool /*isTrigger*/, bool isSenderTrigger)
+{
+	if (other->GetComponent<PacDotComponent>())
+	{
+		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacDotEaten, m_pActor);
+		other->MarkForDeletion();
+	}
+
+	if (other->GetComponent<WallComponent>() && isSenderTrigger)
+	{
+		m_pActor->GetComponent<MoveComponent>()->ResetMovement();
+	}
+}
+
+void PacManFrightenedState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
+{
+	//Die because the other pacman ate you
+	if (other->GetComponent<PacManComponent>() && other != m_pActor && !isSenderTrigger && !isTrigger)
+	{
+		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, m_pActor);
+	}
+}
+
+void PacManFrightenedState::OnEnter()
+{
+	m_pActor->GetComponent<SpriteRenderer>()->SetTexture("PacManFrightened.png");
+
+
+	if (const auto timer = m_pActor->GetComponent<CountdownComponent>())
+	{
+		timer->SetTime(3.5f);
+		timer->Play();
+	}
+
+	m_pActor->GetComponent<SpriteRenderer>()->Play();
+	m_pActor->GetComponent<SpriteRenderer>()->SetFrameTime(0.2f);
 }

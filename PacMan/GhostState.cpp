@@ -54,13 +54,6 @@ void ChaseState::Update()
 
 void ChaseState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	//Colliding with a ghost
-	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
-	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
-		return;
-	}
-
 	if (other->GetComponent<IntersectionComponent>())
 	{
 		m_Target = other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint();
@@ -77,6 +70,13 @@ void ChaseState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTri
 
 void ChaseState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
+	//Colliding with pac man
+	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		return;
+	}
+
 	//The Ghost  is colliding with a Intersection Trigger
 	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{
@@ -147,13 +147,6 @@ void ScatterState::Update()
 
 void ScatterState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	//Colliding with a ghost
-	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
-	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
-		return;
-	}
-
 	if (other->GetComponent<IntersectionComponent>())
 	{
 		m_Target = other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint();
@@ -170,6 +163,14 @@ void ScatterState::OnCollision(GameObject* other, bool isTrigger, bool isSenderT
 
 void ScatterState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
+	//Colliding with pac man
+	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		return;
+	}
+
+
 	//The Ghost  is colliding with a Intersection Trigger
 	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{
@@ -341,13 +342,6 @@ void CorneringState::Update()
 
 void CorneringState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
-	//Colliding with a ghost
-	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
-	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
-		return;
-	}
-
 	if (other->GetComponent<IntersectionComponent>())
 	{
 		m_Target = other->GetComponent<TriggerComponent>()->GetColliderMiddlePoint();
@@ -364,6 +358,13 @@ void CorneringState::OnCollision(GameObject* other, bool isTrigger, bool isSende
 
 void CorneringState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSenderTrigger)
 {
+	//Colliding with pac man
+	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
+	{
+		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		return;
+	}
+
 	//The Ghost  is colliding with a Intersection Trigger
 	if (other->GetComponent<IntersectionComponent>() && isTrigger && !isSenderTrigger)
 	{

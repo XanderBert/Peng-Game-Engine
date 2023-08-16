@@ -39,23 +39,30 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 
 
 
+
 	//Load the level
 	LoadInterSections(level1);
 	LoadWalls(level1);
 	LoadPowerUps(level1);
-	LoadPacMan(level1);
+
+	//Load Pacman / Pacman 2 if needed
+	if (m_GameMode == GameMode::SinglePlayer) LoadPacMan(level1, 1);
+	else LoadPacMan(level1, 2);
+
 	LoadPacDot(level1);
-	LoadGhosts(level1);
+
+	//Don't Load ghosts if in vs mode
+	if (m_GameMode != GameMode::Vs)
+	{
+		LoadGhosts(level1);
+	}
+
+
 	LoadHud(level1);
 
+
+	//Add the fps counter
 	level1.Add(FpsCounter().GetGameObject());
-
-
-	//SetVelocity of the ghosts
-	for (int i{}; i < 4; ++i)
-	{
-		m_pGhosts[i]->GetComponent<VelocityComponent>()->SetVelocity(40.f + levelId * 5);
-	}
 
 
 	return &level1;
@@ -75,7 +82,7 @@ Scene* LevelLoader::LoadEndingScreen()
 	SceneManager& sceneManager = SceneManager::GetInstance();
 
 	//Get the highScore and save it as a string
-	std::string text{ "Highscore: " };
+	std::string text{};
 	for (const auto object : sceneManager.GetActiveScene()->GetObjects())
 	{
 		if (const auto hud = object->GetComponent<HudComponent>())
@@ -251,6 +258,9 @@ void LevelLoader::LoadGhosts(Scene& scene)
 	for (auto i = 0; i < 4; ++i)
 	{
 		m_pGhosts.push_back(Ghost().GetGameObject());
+
+		//Set Velocity
+		m_pGhosts[i]->GetComponent<VelocityComponent>()->SetVelocity(40.f + m_LevelId * 5);
 		scene.Add(m_pGhosts[i]);
 	}
 }
@@ -557,19 +567,25 @@ void LevelLoader::LoadPacDot(Scene& scene)
 
 }
 
-void LevelLoader::LoadPacMan(Scene& scene)
+void LevelLoader::LoadPacMan(Scene& scene, int amount)
 {
-	const auto observer = new PowerUpObserver();
-	const auto pacMan = PacMan();
-	pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
-	pacMan.GetPacMan()->GetComponent<InputHandler>()->SetupInput(false);
+	for (int i = 0; i < amount; ++i)
+	{
+		const auto observer = new PowerUpObserver();
+		const auto pacMan = PacMan();
+		pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
+
+		if (i == 0)
+		{
+			pacMan.GetPacMan()->GetComponent<InputHandler>()->SetupInput(false);
+		}
+		else
+		{
+			pacMan.GetPacMan()->GetComponent<InputHandler>()->SetupInput(true);
+
+		}
 
 
-	scene.Add(pacMan.GetPacMan());
-
-	const auto observer1 = new PowerUpObserver();
-	const auto pacMan1 = PacMan();
-	pacMan1.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer1);
-	pacMan1.GetPacMan()->GetComponent<InputHandler>()->SetupInput(true);
-	scene.Add(pacMan1.GetPacMan());
+		scene.Add(pacMan.GetPacMan());
+	}
 }

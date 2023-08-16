@@ -27,7 +27,8 @@ AudioServiceImpl::~AudioServiceImpl()
 
 void AudioServiceImpl::Play(int id)
 {
-	if (isAudioInQueue(id)) return; //If the audio is already in the queue, don't add it again. (This prevents the same audio from playing multiple times at once
+	if (m_Muted) return; //If the audio is muted, don't play it.)
+	if (isAudioInQueue(id)) return; //If the audio is already in the queue, don't add it again. (This prevents the same audio from playing multiple times at the same time. -> that will just make it louder)
 
 	std::unique_lock lock(m_AudioMutex);
 
@@ -133,7 +134,7 @@ bool AudioServiceImpl::isAudioInQueue(int id)
 
 void AudioServiceImpl::PlayAudioAsync()
 {
-	while (!m_Muted)
+	while (true)
 	{
 		int audioData;
 
