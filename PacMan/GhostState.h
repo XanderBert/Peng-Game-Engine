@@ -136,4 +136,5 @@ public:
 	void OnCollisionEnter(GameObject* /*other*/, bool /*isTrigger*/, bool /*isSenderTrigger*/) override {}
 private:
 	void OnEnter() override;
+	float m_LastDistance{};
 };

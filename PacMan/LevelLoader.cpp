@@ -47,17 +47,17 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 
 
 
-
+	LoadLevelData(&level1);
 	//Load the level
-	LoadInterSections(level1);
-	LoadWalls(level1);
-	LoadPowerUps(level1);
+	//LoadInterSections(level1);
+	//LoadWalls(level1);
+	//LoadPowerUps(level1);
 
 	//Load Pacman / Pacman 2 if needed
 	if (m_GameMode == GameMode::SinglePlayer) LoadPacMan(level1, 1);
 	else LoadPacMan(level1, 2);
 
-	LoadPacDot(level1);
+	//LoadPacDot(level1);
 
 	//Don't Load ghosts if in vs mode
 	if (m_GameMode != GameMode::Vs)
@@ -94,12 +94,8 @@ Scene* LevelLoader::LoadEndingScreen()
 {
 	SaveHighScore();
 
-
 	//Get the scenemanager
-	SceneManager& sceneManager = SceneManager::GetInstance();
-
-
-
+	const SceneManager& sceneManager = SceneManager::GetInstance();
 
 	std::string text{};
 	for (const auto object : sceneManager.GetActiveScene()->GetObjects())
@@ -120,11 +116,6 @@ Scene* LevelLoader::LoadEndingScreen()
 	}
 
 
-
-	//Get the highScore and save it as a string
-
-
-
 	auto& end = SceneManager::GetInstance().CreateScene("EndingScreen");
 	const auto endingScreen = EndingScreen().GetGameObject();
 	endingScreen->GetComponent<FontRenderer>()->SetText(text);
@@ -134,139 +125,6 @@ Scene* LevelLoader::LoadEndingScreen()
 	return &end;
 }
 
-
-void LevelLoader::LoadInterSections(Scene& scene)
-{
-	//  , { {-1,0}, {1,0}, {0, 1}, {0, -1} }
-	scene.Add(IntersectionTile({ 4,4 }, { {1,0}, {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,36 }, { {1,0}, {0, 1},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,60 }, { {1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,156 }, { {1,0},{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,180 }, { {1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,204 }, { {1,0},{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 4,228 }, { {1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,4 }, { {-1,0}, {1,0}, {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,36 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,60 }, { {-1, 0}, {0,-1}, {0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,108 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,156 }, { {-1,0}, {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,180 }, { {1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 44,204 }, { {-1,0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,36 }, { {-1,0},   {1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,60 }, { {1, 0} ,   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,84 }, { {1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,108 }, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,132 }, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,156 }, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,180 }, { {1, 0} ,   {-1, 0},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 68,204 }, { {1, 0} ,   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,4 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,36 }, { {-1, 0} ,   {1, 0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,60 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,84 }, { {-1, 0} ,   {1, 0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,156 }, { {-1, 0} ,{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,180 }, { {-1, 0} ,{1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,204 }, { {-1, 0} ,{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 92,228 }, { {-1, 0},{1,0} ,{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,4 }, { {1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,36 }, { {1, 0} ,   {-1, 0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,60 }, { {1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,84 }, { {1, 0} ,   {-1, 0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,156 }, { {1, 0} ,{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,180 }, { {1, 0} ,{-1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,204 }, { {1, 0} ,{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 116,228 }, { {1, 0},{-1,0} ,{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,36 }, { {1,0},   {-1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,60 }, { {-1, 0} ,   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,84 }, { {-1, 0} ,   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,108 }, { {1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,132 }, { {-1, 0} ,   {0, -1},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,156 }, { {-1, 0} ,   {1, 0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,180 }, { {-1, 0} ,   {1, 0},   {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 140 ,204 }, { {-1, 0} ,   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,4 }, { {1,0}, {-1,0}, {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,36 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,60 }, { {1, 0}, {0,-1}, {0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,108 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,156 }, { {1,0}, {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,180 }, { {-1,0}, {0, 1}, {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 164,204 }, { {1,0},   {0, -1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,4 }, { {-1,0}, {0, 1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,36 }, { {-1,0}, {0, 1},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,60 }, { {-1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,156 }, { {-1,0},{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,180 }, { {-1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,204 }, { {-1,0},{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 204,228 }, { {-1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 20,180 }, { {-1,0},{0,1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 20,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 188,180 }, { {1,0},{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 188,204 }, { {-1,0},{1,0} ,{0,-1} }).GetGameObject());
-	scene.Add(IntersectionTile({ 104,84 }, { {-1,0},{1,0} }).GetGameObject());
-
-}
-
-void LevelLoader::LoadWalls(Scene& scene)
-{
-	WallManager wallManager{};
-	wallManager.AddWall("Walls/Wall_0x0_5x80.png");
-	wallManager.AddWall("Walls/Wall_5x75_40x5.png");
-	wallManager.AddWall("Walls/Wall_40x80_5x29.png");
-	wallManager.AddWall("Walls/Wall_0x104_40x5.png");
-	wallManager.AddWall("Walls/Wall_0x123_45x5.png");
-	wallManager.AddWall("Walls/Wall_40x128_5x29.png");
-	wallManager.AddWall("Walls/Wall_0x152_40x5.png");
-	wallManager.AddWall("Walls/Wall_0x157_5x91.png");
-	wallManager.AddWall("Walls/Wall_5x195_16x10.png");
-	wallManager.AddWall("Walls/Wall_5x243_219x5.png");
-	wallManager.AddWall("Walls/Wall_219x152_5x91.png");
-	wallManager.AddWall("Walls/Wall_179x152_40x5.png");
-	wallManager.AddWall("Walls/Wall_203x195_16x10.png");
-	wallManager.AddWall("Walls/Wall_179x123_5x29.png");
-	wallManager.AddWall("Walls/Wall_184x123_40x5.png");
-	wallManager.AddWall("Walls/Wall_179x104_45x5.png");
-	wallManager.AddWall("Walls/Wall_179x75_5x29.png");
-	wallManager.AddWall("Walls/Wall_184x75_40x5.png");
-	wallManager.AddWall("Walls/Wall_219x0_5x75.png");
-	wallManager.AddWall("Walls/Wall_5x0_214x5.png");
-	wallManager.AddWall("Walls/Wall_107x5_10x32.png");
-	wallManager.AddWall("Walls/Wall_19x219_74x10.png");
-	wallManager.AddWall("Walls/Wall_131x219_74x10.png");
-	wallManager.AddWall("Walls/Wall_83x195_58x10.png");
-	wallManager.AddWall("Walls/Wall_83x147_58x10.png");
-	wallManager.AddWall("Walls/Wall_83x51_58x10.png");
-	wallManager.AddWall("Walls/Wall_59x195_10x24.png");
-	wallManager.AddWall("Walls/Wall_155x195_10x24.png");
-	wallManager.AddWall("Walls/Wall_58x123_12x34.png");
-	wallManager.AddWall("Walls/Wall_155x123_10x34.png");
-	wallManager.AddWall("Walls/Wall_107x205_10x24.png");
-	wallManager.AddWall("Walls/Wall_19x171_26x10.png");
-	wallManager.AddWall("Walls/Wall_179x171_26x10.png");
-	wallManager.AddWall("Walls/Wall_35x181_10x24.png");
-	wallManager.AddWall("Walls/Wall_179x181_10x24.png");
-	wallManager.AddWall("Walls/Wall_107x157_10x24.png");
-	wallManager.AddWall("Walls/Wall_107x61_10x24.png");
-	wallManager.AddWall("Walls/Wall_59x171_34x10.png");
-	wallManager.AddWall("Walls/Wall_131x171_34x10.png");
-	wallManager.AddWall("Walls/Wall_59x52_10x56.png");
-	wallManager.AddWall("Walls/Wall_155x51_10x58.png");
-	wallManager.AddWall("Walls/Wall_69x76_23x8.png");
-	wallManager.AddWall("Walls/Wall_132x76_23x8.png");
-	wallManager.AddWall("Walls/Wall_19x51_26x10.png");
-	wallManager.AddWall("Walls/Wall_179x51_26x10.png");
-	wallManager.AddWall("Walls/Wall_19x19_26x18.png");
-	wallManager.AddWall("Walls/Wall_179x19_26x18.png");
-	wallManager.AddWall("Walls/Wall_59x19_34x18.png");
-	wallManager.AddWall("Walls/Wall_131x19_34x18.png");
-	//Ghost StartingBox
-	wallManager.AddWall("Walls/Wall_84x100_20x4.png");
-	wallManager.AddWall("Walls/Wall_120x100_20x4.png");
-	wallManager.AddWall("Walls/Wall_84x104_4x28.png");
-	wallManager.AddWall("Walls/Wall_136x104_4x28.png");
-	wallManager.AddWall("Walls/Wall_88x128_48x4.png");
-
-	wallManager.AddWallsToScene(scene);
-}
 
 void LevelLoader::LoadPowerUps(Scene& scene)
 {
@@ -701,5 +559,169 @@ void LevelLoader::SaveHighScore()
 
 	// Free the allocated memory
 	doc.clear();
+
+}
+
+void LevelLoader::LoadLevelData(Scene* scene)
+{
+	// Read the xml file into a vector
+	std::ifstream theFile("name.xml");
+
+	std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
+	buffer.push_back('\0');
+
+	//Storing a copy, because when the buffer goes out of scope , the data will be deleted
+	std::vector<char> m_XmlBuffer = buffer;
+
+	// Parse the buffer using the xml file parsing library into doc 
+	rapidxml::xml_document<> m_LevelDocument;
+	m_LevelDocument.parse<0>(&m_XmlBuffer[0]);
+
+
+	// Access the root node
+	const rapidxml::xml_node<>* rootNode = m_LevelDocument.first_node("Level");
+	if (!rootNode)
+	{
+		// Handle the case where the root node is not found
+		// throw an exception
+		return;
+	}
+
+
+
+
+	//
+	//----------------------
+	//----------------------
+	//
+
+	// Access the Walls
+	const rapidxml::xml_node<>* WallsNode = rootNode->first_node("Walls");
+	if (!WallsNode)
+	{
+		// Handle the case where the root node is not found
+		// throw an exception
+		assert(false && "Walls not found");
+		return;
+	}
+
+	//Load The walls
+	WallManager wallManager{};
+	for (const rapidxml::xml_node<>* objectNode = WallsNode->first_node("Wall"); objectNode; objectNode = objectNode->next_sibling("Wall"))
+	{
+		std::string objectType = objectNode->first_attribute("path")->value();
+
+		wallManager.AddWall(objectType);
+	}
+
+	wallManager.AddWallsToScene(*scene);
+
+
+
+
+
+	//
+	//----------------------
+	//----------------------
+	//
+
+	// Access the Intersections
+	const rapidxml::xml_node<>* IntersectionsNode = rootNode->first_node("Intersections");
+	if (!IntersectionsNode)
+	{
+		// Handle the case where the root node is not found
+		// throw an exception
+
+		assert(false && "IntersectionsNode not found");
+		return;
+	}
+
+	//Load The Intersections
+	for (const rapidxml::xml_node<>* objectNode = IntersectionsNode->first_node("IntersectionTile"); objectNode; objectNode = objectNode->next_sibling("IntersectionTile"))
+	{
+		float x = std::stof(objectNode->first_attribute("x")->value());
+		float y = std::stof(objectNode->first_attribute("y")->value());
+
+		std::vector<glm::vec2> directions{};
+
+		for (const rapidxml::xml_node<>* directionNode = objectNode->first_node("Direction"); directionNode; directionNode = directionNode->next_sibling("Direction"))
+		{
+			float xDir = std::stof(directionNode->first_attribute("x")->value());
+			float yDir = std::stof(directionNode->first_attribute("y")->value());
+
+			directions.emplace_back(glm::vec2(xDir, yDir));
+		}
+
+		scene->Add(IntersectionTile({ x,y }, directions).GetGameObject());
+	}
+
+
+
+
+
+
+
+
+
+	//
+	//----------------------
+	//----------------------
+	//
+
+	// Access the PowerUps
+	const rapidxml::xml_node<>* PowerUpNode = rootNode->first_node("PowerUps");
+	if (!PowerUpNode)
+	{
+		// Handle the case where the root node is not found
+		// throw an exception
+
+		assert(false && "PowerUp not found");
+		return;
+	}
+
+	//Load The PowerUps
+	for (const rapidxml::xml_node<>* objectNode = PowerUpNode->first_node("PowerUp"); objectNode; objectNode = objectNode->next_sibling("PowerUp"))
+	{
+		float x = std::stof(objectNode->first_attribute("x")->value());
+		float y = std::stof(objectNode->first_attribute("y")->value());
+
+		scene->Add(PowerUp{ "PacBoost.png", {x,y} }.GetGameObject());
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	//
+	//----------------------
+	//----------------------
+	//
+
+	// Access the PacDots
+	const rapidxml::xml_node<>* PacDotNode = rootNode->first_node("PacDots");
+	if (!PacDotNode)
+	{
+		// Handle the case where the root node is not found
+		// throw an exception
+
+		assert(false && "PowerUp not found");
+		return;
+	}
+
+	//Load The Intersections
+	for (const rapidxml::xml_node<>* objectNode = PacDotNode->first_node("PacDot"); objectNode; objectNode = objectNode->next_sibling("PacDot"))
+	{
+		float x = std::stof(objectNode->first_attribute("x")->value());
+		float y = std::stof(objectNode->first_attribute("y")->value());
+
+		scene->Add(PacDot{ x,y }.GetGameObject());
+	}
 
 }

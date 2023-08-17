@@ -207,7 +207,9 @@ glm::vec2 GhostComponent::GetDirectionOfVector(const std::vector<glm::vec2>& pos
 	}
 
 	// If no valid direction is found
-	return  possibleDirections[0];
+	std::cout << "glm::vec2 GhostComponent::GetDirectionOfVector(const std::vector<glm::vec2>& possibleDirections, const glm::vec2& target) const \n{\n\tNo Possible Direction Found;\n}";
+
+	return  desiredDirection;
 }
 
 glm::vec2 GhostComponent::CalculateDirection(const glm::vec2& target) const

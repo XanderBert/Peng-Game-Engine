@@ -47,7 +47,7 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 					const auto state = object->GetComponent<StateComponent>();
 
 					//Only change state if the ghost is not in the idle state && not in the frightened state
-					if (typeid(*state->GetState()) != typeid(IdleState) && typeid(*state->GetState()) != typeid(FrightenedState))
+					if (typeid(*state->GetState()) != typeid(IdleState) && typeid(*state->GetState()) != typeid(WasEatenState))
 					{
 						object->GetComponent<StateComponent>()->SetState(new FrightenedState{ object });
 					}

@@ -383,7 +383,6 @@ void CorneringState::OnCollisionEnter(GameObject* other, bool isTrigger, bool is
 	}
 }
 
-
 void CorneringState::OnEnter()
 {
 
@@ -493,7 +492,7 @@ WasEatenState::WasEatenState(GameObject* object) : State(object)
 
 State* WasEatenState::HandleInput()
 {
-	if (glm::distance(m_pActor->GetComponent<Transform>()->GetWorldPosition(), m_pActor->GetComponent<GhostComponent>()->GetStartPosition()) < 0.5f)
+	if (glm::distance(m_pActor->GetComponent<Transform>()->GetWorldPosition(), m_pActor->GetComponent<GhostComponent>()->GetStartPosition()) < 0.8f)
 	{
 		m_pActor->GetComponent<DirectionComponent>()->SetDirection({ 0,-1 });
 
@@ -508,7 +507,7 @@ void WasEatenState::Update()
 	m_pActor->GetComponent<MoveComponent>()->SetCanMove(true);
 
 	const auto ghostComp = m_pActor->GetComponent<GhostComponent>();
-	const auto direction = ghostComp->GetDirectionOfVector({ {1,0}, {-1,0}, {0,1}, {0,-1} }, ghostComp->GetStartPosition());
+	const auto direction = ghostComp->CalculateDirection(ghostComp->GetStartPosition());
 
 	m_pActor->GetComponent<DirectionComponent>()->SetDirection(direction);
 }
@@ -519,6 +518,4 @@ void WasEatenState::OnEnter()
 	const auto ghostComp = m_pActor->GetComponent<GhostComponent>();
 
 	ghostComp->SetTarget(ghostComp->GetStartPosition());
-
-	//Change the sprite to the eyes
 }

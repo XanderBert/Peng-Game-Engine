@@ -37,6 +37,7 @@ private:
 	static void LoadPacMan(Scene& scene, int amount);
 
 	static void SaveHighScore();
+	static void LoadLevelData(Scene* scene);
 
 	inline static std::vector<GameObject*> m_pGhosts{};
 	inline static int m_LevelId{};

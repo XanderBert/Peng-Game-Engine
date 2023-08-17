@@ -1,0 +1,634 @@
+<Level>
+    <Intersections>
+        <IntersectionTile x="4" y="4">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="36">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="60">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="156">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="180">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="204">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="4" y="228">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="4">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="36">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="60">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="108">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="156">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="180">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="44" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="36">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="60">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="84">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="108">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="132">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="156">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="180">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="68" y="204">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="4">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="36">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="60">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="84">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="156">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="180">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="92" y="228">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="4">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="36">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="60">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="84">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="156">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="180">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="204">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="116" y="228">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="36">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="60">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="84">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="108">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="132">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="156">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="180">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="140" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="4">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="36">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="60">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="108">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="156">
+            <Direction x="1" y="0"/>
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="180">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="164" y="204">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="4">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="36">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="60">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="156">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="180">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="204" y="228">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="20" y="180">
+            <Direction x="-1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+        <IntersectionTile x="20" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+
+        <IntersectionTile x="188" y="180">
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="1"/>
+        </IntersectionTile>
+
+        <IntersectionTile x="188" y="204">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+            <Direction x="0" y="-1"/>
+        </IntersectionTile>
+        <IntersectionTile x="104" y="84">
+            <Direction x="-1" y="0"/>
+            <Direction x="1" y="0"/>
+        </IntersectionTile>
+    </Intersections>
+
+    <Walls>
+        <Wall path="Walls/Wall_0x0_5x80.png"/>
+        <Wall path="Walls/Wall_5x75_40x5.png"/>
+        <Wall path="Walls/Wall_40x80_5x29.png"/>
+        <Wall path="Walls/Wall_0x104_40x5.png"/>
+        <Wall path="Walls/Wall_0x123_45x5.png"/>
+        <Wall path="Walls/Wall_40x128_5x29.png"/>
+        <Wall path="Walls/Wall_0x152_40x5.png"/>
+        <Wall path="Walls/Wall_0x157_5x91.png"/>
+        <Wall path="Walls/Wall_5x195_16x10.png"/>
+        <Wall path="Walls/Wall_5x243_219x5.png"/>
+        <Wall path="Walls/Wall_219x152_5x91.png"/>
+        <Wall path="Walls/Wall_179x152_40x5.png"/>
+        <Wall path="Walls/Wall_203x195_16x10.png"/>
+        <Wall path="Walls/Wall_179x123_5x29.png"/>
+        <Wall path="Walls/Wall_184x123_40x5.png"/>
+        <Wall path="Walls/Wall_179x104_45x5.png"/>
+        <Wall path="Walls/Wall_179x75_5x29.png"/>
+        <Wall path="Walls/Wall_184x75_40x5.png"/>
+        <Wall path="Walls/Wall_219x0_5x75.png"/>
+        <Wall path="Walls/Wall_5x0_214x5.png"/>
+        <Wall path="Walls/Wall_107x5_10x32.png"/>
+        <Wall path="Walls/Wall_19x219_74x10.png"/>
+        <Wall path="Walls/Wall_131x219_74x10.png"/>
+        <Wall path="Walls/Wall_83x195_58x10.png"/>
+        <Wall path="Walls/Wall_83x147_58x10.png"/>
+        <Wall path="Walls/Wall_83x51_58x10.png"/>
+        <Wall path="Walls/Wall_59x195_10x24.png"/>
+        <Wall path="Walls/Wall_155x195_10x24.png"/>
+        <Wall path="Walls/Wall_58x123_12x34.png"/>
+        <Wall path="Walls/Wall_155x123_10x34.png"/>
+        <Wall path="Walls/Wall_107x205_10x24.png"/>
+        <Wall path="Walls/Wall_19x171_26x10.png"/>
+        <Wall path="Walls/Wall_179x171_26x10.png"/>
+        <Wall path="Walls/Wall_35x181_10x24.png"/>
+        <Wall path="Walls/Wall_179x181_10x24.png"/>
+        <Wall path="Walls/Wall_107x157_10x24.png"/>
+        <Wall path="Walls/Wall_107x61_10x24.png"/>
+        <Wall path="Walls/Wall_59x171_34x10.png"/>
+        <Wall path="Walls/Wall_131x171_34x10.png"/>
+        <Wall path="Walls/Wall_59x52_10x56.png"/>
+        <Wall path="Walls/Wall_155x51_10x58.png"/>
+        <Wall path="Walls/Wall_69x76_23x8.png"/>
+        <Wall path="Walls/Wall_132x76_23x8.png"/>
+        <Wall path="Walls/Wall_19x51_26x10.png"/>
+        <Wall path="Walls/Wall_179x51_26x10.png"/>
+        <Wall path="Walls/Wall_19x19_26x18.png"/>
+        <Wall path="Walls/Wall_179x19_26x18.png"/>
+        <Wall path="Walls/Wall_59x19_34x18.png"/>
+        <Wall path="Walls/Wall_131x19_34x18.png"/>
+        <Wall path="Walls/Wall_84x100_20x4.png"/>
+        <Wall path="Walls/Wall_120x100_20x4.png"/>
+        <Wall path="Walls/Wall_84x104_4x28.png"/>
+        <Wall path="Walls/Wall_136x104_4x28.png"/>
+        <Wall path="Walls/Wall_88x128_48x4.png"/>
+    </Walls>
+
+    <PowerUps>
+        <PowerUp x="8" y="24"/>
+        <PowerUp x="8" y="184"/>
+        <PowerUp x="208" y="184"/>
+        <PowerUp x="208" y="24"/>
+    </PowerUps>
+
+
+    <PacDots>
+        <PacDot x="11" y="11"/>
+        <PacDot x="11" y="19"/>
+        <PacDot x="11" y="35"/>
+        <PacDot x="11" y="43"/>
+        <PacDot x="11" y="51"/>
+        <PacDot x="11" y="59"/>
+        <PacDot x="11" y="67"/>
+        <PacDot x="11" y="163"/>
+        <PacDot x="11" y="171"/>
+        <PacDot x="11" y="179"/>
+        <PacDot x="11" y="211"/>
+        <PacDot x="11" y="219"/>
+        <PacDot x="11" y="227"/>
+        <PacDot x="11" y="235"/>
+        <PacDot x="11" y="11"/>
+        <PacDot x="11" y="19"/>
+        <PacDot x="11" y="35"/>
+        <PacDot x="11" y="43"/>
+        <PacDot x="11" y="51"/>
+        <PacDot x="11" y="59"/>
+        <PacDot x="11" y="67"/>
+        <PacDot x="11" y="163"/>
+        <PacDot x="11" y="171"/>
+        <PacDot x="11" y="179"/>
+        <PacDot x="11" y="211"/>
+        <PacDot x="11" y="219"/>
+        <PacDot x="11" y="227"/>
+        <PacDot x="11" y="235"/>
+        <PacDot x="19" y="11"/>
+        <PacDot x="19" y="43"/>
+        <PacDot x="19" y="67"/>
+        <PacDot x="19" y="163"/>
+        <PacDot x="19" y="187"/>
+        <PacDot x="19" y="211"/>
+        <PacDot x="19" y="235"/>
+        <PacDot x="27" y="11"/>
+        <PacDot x="27" y="43"/>
+        <PacDot x="27" y="67"/>
+        <PacDot x="27" y="163"/>
+        <PacDot x="27" y="187"/>
+        <PacDot x="27" y="195"/>
+        <PacDot x="27" y="203"/>
+        <PacDot x="27" y="211"/>
+        <PacDot x="27" y="235"/>
+        <PacDot x="35" y="11"/>
+
+        <PacDot x="35" y="43"/>
+        <PacDot x="35" y="67"/>
+        <PacDot x="35" y="163"/>
+        <PacDot x="35" y="211"/>
+        <PacDot x="35" y="235"/>
+        <PacDot x="43" y="11"/>
+
+        <PacDot x="43" y="43"/>
+        <PacDot x="43" y="67"/>
+        <PacDot x="43" y="163"/>
+        <PacDot x="43" y="211"/>
+        <PacDot x="43" y="235"/>
+        <PacDot x="51" y="11"/>
+        <PacDot x="51" y="19"/>
+        <PacDot x="51" y="27"/>
+        <PacDot x="51" y="35"/>
+        <PacDot x="51" y="43"/>
+        <PacDot x="51" y="51"/>
+        <PacDot x="51" y="59"/>
+        <PacDot x="51" y="67"/>
+        <PacDot x="51" y="75"/>
+        <PacDot x="51" y="75"/>
+        <PacDot x="51" y="83"/>
+        <PacDot x="51" y="91"/>
+        <PacDot x="51" y="99"/>
+        <PacDot x="51" y="107"/>
+        <PacDot x="51" y="115"/>
+        <PacDot x="51" y="123"/>
+        <PacDot x="51" y="131"/>
+        <PacDot x="51" y="139"/>
+        <PacDot x="51" y="147"/>
+        <PacDot x="51" y="155"/>
+        <PacDot x="51" y="163"/>
+        <PacDot x="51" y="171"/>
+        <PacDot x="51" y="179"/>
+        <PacDot x="51" y="187"/>
+        <PacDot x="51" y="195"/>
+        <PacDot x="51" y="203"/>
+        <PacDot x="51" y="211"/>
+        <PacDot x="51" y="235"/>
+        <PacDot x="59" y="11"/>
+        <PacDot x="59" y="43"/>
+        <PacDot x="59" y="163"/>
+        <PacDot x="59" y="187"/>
+        <PacDot x="59" y="235"/>
+        <PacDot x="67" y="11"/>
+        <PacDot x="67" y="43"/>
+        <PacDot x="67" y="163"/>
+        <PacDot x="67" y="187"/>
+        <PacDot x="67" y="235"/>
+        <PacDot x="75" y="11"/>
+        <PacDot x="75" y="43"/>
+        <PacDot x="75" y="51"/>
+        <PacDot x="75" y="59"/>
+        <PacDot x="75" y="67"/>
+        <PacDot x="75" y="163"/>
+        <PacDot x="75" y="187"/>
+        <PacDot x="75" y="195"/>
+        <PacDot x="75" y="203"/>
+        <PacDot x="75" y="211"/>
+        <PacDot x="75" y="235"/>
+        <PacDot x="83" y="11"/>
+        <PacDot x="83" y="43"/>
+        <PacDot x="83" y="67"/>
+        <PacDot x="83" y="163"/>
+        <PacDot x="83" y="187"/>
+        <PacDot x="83" y="211"/>
+        <PacDot x="83" y="235"/>
+        <PacDot x="91" y="11"/>
+        <PacDot x="91" y="43"/>
+        <PacDot x="91" y="67"/>
+        <PacDot x="91" y="163"/>
+        <PacDot x="91" y="187"/>
+        <PacDot x="91" y="211"/>
+        <PacDot x="91" y="235"/>
+        <PacDot x="99" y="11"/>
+        <PacDot x="99" y="19"/>
+        <PacDot x="99" y="27"/>
+        <PacDot x="99" y="35"/>
+        <PacDot x="99" y="43"/>
+        <PacDot x="99" y="67"/>
+        <PacDot x="99" y="163"/>
+        <PacDot x="99" y="171"/>
+        <PacDot x="99" y="179"/>
+        <PacDot x="99" y="187"/>
+        <PacDot x="99" y="211"/>
+        <PacDot x="99" y="219"/>
+        <PacDot x="99" y="227"/>
+        <PacDot x="99" y="235"/>
+        <PacDot x="107" y="43"/>
+        <PacDot x="107" y="235"/>
+        <PacDot x="115" y="43"/>
+        <PacDot x="115" y="235"/>
+        <PacDot x="123" y="11"/>
+        <PacDot x="123" y="19"/>
+        <PacDot x="123" y="27"/>
+        <PacDot x="123" y="35"/>
+        <PacDot x="123" y="43"/>
+        <PacDot x="123" y="67"/>
+        <PacDot x="123" y="163"/>
+        <PacDot x="123" y="171"/>
+        <PacDot x="123" y="179"/>
+        <PacDot x="123" y="187"/>
+        <PacDot x="123" y="211"/>
+        <PacDot x="123" y="219"/>
+        <PacDot x="123" y="227"/>
+        <PacDot x="123" y="235"/>
+        <PacDot x="131" y="11"/>
+        <PacDot x="131" y="43"/>
+        <PacDot x="131" y="67"/>
+        <PacDot x="131" y="163"/>
+        <PacDot x="131" y="187"/>
+        <PacDot x="131" y="211"/>
+        <PacDot x="131" y="235"/>
+        <PacDot x="139" y="11"/>
+        <PacDot x="139" y="43"/>
+        <PacDot x="139" y="67"/>
+        <PacDot x="139" y="163"/>
+        <PacDot x="139" y="187"/>
+        <PacDot x="139" y="211"/>
+        <PacDot x="139" y="235"/>
+        <PacDot x="147" y="11"/>
+        <PacDot x="147" y="43"/>
+        <PacDot x="147" y="51"/>
+        <PacDot x="147" y="59"/>
+        <PacDot x="147" y="67"/>
+        <PacDot x="147" y="163"/>
+        <PacDot x="147" y="187"/>
+        <PacDot x="147" y="195"/>
+        <PacDot x="147" y="203"/>
+        <PacDot x="147" y="211"/>
+        <PacDot x="147" y="235"/>
+        <PacDot x="155" y="11"/>
+        <PacDot x="155" y="43"/>
+        <PacDot x="155" y="163"/>
+        <PacDot x="155" y="187"/>
+        <PacDot x="155" y="235"/>
+        <PacDot x="163" y="11"/>
+        <PacDot x="163" y="43"/>
+        <PacDot x="163" y="163"/>
+        <PacDot x="163" y="187"/>
+        <PacDot x="163" y="235"/>
+        <PacDot x="171" y="11"/>
+        <PacDot x="171" y="19"/>
+        <PacDot x="171" y="27"/>
+        <PacDot x="171" y="35"/>
+        <PacDot x="171" y="43"/>
+        <PacDot x="171" y="51"/>
+        <PacDot x="171" y="59"/>
+        <PacDot x="171" y="67"/>
+        <PacDot x="171" y="75"/>
+        <PacDot x="171" y="75"/>
+        <PacDot x="171" y="83"/>
+        <PacDot x="171" y="91"/>
+        <PacDot x="171" y="99"/>
+        <PacDot x="171" y="107"/>
+        <PacDot x="171" y="115"/>
+        <PacDot x="171" y="123"/>
+        <PacDot x="171" y="131"/>
+        <PacDot x="171" y="139"/>
+        <PacDot x="171" y="147"/>
+        <PacDot x="171" y="155"/>
+        <PacDot x="171" y="163"/>
+        <PacDot x="171" y="171"/>
+        <PacDot x="171" y="179"/>
+        <PacDot x="171" y="187"/>
+        <PacDot x="171" y="195"/>
+        <PacDot x="171" y="203"/>
+        <PacDot x="171" y="211"/>
+        <PacDot x="171" y="235"/>
+        <PacDot x="179" y="11"/>
+     
+        <PacDot x="179" y="43"/>
+        <PacDot x="179" y="67"/>
+        <PacDot x="179" y="163"/>
+        <PacDot x="179" y="211"/>
+        <PacDot x="179" y="235"/>
+        <PacDot x="187" y="11"/>
+ 
+        <PacDot x="187" y="43"/>
+        <PacDot x="187" y="67"/>
+        <PacDot x="187" y="163"/>
+        <PacDot x="187" y="211"/>
+        <PacDot x="187" y="235"/>
+        <PacDot x="195" y="11"/>
+        <PacDot x="195" y="43"/>
+        <PacDot x="195" y="67"/>
+        <PacDot x="195" y="163"/>
+        <PacDot x="195" y="187"/>
+        <PacDot x="195" y="195"/>
+        <PacDot x="195" y="203"/>
+        <PacDot x="195" y="211"/>
+        <PacDot x="195" y="235"/>
+        <PacDot x="203" y="11"/>
+        <PacDot x="203" y="43"/>
+        <PacDot x="203" y="67"/>
+        <PacDot x="203" y="163"/>
+        <PacDot x="203" y="187"/>
+        <PacDot x="203" y="211"/>
+        <PacDot x="203" y="235"/>
+        <PacDot x="211" y="11"/>
+        <PacDot x="211" y="19"/>
+        <PacDot x="211" y="35"/>
+        <PacDot x="211" y="43"/>
+        <PacDot x="211" y="51"/>
+        <PacDot x="211" y="59"/>
+        <PacDot x="211" y="67"/>
+        <PacDot x="211" y="163"/>
+        <PacDot x="211" y="171"/>
+        <PacDot x="211" y="179"/>
+        <PacDot x="211" y="211"/>
+        <PacDot x="211" y="219"/>
+        <PacDot x="211" y="227"/>
+        <PacDot x="211" y="235"/>
+    </PacDots>
+</Level>
