@@ -49,9 +49,6 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 
 	LoadLevelData(&level1);
 	//Load the level
-	//LoadInterSections(level1);
-	//LoadWalls(level1);
-	//LoadPowerUps(level1);
 
 	//Load Pacman / Pacman 2 if needed
 	if (m_GameMode == GameMode::SinglePlayer) LoadPacMan(level1, 1);
@@ -471,6 +468,8 @@ void LevelLoader::LoadPacMan(Scene& scene, int amount)
 
 		scene.Add(pacMan.GetPacMan());
 	}
+
+
 }
 
 void LevelLoader::SaveHighScore()

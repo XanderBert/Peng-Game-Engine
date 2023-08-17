@@ -222,6 +222,8 @@
     <ClCompile Include="EndingScreen.cpp" />
     <ClCompile Include="EndingScreenComponent.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
+    <ClCompile Include="Fruit.cpp" />
+    <ClCompile Include="FruitComponent.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostComponent.cpp" />
     <ClCompile Include="GhostState.cpp" />
@@ -245,6 +247,8 @@
     <ClInclude Include="EndingScreen.h" />
     <ClInclude Include="EndingScreenComponent.h" />
     <ClInclude Include="FpsCounter.h" />
+    <ClInclude Include="Fruit.h" />
+    <ClInclude Include="FruitComponent.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostState.h" />

@@ -6,6 +6,7 @@ enum class GameEvent
 	PacDotEaten,
 	GhostEaten,
 	PacManDied,
+	FruitEaten,
 };
 
 class PowerUpObserver final : public Observer

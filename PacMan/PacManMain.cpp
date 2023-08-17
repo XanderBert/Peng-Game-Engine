@@ -29,6 +29,8 @@ void load()
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(5, "Sounds/siren_1.wav");
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(5, "Sounds/siren_1.wav");
 	ServiceLocator::GetInstance().AudioService.GetService().AddSound(6, "Sounds/death_1.wav");
+	ServiceLocator::GetInstance().AudioService.GetService().AddSound(7, "Sounds/Background.mp3");
+
 
 	LevelLoader::GetInstance().LoadStartScene();
 }

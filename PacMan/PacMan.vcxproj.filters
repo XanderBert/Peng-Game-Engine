@@ -98,6 +98,15 @@
     <Filter Include="Components\ObjectFilters\Screens\EndingScreen">
       <UniqueIdentifier>{e42c679e-9ae0-4e85-8645-76d5bc31dc1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\FruitSpawner">
+      <UniqueIdentifier>{6fb3b7ec-5819-47f1-b9a9-f5743e350383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\FruitSpawner\Fuit">
+      <UniqueIdentifier>{13795473-fb44-43f9-8902-42c95ca3dcad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ObjectFilters\Fruit">
+      <UniqueIdentifier>{3a5526ca-cc4d-4b93-a176-a8a7284d87cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
@@ -162,6 +171,12 @@
     </ClCompile>
     <ClCompile Include="EndingScreenComponent.cpp">
       <Filter>Components\ObjectFilters\Screens\EndingScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="Fruit.cpp">
+      <Filter>GameObjects\FruitSpawner\Fuit</Filter>
+    </ClCompile>
+    <ClCompile Include="FruitComponent.cpp">
+      <Filter>Components\ObjectFilters\Fruit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +272,12 @@
     </ClInclude>
     <ClInclude Include="SkipLevelCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Fruit.h">
+      <Filter>GameObjects\FruitSpawner\Fuit</Filter>
+    </ClInclude>
+    <ClInclude Include="FruitComponent.h">
+      <Filter>Components\ObjectFilters\Fruit</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

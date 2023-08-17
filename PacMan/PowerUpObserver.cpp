@@ -1,5 +1,6 @@
 #include "PowerUpObserver.h"
 #include "DirectionComponent.h"
+#include "Fruit.h"
 #include "GameObjectStorage.h"
 #include "GhostState.h"
 #include "GhostComponent.h"
@@ -61,7 +62,9 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 
 		if (IsLevelCompleted())
 		{
+
 			LoadNextLevel();
+
 		}
 	}
 
@@ -126,6 +129,11 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 		//Teleport to start
 		gameObject->GetComponent<Transform>()->SetWorldPosition(gameObject->GetComponent<PacManComponent>()->GetSpawnPos());
 	}
+
+	else if (event == GameEvent::FruitEaten)
+	{
+		gameObject->GetComponent<ScoreComponent>()->IncreaseScore(200);
+	}
 }
 
 PowerUpObserver::~PowerUpObserver()
@@ -145,16 +153,14 @@ bool PowerUpObserver::IsLevelCompleted()
 		if (object->GetComponent<PacDotComponent>() != nullptr || object->GetComponent<PowerUpComponent>() != nullptr)
 		{
 			++amountOfDotsLeft;
-
-			if (amountOfDotsLeft > 1)
-			{
-				return false;
-			}
 		}
 	}
 
+	//When there are 15 dots left, spawn a fruit
+	if (amountOfDotsLeft == 150) SceneManager::GetInstance().GetActiveScene()->Add(Fruit().GetGameObject());
+	else if (amountOfDotsLeft <= 1) return true;
 
-	return true;
+	return false;
 }
 
 void PowerUpObserver::LoadNextLevel()
