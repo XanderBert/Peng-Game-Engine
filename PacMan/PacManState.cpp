@@ -8,7 +8,7 @@
 #include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
-#include "PowerUpObserver.h"
+#include "PacManEventObserver.h"
 
 //MOVE
 //
@@ -49,7 +49,7 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 
 	if (other->GetComponent<PacDotComponent>())
 	{
-		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacDotEaten, m_pActor);
+		m_pActor->GetComponent<PacManComponent>()->Notify(GameEvent::PacDotEaten, m_pActor);
 		other->MarkForDeletion();
 	}
 
@@ -61,7 +61,7 @@ void PacManMoveState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 	if (other->GetComponent<PowerUpComponent>() && !isSenderTrigger && !isTrigger)
 	{
 		//Alert All Ghost to change state
-		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PowerUpEaten, m_pActor);
+		m_pActor->GetComponent<PacManComponent>()->Notify(GameEvent::PowerUpEaten, m_pActor);
 		other->MarkForDeletion();
 	}
 }
@@ -145,7 +145,7 @@ void PacManFrightenedState::OnCollision(GameObject* other, bool /*isTrigger*/, b
 {
 	if (other->GetComponent<PacDotComponent>())
 	{
-		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacDotEaten, m_pActor);
+		m_pActor->GetComponent<PacManComponent>()->Notify(GameEvent::PacDotEaten, m_pActor);
 		other->MarkForDeletion();
 	}
 
@@ -160,7 +160,7 @@ void PacManFrightenedState::OnCollisionEnter(GameObject* other, bool isTrigger, 
 	//Die because the other pacman ate you
 	if (other->GetComponent<PacManComponent>() && other != m_pActor && !isSenderTrigger && !isTrigger)
 	{
-		m_pActor->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, m_pActor);
+		m_pActor->GetComponent<PacManComponent>()->Notify(GameEvent::PacManDied, m_pActor);
 	}
 }
 

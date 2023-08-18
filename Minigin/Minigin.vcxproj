@@ -378,6 +378,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="TimeM.h" />

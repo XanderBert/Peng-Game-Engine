@@ -231,6 +231,9 @@
     <ClInclude Include="ImGuiComponent.h">
       <Filter>Resource Files\Components\ImGuiComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Source Files\Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Minigin.cpp">

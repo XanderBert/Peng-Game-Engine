@@ -4,13 +4,10 @@
 
 void PacManComponent::AttachObserver(Observer* observer)
 {
-	m_Observers.emplace_back(observer);
+	m_pSubject->AttachObserver(observer);
 }
 
-void PacManComponent::NotifyObservers(GameEvent event, GameObject* object)
+void PacManComponent::Notify(GameEvent event, GameObject* object)
 {
-	for (const auto& observer : m_Observers)
-	{
-		observer->Notify(object, event);
-	}
+	m_pSubject->Notify(event, object);
 }

@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include "Component.h"
-#include "PowerUpObserver.h"
+#include "Subject.h"
+#include "PacManEventObserver.h"
 #include "glm/vec2.hpp"
 
 class PacManComponent final : public Component
 {
 public:
-	PacManComponent(GameObject* pParent) : Component(pParent)
+	PacManComponent(GameObject* pParent) : Component(pParent), m_pSubject(std::make_unique<Subject>())
 	{}
 	~PacManComponent() override = default;
 
@@ -21,12 +22,12 @@ public:
 	void Render() override {}
 
 	void AttachObserver(Observer* observer);
-	void NotifyObservers(GameEvent event, GameObject* object);
+	void Notify(GameEvent event, GameObject* object);
 
 	glm::vec2 GetSpawnPos() const { return m_SpawnPos; }
 
 private:
-	std::vector<std::unique_ptr<Observer>> m_Observers;
-	glm::vec2 m_SpawnPos{ 104, 132 };
 
+	glm::vec2 m_SpawnPos{ 104, 132 };
+	std::unique_ptr<Subject> m_pSubject;
 };

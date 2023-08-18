@@ -73,7 +73,7 @@ void ChaseState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSend
 	//Colliding with pac man
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		other->GetComponent<PacManComponent>()->Notify(GameEvent::PacManDied, other);
 		return;
 	}
 
@@ -166,7 +166,7 @@ void ScatterState::OnCollisionEnter(GameObject* other, bool isTrigger, bool isSe
 	//Colliding with pac man
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		other->GetComponent<PacManComponent>()->Notify(GameEvent::PacManDied, other);
 		return;
 	}
 
@@ -236,7 +236,7 @@ void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSend
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
 
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::GhostEaten, m_pActor);
+		other->GetComponent<PacManComponent>()->Notify(GameEvent::GhostEaten, m_pActor);
 
 		return;
 	}
@@ -361,7 +361,7 @@ void CorneringState::OnCollisionEnter(GameObject* other, bool isTrigger, bool is
 	//Colliding with pac man
 	if (other->GetComponent<PacManComponent>() && !isSenderTrigger && !isTrigger)
 	{
-		other->GetComponent<PacManComponent>()->NotifyObservers(GameEvent::PacManDied, other);
+		other->GetComponent<PacManComponent>()->Notify(GameEvent::PacManDied, other);
 		return;
 	}
 

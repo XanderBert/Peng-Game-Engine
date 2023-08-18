@@ -151,7 +151,7 @@
     <ClCompile Include="PacManComponent.cpp">
       <Filter>Components\ObjectFilters\PacMan</Filter>
     </ClCompile>
-    <ClCompile Include="PowerUpObserver.cpp">
+    <ClCompile Include="PacManEventObserver.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="StartScreen.cpp">
@@ -222,7 +222,7 @@
     <ClInclude Include="PowerUp.h">
       <Filter>GameObjects\PowerUp</Filter>
     </ClInclude>
-    <ClInclude Include="PowerUpObserver.h">
+    <ClInclude Include="PacManEventObserver.h">
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="Hud.h">

@@ -14,5 +14,7 @@ public:
 	Observer& operator=(const Observer& other) = delete;
 	Observer& operator=(Observer&& other)noexcept = delete;
 
+
+	//the game Object that sended the event
 	virtual void Notify(GameObject* gameObject, GameEvent event) = 0;
 };

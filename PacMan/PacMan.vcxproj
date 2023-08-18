@@ -237,7 +237,7 @@
     <ClCompile Include="PacManMain.cpp" />
     <ClCompile Include="PacManState.cpp" />
     <ClCompile Include="PowerUp.cpp" />
-    <ClCompile Include="PowerUpObserver.cpp" />
+    <ClCompile Include="PacManEventObserver.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="StartScreenComponent.cpp" />
     <ClCompile Include="StateComponent.cpp" />
@@ -267,7 +267,7 @@
     <ClInclude Include="PacManState.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpComponent.h" />
-    <ClInclude Include="PowerUpObserver.h" />
+    <ClInclude Include="PacManEventObserver.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="SkipLevelCommand.h" />
     <ClInclude Include="StartScreen.h" />

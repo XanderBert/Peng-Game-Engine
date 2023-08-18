@@ -1,4 +1,4 @@
-#include "PowerUpObserver.h"
+#include "PacManEventObserver.h"
 #include "DirectionComponent.h"
 #include "Fruit.h"
 #include "GameObjectStorage.h"
@@ -18,7 +18,7 @@
 #include "Transform.h"
 
 
-void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
+void PacManEventObserver::Notify(GameObject* gameObject, GameEvent event)
 {
 	if (event == GameEvent::PowerUpEaten)
 	{
@@ -103,7 +103,6 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 		}
 
 
-		//added score = 200 * 2^(ghosts eaten)
 		const auto score = static_cast<int>(200 * std::pow(2, (ghostsEaten - 1)));
 
 		//Fetch Pacman of the ghost storage, Update its score of that pacman
@@ -136,11 +135,11 @@ void PowerUpObserver::Notify(GameObject* gameObject, GameEvent event)
 	}
 }
 
-PowerUpObserver::~PowerUpObserver()
+PacManEventObserver::~PacManEventObserver()
 {
 }
 
-bool PowerUpObserver::IsLevelCompleted()
+bool PacManEventObserver::IsLevelCompleted()
 {
 	const auto objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
 	auto amountOfDotsLeft = 0;
@@ -163,7 +162,7 @@ bool PowerUpObserver::IsLevelCompleted()
 	return false;
 }
 
-void PowerUpObserver::LoadNextLevel()
+void PacManEventObserver::LoadNextLevel()
 {
 	auto id = LevelLoader::GetInstance().GetLevelId();
 	LevelLoader::GetInstance().LoadLevel(++id);

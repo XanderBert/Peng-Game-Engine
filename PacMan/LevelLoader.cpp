@@ -11,7 +11,7 @@
 #include "PacMan.h"
 #include "PacManComponent.h"
 #include "PowerUp.h"
-#include "PowerUpObserver.h"
+#include "PacManEventObserver.h"
 #include "rapidxml_print.hpp"
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
@@ -449,9 +449,12 @@ void LevelLoader::LoadPacDot(Scene& scene)
 
 void LevelLoader::LoadPacMan(Scene& scene, int amount)
 {
+	const auto observer = new PacManEventObserver();
+
+
+
 	for (int i = 0; i < amount; ++i)
 	{
-		const auto observer = new PowerUpObserver();
 		const auto pacMan = PacMan();
 		pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
 
@@ -468,8 +471,6 @@ void LevelLoader::LoadPacMan(Scene& scene, int amount)
 
 		scene.Add(pacMan.GetPacMan());
 	}
-
-
 }
 
 void LevelLoader::SaveHighScore()
