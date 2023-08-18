@@ -1,5 +1,4 @@
 #include "LevelLoader.h"
-
 #include "EndingScreen.h"
 #include "FpsCounter.h"
 #include "Ghost.h"
@@ -15,7 +14,6 @@
 #include "rapidxml_print.hpp"
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
-
 #include "SkipLevelCommand.h"
 #include "StartScreen.h"
 #include "VelocityComponent.h"
@@ -26,7 +24,6 @@
 
 Scene* LevelLoader::LoadLevel(const int levelId, GameMode gameMode)
 {
-
 	m_GameMode = gameMode;
 	return LoadLevel(levelId);
 }
@@ -36,7 +33,8 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 	m_LevelId = levelId;
 
 	//Show Ending Screen if needed
-	if (levelId == m_AmountOfLevels + 1) return LoadEndingScreen();
+	if (levelId == m_AmountOfLevels + 1)
+		return LoadEndingScreen();
 
 	//Delete the old scene
 	SceneManager::GetInstance().GetActiveScene()->MarkForDeletion();
@@ -47,14 +45,12 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 
 
 
-	LoadLevelData(&level1);
 	//Load the level
+	LoadLevelData(level1);
 
 	//Load Pacman / Pacman 2 if needed
 	if (m_GameMode == GameMode::SinglePlayer) LoadPacMan(level1, 1);
 	else LoadPacMan(level1, 2);
-
-	//LoadPacDot(level1);
 
 	//Don't Load ghosts if in vs mode
 	if (m_GameMode != GameMode::Vs)
@@ -68,7 +64,6 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 
 	//Add the fps counter
 	level1.Add(FpsCounter().GetGameObject());
-
 
 	return &level1;
 }
@@ -122,15 +117,6 @@ Scene* LevelLoader::LoadEndingScreen()
 	return &end;
 }
 
-
-void LevelLoader::LoadPowerUps(Scene& scene)
-{
-	scene.Add(PowerUp("PacBoost.png", { 8,24 }).GetGameObject());
-	scene.Add(PowerUp("PacBoost.png", { 8,184 }).GetGameObject());
-	scene.Add(PowerUp("PacBoost.png", { 208,24 }).GetGameObject());
-	scene.Add(PowerUp("PacBoost.png", { 208,184 }).GetGameObject());
-}
-
 void LevelLoader::LoadGhosts(Scene& scene)
 {
 	m_pGhosts.clear();
@@ -140,7 +126,7 @@ void LevelLoader::LoadGhosts(Scene& scene)
 		m_pGhosts.push_back(Ghost().GetGameObject());
 
 		//Set Velocity
-		m_pGhosts[i]->GetComponent<VelocityComponent>()->SetVelocity(40.f + m_LevelId * 5);
+		m_pGhosts[i]->GetComponent<VelocityComponent>()->SetVelocity(45.f + static_cast<float>(m_LevelId) * 5.f);
 		scene.Add(m_pGhosts[i]);
 	}
 }
@@ -148,303 +134,6 @@ void LevelLoader::LoadGhosts(Scene& scene)
 void LevelLoader::LoadHud(Scene& scene)
 {
 	scene.Add(Hud().GetGameObject());
-}
-
-void LevelLoader::LoadPacDot(Scene& scene)
-{
-#ifdef _DEBUG
-	//Row_01
-	scene.Add(PacDot(11, 11).GetGameObject());
-	scene.Add(PacDot(11, 19).GetGameObject());
-	scene.Add(PacDot(11, 35).GetGameObject());
-	scene.Add(PacDot(11, 43).GetGameObject());
-	scene.Add(PacDot(11, 51).GetGameObject());
-	scene.Add(PacDot(11, 59).GetGameObject());
-	scene.Add(PacDot(11, 67).GetGameObject());
-	scene.Add(PacDot(11, 163).GetGameObject());
-	scene.Add(PacDot(11, 171).GetGameObject());
-	scene.Add(PacDot(11, 179).GetGameObject());
-	scene.Add(PacDot(11, 211).GetGameObject());
-	scene.Add(PacDot(11, 219).GetGameObject());
-	scene.Add(PacDot(11, 227).GetGameObject());
-	scene.Add(PacDot(11, 235).GetGameObject());
-#else
-	//Row_01
-	scene.Add(PacDot(11, 11).GetGameObject());
-	scene.Add(PacDot(11, 19).GetGameObject());
-	scene.Add(PacDot(11, 35).GetGameObject());
-	scene.Add(PacDot(11, 43).GetGameObject());
-	scene.Add(PacDot(11, 51).GetGameObject());
-	scene.Add(PacDot(11, 59).GetGameObject());
-	scene.Add(PacDot(11, 67).GetGameObject());
-	scene.Add(PacDot(11, 163).GetGameObject());
-	scene.Add(PacDot(11, 171).GetGameObject());
-	scene.Add(PacDot(11, 179).GetGameObject());
-	scene.Add(PacDot(11, 211).GetGameObject());
-	scene.Add(PacDot(11, 219).GetGameObject());
-	scene.Add(PacDot(11, 227).GetGameObject());
-	scene.Add(PacDot(11, 235).GetGameObject());
-	//Row_02
-	scene.Add(PacDot(19, 11).GetGameObject());
-	scene.Add(PacDot(19, 43).GetGameObject());
-	scene.Add(PacDot(19, 67).GetGameObject());
-	scene.Add(PacDot(19, 163).GetGameObject());
-	scene.Add(PacDot(19, 187).GetGameObject());
-	scene.Add(PacDot(19, 211).GetGameObject());
-	scene.Add(PacDot(19, 235).GetGameObject());
-	//Row_03
-	scene.Add(PacDot(27, 11).GetGameObject());
-	scene.Add(PacDot(27, 43).GetGameObject());
-	scene.Add(PacDot(27, 67).GetGameObject());
-	scene.Add(PacDot(27, 163).GetGameObject());
-	scene.Add(PacDot(27, 187).GetGameObject());
-	scene.Add(PacDot(27, 195).GetGameObject());
-	scene.Add(PacDot(27, 203).GetGameObject());
-	scene.Add(PacDot(27, 211).GetGameObject());
-	scene.Add(PacDot(27, 235).GetGameObject());
-	//Row_04
-	scene.Add(PacDot(35, 11).GetGameObject());
-	scene.Add(PacDot(35, 35).GetGameObject());
-	scene.Add(PacDot(35, 43).GetGameObject());
-	scene.Add(PacDot(35, 67).GetGameObject());
-	scene.Add(PacDot(35, 163).GetGameObject());
-	scene.Add(PacDot(35, 211).GetGameObject());
-	scene.Add(PacDot(35, 235).GetGameObject());
-	//Row_05
-	scene.Add(PacDot(43, 11).GetGameObject());
-	scene.Add(PacDot(43, 35).GetGameObject());
-	scene.Add(PacDot(43, 43).GetGameObject());
-	scene.Add(PacDot(43, 67).GetGameObject());
-	scene.Add(PacDot(43, 163).GetGameObject());
-	scene.Add(PacDot(43, 211).GetGameObject());
-	scene.Add(PacDot(43, 235).GetGameObject());
-	//Row_06
-	scene.Add(PacDot(51, 11).GetGameObject());
-	scene.Add(PacDot(51, 19).GetGameObject());
-	scene.Add(PacDot(51, 27).GetGameObject());
-	scene.Add(PacDot(51, 35).GetGameObject());
-	scene.Add(PacDot(51, 43).GetGameObject());
-	scene.Add(PacDot(51, 51).GetGameObject());
-	scene.Add(PacDot(51, 59).GetGameObject());
-	scene.Add(PacDot(51, 67).GetGameObject());
-	scene.Add(PacDot(51, 75).GetGameObject());
-	scene.Add(PacDot(51, 75).GetGameObject());
-	scene.Add(PacDot(51, 83).GetGameObject());
-	scene.Add(PacDot(51, 91).GetGameObject());
-	scene.Add(PacDot(51, 99).GetGameObject());
-	scene.Add(PacDot(51, 107).GetGameObject());
-	scene.Add(PacDot(51, 115).GetGameObject());
-	scene.Add(PacDot(51, 123).GetGameObject());
-	scene.Add(PacDot(51, 131).GetGameObject());
-	scene.Add(PacDot(51, 139).GetGameObject());
-	scene.Add(PacDot(51, 147).GetGameObject());
-	scene.Add(PacDot(51, 155).GetGameObject());
-	scene.Add(PacDot(51, 163).GetGameObject());
-	scene.Add(PacDot(51, 171).GetGameObject());
-	scene.Add(PacDot(51, 179).GetGameObject());
-	scene.Add(PacDot(51, 187).GetGameObject());
-	scene.Add(PacDot(51, 195).GetGameObject());
-	scene.Add(PacDot(51, 203).GetGameObject());
-	scene.Add(PacDot(51, 211).GetGameObject());
-	scene.Add(PacDot(51, 235).GetGameObject());
-	//Row_07
-	scene.Add(PacDot(59, 11).GetGameObject());
-	scene.Add(PacDot(59, 43).GetGameObject());
-	scene.Add(PacDot(59, 163).GetGameObject());
-	scene.Add(PacDot(59, 187).GetGameObject());
-	scene.Add(PacDot(59, 235).GetGameObject());
-	//Row_08
-	scene.Add(PacDot(67, 11).GetGameObject());
-	scene.Add(PacDot(67, 43).GetGameObject());
-	scene.Add(PacDot(67, 163).GetGameObject());
-	scene.Add(PacDot(67, 187).GetGameObject());
-	scene.Add(PacDot(67, 235).GetGameObject());
-	//Row_09
-	scene.Add(PacDot(75, 11).GetGameObject());
-	scene.Add(PacDot(75, 43).GetGameObject());
-	scene.Add(PacDot(75, 51).GetGameObject());
-	scene.Add(PacDot(75, 59).GetGameObject());
-	scene.Add(PacDot(75, 67).GetGameObject());
-	scene.Add(PacDot(75, 163).GetGameObject());
-	scene.Add(PacDot(75, 187).GetGameObject());
-	scene.Add(PacDot(75, 195).GetGameObject());
-	scene.Add(PacDot(75, 203).GetGameObject());
-	scene.Add(PacDot(75, 211).GetGameObject());
-	scene.Add(PacDot(75, 235).GetGameObject());
-	//Row_10
-	scene.Add(PacDot(83, 11).GetGameObject());
-	scene.Add(PacDot(83, 43).GetGameObject());
-	scene.Add(PacDot(83, 67).GetGameObject());
-	scene.Add(PacDot(83, 163).GetGameObject());
-	scene.Add(PacDot(83, 187).GetGameObject());
-	scene.Add(PacDot(83, 211).GetGameObject());
-	scene.Add(PacDot(83, 235).GetGameObject());
-	//Row_11
-	scene.Add(PacDot(91, 11).GetGameObject());
-	scene.Add(PacDot(91, 43).GetGameObject());
-	scene.Add(PacDot(91, 67).GetGameObject());
-	scene.Add(PacDot(91, 163).GetGameObject());
-	scene.Add(PacDot(91, 187).GetGameObject());
-	scene.Add(PacDot(91, 211).GetGameObject());
-	scene.Add(PacDot(91, 235).GetGameObject());
-	//Row_12
-	scene.Add(PacDot(99, 11).GetGameObject());
-	scene.Add(PacDot(99, 19).GetGameObject());
-	scene.Add(PacDot(99, 27).GetGameObject());
-	scene.Add(PacDot(99, 35).GetGameObject());
-	scene.Add(PacDot(99, 43).GetGameObject());
-	scene.Add(PacDot(99, 67).GetGameObject());
-	scene.Add(PacDot(99, 163).GetGameObject());
-	scene.Add(PacDot(99, 171).GetGameObject());
-	scene.Add(PacDot(99, 179).GetGameObject());
-	scene.Add(PacDot(99, 187).GetGameObject());;
-	scene.Add(PacDot(99, 211).GetGameObject());
-	scene.Add(PacDot(99, 219).GetGameObject());
-	scene.Add(PacDot(99, 227).GetGameObject());
-	scene.Add(PacDot(99, 235).GetGameObject());
-	//Row_13
-	scene.Add(PacDot(107, 43).GetGameObject());
-	scene.Add(PacDot(107, 235).GetGameObject());
-	//Row_14
-	scene.Add(PacDot(115, 43).GetGameObject());
-	scene.Add(PacDot(115, 235).GetGameObject());
-	//Row_15
-	scene.Add(PacDot(123, 11).GetGameObject());
-	scene.Add(PacDot(123, 19).GetGameObject());
-	scene.Add(PacDot(123, 27).GetGameObject());
-	scene.Add(PacDot(123, 35).GetGameObject());
-	scene.Add(PacDot(123, 43).GetGameObject());
-	scene.Add(PacDot(123, 67).GetGameObject());
-	scene.Add(PacDot(123, 163).GetGameObject());
-	scene.Add(PacDot(123, 171).GetGameObject());
-	scene.Add(PacDot(123, 179).GetGameObject());
-	scene.Add(PacDot(123, 187).GetGameObject());;
-	scene.Add(PacDot(123, 211).GetGameObject());
-	scene.Add(PacDot(123, 219).GetGameObject());
-	scene.Add(PacDot(123, 227).GetGameObject());
-	scene.Add(PacDot(123, 235).GetGameObject());
-	//Row_16
-	scene.Add(PacDot(131, 11).GetGameObject());
-	scene.Add(PacDot(131, 43).GetGameObject());
-	scene.Add(PacDot(131, 67).GetGameObject());
-	scene.Add(PacDot(131, 163).GetGameObject());
-	scene.Add(PacDot(131, 187).GetGameObject());
-	scene.Add(PacDot(131, 211).GetGameObject());
-	scene.Add(PacDot(131, 235).GetGameObject());
-	//Row_17
-	scene.Add(PacDot(139, 11).GetGameObject());
-	scene.Add(PacDot(139, 43).GetGameObject());
-	scene.Add(PacDot(139, 67).GetGameObject());
-	scene.Add(PacDot(139, 163).GetGameObject());
-	scene.Add(PacDot(139, 187).GetGameObject());
-	scene.Add(PacDot(139, 211).GetGameObject());
-	scene.Add(PacDot(139, 235).GetGameObject());
-	//Row_18
-	scene.Add(PacDot(147, 11).GetGameObject());
-	scene.Add(PacDot(147, 43).GetGameObject());
-	scene.Add(PacDot(147, 51).GetGameObject());
-	scene.Add(PacDot(147, 59).GetGameObject());
-	scene.Add(PacDot(147, 67).GetGameObject());
-	scene.Add(PacDot(147, 163).GetGameObject());
-	scene.Add(PacDot(147, 187).GetGameObject());
-	scene.Add(PacDot(147, 195).GetGameObject());
-	scene.Add(PacDot(147, 203).GetGameObject());
-	scene.Add(PacDot(147, 211).GetGameObject());
-	scene.Add(PacDot(147, 235).GetGameObject());
-	//Row_19
-	scene.Add(PacDot(155, 11).GetGameObject());
-	scene.Add(PacDot(155, 43).GetGameObject());
-	scene.Add(PacDot(155, 163).GetGameObject());
-	scene.Add(PacDot(155, 187).GetGameObject());
-	scene.Add(PacDot(155, 235).GetGameObject());
-	//Row_20
-	scene.Add(PacDot(163, 11).GetGameObject());
-	scene.Add(PacDot(163, 43).GetGameObject());
-	scene.Add(PacDot(163, 163).GetGameObject());
-	scene.Add(PacDot(163, 187).GetGameObject());
-	scene.Add(PacDot(163, 235).GetGameObject());
-	//Row_21
-	scene.Add(PacDot(171, 11).GetGameObject());
-	scene.Add(PacDot(171, 19).GetGameObject());
-	scene.Add(PacDot(171, 27).GetGameObject());
-	scene.Add(PacDot(171, 35).GetGameObject());
-	scene.Add(PacDot(171, 43).GetGameObject());
-	scene.Add(PacDot(171, 51).GetGameObject());
-	scene.Add(PacDot(171, 59).GetGameObject());
-	scene.Add(PacDot(171, 67).GetGameObject());
-	scene.Add(PacDot(171, 75).GetGameObject());
-	scene.Add(PacDot(171, 75).GetGameObject());
-	scene.Add(PacDot(171, 83).GetGameObject());
-	scene.Add(PacDot(171, 91).GetGameObject());
-	scene.Add(PacDot(171, 99).GetGameObject());
-	scene.Add(PacDot(171, 107).GetGameObject());
-	scene.Add(PacDot(171, 115).GetGameObject());
-	scene.Add(PacDot(171, 123).GetGameObject());
-	scene.Add(PacDot(171, 131).GetGameObject());
-	scene.Add(PacDot(171, 139).GetGameObject());
-	scene.Add(PacDot(171, 147).GetGameObject());
-	scene.Add(PacDot(171, 155).GetGameObject());
-	scene.Add(PacDot(171, 163).GetGameObject());
-	scene.Add(PacDot(171, 171).GetGameObject());
-	scene.Add(PacDot(171, 179).GetGameObject());
-	scene.Add(PacDot(171, 187).GetGameObject());
-	scene.Add(PacDot(171, 195).GetGameObject());
-	scene.Add(PacDot(171, 203).GetGameObject());
-	scene.Add(PacDot(171, 211).GetGameObject());
-	scene.Add(PacDot(171, 235).GetGameObject());
-	//Row_2
-	scene.Add(PacDot(179, 11).GetGameObject());
-	scene.Add(PacDot(179, 35).GetGameObject());
-	scene.Add(PacDot(179, 43).GetGameObject());
-	scene.Add(PacDot(179, 67).GetGameObject());
-	scene.Add(PacDot(179, 163).GetGameObject());
-	scene.Add(PacDot(179, 211).GetGameObject());
-	scene.Add(PacDot(179, 235).GetGameObject());
-	//Row_23
-	scene.Add(PacDot(187, 11).GetGameObject());
-	scene.Add(PacDot(187, 35).GetGameObject());
-	scene.Add(PacDot(187, 43).GetGameObject());
-	scene.Add(PacDot(187, 67).GetGameObject());
-	scene.Add(PacDot(187, 163).GetGameObject());
-	scene.Add(PacDot(187, 211).GetGameObject());
-	scene.Add(PacDot(187, 235).GetGameObject());
-	//Row_24
-	scene.Add(PacDot(195, 11).GetGameObject());
-	scene.Add(PacDot(195, 43).GetGameObject());
-	scene.Add(PacDot(195, 67).GetGameObject());
-	scene.Add(PacDot(195, 163).GetGameObject());
-	scene.Add(PacDot(195, 187).GetGameObject());
-	scene.Add(PacDot(195, 195).GetGameObject());
-	scene.Add(PacDot(195, 203).GetGameObject());
-	scene.Add(PacDot(195, 211).GetGameObject());
-	scene.Add(PacDot(195, 235).GetGameObject());
-	//Row_25
-	scene.Add(PacDot(203, 11).GetGameObject());
-	scene.Add(PacDot(203, 43).GetGameObject());
-	scene.Add(PacDot(203, 67).GetGameObject());
-	scene.Add(PacDot(203, 163).GetGameObject());
-	scene.Add(PacDot(203, 187).GetGameObject());
-	scene.Add(PacDot(203, 211).GetGameObject());
-	scene.Add(PacDot(203, 235).GetGameObject());
-	//Row_26
-	scene.Add(PacDot(211, 11).GetGameObject());
-	scene.Add(PacDot(211, 19).GetGameObject());
-	scene.Add(PacDot(211, 35).GetGameObject());
-	scene.Add(PacDot(211, 43).GetGameObject());
-	scene.Add(PacDot(211, 51).GetGameObject());
-	scene.Add(PacDot(211, 59).GetGameObject());
-	scene.Add(PacDot(211, 67).GetGameObject());
-	scene.Add(PacDot(211, 163).GetGameObject());
-	scene.Add(PacDot(211, 171).GetGameObject());
-	scene.Add(PacDot(211, 179).GetGameObject());
-	scene.Add(PacDot(211, 211).GetGameObject());
-	scene.Add(PacDot(211, 219).GetGameObject());
-	scene.Add(PacDot(211, 227).GetGameObject());
-	scene.Add(PacDot(211, 235).GetGameObject());
-#endif // !_Debug
-
-
-
 }
 
 void LevelLoader::LoadPacMan(Scene& scene, int amount)
@@ -475,9 +164,8 @@ void LevelLoader::LoadPacMan(Scene& scene, int amount)
 
 void LevelLoader::SaveHighScore()
 {
-	//Load the potential new high scores
-	//Get the scenemanager
-	SceneManager& sceneManager = SceneManager::GetInstance();
+	//Get Current Scores
+	const SceneManager& sceneManager = SceneManager::GetInstance();
 	for (const auto object : sceneManager.GetActiveScene()->GetObjects())
 	{
 		if (const auto hud = object->GetComponent<HudComponent>())
@@ -488,29 +176,7 @@ void LevelLoader::SaveHighScore()
 
 
 	// Load existing high scores from the XML file if it exists
-	std::vector<int> existingHighScores;
-
-
-	if (std::ifstream inFile("highscores.xml"); inFile.is_open())
-	{
-		std::vector<char> buffer((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
-		buffer.push_back('\0');
-
-		rapidxml::xml_document<> doc;
-		doc.parse<0>(&buffer[0]);
-
-		rapidxml::xml_node<>* root = doc.first_node("highscores");
-		if (root)
-		{
-			for (rapidxml::xml_node<>* scoreNode = root->first_node("score"); scoreNode; scoreNode = scoreNode->next_sibling())
-			{
-				int score = std::stoi(scoreNode->value());
-				existingHighScores.push_back(score);
-			}
-		}
-
-		doc.clear();
-	}
+	const auto existingHighScores = LoadExistingHighScores();
 
 	// Combine existing high scores and new high scores
 	m_AllHighScores.insert(m_AllHighScores.end(), existingHighScores.begin(), existingHighScores.end());
@@ -518,6 +184,8 @@ void LevelLoader::SaveHighScore()
 
 	// Sort the combined high scores in descending order
 	std::ranges::sort(m_AllHighScores, std::greater<int>());
+
+
 
 	// Create an XML document
 	rapidxml::xml_document<> doc;
@@ -546,23 +214,49 @@ void LevelLoader::SaveHighScore()
 
 	// Save the XML to a file
 	std::ofstream outFile("highscores.xml");
+
+	assert(outFile.is_open() && "Error: Unable to open highscores.xml for writing.");
 	if (outFile.is_open())
 	{
 		outFile << doc;
 		outFile.close();
 	}
-	else
-	{
-		// Print an error message if the file couldn't be opened
-		std::cout << "Error: Unable to open highscores.xml for writing." << std::endl;
-	}
+
 
 	// Free the allocated memory
 	doc.clear();
-
 }
 
-void LevelLoader::LoadLevelData(Scene* scene)
+std::vector<int> LevelLoader::LoadExistingHighScores()
+{
+	std::vector<int> existingHighScores{};
+
+	if (std::ifstream inFile("highscores.xml"); inFile.is_open())
+	{
+		std::vector<char> buffer((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+		buffer.push_back('\0');
+
+		rapidxml::xml_document<> doc;
+		doc.parse<0>(&buffer[0]);
+
+		rapidxml::xml_node<>* root = doc.first_node("highscores");
+		if (root)
+		{
+
+			for (rapidxml::xml_node<>* scoreNode = root->first_node("score"); scoreNode; scoreNode = scoreNode->next_sibling())
+			{
+				int score = std::stoi(scoreNode->value());
+				existingHighScores.push_back(score);
+			}
+		}
+
+		doc.clear();
+	}
+
+	return existingHighScores;
+}
+
+void LevelLoader::LoadLevelData(Scene& scene)
 {
 	// Read the xml file into a vector
 	std::ifstream theFile("name.xml");
@@ -577,33 +271,22 @@ void LevelLoader::LoadLevelData(Scene* scene)
 	rapidxml::xml_document<> m_LevelDocument;
 	m_LevelDocument.parse<0>(&m_XmlBuffer[0]);
 
-
 	// Access the root node
 	const rapidxml::xml_node<>* rootNode = m_LevelDocument.first_node("Level");
-	if (!rootNode)
-	{
-		// Handle the case where the root node is not found
-		// throw an exception
-		return;
-	}
+	assert(rootNode && "Root Node not found");
 
+	LoadWallsFromFile(scene, rootNode);
+	LoadIntersectionsFromFile(scene, rootNode);
+	LoadPowerPalletsFromFile(scene, rootNode);
+	LoadPacDotsFromFile(scene, rootNode);
 
+}
 
-
-	//
-	//----------------------
-	//----------------------
-	//
-
+void LevelLoader::LoadWallsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode)
+{
 	// Access the Walls
 	const rapidxml::xml_node<>* WallsNode = rootNode->first_node("Walls");
-	if (!WallsNode)
-	{
-		// Handle the case where the root node is not found
-		// throw an exception
-		assert(false && "Walls not found");
-		return;
-	}
+	assert(WallsNode && "Walls Node not found");
 
 	//Load The walls
 	WallManager wallManager{};
@@ -614,27 +297,14 @@ void LevelLoader::LoadLevelData(Scene* scene)
 		wallManager.AddWall(objectType);
 	}
 
-	wallManager.AddWallsToScene(*scene);
+	wallManager.AddWallsToScene(scene);
+}
 
-
-
-
-
-	//
-	//----------------------
-	//----------------------
-	//
-
+void LevelLoader::LoadIntersectionsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode)
+{
 	// Access the Intersections
 	const rapidxml::xml_node<>* IntersectionsNode = rootNode->first_node("Intersections");
-	if (!IntersectionsNode)
-	{
-		// Handle the case where the root node is not found
-		// throw an exception
-
-		assert(false && "IntersectionsNode not found");
-		return;
-	}
+	assert(IntersectionsNode && "IntersectionsNode not found");
 
 	//Load The Intersections
 	for (const rapidxml::xml_node<>* objectNode = IntersectionsNode->first_node("IntersectionTile"); objectNode; objectNode = objectNode->next_sibling("IntersectionTile"))
@@ -652,32 +322,16 @@ void LevelLoader::LoadLevelData(Scene* scene)
 			directions.emplace_back(glm::vec2(xDir, yDir));
 		}
 
-		scene->Add(IntersectionTile({ x,y }, directions).GetGameObject());
+		scene.Add(IntersectionTile({ x,y }, directions).GetGameObject());
 	}
+}
 
-
-
-
-
-
-
-
-
-	//
-	//----------------------
-	//----------------------
-	//
-
+void LevelLoader::LoadPowerPalletsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode)
+{
 	// Access the PowerUps
 	const rapidxml::xml_node<>* PowerUpNode = rootNode->first_node("PowerUps");
-	if (!PowerUpNode)
-	{
-		// Handle the case where the root node is not found
-		// throw an exception
+	assert(PowerUpNode && "PowerUp not found");
 
-		assert(false && "PowerUp not found");
-		return;
-	}
 
 	//Load The PowerUps
 	for (const rapidxml::xml_node<>* objectNode = PowerUpNode->first_node("PowerUp"); objectNode; objectNode = objectNode->next_sibling("PowerUp"))
@@ -685,43 +339,22 @@ void LevelLoader::LoadLevelData(Scene* scene)
 		float x = std::stof(objectNode->first_attribute("x")->value());
 		float y = std::stof(objectNode->first_attribute("y")->value());
 
-		scene->Add(PowerUp{ "PacBoost.png", {x,y} }.GetGameObject());
+		scene.Add(PowerUp{ "PacBoost.png", {x,y} }.GetGameObject());
 	}
+}
 
-
-
-
-
-
-
-
-
-
-
-
-	//
-	//----------------------
-	//----------------------
-	//
-
+void LevelLoader::LoadPacDotsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode)
+{
 	// Access the PacDots
 	const rapidxml::xml_node<>* PacDotNode = rootNode->first_node("PacDots");
-	if (!PacDotNode)
-	{
-		// Handle the case where the root node is not found
-		// throw an exception
+	assert(PacDotNode && "PowerUp not found");
 
-		assert(false && "PowerUp not found");
-		return;
-	}
-
-	//Load The Intersections
+	//Load The PacDots
 	for (const rapidxml::xml_node<>* objectNode = PacDotNode->first_node("PacDot"); objectNode; objectNode = objectNode->next_sibling("PacDot"))
 	{
 		float x = std::stof(objectNode->first_attribute("x")->value());
 		float y = std::stof(objectNode->first_attribute("y")->value());
 
-		scene->Add(PacDot{ x,y }.GetGameObject());
+		scene.Add(PacDot{ x,y }.GetGameObject());
 	}
-
 }

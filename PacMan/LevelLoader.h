@@ -1,4 +1,6 @@
 #pragma once
+#include <rapidxml.hpp>
+
 #include "Scene.h"
 #include "Singleton.h"
 enum class GameMode
@@ -28,16 +30,18 @@ private:
 	LevelLoader() = default;
 
 
-	static void LoadInterSections(Scene& scene);
-	static void LoadWalls(Scene& scene);
-	static void LoadPowerUps(Scene& scene);
 	static void LoadGhosts(Scene& scene);
 	static void LoadHud(Scene& scene);
-	static void LoadPacDot(Scene& scene);
 	static void LoadPacMan(Scene& scene, int amount);
 
 	static void SaveHighScore();
-	static void LoadLevelData(Scene* scene);
+	static std::vector<int> LoadExistingHighScores();
+
+	static void LoadLevelData(Scene& scene);
+	static void LoadWallsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
+	static void LoadIntersectionsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
+	static void LoadPouwerPalletsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
+
 
 	inline static std::vector<GameObject*> m_pGhosts{};
 	inline static int m_LevelId{};
