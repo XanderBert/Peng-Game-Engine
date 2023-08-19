@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "WallComponent.h"
 #include "IntersectionComponent.h"
+#include "SpriteRenderer.h"
 #include "TimeM.h"
 #include "TriggerComponent.h"
 #include "VelocityComponent.h"
@@ -228,6 +229,30 @@ void FrightenedState::Update()
 	}
 
 	m_pActor->GetComponent<GhostComponent>()->SetTarget(m_Target);
+
+
+
+
+
+	if (m_pActor->GetComponent<CountdownComponent>()->GetTime() <= 2.f)
+	{
+		const auto spriteRenderer = m_pActor->GetComponent<SpriteRenderer>();
+		spriteRenderer->ResetSpriteFrames();
+		spriteRenderer->SetTexture("GhostScared.png");
+
+
+		const auto x = 16;
+		for (size_t i{}; i < 3; ++i)
+		{
+			spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Down);
+			spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Up);
+			spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Left);
+			spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Right);
+		}
+	}
+
+
+
 }
 
 void FrightenedState::OnCollision(GameObject* other, bool isTrigger, bool isSenderTrigger)

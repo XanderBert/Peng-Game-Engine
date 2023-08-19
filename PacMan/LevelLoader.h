@@ -1,6 +1,7 @@
 #pragma once
 #include <rapidxml.hpp>
 
+#include "Observer.h"
 #include "Scene.h"
 #include "Singleton.h"
 enum class GameMode
@@ -38,9 +39,10 @@ private:
 	static std::vector<int> LoadExistingHighScores();
 
 	static void LoadLevelData(Scene& scene);
-	static void LoadWallsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
-	static void LoadIntersectionsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
-	static void LoadPouwerPalletsFromFile(Scene& scene, rapidxml::xml_node<>* rootNode);
+	static void LoadWallsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode);
+	static void LoadIntersectionsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode);
+	static void LoadPowerPalletsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode);
+	static void LoadPacDotsFromFile(Scene& scene, const rapidxml::xml_node<>* rootNode);
 
 
 	inline static std::vector<GameObject*> m_pGhosts{};
@@ -49,4 +51,5 @@ private:
 	inline static GameMode m_GameMode{ GameMode::SinglePlayer };
 	inline static std::vector<int> m_NewHighScores{};
 	inline static std::vector<int> m_AllHighScores{};
+	inline static std::vector<std::unique_ptr<Observer>> m_Observers;
 };

@@ -277,7 +277,7 @@ void GhostComponent::InitScaredSprites()
 
 
 	const auto x = 16;
-	for (size_t i{}; i < 3; ++i)
+	for (size_t i{}; i < 1; ++i)
 	{
 		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Down);
 		spriteRenderer->AddSpriteFrame({ i * x, 0 }, MovementDirection::Up);

@@ -1,5 +1,9 @@
 #include "PacManState.h"
+
+#include <iostream>
+
 #include "CountdownComponent.h"
+#include "DirectionComponent.h"
 #include "GameObjectStorage.h"
 #include "MoveComponent.h"
 #include "PacDotComponent.h"
@@ -9,6 +13,7 @@
 #include "SpriteRenderer.h"
 #include "WallComponent.h"
 #include "PacManEventObserver.h"
+#include "VelocityComponent.h"
 
 //MOVE
 //
@@ -40,6 +45,16 @@ void PacManMoveState::Update()
 	else
 	{
 		timer->Play();
+	}
+
+	//Give Pacman A Slight Cornering boost.
+	if (m_pActor->GetComponent<DirectionComponent>()->IsDirectionChanged())
+	{
+		m_pActor->GetComponent<VelocityComponent>()->SetVelocityPercentage(150.f);
+	}
+	else
+	{
+		m_pActor->GetComponent<VelocityComponent>()->SetVelocityPercentage(100.f);
 	}
 
 }

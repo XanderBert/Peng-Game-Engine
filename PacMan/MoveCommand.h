@@ -8,6 +8,19 @@
 #include "TimeM.h"
 #include "VelocityComponent.h"
 
+
+
+//Save the last direction.
+//Check if a collision will happen.
+//If so don't change direction
+//when no collision will happen change direction
+
+
+
+//How do i keep checking if a collision will happen?
+
+//In the state update.
+
 class MoveCommand final : public Command
 {
 public:
@@ -20,19 +33,24 @@ public:
 
 	void Execute() override
 	{
+
+		const auto velocity = m_GameActor->GetComponent<VelocityComponent>();
+		;
+
+
 		if (const auto spriteRenderer{ m_GameActor->GetComponent<SpriteRenderer>() })
 		{
 			if (spriteRenderer->GetOffset() == glm::vec2{ 0,16 }) return;
 		}
 
 
-		//Todo fine tune this
+		////Todo fine tune this
 		////Cornerning advantage for pacman
 		//const auto transform = m_GameActor->GetComponent<Transform>();
 		//if (m_GameActor->GetComponent<DirectionComponent>()->GetDirection() != m_MovementDirection)
 		//{
-		//	const auto velocity = m_GameActor->GetComponent<VelocityComponent>()->GetVelocity();
-		//	const auto movement{ m_MovementDirection * velocity * TimeM::GetInstance().GetDeltaTimeM() * 4.f };
+
+		//	const auto movement{ m_MovementDirection * velocity * TimeM::GetInstance().GetDeltaTimeM() };
 
 		//	transform->SetWorldPosition(transform->GetWorldPosition() + movement);
 		//}

@@ -25,7 +25,12 @@
 Scene* LevelLoader::LoadLevel(const int levelId, GameMode gameMode)
 {
 	m_GameMode = gameMode;
+
+	m_Observers.push_back(std::make_unique<PacManEventObserver>());
+
 	return LoadLevel(levelId);
+
+
 }
 
 Scene* LevelLoader::LoadLevel(const int levelId)
@@ -42,6 +47,7 @@ Scene* LevelLoader::LoadLevel(const int levelId)
 	//Create the new scene
 	const auto level = "level" + std::to_string(levelId);
 	auto& level1 = SceneManager::GetInstance().CreateScene(level);
+
 
 
 
@@ -138,14 +144,13 @@ void LevelLoader::LoadHud(Scene& scene)
 
 void LevelLoader::LoadPacMan(Scene& scene, int amount)
 {
-	const auto observer = new PacManEventObserver();
 
 
 
 	for (int i = 0; i < amount; ++i)
 	{
 		const auto pacMan = PacMan();
-		pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(observer);
+		pacMan.GetPacMan()->GetComponent<PacManComponent>()->AttachObserver(m_Observers[0].get());
 
 		if (i == 0)
 		{

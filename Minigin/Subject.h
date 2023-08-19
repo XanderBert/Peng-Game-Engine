@@ -26,7 +26,7 @@ public:
 	void Notify(GameEvent event, GameObject* object) const;
 
 private:
-	std::vector<std::unique_ptr<Observer>> m_Observers;
+	std::vector<Observer*> m_Observers;
 };
 
 inline void Subject::AttachObserver(Observer* observer)

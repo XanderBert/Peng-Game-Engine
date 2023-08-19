@@ -11,10 +11,7 @@ public:
 
 	void Execute() override
 	{
-		std::cout << "NExt LEvell\n";
-
-
-		LevelLoader::GetInstance().LoadLevel(LevelLoader::GetInstance().GetLevelId() + 1);
+		LevelLoader::GetInstance().LoadNextLevel();
 	}
 
 };

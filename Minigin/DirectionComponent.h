@@ -28,9 +28,17 @@ public:
 	void SetDirectionX(float x);
 	void SetDirectionY(float y);
 
+	bool IsDirectionChanged() const;
+
 	glm::vec2 GetDirection() const;
 	glm::vec2 GetPreviousDirection() const;
 private:
 	glm::vec2 m_Direction{ 0.f,0.f };
 	glm::vec2 m_PreviousDirection{ 0.f,0.f };
+	bool m_IsDirectionChanged{ false };
 };
+
+inline bool DirectionComponent::IsDirectionChanged() const
+{
+	return m_IsDirectionChanged;
+}
