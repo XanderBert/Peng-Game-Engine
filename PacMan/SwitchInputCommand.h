@@ -8,20 +8,21 @@
 class SwitchInputCommand final : public Command
 {
 public:
-	SwitchInputCommand(GameObject* gameActor)
-		: m_GameActor(gameActor)
+	SwitchInputCommand(GameObject* gameActor, InputType type)
+		: Command(type)
+		, m_GameActor(gameActor)
 	{}
 
 	~SwitchInputCommand() override = default;
 
 	void Execute() override
 	{
-		if(m_GameActor->GetComponent<InputComponent>()->IsEnabled())
+		if (m_GameActor->GetComponent<InputComponent>()->IsEnabled())
 		{
 			m_GameActor->GetComponent<InputComponent>()->DisableInput();
 			m_GameActor->GetComponent<ControllerComponent>()->EnableInput();
 		}
-			
+
 		else
 		{
 			m_GameActor->GetComponent<InputComponent>()->EnableInput();

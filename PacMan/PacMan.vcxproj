@@ -260,6 +260,7 @@
     <ClInclude Include="IntersectionTile.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PacDot.h" />
     <ClInclude Include="PacDotComponent.h" />
     <ClInclude Include="PacMan.h" />

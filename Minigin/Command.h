@@ -6,10 +6,18 @@
 //Keep track of the commands (To Undo) 
 //https://www.youtube.com/watch?v=mSZuEbAkJCo
 
+enum class InputType
+{
+	Down,
+	Up,
+	Pressed
+};
+
+
 class Command
 {
 public:
-	Command() = default;
+	Command(InputType type);
 	virtual ~Command() = default;
 
 	Command(const Command& other) = delete;
@@ -20,5 +28,13 @@ public:
 	virtual void Execute() = 0;
 	//virtual void Undo() = 0;
 	//virtual void Merge(Command* other) = 0;
+
+	InputType GetInputtType() const { return  m_InputType; }
+
+private:
+	InputType m_InputType;
 };
+
+inline Command::Command(InputType type) : m_InputType(type)
+{}
 

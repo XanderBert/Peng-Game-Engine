@@ -282,5 +282,8 @@
     <ClInclude Include="FruitComponent.h">
       <Filter>Components\ObjectFilters\Fruit</Filter>
     </ClInclude>
+    <ClInclude Include="MuteCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

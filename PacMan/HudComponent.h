@@ -70,22 +70,13 @@ private:
 	inline static std::vector<int> m_HighScore{};
 
 	bool m_IsMultiplayer{ false };
-	void UpdateAudio();
 	void UpdateSinglePlayer();
 	void UpdateMultiPlayer();
 };
 
 inline void HudComponent::Update()
 {
-	UpdateAudio();
-	const auto& serviceLocator = ServiceLocator::GetInstance();
-	const auto& inputService = serviceLocator.InputManager.GetService();
 
-
-	if (inputService.GetButtonPressed(SDLK_F1))
-	{
-		SkipLevelCommand().Execute();
-	}
 
 	if (!m_IsMultiplayer)
 	{
@@ -97,18 +88,7 @@ inline void HudComponent::Update()
 	UpdateMultiPlayer();
 }
 
-inline void HudComponent::UpdateAudio()
-{
-	const auto& serviceLocator = ServiceLocator::GetInstance();
-	const auto& inputService = serviceLocator.InputManager.GetService();
 
-
-	if (inputService.GetButtonPressed(SDLK_m))
-	{
-		auto& audioService = serviceLocator.AudioService.GetService();
-		audioService.ToggleMute();
-	}
-}
 
 inline void HudComponent::UpdateSinglePlayer()
 {

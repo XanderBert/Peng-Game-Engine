@@ -24,12 +24,21 @@ void InputComponent::Update()
 
 	for (const auto& command : m_KeyboardCommands)
 	{
-		if (m_pInputManager->GetButtonDown(command.first))
+		if (command.second->GetInputtType() == InputType::Down)
 		{
-			command.second->Execute();
+			if (m_pInputManager->GetButtonDown(command.first))
+			{
+				command.second->Execute();
+			}
+		}
+		else if (command.second->GetInputtType() == InputType::Pressed)
+		{
+			if (m_pInputManager->GetButtonPressed(command.first))
+			{
+				command.second->Execute();
+			}
 		}
 	}
-
 }
 
 void InputComponent::AddBinding(SDL_Keycode key, Command* command)

@@ -6,7 +6,7 @@
 class SkipLevelCommand final : public Command
 {
 public:
-	SkipLevelCommand() {}
+	SkipLevelCommand(InputType type) : Command(type) {}
 	~SkipLevelCommand() override = default;
 
 	void Execute() override
