@@ -16,7 +16,6 @@ public:
 	~PacManEventObserver()override;
 private:
 	bool IsLevelCompleted();
-	void LoadNextLevel();
 	int m_PacDotEatenSoundIndex{};
 };
 

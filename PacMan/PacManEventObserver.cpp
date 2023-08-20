@@ -62,9 +62,7 @@ void PacManEventObserver::Notify(GameObject* gameObject, GameEvent event)
 
 		if (IsLevelCompleted())
 		{
-
-			LoadNextLevel();
-
+			LevelLoader::GetInstance().LoadNextLevel();
 		}
 	}
 
@@ -76,7 +74,7 @@ void PacManEventObserver::Notify(GameObject* gameObject, GameEvent event)
 
 		if (IsLevelCompleted())
 		{
-			LoadNextLevel();
+			LevelLoader::GetInstance().LoadNextLevel();
 		}
 	}
 
@@ -160,10 +158,4 @@ bool PacManEventObserver::IsLevelCompleted()
 	else if (amountOfDotsLeft <= 1) return true;
 
 	return false;
-}
-
-void PacManEventObserver::LoadNextLevel()
-{
-	auto id = LevelLoader::GetInstance().GetLevelId();
-	LevelLoader::GetInstance().LoadLevel(++id);
 }
