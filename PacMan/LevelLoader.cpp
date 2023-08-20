@@ -264,7 +264,7 @@ std::vector<int> LevelLoader::LoadExistingHighScores()
 void LevelLoader::LoadLevelData(Scene& scene)
 {
 	// Read the xml file into a vector
-	std::ifstream theFile("name.xml");
+	std::ifstream theFile("../Data/Levels/PacManLevel.xml");
 
 	std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
