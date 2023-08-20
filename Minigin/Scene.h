@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Observer.h"
 #include "SceneManager.h"
 
 class GameObject;
@@ -36,7 +37,7 @@ private:
 	explicit Scene(const std::string& name);
 
 	std::string m_name;
-	std::vector < std::unique_ptr<GameObject>> m_objects{};
+	std::vector <std::unique_ptr<GameObject>> m_objects{};
 
 	static unsigned int m_idCounter;
 	bool m_CanBeDeleted = false;

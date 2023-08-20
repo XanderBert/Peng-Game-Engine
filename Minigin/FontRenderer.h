@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SDL_pixels.h>
+#include <SDL_surface.h>
 #include <string>
 #include "Component.h"
 #include "Font.h"
@@ -39,6 +40,10 @@ public:
 	void SetOffset(const glm::vec2& offset);
 	glm::vec2 GetOffset() const;
 
+	SDL_Surface* GetTextSurface() const;
+
+	void SetPadding(int padding);
+
 private:
 	void GetColor();
 	SDL_Color m_color{};
@@ -47,4 +52,5 @@ private:
 	bool m_needsUpdate{ false };
 	std::shared_ptr<Texture2D> m_textTexture;
 	glm::vec2 m_Offset{};
+	int m_Padding{ 4 };
 };

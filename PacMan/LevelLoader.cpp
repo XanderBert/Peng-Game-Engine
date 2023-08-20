@@ -102,13 +102,13 @@ Scene* LevelLoader::LoadEndingScreen()
 		{
 			if (hud->IsMultiplayer())
 			{
-				text += "Player 1: " + std::to_string(hud->GetHighScore()[0]) + " Player 2: " + std::to_string(hud->GetHighScore()[1]);
-				text += " HighScore: " + std::to_string(m_AllHighScores[0]);
+				text += "Player 1: " + std::to_string(hud->GetHighScore()[0]) + "\nPlayer 2: " + std::to_string(hud->GetHighScore()[1]);
+				text += "\nHighScore: " + std::to_string(m_AllHighScores[0]);
 			}
 			else
 			{
 				text += "Player 1: " + std::to_string(hud->GetHighScore()[0]);
-				text += " HighScore: " + std::to_string(m_AllHighScores[0]);
+				text += "\nHighScore: " + std::to_string(m_AllHighScores[0]);
 			}
 		}
 	}

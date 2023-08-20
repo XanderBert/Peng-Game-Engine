@@ -42,6 +42,7 @@ void Renderer::Render() const
 	SDL_RenderClear(m_renderer);
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);
+
 	ImGui::NewFrame();
 	SceneManager::GetInstance().Render();
 	ImGui::Render();

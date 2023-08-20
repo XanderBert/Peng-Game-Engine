@@ -107,6 +107,9 @@
     <Filter Include="Components\ObjectFilters\Fruit">
       <UniqueIdentifier>{3a5526ca-cc4d-4b93-a176-a8a7284d87cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Singletons\LevelLoader\Observers">
+      <UniqueIdentifier>{50cf8c91-2008-418e-8207-677a8a5634db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PacManMain.cpp">
